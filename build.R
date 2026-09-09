@@ -61,5 +61,7 @@ devtools::test()
 #
 #     git push origin --delete mosaic
 
+## Create GIT
 
-
+# install.packages("usethis")
+# usethis::use_git()
