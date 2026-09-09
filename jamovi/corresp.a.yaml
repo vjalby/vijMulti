@@ -1,0 +1,431 @@
+---
+name:  corresp
+title: Correspondence Analysis
+menuGroup: vijMulti
+menuSubgroup: Multivariate
+version: '1.0.0'
+jas: '1.2'
+
+weightsSupport: 'full'
+
+options:
+    - name: data
+      type: Data
+
+    - name: mode
+      title: ""
+      type: List
+      options:
+            - name: obsTable
+              title: "Observation Table"
+            - name: contTable
+              title: "Contingency Table"
+      default: obsTable
+
+    - name: rows
+      title: Rows
+      type: Variable
+      suggested:
+        - nominal
+        - ordinal
+      permitted:
+        - factor
+
+    - name: cols
+      title: Columns
+      type: Variable
+      suggested:
+        - nominal
+        - ordinal
+      permitted:
+        - factor
+
+    - name: columns
+      title: Columns
+      type: Variables
+      suggested:
+        - continuous
+      permitted:
+        - numeric
+
+    - name: rowLabels
+      title: Row Labels
+      type: Variable
+      suggested:
+        - nominal
+        - ordinal
+      permitted:
+        - factor
+
+    - name: columnTitle
+      title: Column title
+      type: String
+      default: 'Columns'
+
+    - name: counts
+      title: Counts (optional)
+      type: Variable
+      suggested:
+        - continuous
+      permitted:
+        - numeric
+
+    - name: showContingency
+      title: Contingency table
+      type: Bool
+      default: false
+
+    - name: showProfiles
+      title: Row and column profiles
+      type: Bool
+      default: false
+
+    - name: showInertia
+      title: Inertia summary
+      type: Bool
+      default: true
+
+    - name: showSummaries
+      title: Row and column summaries
+      type: Bool
+      default: false
+
+    - name: showRowPlot
+      title: Row plot
+      type: Bool
+      default: false
+
+    - name: showColPlot
+      title: Column plot
+      type: Bool
+      default: false
+
+    - name: showBiPlot
+      title: Biplot
+      type: Bool
+      default: true
+
+    - name: supplementaryRows
+      type: String
+      title: Supplementary rows
+      default: ''
+
+    - name: supplementaryCols
+      type: String
+      title: Supplementary columns
+      default: ''
+
+    - name: dimNum
+      type: Number
+      title: "Number of dimensions"
+      min: 2
+      max: 10
+      default: 2
+
+    - name: xaxis
+      type: Number
+      title: "X-Axis"
+      min: 1
+      max: 10
+      default: 1
+
+    - name: yaxis
+      type: Number
+      title: "Y-Axis"
+      min: 1
+      max: 10
+      default: 2
+
+    - name: normalization
+      title: Normalization
+      type: List
+      options:
+        - title: Principal
+          name:  principal
+        - title: Symmetric
+          name:  symmetric
+        - title: Row principal
+          name:  rowprincipal
+        - title: Column principal
+          name:  colprincipal
+        - title: Standard
+          name:  standard
+      default: principal
+
+    - name: labelSize
+      type: Integer
+      title: Label
+      default: 12
+      min: 8
+      max: 24
+
+    - name: rowColor
+      title: Row
+      type: List
+      options:
+        - title: Blue
+          name:  blue
+        - title: Red
+          name:  red
+        - title: Green
+          name:  forestgreen
+        - title: Purple
+          name:  purple
+        - title: Pink
+          name:  hotpink
+        - title: Orange
+          name:  darkorange1
+      default: blue
+
+    - name: colColor
+      title: Column
+      type: List
+      options:
+        - title: Blue
+          name:  blue
+        - title: Red
+          name:  red
+        - title: Green
+          name:  forestgreen
+        - title: Purple
+          name:  purple
+        - title: Pink
+          name:  hotpink
+        - title: Orange
+          name:  darkorange1
+      default: red
+
+    - name: supColor
+      title: Supplement
+      type: List
+      options:
+        - title: Gray
+          name:  darkgray
+        - title: Black
+          name:  black
+        - title: Yellow
+          name:  yellow2
+        - title: White
+          name:  white
+      default: darkgray
+
+    - name: columnTitleText
+      title: Column plot
+      type: String
+      default: 'default'
+
+    - name: rowTitleText
+      title: Row plot
+      type: String
+      default: 'default'
+
+    - name: biplotTitleText
+      title: Biplot
+      type: String
+      default: 'default'
+
+    - name: titleAlign
+      title: Align
+      type: List
+      options:
+        - name: "0"
+          title: Left
+        - name: "0.5"
+          title: Center
+        - name: "1"
+          title: Right
+      default: "0.5"
+
+    - name: titleFontSize
+      title: Font size
+      type: Number
+      default: 16
+      min: 8
+      max: 24
+
+    - name: titleFontFace
+      title: Font face
+      type: List
+      options:
+        - name: plain
+          title: Normal
+        - name: bold
+          title: Bold
+        - name: italic
+          title: Italic
+        - name: bold.italic
+          title: Bold Italic
+      default: plain
+
+    - name: columnSubtitleText
+      title: Column plot
+      type: String
+      default: 'default'
+
+    - name: rowSubtitleText
+      title: Row plot
+      type: String
+      default: 'default'
+
+    - name: biplotSubtitleText
+      title: Biplot
+      type: String
+      default: 'default'
+
+    - name: subtitleAlign
+      title: Align
+      type: List
+      options:
+        - name: "0"
+          title: Left
+        - name: "0.5"
+          title: Center
+        - name: "1"
+          title: Right
+      default: "0.5"
+
+    - name: subtitleFontSize
+      title: Font size
+      type: Number
+      default: 12
+      min: 8
+      max: 24
+
+    - name: subtitleFontFace
+      title: Font face
+      type: List
+      options:
+        - name: plain
+          title: Normal
+        - name: bold
+          title: Bold
+        - name: italic
+          title: Italic
+        - name: bold.italic
+          title: Bold Italic
+      default: italic
+
+    - name: rowCaptionText
+      title: Row plot
+      type: String
+      default: ''
+
+    - name: columnCaptionText
+      title: Column plot
+      type: String
+      default: ''
+
+    - name: biplotCaptionText
+      title: Biplot
+      type: String
+      default: ''
+
+    - name: captionAlign
+      title: Align
+      type: List
+      options:
+        - name: "0"
+          title: Left
+        - name: "0.5"
+          title: Center
+        - name: "1"
+          title: Right
+      default: "1"
+
+    - name: captionFontSize
+      title: Font size
+      type: Number
+      default: 12
+      min: 8
+      max: 24
+
+    - name: captionFontFace
+      title: Font face
+      type: List
+      options:
+        - name: plain
+          title: Normal
+        - name: bold
+          title: Bold
+        - name: italic
+          title: Italic
+        - name: bold.italic
+          title: Bold Italic
+      default: plain
+
+    - name: xAxisText
+      title: ""
+      type: String
+      default: ''
+
+    - name: xAxisFontSize
+      title: Size
+      type: List
+      options:
+        - name: "10"
+          title: "10"
+        - name: "12"
+          title: "12"
+        - name: "14"
+          title: "14"
+        - name: "16"
+          title: "16"
+        - name: "18"
+          title: "18"
+        - name: "20"
+          title: "20"
+      default: "16"
+
+    - name: xAxisPosition
+      title: Position
+      type: List
+      options:
+        - name: "0"
+          title: Left
+        - name: "0.5"
+          title: Center
+        - name: "1"
+          title: Right
+      default: "0.5"
+
+    - name: yAxisText
+      title: ""
+      type: String
+      default: ''
+
+    - name: yAxisFontSize
+      title: Size
+      type: List
+      options:
+        - name: "10"
+          title: "10"
+        - name: "12"
+          title: "12"
+        - name: "14"
+          title: "14"
+        - name: "16"
+          title: "16"
+        - name: "18"
+          title: "18"
+        - name: "20"
+          title: "20"
+      default: "16"
+
+    - name: yAxisPosition
+      title: Position
+      type: List
+      options:
+        - name: "1"
+          title: Top
+        - name: "0.5"
+          title: Center
+        - name: "0"
+          title: Bottom
+      default: "0.5"
+
+    - name: descAsVarName
+      title: Use variable's description as name
+      type: Bool
+      default: false
+
+...

@@ -1,0 +1,1971 @@
+msgid ""
+msgstr ""
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2021-07-26 12:08:06+01000\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+"Language: fr\n"
+
+#: R/principal.b.R
+msgid "{rotation} rotation"
+msgstr "Rotation {rotation}"
+
+#: R/principal.b.R
+msgid "{rotation} rotation was used."
+msgstr "La rotation {rotation} a été utilisée."
+
+#: R/principal.b.R
+msgid "{rotation} rotation with Kaiser normalization"
+msgstr "Rotation {rotation} avec normalisation de Kaiser"
+
+#: R/principal.b.R
+msgid "{rotation} rotation with Kaiser normalization was used."
+msgstr "La rotation {rotation} avec normalisation de Kaiser a été utilisée."
+
+#: R/corresp.b.R
+#: R/multcorresp.b.R
+#: multcorresp/results/categories.columns.title
+msgid "% Inertia"
+msgstr "% d'inertie"
+
+#: R/multcorresp.b.R
+#: corresp/results/eigenvalues.columns.title
+#: multcorresp/results/eigenvalues.columns.title
+msgid "% of Inertia"
+msgstr "% d'inertie"
+
+#: principal/results/summaryTable.columns.title
+msgid "% of Variance"
+msgstr "% de variance"
+
+#: package.description
+msgid ""
+"<p><strong>Main classic multivariate data analyses</strong>:</p> <ul> "
+"<li>Principal Component Analysis</li> <li>Correspondence Analysis</li> "
+"<li>Multiple Correspondence Analysis</li> </ul> <p>The module is available "
+"in the <strong>Multivariate</strong> tab.</p> <p>Project source (and "
+"changelog) is available at <a href=\"https://github.com/vjalby/vijMulti\" "
+"target=\"_blank\">Github</a>.</p>"
+msgstr ""
+"<p><strong>Les principales analyses multivariées classiques</strong> :</p> "
+"<ul> <li>Analyse en composantes principales</li> <li>Analyse des "
+"correspondances</li> <li>Analyse des correspondances multiples</li> </ul> "
+"<p>Le module est disponible dans l'onglet <strong>Analyses "
+"multivariées</strong>.</p> <p>Le code source du projet (et le changelog) est "
+"disponible sur <a href=\"https://github.com/vjalby/vijMulti\" "
+"target=\"_blank\">Github</a>.</p>"
+
+#: R/corresp.b.R
+msgid ""
+"<p>This module computes <strong>Correspondence Analysis (CA)</strong> for "
+"two categorical variables. Computations are based on <a href = "
+"\"https://CRAN.R-project.org/package=FactoMineR\" "
+"target=\"_blank\">FactoMineR<a/> package by F. Husson, J. Josse, S. Le, J. "
+"Mazet.</p>\n"
+"<p>The data can be</p>\n"
+"<ul>\n"
+"<li>an <strong>Observation table</strong> (raw data), possibly weighted "
+"using <em>jamovi</em> built-in weight system or using the \"Counts\" "
+"variable</li>\n"
+"<li>or a <strong>Contingency table</strong></li>\n"
+"</ul>\n"
+"<p><strong>Supplementary row or column</strong> numbers may be entered as "
+"integer lists : 1,3,6</p>\n"
+"<p>Four normalizations (scaling of row and column scores before plotting) "
+"are available :</p>\n"
+"<ul>\n"
+"<li><strong>Principal:</strong> Row and column scores are scaled by "
+"eigenvalues.</li>\n"
+"<li><strong>Symmetric:</strong> Row and column scores are scaled by the "
+"square root of eigenvalues. </li>\n"
+"<li><strong>Row Principal:</strong> Only row scores are scaled by "
+"eigenvalues.</li>\n"
+"<li><strong>Column Principal:</strong> Only column scores are scaled by "
+"eigenvalues.</li>\n"
+"<li><strong>Standard:</strong> The raw coordinates without "
+"normalization.</li>\n"
+"</ul>\n"
+"<p>A sample file is included at Open > Data Library > vijMulti > Smoking</p>"
+msgstr ""
+"<p>Ce module effectue une <strong>Analyse des Correspondances (CA)</strong> "
+"pour deux variables catégorielles. Les calculs sont basés sur le package <a "
+"href=\"https://CRAN.R-project.org/package=FactoMineR\" "
+"target=\"_blank\">FactoMineR</a/> de F. Husson, J. Josse, S. Le et J. "
+"Mazet.</p>\n"
+"<p>Les données peuvent être</p>\n"
+"<ul>\n"
+"<li>la <strong>table des observations</strong> (données brutes) "
+"éventuellement pondérées à l'aide du système de pondération intégré de "
+"<em>jamovi</em> ou de la variable « Effectifs ».</li>\n"
+"<li>ou un <strong>tableau de contingence</strong></li>\n"
+"</ul>\n"
+"<p>Les numéros de <strong>lignes ou de colonnes supplémentaires</strong> "
+"doivent être saisis sous forme de listes d'entiers : 1, 3, 6</p>\n"
+"<p>Quatre normalisations (mise à l'échelle des coordonnées des points-lignes "
+"et des points-colonnes) sont disponibles :</p>\n"
+"<ul>\n"
+"<li><strong>Principal :</strong> Les coordonnées des points-lignes et des "
+"points-colonnes sont normalisées par les valeurs propres.</li>\n"
+"<li><strong>Symétrique :</strong> Les coordonnées des points-lignes et des "
+"points-colonnes sont normalisées par la racine carrée des valeurs "
+"propres.</li>\n"
+"<li><strong>Principal des lignes :</strong> Seules les coordonnées des "
+"points-lignes sont normalisées par les valeurs propres.</li>\n"
+"<li><strong>Principal des colonnes :</strong> Seules les coordonnées des "
+"points-colonnes sont normalisées par les valeurs propres.</li>\n"
+"<li><strong>Standard :</strong> Les coordonnées ne sont pas "
+"normalisées.</li>\n"
+"</ul>\n"
+"<p>Un fichier de démonstration est disponible dans Ouvrir > Bibliothèque de "
+"données > vijMulti > Smoking</p>"
+
+#: R/multcorresp.b.R
+msgid ""
+"<p>This module computes <strong>Multiple Correspondence Analysis "
+"(MCA)</strong> for several categorical variables. Computations are based on "
+"<a href = \"https://CRAN.R-project.org/package=FactoMineR\" "
+"target=\"_blank\">FactoMineR<a/> package by F. Husson, J. Josse, S. Le, J. "
+"Mazet.</p>\n"
+"<p>Both classic methods are available:</p>\n"
+"<ul>\n"
+"<li><strong>Indicator matrix:</strong> CA of the indicator matrix</li>\n"
+"<li><strong>Burt matrix:</strong> CA of the Burt matrix. The eigenvalues are "
+"the squares of those of the indicator matrix method. </li>\n"
+"</ul>\n"
+"<p>Both methods give the same <em>standard</em> coordinates and "
+"discriminations (but different <em>principal</em> coordinates).</p>\n"
+"<p>When selected, <strong>Benzécri and Greenacre corrections</strong> are "
+"applied to eigenvalues only (<strong>Summary</strong> table). Principal "
+"coordinates (and inertia) of categories and observations are computed from "
+"the original eigenvalues of the Burt matrix.</p>\n"
+"<p>The <strong>Normalization</strong> options specify how the coordinates "
+"are scaled (by eigenvalues):</p>\n"
+"<ul>\n"
+"<li><strong>Principal:</strong> Both category and observation coordinates "
+"are scaled.</li>\n"
+"<li><strong>Category principal:</strong> Only category coordinates are "
+"scaled.</li>\n"
+"<li><strong>Observation principal:</strong> Only observation coordinates are "
+"scaled.</li>\n"
+"<li><strong>Standard:</strong> Both category and observation coordinates are "
+"standard.</li>\n"
+"</ul>\n"
+"<p>A sample file is included at Open > Data Library > vijMulti > Cars</p>"
+msgstr ""
+"<p>Ce module effectue une <strong>Analyse des Correspondances Multiples "
+"(ACM)</strong> de plusieurs variables catégorielles. Les calculs sont basés "
+"sur le package <a href=\"https://CRAN.R-project.org/package=FactoMineR\" "
+"target=\"_blank\">FactoMineR</a/> de F. Husson, J. Josse, S. Le et J. "
+"Mazet.</p>\n"
+"<p>Les deux méthodes classiques sont disponibles :</p>\n"
+"<ul>\n"
+"<li><strong>Tableau disjonctif :</strong> ACM de la matrice indicatrice</li>\n"
+"<li><strong>Tableau de Burt :</strong> ACM de la matrice de Burt. Les "
+"valeurs propres sont les carrés de celles de la méthode de la matrice "
+"indicatrice.</li>\n"
+"</ul>\n"
+"<p>Les deux méthodes donnent Les mêmes coordonnées <em>standards</em> et "
+"discriminations (mais des coordonnées <em>principales</em> différentes).</p>\n"
+"<p>Lorsque l'option <strong>correction de Benzécri</strong> ou "
+"<strong>correction de Greenacre</strong> est sélectionnée, les corrections "
+"sont appliquées uniquement aux valeurs propres (<strong>tableau "
+"récapitulatif</strong>). Les coordonnées principales (et l'inertie) des "
+"catégories et des observations sont calculées à partir des valeurs propres "
+"originales de la matrice de Burt.</p>\n"
+"<p>Les options de <strong>normalisation</strong> spécifient comment les "
+"coordonnées sont mises à l'échelle (par les valeurs propres) :</p>\n"
+"<ul>\n"
+"<li><strong>Principale :</strong> Les coordonnées des catégories et des "
+"observations sont mises à l'échelle.</li>\n"
+"<li><strong>Catégories principales :</strong> Seules les coordonnées des "
+"catégories sont mises à l'échelle.</li>\n"
+"<li><strong>Observations principales :</strong> Seules les coordonnées des "
+"observations sont mises à l'échelle.</li>\n"
+"<li><strong>Standard :</strong> Les coordonnées des catégories et des "
+"observations sont standardisées.</li>\n"
+"</ul>\n"
+"<p>Un fichier de démonstration est disponible dans Ouvrir > Bibliothèque de "
+"données > vijMulti > Cars</p>"
+
+#: R/principal.b.R
+msgid ""
+"<p>This module computes <strong>Principal Component Analysis (PCA)</strong> "
+"for several continuous variables. Computations are based on "
+"<tt>stats::prcomp</tt> function.</p>\n"
+"<p>Although rotated components are not principal components, they are widely "
+"used. Only orthogonal rotations are available (from GPArotation "
+"package).</p>\n"
+"<p>Loadings (variable coordinates) and scores (observation coordinates) are "
+"principal (scaled by the square root of eigenvalues).</p>\n"
+"<p>Biplot follows \"Biplots in Practice\" (Michael Greenacre, 2010):</p>\n"
+"<ul>\n"
+"<li><strong>Form biplot:</strong> Scores are principal (scaled by "
+"eigenvalues) while loadings are standard.</li>\n"
+"<li><strong>Covariance biplot:</strong> Loadings are principal while scores "
+"are standard. </li>\n"
+"</ul>\n"
+"<p><strong>Advanced options</strong>:</p>\n"
+"<ul>\n"
+"<li><strong>Standardize loadings:</strong> loadings are normalized with sums "
+"of squared equal to 1 (instead of eigenvalues)</li>\n"
+"<li><strong>Standardize scores:</strong> scores are normalized with "
+"variances equal to 1 (instead of eigenvalues)</li>\n"
+"<li><strong>Rotate eigenvectors:</strong> the rotation (varimax, etc) is "
+"applied to eigenvectors (standard loadings) instead of principal loadings "
+"(STATA way).</li>\n"
+"</ul>\n"
+"<p>A sample file is included at Open > Data Library > vijMulti > Iris</p>"
+msgstr ""
+"<p>Ce module effectue une <strong>Analyse en Composantes Principales "
+"(ACP)</strong> de plusieurs variables continues. Les calculs sont basés sur "
+"la fonction <tt>stats::prcomp</tt>.</p>\n"
+"<p>Bien que les composantes après rotation ne soient pas des composantes "
+"principales, elles sont largement utilisées. Seules les rotations "
+"orthogonales sont disponibles (via le package GPArotation).</p>\n"
+"<p>Les coordonnées des variables et des observations sont principles (mis à "
+"l'échelle par la racine carrée des valeurs propres).</p>\n"
+"<p>Le diagramme double suit l'approche de « Biplots in Practice » (Michael "
+"Greenacre, 2010) :</p>\n"
+"<ul>\n"
+"<li><strong>Form :</strong> Les coordonnées des observations sont "
+"principales (mis à l'échelle par les valeurs propres) tandis que celles des "
+"variables sont standardisées.</li>\n"
+"<li><strong>Cov :</strong> Les coordonnées des variables sont principales "
+"tandis que celles des observations sont standardisées. </li>\n"
+"</ul>\n"
+"<p><strong>Options avancées :</strong></p>\n"
+"<ul>\n"
+"<li><strong>Variables standardisées :</strong> les coordonnées des variables "
+"sont normalisées avec la somme des carrés égale à 1 (au lieu des valeurs "
+"propres).</li>\n"
+"<li><strong>Observations standardisées :</strong> les coordonnées des "
+"observations sont normalisées avec la variance égale à 1 (au lieu des "
+"valeurs propres).</li>\n"
+"<li><strong>Rotation des vecteurs propres :</strong> la rotation (varimax, "
+"etc.) est appliquée aux vecteurs propres (coordonnées standardisées) au lieu "
+"des coordonnées principales (méthode STATA).</li>\n"
+"</ul>\n"
+"<p>Un fichier de démonstration est disponible dans Ouvrir > Bibliothèque de "
+"données > vijMulti > Iris</p>"
+
+#: package/datasets/Smoking.description
+msgid "A demonstration dataset for vijMulti/Correspondence Analysis."
+msgstr "Fichier de démonstration pour vijMulti/Analyse des correspondances."
+
+#: package/datasets/Cars.description
+msgid "A demonstration dataset for vijMulti/Multiple Correspondence Analysis."
+msgstr "Fichier de démonstration pour vijMulti/Analyse des correspondances multiples."
+
+#: package/datasets/Iris.description
+msgid "A demonstration dataset for vijMulti/Principal Component Analysis."
+msgstr "Fichier de démonstration pour vijMulti/Analyse en composantes principales."
+
+#: multcorresp/options/colorPalette/Accent.title
+#: principal/options/colorPalette/Accent.title
+msgid "Accent"
+msgstr "Accentué"
+
+#: R/corresp.b.R
+msgid "Active Margin"
+msgstr "Marge active"
+
+#: principal/ui[7].label
+msgid "Advanced Options"
+msgstr "Options avancées"
+
+#: corresp/options/titleAlign.title
+#: corresp/options/subtitleAlign.title
+#: corresp/options/captionAlign.title
+#: multcorresp/options/titleAlign.title
+#: multcorresp/options/subtitleAlign.title
+#: multcorresp/options/captionAlign.title
+#: principal/options/titleAlign.title
+#: principal/options/subtitleAlign.title
+#: principal/options/captionAlign.title
+msgid "Align"
+msgstr "Align."
+
+#: principal/options/varColor.title
+msgid "Arrows"
+msgstr "Vecteurs"
+
+#: R/corresp.b.R
+msgid "Axis numbers cannot be equal."
+msgstr "Les axes ne peuvent pas être identiques."
+
+#: R/corresp.b.R
+msgid "Axis numbers must be less than or equal to the number of dimensions ({nDim})."
+msgstr "Les axes doivent être inférieurs ou égaux au nombre de dimensions ({nDim})."
+
+#: corresp/ui[6].label
+msgid "Axis Titles"
+msgstr "Titre des axes"
+
+#: R/principal.b.R
+msgid "Bartlett's Test of Sphericity"
+msgstr "Test de sphéricité de Bartlett"
+
+#: principal/options/rotation/bentlerT.title
+msgid "Bentler T"
+msgstr "Bentler T"
+
+#: R/multcorresp.b.R
+msgid "Benzécri Correction"
+msgstr "Correction de Benzécri"
+
+#: multcorresp/options/BenzecriAdj.title
+msgid "Benzécri correction"
+msgstr "Correction de Benzécri"
+
+#: R/multcorresp.b.R
+#: corresp/options/showBiPlot.title
+#: corresp/options/biplotTitleText.title
+#: corresp/options/biplotSubtitleText.title
+#: corresp/options/biplotCaptionText.title
+#: corresp/results/biplot.title
+#: multcorresp/options/showBiPlot.title
+#: multcorresp/options/biplotTitleText.title
+#: multcorresp/options/biplotSubtitleText.title
+#: multcorresp/options/biplotCaptionText.title
+#: multcorresp/results/biplot.title
+#: principal/options/showBiplot.title
+#: principal/options/biplotTitleText.title
+#: principal/options/biplotSubtitleText.title
+#: principal/options/biplotCaptionText.title
+#: principal/ui[3][2][0].label
+#: principal/results/biPlot.title
+msgid "Biplot"
+msgstr "Graphique double"
+
+#: principal/options/biplotType.title
+msgid "Biplot Type"
+msgstr "Type de graphique double"
+
+#: corresp/options/supColor/black.title
+#: multcorresp/options/obsColor/black.title
+#: principal/options/varColor/black.title
+#: principal/options/labelColor/black.title
+#: principal/options/obsColor/black.title
+msgid "Black"
+msgstr "Noir"
+
+#: corresp/options/rowColor/blue.title
+#: corresp/options/colColor/blue.title
+#: multcorresp/options/obsColor/blue.title
+#: principal/options/varColor/#377EB8.title
+#: principal/options/obsColor/#377EB8.title
+msgid "Blue"
+msgstr "Bleu"
+
+#: multcorresp/options/colorPalette/BuGn.title
+#: principal/options/colorPalette/BuGn.title
+msgid "Blue to Green"
+msgstr "Bleu à vert"
+
+#: multcorresp/options/colorPalette/BuPu.title
+#: principal/options/colorPalette/BuPu.title
+msgid "Blue to Purple"
+msgstr "Bleu à violet"
+
+#: multcorresp/options/colorPalette/Blues.title
+#: principal/options/colorPalette/Blues.title
+msgid "Blues"
+msgstr "Bleus"
+
+#: corresp/options/titleFontFace/bold.title
+#: corresp/options/subtitleFontFace/bold.title
+#: corresp/options/captionFontFace/bold.title
+#: multcorresp/options/titleFontFace/bold.title
+#: multcorresp/options/subtitleFontFace/bold.title
+#: multcorresp/options/captionFontFace/bold.title
+#: principal/options/titleFontFace/bold.title
+#: principal/options/subtitleFontFace/bold.title
+#: principal/options/captionFontFace/bold.title
+msgid "Bold"
+msgstr "Gras"
+
+#: corresp/options/titleFontFace/bold.italic.title
+#: corresp/options/subtitleFontFace/bold.italic.title
+#: corresp/options/captionFontFace/bold.italic.title
+#: multcorresp/options/titleFontFace/bold.italic.title
+#: multcorresp/options/subtitleFontFace/bold.italic.title
+#: multcorresp/options/captionFontFace/bold.italic.title
+#: principal/options/titleFontFace/bold.italic.title
+#: principal/options/subtitleFontFace/bold.italic.title
+#: principal/options/captionFontFace/bold.italic.title
+msgid "Bold Italic"
+msgstr "Gras Ital."
+
+#: corresp/options/yAxisPosition/0.title
+#: multcorresp/options/legendPosition/bottom.title
+#: multcorresp/options/yAxisPosition/0.title
+#: principal/options/legendPosition/bottom.title
+#: principal/options/yAxisPosition/0.title
+msgid "Bottom"
+msgstr "Bas"
+
+#: principal/options/varColor/#A65628.title
+#: principal/options/obsColor/#A65628.title
+msgid "Brown"
+msgstr "Marron"
+
+#: multcorresp/options/colorPalette/BrBG.title
+#: principal/options/colorPalette/BrBG.title
+msgid "Brown and Green"
+msgstr "Marron à vert"
+
+#: R/multcorresp.b.R
+#: multcorresp/options/method/Burt.title
+#: multcorresp/ui[3][0][0]/method_burt.label
+msgid "Burt matrix"
+msgstr "Tableau de Burt"
+
+#: corresp/ui[7][2][1][0].label
+#: multcorresp/ui[8][2][1][0].label
+#: principal/ui[6][2][1][0].label
+msgid "Caption Style"
+msgstr "Style des légendes"
+
+#: corresp/ui[7][2][0][0].label
+#: multcorresp/ui[8][2][0][0].label
+#: principal/ui[6][2][0][0].label
+msgid "Caption Text"
+msgstr "Texte des légendes"
+
+#: multcorresp/options/colorPalette/custom::carbon_dark.title
+#: principal/options/colorPalette/custom::carbon_dark.title
+msgid "Carbon:Dark"
+msgstr "Carbon:Foncé"
+
+#: multcorresp/options/colorPalette/custom::carbon_light.title
+#: principal/options/colorPalette/custom::carbon_light.title
+msgid "Carbon:Light"
+msgstr "Carbon:Clair"
+
+#: package/datasets/Cars.name
+msgid "Cars"
+msgstr "Cars"
+
+#: multcorresp/options/showCategories.title
+#: multcorresp/options/showCategoryPlot.title
+msgid "Categories"
+msgstr "Catégories"
+
+#: R/multcorresp.b.R
+#: multcorresp/results/categoryplot.title
+msgid "Category Plot"
+msgstr "Graphique des catégories"
+
+#: multcorresp/options/catTitleText.title
+#: multcorresp/options/catSubtitleText.title
+#: multcorresp/options/catCaptionText.title
+msgid "Category plot"
+msgstr "Catégories"
+
+#: multcorresp/ui[6][0][1][0].label
+msgid "Category Plot Options"
+msgstr "Graphique des catégories"
+
+#: multcorresp/options/normalization/catprincipal.title
+msgid "Category principal"
+msgstr "Catégories principales"
+
+#: R/multcorresp.b.R
+msgid "Category principal coordinates"
+msgstr "Coordonnées principales des catégories"
+
+#: multcorresp/results/categories.title
+msgid "Category Summary"
+msgstr "Résumés des catégories"
+
+#: corresp/options/titleAlign/0.5.title
+#: corresp/options/subtitleAlign/0.5.title
+#: corresp/options/captionAlign/0.5.title
+#: corresp/options/xAxisPosition/0.5.title
+#: corresp/options/yAxisPosition/0.5.title
+#: multcorresp/options/titleAlign/0.5.title
+#: multcorresp/options/subtitleAlign/0.5.title
+#: multcorresp/options/captionAlign/0.5.title
+#: multcorresp/options/xAxisPosition/0.5.title
+#: multcorresp/options/yAxisPosition/0.5.title
+#: principal/options/titleAlign/0.5.title
+#: principal/options/subtitleAlign/0.5.title
+#: principal/options/captionAlign/0.5.title
+#: principal/options/xAxisPosition/0.5.title
+#: principal/options/yAxisPosition/0.5.title
+msgid "Center"
+msgstr "Centrer"
+
+#: corresp/ui[5][0][1][0].label
+msgid "Colors"
+msgstr "Couleurs"
+
+#: corresp/options/colColor.title
+msgid "Column"
+msgstr "Colonne"
+
+#: corresp/options/showColPlot.title
+#: corresp/options/columnTitleText.title
+#: corresp/options/columnSubtitleText.title
+#: corresp/options/columnCaptionText.title
+msgid "Column plot"
+msgstr "Graphique des colonnes"
+
+#: corresp/results/colplot.title
+msgid "Column Plot"
+msgstr "Graphique des colonnes"
+
+#: R/corresp.b.R
+msgid "Column Points for {cols}"
+msgstr "Graphique des colonnes pour {cols}"
+
+#: corresp/options/normalization/colprincipal.title
+msgid "Column principal"
+msgstr "Col. principales"
+
+#: R/corresp.b.R
+msgid "Column principal normalization"
+msgstr "Normalisation principale en colonnes"
+
+#: corresp/results/colProfiles.title
+msgid "Column Profiles"
+msgstr "Profils colonnes"
+
+#: corresp/results/colSummary.title
+msgid "Column Summary"
+msgstr "Résumé des colonnes"
+
+#: corresp/options/columnTitle.title
+msgid "Column title"
+msgstr "Titre des colonnes"
+
+#: corresp/options/cols.title
+#: corresp/options/columns.title
+#: corresp/options/columnTitle.default
+#: corresp/ui/mode/obsTable[0][0][1].label
+#: corresp/ui/mode/contTable[0][0][0].label
+msgid "Columns"
+msgstr "Colonnes"
+
+#: R/principal.b.R
+#: principal/results/summaryTable.columns.title
+msgid "Component"
+msgstr "Composante"
+
+#: R/principal.b.R
+msgid "Component {n} ({perc} %)"
+msgstr "Composante {n} ({perc} %)"
+
+#: R/principal.b.R
+msgid "Component Plot"
+msgstr "Graphique des composantes"
+
+#: multcorresp/options/connectOrdinalCat.title
+msgid "Connect ordinal categories"
+msgstr "Joindre les catégories ordinales"
+
+#: corresp/options/mode/contTable.title
+#: corresp/results/contingency.title
+msgid "Contingency Table"
+msgstr "Tableau de contingence"
+
+#: corresp/options/showContingency.title
+msgid "Contingency table"
+msgstr "Tableau de contingence"
+
+#: R/corresp.b.R
+#: R/multcorresp.b.R
+msgid "Contributions"
+msgstr "Contributions"
+
+#: R/corresp.b.R
+#: R/multcorresp.b.R
+msgid "Coordinates"
+msgstr "Coordonnées"
+
+#: package/analyses/corresp.title
+#: package/analyses/corresp.menuTitle
+#: corresp/options.title
+#: corresp/ui.title
+#: corresp/results.title
+msgid "Correspondence Analysis"
+msgstr "Analyse des correspondances"
+
+#: R/multcorresp.b.R
+msgid "COS2"
+msgstr "COS2"
+
+#: corresp/options/counts.title
+#: corresp/ui/mode/obsTable[0][0][2].label
+msgid "Counts (optional)"
+msgstr "Effectifs (optionnel)"
+
+#: R/corresp.b.R
+msgid "Counts may not be infinite."
+msgstr "Les effectifs ne peuvent pas être infinis."
+
+#: R/corresp.b.R
+msgid "Counts may not be negative."
+msgstr "Les effectifs ne peuvent pas être négatifs."
+
+#: principal/ui[3][2][0]/biplotType_covPlot.label
+msgid "Cov (Loading principal)"
+msgstr "Cov (Var. principales)"
+
+#: principal/options/biplotType/covPlot.title
+msgid "Covariance (Loading principal)"
+msgstr "Covariance (Variables principales)"
+
+#: R/principal.b.R
+msgid "Covariance Biplot"
+msgstr "Graphique double (Covariance)"
+
+#: R/multcorresp.b.R
+#: corresp/results/eigenvalues.columns.title
+#: multcorresp/results/eigenvalues.columns.title
+#: principal/results/summaryTable.columns.title
+msgid "Cumulative %"
+msgstr "% cumulés"
+
+#: multcorresp/options/colorPalette/Dark2.title
+#: principal/options/colorPalette/Dark2.title
+msgid "Dark 2"
+msgstr "Sombre 2"
+
+#: multcorresp/options/obsColor/darkgray.title
+msgid "Dark Gray"
+msgstr "Gris foncé"
+
+#: R/utils.R
+#: corresp/options/columnTitleText.default
+#: corresp/options/rowTitleText.default
+#: corresp/options/biplotTitleText.default
+#: corresp/options/columnSubtitleText.default
+#: corresp/options/rowSubtitleText.default
+#: corresp/options/biplotSubtitleText.default
+#: multcorresp/options/discrimTitleText.default
+#: multcorresp/options/catTitleText.default
+#: multcorresp/options/obsTitleText.default
+#: multcorresp/options/biplotTitleText.default
+#: multcorresp/options/catSubtitleText.default
+#: multcorresp/options/obsSubtitleText.default
+#: multcorresp/options/biplotSubtitleText.default
+#: principal/options/screeTitleText.default
+#: principal/options/varTitleText.default
+#: principal/options/obsTitleText.default
+#: principal/options/biplotTitleText.default
+#: principal/options/varSubtitleText.default
+#: principal/options/obsSubtitleText.default
+#: principal/options/biplotSubtitleText.default
+#: principal/options/varCaptionText.default
+#: principal/options/obsCaptionText.default
+msgid "default"
+msgstr "par défaut"
+
+#: principal/results/kmoTable.columns.title
+msgid "df"
+msgstr "ddl"
+
+#: multcorresp/options/colorPalette/dichromat::Categorical.12.title
+#: principal/options/colorPalette/dichromat::Categorical.12.title
+msgid "Dichromat:Categorical"
+msgstr "Dichromat:Categorical"
+
+#: R/principal.b.R
+msgid "Dim"
+msgstr "Dim"
+
+#: R/corresp.b.R
+#: R/multcorresp.b.R
+#: R/principal.b.R
+msgid "Dim {n}"
+msgstr "Dim {n}"
+
+#: corresp/results/eigenvalues.columns.title
+#: multcorresp/results/eigenvalues.columns.title
+msgid "Dimension"
+msgstr "Dimension"
+
+#: R/corresp.b.R
+#: R/multcorresp.b.R
+msgid "Dimension {n} ({perc} %)"
+msgstr "Dimension {n} ({perc} %)"
+
+#: R/multcorresp.b.R
+msgid "Discrimination"
+msgstr "Discrimination"
+
+#: R/multcorresp.b.R
+#: multcorresp/results/discrimplot.title
+msgid "Discrimination Plot"
+msgstr "Graphique des discriminations"
+
+#: multcorresp/options/discrimTitleText.title
+#: multcorresp/options/discrimSubtitleText.title
+#: multcorresp/options/discrimCaptionText.title
+msgid "Discrimination plot"
+msgstr "Discriminations"
+
+#: principal/options/biplotLines.title
+msgid "Draw arrow lines"
+msgstr "Droites des vecteurs"
+
+#: principal/results/summaryTable.columns.title
+msgid "Eigenvalue"
+msgstr "Valeur propre"
+
+#: R/principal.b.R
+msgid "Eigenvalues"
+msgstr "Valeurs propres"
+
+#: principal/ui[4][0][0][1].label
+msgid "Element Sizes"
+msgstr "Taille des éléments"
+
+#: principal/options/rotation/equamax.title
+msgid "Equamax"
+msgstr "Equamax"
+
+#: R/principal.b.R
+msgid "Extraction"
+msgstr "Extraction"
+
+#: principal/results/summaryTable.columns.superTitle
+msgid "Extraction Sums of Squared Loadings"
+msgstr "Sommes des carrés des composantes extraites"
+
+#: multcorresp/results/categories.columns.title
+msgid "Factor"
+msgstr "Facteur"
+
+#: corresp/options/titleFontFace.title
+#: corresp/options/subtitleFontFace.title
+#: corresp/options/captionFontFace.title
+#: multcorresp/options/titleFontFace.title
+#: multcorresp/options/subtitleFontFace.title
+#: multcorresp/options/captionFontFace.title
+#: principal/options/titleFontFace.title
+#: principal/options/subtitleFontFace.title
+#: principal/options/captionFontFace.title
+msgid "Font face"
+msgstr "Style de police"
+
+#: corresp/options/titleFontSize.title
+#: corresp/options/subtitleFontSize.title
+#: corresp/options/captionFontSize.title
+#: multcorresp/options/titleFontSize.title
+#: multcorresp/options/subtitleFontSize.title
+#: multcorresp/options/captionFontSize.title
+#: principal/options/titleFontSize.title
+#: principal/options/subtitleFontSize.title
+#: principal/options/captionFontSize.title
+msgid "Font size"
+msgstr "Taille de police"
+
+#: principal/options/biplotType/formPlot.title
+#: principal/ui[3][2][0]/biplotType_formPlot.label
+msgid "Form (Score principal)"
+msgstr "Form (Obs. principales)"
+
+#: R/principal.b.R
+msgid "Form Biplot"
+msgstr "Graphique double (Form)"
+
+#: corresp/options/supColor/darkgray.title
+#: multcorresp/options/obsColor/gray.title
+#: principal/options/varColor/#999999.title
+#: principal/options/obsColor/#999999.title
+msgid "Gray"
+msgstr "Gris"
+
+#: corresp/options/rowColor/forestgreen.title
+#: corresp/options/colColor/forestgreen.title
+#: principal/options/varColor/#4DAF4A.title
+#: principal/options/obsColor/#4DAF4A.title
+msgid "Green"
+msgstr "Vert"
+
+#: multcorresp/options/colorPalette/GnBu.title
+#: principal/options/colorPalette/GnBu.title
+msgid "Green to Blue"
+msgstr "Vert à bleu"
+
+#: R/multcorresp.b.R
+msgid "Greenacre Correction"
+msgstr "Correction de Greenacre"
+
+#: multcorresp/options/GreenacreAdj.title
+msgid "Greenacre correction"
+msgstr "Correction de Greenacre"
+
+#: R/multcorresp.b.R
+msgid "Greenacre's corrected inertia = {inertia}"
+msgstr "Inertie corrigée (Greenacre) = {inertia}"
+
+#: multcorresp/options/colorPalette/Greens.title
+#: principal/options/colorPalette/Greens.title
+msgid "Greens"
+msgstr "Verts"
+
+#: multcorresp/options/colorPalette/Greys.title
+#: principal/options/colorPalette/Greys.title
+msgid "Greys"
+msgstr "Gris"
+
+#: principal/options/groupVar.title
+#: principal/ui[0][2].label
+msgid "Group"
+msgstr "Groupe"
+
+#: multcorresp/options/ggrepel.title
+msgid "Improve label display"
+msgstr "Améliorer l'affichage des étiquettes"
+
+#: R/multcorresp.b.R
+#: multcorresp/options/method/Indicator.title
+#: multcorresp/ui[3][0][0]/method_indicator.label
+msgid "Indicator matrix"
+msgstr "Tableau disjonctif"
+
+#: R/multcorresp.b.R
+#: corresp/results/eigenvalues.columns.title
+#: multcorresp/results/eigenvalues.columns.title
+msgid "Inertia"
+msgstr "Inertie"
+
+#: corresp/options/showInertia.title
+msgid "Inertia summary"
+msgstr "Récapitulatif de l'inertie"
+
+#: principal/results/summaryTable.columns.superTitle
+msgid "Initial Eigenvalues"
+msgstr "Valeurs propres initiales"
+
+#: package/datasets/Iris.name
+msgid "Iris"
+msgstr "Iris"
+
+#: corresp/options/titleFontFace/italic.title
+#: corresp/options/subtitleFontFace/italic.title
+#: corresp/options/captionFontFace/italic.title
+#: multcorresp/options/titleFontFace/italic.title
+#: multcorresp/options/subtitleFontFace/italic.title
+#: multcorresp/options/captionFontFace/italic.title
+#: principal/options/titleFontFace/italic.title
+#: principal/options/subtitleFontFace/italic.title
+#: principal/options/captionFontFace/italic.title
+msgid "Italic"
+msgstr "Italique"
+
+#: principal/options/varColor/#A6C4F1.title
+#: principal/options/obsColor/#A6C4F1.title
+msgid "jmv Blue"
+msgstr "Bleu jmv"
+
+#: multcorresp/options/colorPalette/jmv.title
+#: principal/options/colorPalette/jmv.title
+msgid "jmv Default"
+msgstr "Couleurs jmv"
+
+#: principal/options/varColor/#C5C5C5.title
+#: principal/options/obsColor/#C5C5C5.title
+msgid "jmv Gray"
+msgstr "Gris jmv"
+
+#: principal/options/varColor/#88C38B.title
+#: principal/options/obsColor/#88C38B.title
+msgid "jmv Green"
+msgstr "Vert jmv"
+
+#: principal/options/varColor/#E18A8A.title
+#: principal/options/obsColor/#E18A8A.title
+msgid "jmv Red"
+msgstr "Rouge jmv"
+
+#: principal/options/varColor/#F0CD8C.title
+#: principal/options/obsColor/#F0CD8C.title
+msgid "jmv Yellow"
+msgstr "Jaune jmv"
+
+#: principal/options/kaiser.title
+msgid "Kaiser normalization"
+msgstr "Normalisation de Kaiser"
+
+#: R/principal.b.R
+msgid "Kaiser-Meyer-Olkin Measure of Sampling Adequacy (MSA)"
+msgstr "Mesure de Kaiser-Meyer-Olkin d'adéquation de l'échantillonnage"
+
+#: principal/options/showKMO.title
+msgid "KMO & Bartlett's test"
+msgstr "KMO & test de Bartlett"
+
+#: principal/results/kmoTable.title
+msgid "KMO & Bartlett's Test"
+msgstr "KMO & test de Bartlett"
+
+#: corresp/options/labelSize.title
+#: multcorresp/options/labelVar.title
+#: multcorresp/options/labelSize.title
+#: multcorresp/ui[0][2].label
+#: principal/options/labelVar.title
+#: principal/ui[0][1].label
+msgid "Label"
+msgstr "Étiquette"
+
+#: principal/options/labelColor.title
+msgid "Labels"
+msgstr "Étiquettes"
+
+#: corresp/options/titleAlign/0.title
+#: corresp/options/subtitleAlign/0.title
+#: corresp/options/captionAlign/0.title
+#: corresp/options/xAxisPosition/0.title
+#: multcorresp/options/titleAlign/0.title
+#: multcorresp/options/subtitleAlign/0.title
+#: multcorresp/options/captionAlign/0.title
+#: multcorresp/options/legendPosition/left.title
+#: multcorresp/options/xAxisPosition/0.title
+#: principal/options/titleAlign/0.title
+#: principal/options/subtitleAlign/0.title
+#: principal/options/captionAlign/0.title
+#: principal/options/legendPosition/left.title
+#: principal/options/xAxisPosition/0.title
+msgid "Left"
+msgstr "Gauche"
+
+#: multcorresp/ui[7][0].label
+#: principal/ui[5][0].label
+msgid "Legend"
+msgstr "Légende"
+
+#: multcorresp/ui[7].label
+#: principal/ui[5].label
+msgid "Legend & Axis Titles"
+msgstr "Titres de la légende et des axes"
+
+#: multcorresp/options/colorPalette/custom::lemovice.title
+#: principal/options/colorPalette/custom::lemovice.title
+msgid "Lémovice"
+msgstr "Lémovice"
+
+#: multcorresp/results/categories.columns.title
+msgid "Level"
+msgstr "Niveau"
+
+#: principal/options/varColor/#B3CDE3.title
+#: principal/options/obsColor/#B3CDE3.title
+msgid "Light Blue"
+msgstr "Bleu clair"
+
+#: principal/options/varColor/#E5D8BD.title
+#: principal/options/obsColor/#E5D8BD.title
+msgid "Light Brown"
+msgstr "Marron clair"
+
+#: multcorresp/options/obsColor/lightgray.title
+#: principal/options/varColor/#F2F2F2.title
+#: principal/options/obsColor/#F2F2F2.title
+msgid "Light Gray"
+msgstr "Gris clair"
+
+#: principal/options/varColor/#CCEBC5.title
+#: principal/options/obsColor/#CCEBC5.title
+msgid "Light Green"
+msgstr "Vert clair"
+
+#: principal/options/varColor/#FED9A6.title
+#: principal/options/obsColor/#FED9A6.title
+msgid "Light Orange"
+msgstr "Orange clair"
+
+#: principal/options/varColor/#FDDAEC.title
+#: principal/options/obsColor/#FDDAEC.title
+msgid "Light Pink"
+msgstr "Rose clair"
+
+#: principal/options/varColor/#DECBE4.title
+#: principal/options/obsColor/#DECBE4.title
+msgid "Light Purple"
+msgstr "Violet clair"
+
+#: principal/options/varColor/#FBB4AE.title
+#: principal/options/obsColor/#FBB4AE.title
+msgid "Light Red"
+msgstr "Rouge clair"
+
+#: principal/options/varColor/#FFFFCC.title
+#: principal/options/obsColor/#FFFFCC.title
+msgid "Light Yellow"
+msgstr "Jaune clair"
+
+#: R/multcorresp.b.R
+#: R/principal.b.R
+msgid "Limited to the first 100 observations"
+msgstr "Limité aux 100 premières observations"
+
+#: R/corresp.b.R
+#: multcorresp/results/categories.columns.title
+#: multcorresp/results/observations.columns.title
+msgid "Mass"
+msgstr "Masse"
+
+#: R/multcorresp.b.R
+msgid "MCA Principal Coordinates ({method})"
+msgstr "Coordonnées principales ACM ({method})"
+
+#: R/multcorresp.b.R
+msgid "MCA Standard Coordinates ({method})"
+msgstr "Coordonnées standardisées ACM ({method})"
+
+#: multcorresp/options/method.title
+#: multcorresp/ui[3][0].label
+msgid "Method"
+msgstr "Méthode"
+
+#: R/multcorresp.b.R
+msgid "Method: {method}"
+msgstr "Méthode : {method}"
+
+#: principal/options/rotation/entropy.title
+msgid "Minimum entropy"
+msgstr "Entropie minimale"
+
+#: package/analyses/multcorresp.title
+#: package/analyses/multcorresp.menuTitle
+#: multcorresp/options.title
+#: multcorresp/ui.title
+#: multcorresp/results.title
+msgid "Multiple Correspondence Analysis"
+msgstr "Analyse des correspondances multiples"
+
+#: package/analyses/principal.menuSubgroup
+#: package/analyses/corresp.menuSubgroup
+#: package/analyses/multcorresp.menuSubgroup
+#: corresp/options.menuSubgroup
+#: multcorresp/options.menuSubgroup
+#: principal/options.menuSubgroup
+msgid "Multivariate"
+msgstr "Multivarié"
+
+#: multcorresp/results/observations.columns.title
+msgid "Name"
+msgstr "Nom"
+
+#: R/principal.b.R
+msgid "No rotation used."
+msgstr "Aucune rotation appliquée."
+
+#: principal/options/rotation/none.title
+msgid "None"
+msgstr "Aucun"
+
+#: corresp/options/titleFontFace/plain.title
+#: corresp/options/subtitleFontFace/plain.title
+#: corresp/options/captionFontFace/plain.title
+#: multcorresp/options/titleFontFace/plain.title
+#: multcorresp/options/subtitleFontFace/plain.title
+#: multcorresp/options/captionFontFace/plain.title
+#: principal/options/titleFontFace/plain.title
+#: principal/options/subtitleFontFace/plain.title
+#: principal/options/captionFontFace/plain.title
+msgid "Normal"
+msgstr "Normal"
+
+#: corresp/options/normalization.title
+#: corresp/ui[3][0].label
+#: multcorresp/options/normalization.title
+#: multcorresp/ui[4][0].label
+#: principal/ui[7][0][0][0].label
+msgid "Normalization"
+msgstr "Normalisation"
+
+#: R/principal.b.R
+msgid "Not enough complete observations to perform PCA."
+msgstr "Nombre d'observations insuffisant pour procéder à une ACP."
+
+#: R/corresp.b.R
+msgid "Not enough data to compute CA."
+msgstr "Données insuffisantes pour effectuer une analyse des correspondances."
+
+#: corresp/options/dimNum.title
+#: multcorresp/options/dimNum.title
+#: principal/options/dimNum.title
+msgid "Number of dimensions"
+msgstr "Nombre de dimensions"
+
+#: R/corresp.b.R
+msgid "Number of dimensions must be less than or equal to {maxDim}."
+msgstr "Le nombre de dimensions doit être inférieur ou égal à {maxDim}."
+
+#: multcorresp/options/obsColor.title
+msgid "Obs color"
+msgstr "Couleur obs."
+
+#: R/principal.b.R
+#: principal/results/obsTable.columns.title
+msgid "Observation"
+msgstr "Observation"
+
+#: multcorresp/results/obsCoordOV.title
+#: principal/results/obsCoordOV.title
+msgid "Observation Coordinates"
+msgstr "Coordonnées des observations"
+
+#: R/multcorresp.b.R
+#: R/principal.b.R
+#: multcorresp/results/obsplot.title
+#: principal/results/obsPlot.title
+msgid "Observation Plot"
+msgstr "Graphique des observations"
+
+#: multcorresp/options/obsTitleText.title
+#: multcorresp/options/obsSubtitleText.title
+#: multcorresp/options/obsCaptionText.title
+#: principal/options/obsTitleText.title
+#: principal/options/obsSubtitleText.title
+#: principal/options/obsCaptionText.title
+msgid "Observation plot"
+msgstr "Observations"
+
+#: multcorresp/ui[6][0][1][1].label
+msgid "Observation Plot Options"
+msgstr "Graphique des observations"
+
+#: multcorresp/options/normalization/obsprincipal.title
+msgid "Observation principal"
+msgstr "Observations principales"
+
+#: R/multcorresp.b.R
+msgid "Observation principal coordinates"
+msgstr "Coordonnées principales des observations"
+
+#: multcorresp/results/observations.title
+msgid "Observation Summary"
+msgstr "Résumé des observations"
+
+#: corresp/options/mode/obsTable.title
+msgid "Observation Table"
+msgstr "Table des observations"
+
+#: multcorresp/options/showObservations.title
+#: multcorresp/options/showObservationPlot.title
+#: principal/options/showObservations.title
+#: principal/options/showObsPlot.title
+#: principal/options/obsLabelSize.title
+#: principal/results/obsTable.title
+msgid "Observations"
+msgstr "Observations"
+
+#: corresp/options/rowColor/darkorange1.title
+#: corresp/options/colColor/darkorange1.title
+#: principal/options/varColor/#FF7F00.title
+#: principal/options/obsColor/#FF7F00.title
+msgid "Orange"
+msgstr "Orange"
+
+#: multcorresp/options/colorPalette/PuOr.title
+#: principal/options/colorPalette/PuOr.title
+msgid "Orange and Purple"
+msgstr "Orange à violet"
+
+#: multcorresp/options/colorPalette/OrRd.title
+#: principal/options/colorPalette/OrRd.title
+msgid "Orange to Red"
+msgstr "Orange à rouge"
+
+#: multcorresp/options/colorPalette/Oranges.title
+#: principal/options/colorPalette/Oranges.title
+msgid "Oranges"
+msgstr "Oranges"
+
+#: multcorresp/results/eigenvalues.columns.superTitle
+msgid "Original Eigenvalues"
+msgstr "Valeurs propres originales"
+
+#: multcorresp/options/colorPalette/Paired.title
+#: principal/options/colorPalette/Paired.title
+msgid "Paired"
+msgstr "Apparié"
+
+#: multcorresp/options/colorPalette.title
+#: principal/options/colorPalette.title
+msgid "Palette"
+msgstr "Palette"
+
+#: principal/options/rotation/parsimax.title
+msgid "Parsimax"
+msgstr "Parsimax"
+
+#: multcorresp/options/colorPalette/Pastel1.title
+#: principal/options/colorPalette/Pastel1.title
+msgid "Pastel 1"
+msgstr "Pastel 1"
+
+#: multcorresp/options/colorPalette/Pastel2.title
+#: principal/options/colorPalette/Pastel2.title
+msgid "Pastel 2"
+msgstr "Pastel 2"
+
+#: R/principal.b.R
+msgid "PCA Principal Coordinates"
+msgstr "Coordonnées principales ACP"
+
+#: R/principal.b.R
+msgid "PCA Principal Coordinates ({rot})"
+msgstr "Coordonnées principales ACP ({rot})"
+
+#: R/principal.b.R
+msgid "PCA Standard Coordinates"
+msgstr "Coordonnées standardisées ACP"
+
+#: R/principal.b.R
+msgid "PCA Standard Coordinates ({rot})"
+msgstr "Coordonnées standardisées ACP ({rot})"
+
+#: corresp/options/rowColor/hotpink.title
+#: corresp/options/colColor/hotpink.title
+#: principal/options/varColor/#F781BF.title
+#: principal/options/obsColor/#F781BF.title
+msgid "Pink"
+msgstr "Rose"
+
+#: multcorresp/options/colorPalette/PiYG.title
+#: principal/options/colorPalette/PiYG.title
+msgid "Pink and Green"
+msgstr "Rose et vert"
+
+#: multcorresp/ui[6][0][0][0].label
+msgid "Plot Color"
+msgstr "Couleurs du graphique"
+
+#: principal/ui[4][0][1][0].label
+msgid "Plot Colors"
+msgstr "Couleurs du graphique"
+
+#: multcorresp/ui[6].label
+msgid "Plot Options"
+msgstr "Options du graphique"
+
+#: corresp/ui[7].label
+#: multcorresp/ui[8].label
+#: principal/ui[6].label
+msgid "Plot Titles & Subtitles"
+msgstr "Titres et sous-titres des graphiques"
+
+#: corresp/ui[4][1][0].label
+#: multcorresp/ui[5][1][0].label
+#: principal/ui[3][1][0].label
+msgid "Plots"
+msgstr "Graphiques"
+
+#: principal/options/pointSize.title
+msgid "Point size"
+msgstr "Taille des points"
+
+#: principal/options/obsColor.title
+msgid "Points"
+msgstr "Points"
+
+#: corresp/options/xAxisPosition.title
+#: corresp/options/yAxisPosition.title
+#: multcorresp/options/legendPosition.title
+#: multcorresp/options/xAxisPosition.title
+#: multcorresp/options/yAxisPosition.title
+#: principal/options/legendPosition.title
+#: principal/options/xAxisPosition.title
+#: principal/options/yAxisPosition.title
+msgid "Position"
+msgstr "Position"
+
+#: corresp/options/normalization/principal.title
+#: multcorresp/options/normalization/principal.title
+msgid "Principal"
+msgstr "Principale"
+
+#: package/analyses/principal.title
+#: package/analyses/principal.menuTitle
+#: principal/options.title
+#: principal/ui.title
+#: principal/results.title
+msgid "Principal Component Analysis"
+msgstr "Analyse en composantes principales"
+
+#: R/multcorresp.b.R
+#: principal/results/loadingTable.notes.norm
+#: principal/results/obsTable.notes.norm
+msgid "Principal coordinates"
+msgstr "Coordonnées principales"
+
+#: R/corresp.b.R
+msgid "Principal normalization"
+msgstr "Normalisation principale"
+
+#: multcorresp/options/propPoint.title
+msgid "Proportional point size"
+msgstr "Points proportionnels"
+
+#: corresp/options/rowColor/purple.title
+#: corresp/options/colColor/purple.title
+#: principal/options/varColor/#984EA3.title
+#: principal/options/obsColor/#984EA3.title
+msgid "Purple"
+msgstr "Violet"
+
+#: multcorresp/options/colorPalette/PRGn.title
+#: principal/options/colorPalette/PRGn.title
+msgid "Purple and Green"
+msgstr "Violet et vert"
+
+#: multcorresp/options/colorPalette/PuBu.title
+#: principal/options/colorPalette/PuBu.title
+msgid "Purple to Blue"
+msgstr "Violet à bleu"
+
+#: multcorresp/options/colorPalette/PuBuGn.title
+#: principal/options/colorPalette/PuBuGn.title
+msgid "Purple to Green"
+msgstr "Violet à vert"
+
+#: multcorresp/options/colorPalette/PuRd.title
+#: principal/options/colorPalette/PuRd.title
+msgid "Purple to Red"
+msgstr "Violet à rouge"
+
+#: multcorresp/options/colorPalette/Purples.title
+#: principal/options/colorPalette/Purples.title
+msgid "Purples"
+msgstr "Violets"
+
+#: multcorresp/results/categories.columns.title
+msgid "QLT"
+msgstr "QLT"
+
+#: principal/options/rotation/quartimax.title
+msgid "Quartimax"
+msgstr "Quartimax"
+
+#: corresp/options/rowColor/red.title
+#: corresp/options/colColor/red.title
+#: multcorresp/options/obsColor/red.title
+#: principal/options/varColor/#E41A1C.title
+#: principal/options/obsColor/#E41A1C.title
+msgid "Red"
+msgstr "Rouge"
+
+#: multcorresp/options/colorPalette/RdBu.title
+#: principal/options/colorPalette/RdBu.title
+msgid "Red and Blue"
+msgstr "Rouge et bleu"
+
+#: multcorresp/options/colorPalette/RdGy.title
+#: principal/options/colorPalette/RdGy.title
+msgid "Red and Gray"
+msgstr "Rouge et gris"
+
+#: multcorresp/options/colorPalette/RdPu.title
+#: principal/options/colorPalette/RdPu.title
+msgid "Red to Purple"
+msgstr "Rouge à violet"
+
+#: multcorresp/options/colorPalette/RdYlBu.title
+#: principal/options/colorPalette/RdYlBu.title
+msgid "Red, Yellow, Blue"
+msgstr "Rouge, jaune et bleu"
+
+#: multcorresp/options/colorPalette/RdYlGn.title
+#: principal/options/colorPalette/RdYlGn.title
+msgid "Red, Yellow, Green"
+msgstr "Rouge, jaune et vert"
+
+#: multcorresp/options/colorPalette/Reds.title
+#: principal/options/colorPalette/Reds.title
+msgid "Reds"
+msgstr "Rouges"
+
+#: corresp/options/titleAlign/1.title
+#: corresp/options/subtitleAlign/1.title
+#: corresp/options/captionAlign/1.title
+#: corresp/options/xAxisPosition/1.title
+#: multcorresp/options/titleAlign/1.title
+#: multcorresp/options/subtitleAlign/1.title
+#: multcorresp/options/captionAlign/1.title
+#: multcorresp/options/legendPosition/right.title
+#: multcorresp/options/xAxisPosition/1.title
+#: principal/options/titleAlign/1.title
+#: principal/options/subtitleAlign/1.title
+#: principal/options/captionAlign/1.title
+#: principal/options/legendPosition/right.title
+#: principal/options/xAxisPosition/1.title
+msgid "Right"
+msgstr "Droite"
+
+#: principal/options/stataRotation.title
+msgid "Rotate eigenvectors"
+msgstr "Rotation des vecteurs propres"
+
+#: principal/options/rotation.title
+#: principal/ui[2][1][0].label
+#: principal/ui[7][0][1][0].label
+msgid "Rotation"
+msgstr "Rotation"
+
+#: corresp/options/rowColor.title
+msgid "Row"
+msgstr "Ligne"
+
+#: R/corresp.b.R
+msgid "Row and Column Points for {rows} and {cols}"
+msgstr "Graphique des lignes et colonnes pour {rows} et {cols}"
+
+#: corresp/options/showProfiles.title
+msgid "Row and column profiles"
+msgstr "Profils lignes et colonnes"
+
+#: corresp/options/showSummaries.title
+msgid "Row and column summaries"
+msgstr "Résumés des lignes et colonnes"
+
+#: corresp/options/rowLabels.title
+#: corresp/ui/mode/contTable[0][0][1].label
+msgid "Row Labels"
+msgstr "Étiquette des lignes"
+
+#: corresp/options/showRowPlot.title
+#: corresp/options/rowTitleText.title
+#: corresp/options/rowSubtitleText.title
+#: corresp/options/rowCaptionText.title
+msgid "Row plot"
+msgstr "Graphique des lignes"
+
+#: corresp/results/rowplot.title
+msgid "Row Plot"
+msgstr "Graphique des lignes"
+
+#: R/corresp.b.R
+msgid "Row Points for {rows}"
+msgstr "Graphique des lignes pour {rows}"
+
+#: corresp/options/normalization/rowprincipal.title
+msgid "Row principal"
+msgstr "Lignes principales"
+
+#: R/corresp.b.R
+msgid "Row principal normalization"
+msgstr "Normalisation principale en lignes"
+
+#: corresp/results/rowProfiles.title
+msgid "Row Profiles"
+msgstr "Profils lignes"
+
+#: corresp/results/rowSummary.title
+msgid "Row Summary"
+msgstr "Résumé des lignes"
+
+#: corresp/options/rows.title
+#: corresp/ui/mode/obsTable[0][0][0].label
+msgid "Rows"
+msgstr "Lignes"
+
+#: principal/options/labelColor/none.title
+msgid "Same as point/arrow"
+msgstr "Comme les vecteurs/points"
+
+#: multcorresp/ui[9].label
+#: principal/ui[8].label
+msgid "Save"
+msgstr "Enregistrer"
+
+#: multcorresp/options/obsCoordOV.title
+#: principal/options/obsCoordOV.title
+msgid "Save observation coordinates"
+msgstr "Enregistrer les coordonnées des observations"
+
+#: R/principal.b.R
+#: principal/results/screePlot.title
+msgid "Scree Plot"
+msgstr "Valeurs propres"
+
+#: principal/options/showScreePlot.title
+#: principal/options/screeTitleText.title
+#: principal/options/screeSubtitleText.title
+#: principal/options/screeCaptionText.title
+msgid "Scree plot"
+msgstr "Valeurs propres"
+
+#: multcorresp/options/colorPalette/Set1.title
+#: principal/options/colorPalette/Set1.title
+msgid "Set 1"
+msgstr "Ensemble 1"
+
+#: multcorresp/options/colorPalette/Set2.title
+#: principal/options/colorPalette/Set2.title
+msgid "Set 2"
+msgstr "Ensemble 2"
+
+#: multcorresp/options/colorPalette/Set3.title
+#: principal/options/colorPalette/Set3.title
+msgid "Set 3"
+msgstr "Ensemble 3"
+
+#: corresp/results/eigenvalues.columns.title
+msgid "Singular Value"
+msgstr "Valeur singulière"
+
+#: corresp/options/xAxisFontSize.title
+#: corresp/options/yAxisFontSize.title
+#: multcorresp/options/legendFontSize.title
+#: multcorresp/options/xAxisFontSize.title
+#: multcorresp/options/yAxisFontSize.title
+#: principal/options/legendFontSize.title
+#: principal/options/xAxisFontSize.title
+#: principal/options/yAxisFontSize.title
+msgid "Size"
+msgstr "Taille"
+
+#: principal/ui[4].label
+msgid "Sizes & Colors"
+msgstr "Tailles & couleurs"
+
+#: package/datasets/Smoking.name
+msgid "Smoking"
+msgstr "Smoking"
+
+#: corresp/ui[1][0].label
+#: multcorresp/ui[2][0].label
+#: principal/ui[2][0][0].label
+msgid "Solution"
+msgstr "Solution"
+
+#: R/corresp.b.R
+msgid "Some categories have zero counts and must be removed."
+msgstr "Certaines catégories ont des effectifs nuls et doivent être supprimées."
+
+#: R/corresp.b.R
+msgid "Some values are missing from the contingency table."
+msgstr "Le tableau de contingence contient des données manquantes."
+
+#: multcorresp/options/colorPalette/Spectral.title
+#: principal/options/colorPalette/Spectral.title
+msgid "Spectral"
+msgstr "Spectral"
+
+#: principal/results/summaryTable.columns.title
+msgid "SS Loadings"
+msgstr "Total"
+
+#: corresp/options/normalization/standard.title
+#: multcorresp/options/normalization/standard.title
+msgid "Standard"
+msgstr "Standard"
+
+#: R/multcorresp.b.R
+#: R/principal.b.R
+msgid "Standard coordinates"
+msgstr "Coordonnées standardisées"
+
+#: R/corresp.b.R
+msgid "Standard normalization"
+msgstr "Normalisation standard"
+
+#: principal/options/stdLoadings.title
+msgid "Standardize loadings (eigenvectors)"
+msgstr "Coord. des variables standardisées"
+
+#: principal/options/stdScores.title
+msgid "Standardize scores"
+msgstr "Coord. des observations standardisées"
+
+#: principal/options/stdVariables.title
+msgid "Standardize variables"
+msgstr "Standardiser les variables"
+
+#: principal/results/kmoTable.columns.title
+msgid "Statistic"
+msgstr "Statistique"
+
+#: principal/options/biplotStretch.title
+msgid "Stretch arrows by"
+msgstr "Taille vecteurs"
+
+#: corresp/ui[7][1][1][0].label
+#: multcorresp/ui[8][1][1][0].label
+#: principal/ui[6][1][1][0].label
+msgid "Subtitle Style"
+msgstr "Style des sous-titres"
+
+#: corresp/ui[7][1][0][0].label
+#: multcorresp/ui[8][1][0][0].label
+#: principal/ui[6][1][0][0].label
+msgid "Subtitle Text"
+msgstr "Texte des sous-titres"
+
+#: corresp/results/eigenvalues.title
+#: multcorresp/options/showSummary.title
+#: multcorresp/results/eigenvalues.title
+#: principal/options/showSummary.title
+#: principal/results/summaryTable.title
+msgid "Summary"
+msgstr "Résumé"
+
+#: R/multcorresp.b.R
+msgid "Suppl. variables"
+msgstr "Variables sup."
+
+#: corresp/options/supColor.title
+msgid "Supplement"
+msgstr "Supplémentaire"
+
+#: R/corresp.b.R
+msgid "Supplementary column numbers must be a list of numbers, e.g. 1,2,9"
+msgstr "Les colonnes supplémentaires doivent être une liste de nombres, e.g. 1,2,9"
+
+#: R/corresp.b.R
+msgid "Supplementary column numbers must be between 1 and {nmax}."
+msgstr ""
+"Les numéros des colonnes supplémentaires doivent être compris entre 1 et "
+"{nmax}."
+
+#: R/corresp.b.R
+#: corresp/options/supplementaryCols.title
+msgid "Supplementary columns"
+msgstr "Colonnes supplémentaires"
+
+#: corresp/ui[2][0].label
+msgid "Supplementary Points"
+msgstr "Points supplémentaires"
+
+#: R/corresp.b.R
+msgid "Supplementary row numbers must be a list of numbers, e.g. 1,2,9"
+msgstr "Les lignes supplémentaires doivent être une liste de nombres, e.g. 1,2,9"
+
+#: R/corresp.b.R
+msgid "Supplementary row numbers must be between 1 and {nmax}."
+msgstr ""
+"Les numéros des lignes supplémentaires doivent être compris entre 1 et "
+"{nmax}."
+
+#: R/corresp.b.R
+#: corresp/options/supplementaryRows.title
+msgid "Supplementary rows"
+msgstr "Lignes supplémentaires"
+
+#: R/corresp.b.R
+msgid "Supplementary rows/columns"
+msgstr "Lignes et colonnes supplémentaires"
+
+#: R/multcorresp.b.R
+msgid "Supplementary variables"
+msgstr "Variables supplémentaires"
+
+#: multcorresp/options/supplVars.title
+#: multcorresp/ui[0][1].label
+msgid "Supplementary Variables"
+msgstr "Variables supplémentaires"
+
+#: corresp/options/normalization/symmetric.title
+msgid "Symmetric"
+msgstr "Symétrique"
+
+#: R/corresp.b.R
+msgid "Symmetric normalization"
+msgstr "Normalisation symétrique"
+
+#: corresp/ui[4][0][0].label
+#: multcorresp/ui[5][0][0].label
+#: principal/ui[3][0][0].label
+msgid "Tables"
+msgstr "Tables"
+
+#: corresp/ui[5][0][0][0].label
+#: multcorresp/ui[6][0][0][1].label
+#: principal/ui[4][0][0][0].label
+msgid "Text Size"
+msgstr "Taille du texte"
+
+#: corresp/ui[5].label
+msgid "Text Size & Colors"
+msgstr "Taille du texte & couleurs"
+
+#: R/principal.b.R
+msgid "The correlation matrix is nearly singular. Computations may not be accurate."
+msgstr ""
+"La matrice des corrélations est quasi-singulière. Les calculs peuvent être "
+"approximatifs."
+
+#: R/principal.b.R
+msgid ""
+"The following variable(s) are constant and cannot be used in a principal "
+"component analysis: {vars}."
+msgstr ""
+"Les variables suivantes sont constantes et ne peuvent pas être utilisées "
+"dans une analyse en composantes principales : {vars}."
+
+#: R/multcorresp.b.R
+msgid "The number of dimensions cannot be greater than {max}."
+msgstr "Le nombre de dimensions ne peut pas être supérieur à {max}."
+
+#: R/principal.b.R
+msgid "The number of dimensions cannot be greater than the number of observations."
+msgstr "Le nombre de dimensions ne peut pas être supérieur au nombre d'observations."
+
+#: R/principal.b.R
+msgid "The number of dimensions cannot be greater than the number of variables."
+msgstr "Le nombre de dimensions ne peut pas être supérieur au nombre de variables."
+
+#: R/corresp.b.R
+msgid ""
+"The singular value for dimension {n} is close to zero. The plots may not be "
+"accurate."
+msgstr ""
+"La valeur singulière pour la dimension {n} est proche de zéro. Les "
+"graphiques peuvent être approximatifs."
+
+#: R/corresp.b.R
+msgid "The χ2 statistic is equal to zero."
+msgstr "La statistique du χ2 est égale à zéro."
+
+#: multcorresp/options/colorPalette/tidy::alger.title
+#: principal/options/colorPalette/tidy::alger.title
+msgid "Tidy:Alger"
+msgstr "Tidy:Alger"
+
+#: multcorresp/options/colorPalette/tidy::apple.title
+#: principal/options/colorPalette/tidy::apple.title
+msgid "Tidy:Apple"
+msgstr "Tidy:Apple"
+
+#: multcorresp/options/colorPalette/tidy::candy.title
+#: principal/options/colorPalette/tidy::candy.title
+msgid "Tidy:Candy"
+msgstr "Tidy:Candy"
+
+#: multcorresp/options/colorPalette/tidy::friendly.title
+#: principal/options/colorPalette/tidy::friendly.title
+msgid "Tidy:Friendly"
+msgstr "Tidy:Friendly"
+
+#: multcorresp/options/colorPalette/tidy::ibm.title
+#: principal/options/colorPalette/tidy::ibm.title
+msgid "Tidy:Ibm"
+msgstr "Tidy:Ibm"
+
+#: multcorresp/options/colorPalette/tidy::metro.title
+#: principal/options/colorPalette/tidy::metro.title
+msgid "Tidy:Metro"
+msgstr "Tidy:Metro"
+
+#: multcorresp/options/colorPalette/tidy::rainbow.title
+#: principal/options/colorPalette/tidy::rainbow.title
+msgid "Tidy:Rainbow"
+msgstr "Tidy:Rainbow"
+
+#: multcorresp/options/colorPalette/tidy::seaside.title
+#: principal/options/colorPalette/tidy::seaside.title
+msgid "Tidy:Seaside"
+msgstr "Tidy:Seaside"
+
+#: corresp/ui[7][0][1][0].label
+#: multcorresp/ui[8][0][1][0].label
+#: principal/ui[6][0][1][0].label
+msgid "Title Style"
+msgstr "Style du titre"
+
+#: corresp/ui[7][0][0][0].label
+#: multcorresp/ui[8][0][0][0].label
+#: principal/ui[6][0][0][0].label
+msgid "Title Text"
+msgstr "Texte du titre"
+
+#: corresp/options/yAxisPosition/1.title
+#: multcorresp/options/legendPosition/top.title
+#: multcorresp/options/yAxisPosition/1.title
+#: principal/options/legendPosition/top.title
+#: principal/options/yAxisPosition/1.title
+msgid "Top"
+msgstr "Haut"
+
+#: R/multcorresp.b.R
+msgid "Total"
+msgstr "Total"
+
+#: R/corresp.b.R
+msgid "Unable to compute correspondence analysis for the selected data."
+msgstr ""
+"Impossible d'effectuer l'analyse des correspondances des données "
+"sélectionnées."
+
+#: R/multcorresp.b.R
+msgid "Unable to compute MCA because of too many missing values."
+msgstr "Impossible d'effectuer l'ACM en raison de données manquantes trop nombreuses."
+
+#: R/multcorresp.b.R
+msgid "Unable to compute MCA for the selected variables."
+msgstr "Impossible d'effectuer l'ACM des variables sélectionnées."
+
+#: R/principal.b.R
+msgid "Unable to compute principal components for the selected variables."
+msgstr ""
+"Impossible de calculer les composantes principales pour les variables "
+"sélectionnées."
+
+#: R/principal.b.R
+msgid "Unable to compute the correlation matrix."
+msgstr "Impossible de calculer la matrice de corrélation."
+
+#: R/corresp.b.R
+msgid "Unable to compute the χ2 statistic."
+msgstr "Impossible de calculer la statistique du χ2."
+
+#: R/principal.b.R
+msgid "Unable to use {rotation} rotation."
+msgstr "Impossible d'utiliser la rotation {rotation}."
+
+#: multcorresp/options/boldCat.title
+msgid "Use boldface"
+msgstr "Catégories en gras"
+
+#: corresp/options/descAsVarName.title
+#: multcorresp/options/descAsVarName.title
+#: principal/options/descAsVarName.title
+msgid "Use variable's description as name"
+msgstr "Description des variables comme nom"
+
+#: multcorresp/results/discrim.columns.title
+msgid "Variable"
+msgstr "Variable"
+
+#: multcorresp/options/showDiscriminations.title
+#: multcorresp/options/showDiscriminationPlot.title
+msgid "Variable discriminations"
+msgstr "Discrimination des variables"
+
+#: multcorresp/results/discrim.title
+msgid "Variable Discriminations"
+msgstr "Discrimination des variables"
+
+#: principal/options/varTitleText.title
+#: principal/options/varSubtitleText.title
+#: principal/options/varCaptionText.title
+msgid "Variable plot"
+msgstr "Variables"
+
+#: principal/results/varPlot.title
+msgid "Variable Plot"
+msgstr "Graphique des variables"
+
+#: R/multcorresp.b.R
+#: multcorresp/options/vars.title
+#: multcorresp/ui[0][0].label
+#: principal/options/vars.title
+#: principal/options/showLoadings.title
+#: principal/options/showVarPlot.title
+#: principal/options/varLabelSize.title
+#: principal/ui[0][0].label
+#: principal/results/loadingTable.title
+msgid "Variables"
+msgstr "Variables"
+
+#: principal/options/rotation/Varimax.title
+msgid "Varimax"
+msgstr "Varimax"
+
+#: package/analyses/principal.menuGroup
+#: package/analyses/corresp.menuGroup
+#: package/analyses/multcorresp.menuGroup
+#: corresp/options.menuGroup
+#: multcorresp/options.menuGroup
+#: principal/options.menuGroup
+msgid "vijMulti"
+msgstr "vijMulti"
+
+#: package.title
+msgid "vijMulti: Multivariate Data Analyses"
+msgstr "vijMulti : Analyses de données multivariées"
+
+#: multcorresp/options/colorPalette/viridis::inferno.title
+#: principal/options/colorPalette/viridis::inferno.title
+msgid "Viridis:Inferno"
+msgstr "Viridis:Inferno"
+
+#: multcorresp/options/colorPalette/viridis::magma.title
+#: principal/options/colorPalette/viridis::magma.title
+msgid "Viridis:Magma"
+msgstr "Viridis:Magma"
+
+#: multcorresp/options/colorPalette/viridis::plasma.title
+#: principal/options/colorPalette/viridis::plasma.title
+msgid "Viridis:Plasma"
+msgstr "Viridis:Plasma"
+
+#: multcorresp/options/colorPalette/viridis::turbo.title
+#: principal/options/colorPalette/viridis::turbo.title
+msgid "Viridis:Turbo"
+msgstr "Viridis:Turbo"
+
+#: multcorresp/options/colorPalette/viridis::viridis.title
+#: principal/options/colorPalette/viridis::viridis.title
+msgid "Viridis:Viridis"
+msgstr "Viridis:Viridis"
+
+#: corresp/options/supColor/white.title
+msgid "White"
+msgstr "Blanc"
+
+#: corresp/options/xaxis.title
+#: corresp/ui[6][0].label
+#: multcorresp/options/xaxis.title
+#: multcorresp/ui[7][1].label
+#: principal/options/xaxis.title
+#: principal/ui[5][1].label
+msgid "X-Axis"
+msgstr "Axe X"
+
+#: R/multcorresp.b.R
+#: R/principal.b.R
+msgid "X-Axis and Y-Axis cannot be equal."
+msgstr "Les axes X et Y ne peuvent pas être identiques."
+
+#: R/multcorresp.b.R
+#: R/principal.b.R
+msgid "X-Axis and Y-Axis cannot be greater than the number of dimensions."
+msgstr "Les axes X et Y ne peuvent pas être supérieurs au nombre de dimensions."
+
+#: corresp/options/yaxis.title
+#: corresp/ui[6][1].label
+#: multcorresp/options/yaxis.title
+#: multcorresp/ui[7][2].label
+#: principal/options/yaxis.title
+#: principal/ui[5][2].label
+msgid "Y-Axis"
+msgstr "Axe Y"
+
+#: corresp/options/supColor/yellow2.title
+#: principal/options/varColor/#FFFF33.title
+#: principal/options/obsColor/#FFFF33.title
+msgid "Yellow"
+msgstr "Jaune"
+
+#: multcorresp/options/colorPalette/YlGnBu.title
+#: principal/options/colorPalette/YlGnBu.title
+msgid "Yellow to Blue"
+msgstr "Jaune à bleu"
+
+#: multcorresp/options/colorPalette/YlOrBr.title
+#: principal/options/colorPalette/YlOrBr.title
+msgid "Yellow to Brown"
+msgstr "Jaune à marron"
+
+#: multcorresp/options/colorPalette/YlGn.title
+#: principal/options/colorPalette/YlGn.title
+msgid "Yellow to Green"
+msgstr "Jaune à vert"
+
+#: multcorresp/options/colorPalette/YlOrRd.title
+#: principal/options/colorPalette/YlOrRd.title
+msgid "Yellow to Red"
+msgstr "Jaune à rouge"
+
+#: R/corresp.b.R
+msgid "χ² = {chisq}, df = {df}, p-value = {pval}"
+msgstr "χ² = {chisq}, df = {df}, p-value = {pval}"

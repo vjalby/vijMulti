@@ -1,0 +1,267 @@
+---
+name:  corresp
+title: Correspondence Analysis
+jrs:   '1.1'
+refs:
+    - factominer
+
+items:
+    - name: contingency
+      title: Contingency Table
+      type: Table
+      visible: (showContingency)
+      rows:  0
+      columns:
+        - name: row
+          title: ""
+          type: text
+      clearWith:
+        - rows
+        - cols
+        - descAsVarName
+        - columns
+        - rowLabels
+        - columnTitle
+
+    - name:  rowProfiles
+      title: Row Profiles
+      type: Table
+      visible: (showProfiles)
+      rows:  0
+      columns:
+        - name: row
+          title: ""
+          type: text
+      clearWith:
+        - rows
+        - cols
+        - descAsVarName
+        - columns
+        - rowLabels
+        - columnTitle
+
+    - name:  colProfiles
+      title: Column Profiles
+      type: Table
+      visible: (showProfiles)
+      rows:  0
+      columns:
+        - name: row
+          title: ""
+          type: text
+      clearWith:
+        - rows
+        - cols
+        - descAsVarName
+        - columns
+        - rowLabels
+        - columnTitle
+
+    - name:  eigenvalues
+      title: Summary
+      type: Table
+      visible: (showInertia)
+      rows:  1
+      columns:
+        - name: dim
+          title: Dimension
+          type: number
+        - name: singular
+          title: "Singular Value"
+          type: number
+          format: zto
+        - name: inertia
+          title: "Inertia"
+          type: number
+          format: zto
+        - name: proportion
+          title: "% of Inertia"
+          type: integer
+          format: pc
+        - name: cumulative
+          title: "Cumulative %"
+          type: number
+          format: pc
+      clearWith:
+        - dimNum
+        - rows
+        - cols
+        - counts
+        - columns
+        - rowLabels
+
+    - name:  rowSummary
+      title: Row Summary
+      type: Table
+      rows:  0
+      visible: (showSummaries)
+      columns:
+        - name: id
+          title: "#"
+          type: integer
+        - name: row
+          title: ""
+          type: text
+      clearWith:
+        - rows
+        - cols
+        - counts
+        - dimNum
+        - normalization
+        - descAsVarName
+        - columns
+        - rowLabels
+
+    - name:  colSummary
+      title: Column Summary
+      type: Table
+      rows:  0
+      visible: (showSummaries)
+      columns:
+        - name: id
+          title: "#"
+          type: integer
+        - name: col
+          title: ""
+          type: text
+      clearWith:
+        - rows
+        - cols
+        - counts
+        - dimNum
+        - normalization
+        - descAsVarName
+        - columns
+        - rowLabels
+        - columnTitle
+
+    - name: rowplot
+      title: "Row Plot"
+      type: Image
+      visible: (showRowPlot)
+      width:  600
+      height: 450
+      renderFun: .rowplot
+      clearWith:
+        - rows
+        - cols
+        - counts
+        - columns
+        - rowLabels
+        - dimNum
+        - xaxis
+        - yaxis
+        - rowColor
+        - supColor
+        - supplementaryRows
+        - supplementaryCols
+        - normalization
+        - descAsVarName
+        - rowTitleText
+        - titleFontFace
+        - titleFontSize
+        - titleAlign
+        - rowSubtitleText
+        - subtitleFontFace
+        - subtitleFontSize
+        - subtitleAlign
+        - rowCaptionText
+        - captionFontFace
+        - captionFontSize
+        - captionAlign
+        - xAxisText
+        - xAxisFontSize
+        - xAxisPosition
+        - yAxisText
+        - yAxisFontSize
+        - yAxisPosition
+        - labelSize
+
+    - name: colplot
+      title: "Column Plot"
+      type: Image
+      visible: (showColPlot)
+      width:  600
+      height: 450
+      renderFun: .colplot
+      clearWith:
+        - rows
+        - cols
+        - counts
+        - columns
+        - rowLabels
+        - columnTitle
+        - dimNum
+        - xaxis
+        - yaxis
+        - colColor
+        - supColor
+        - supplementaryRows
+        - supplementaryCols
+        - normalization
+        - descAsVarName
+        - columnTitleText
+        - titleFontFace
+        - titleFontSize
+        - titleAlign
+        - columnSubtitleText
+        - subtitleFontFace
+        - subtitleFontSize
+        - subtitleAlign
+        - columnCaptionText
+        - captionFontFace
+        - captionFontSize
+        - captionAlign
+        - xAxisText
+        - xAxisFontSize
+        - xAxisPosition
+        - yAxisText
+        - yAxisFontSize
+        - yAxisPosition
+        - labelSize
+
+    - name: biplot
+      title: "Biplot"
+      type: Image
+      visible: (showBiPlot)
+      width:  600
+      height: 450
+      renderFun: .biplot
+      clearWith:
+        - rows
+        - cols
+        - counts
+        - columns
+        - rowLabels
+        - columnTitle
+        - dimNum
+        - xaxis
+        - yaxis
+        - rowColor
+        - colColor
+        - supColor
+        - supplementaryRows
+        - supplementaryCols
+        - normalization
+        - descAsVarName
+        - biplotTitleText
+        - titleFontFace
+        - titleFontSize
+        - titleAlign
+        - biplotSubtitleText
+        - subtitleFontFace
+        - subtitleFontSize
+        - subtitleAlign
+        - biplotCaptionText
+        - captionFontFace
+        - captionFontSize
+        - captionAlign
+        - xAxisText
+        - xAxisFontSize
+        - xAxisPosition
+        - yAxisText
+        - yAxisFontSize
+        - yAxisPosition
+        - labelSize
+
+...

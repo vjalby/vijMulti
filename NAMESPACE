@@ -1,0 +1,4 @@
+exportPattern("^[[:alpha:]]+")
+importFrom(jmvcore,.)
+importFrom(jmvcore,..)
+importFrom(rlang,.data)

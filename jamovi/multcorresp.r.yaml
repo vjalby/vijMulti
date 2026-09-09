@@ -1,0 +1,285 @@
+---
+name:  multcorresp
+title: Multiple Correspondence Analysis
+jrs:   '1.1'
+refs:
+    - factominer
+    - greenacre
+items:
+    - name:  eigenvalues
+      title: Summary
+      type: Table
+      visible: (showSummary)
+      rows:  0
+      columns:
+        - name: dim
+          title: Dimension
+          type: number
+        - name: inertia
+          title: "Inertia"
+          superTitle: "Original Eigenvalues"
+          type: number
+          format: zto
+        - name: proportion
+          title: "% of Inertia"
+          superTitle: "Original Eigenvalues"
+          type: integer
+          format: pc
+        - name: cumulative
+          title: "Cumulative %"
+          superTitle: "Original Eigenvalues"
+          type: number
+          format: pc
+      clearWith:
+        - dimNum
+        - vars
+        - supplVars
+        - method
+        - BenzecriAdj
+        - GreenacreAdj
+
+    - name:  discrim
+      title: Variable Discriminations
+      type: Table
+      visible: (showDiscriminations)
+      columns:
+        - name: var
+          title: 'Variable'
+          type: text
+      clearWith:
+        - vars
+        - supplVars
+        - method
+        - dimNum
+        - descAsVarName
+
+    - name:  categories
+      title: Category Summary
+      visible: (showCategories)
+      type: Table
+      rows:  0
+      columns:
+        - name: factor
+          title: Factor
+          type: text
+          combineBelow: TRUE
+        - name: level
+          title: Level
+          type: text
+        - name: mass
+          title: "Mass"
+          type: number
+          format: zto
+        - name: inertia
+          title: "% Inertia"
+          type: number
+          format: zto
+        - name: qlt
+          title: "QLT"
+          type: number
+          format: zto
+      clearWith:
+        - vars
+        - supplVars
+        - method
+        - normalization
+        - dimNum
+        - descAsVarName
+
+    - name:  observations
+      title: Observation Summary
+      visible: (showObservations)
+      type: Table
+      rows:  0
+      columns:
+        - name: name
+          title: Name
+          type: text
+        - name: mass
+          title: "Mass"
+          type: number
+          format: zto
+      clearWith:
+        - vars
+        - supplVars
+        - method
+        - normalization
+        - dimNum
+
+    - name: discrimplot
+      title: "Discrimination Plot"
+      visible: (showDiscriminationPlot)
+      type: Image
+      width:  600
+      height: 600
+      renderFun: .discrimplot
+      clearWith:
+        - dimNum
+        - vars
+        - supplVars
+        - method
+        - normalization
+        - xaxis
+        - yaxis
+        - discrimTitleText
+        - titleFontFace
+        - titleFontSize
+        - titleAlign
+        - discrimSubtitleText
+        - subtitleFontFace
+        - subtitleFontSize
+        - subtitleAlign
+        - discrimCaptionText
+        - captionFontFace
+        - captionFontSize
+        - captionAlign
+        - xAxisText
+        - xAxisFontSize
+        - xAxisPosition
+        - yAxisText
+        - yAxisFontSize
+        - yAxisPosition
+        - labelSize
+        - descAsVarName
+
+    - name: categoryplot
+      title: "Category Plot"
+      visible: (showCategoryPlot)
+      type: Image
+      width:  650
+      height: 600
+      renderFun: .categoryplot
+      clearWith:
+        - dimNum
+        - vars
+        - supplVars
+        - method
+        - normalization
+        - xaxis
+        - yaxis
+        - catTitleText
+        - titleFontFace
+        - titleFontSize
+        - titleAlign
+        - catSubtitleText
+        - subtitleFontFace
+        - subtitleFontSize
+        - subtitleAlign
+        - catCaptionText
+        - captionFontFace
+        - captionFontSize
+        - captionAlign
+        - xAxisText
+        - xAxisFontSize
+        - xAxisPosition
+        - yAxisText
+        - yAxisFontSize
+        - yAxisPosition
+        - legendText
+        - legendFontSize
+        - legendPosition
+        - colorPalette
+        - labelSize
+        - connectOrdinalCat
+        - descAsVarName
+        - boldCat
+
+    - name: obsplot
+      title: "Observation Plot"
+      visible: (showObservationPlot)
+      type: Image
+      width:  600
+      height: 600
+      renderFun: .obsplot
+      clearWith:
+        - dimNum
+        - vars
+        - supplVars
+        - labelVar
+        - method
+        - normalization
+        - xaxis
+        - yaxis
+        - obsTitleText
+        - titleFontFace
+        - titleFontSize
+        - titleAlign
+        - obsSubtitleText
+        - subtitleFontFace
+        - subtitleFontSize
+        - subtitleAlign
+        - obsCaptionText
+        - captionFontFace
+        - captionFontSize
+        - captionAlign
+        - xAxisText
+        - xAxisFontSize
+        - xAxisPosition
+        - yAxisText
+        - yAxisFontSize
+        - yAxisPosition
+        - legendText
+        - legendFontSize
+        - legendPosition
+        - obsColor
+        - labelSize
+        - propPoint
+        - ggrepel
+
+    - name: biplot
+      title: "Biplot"
+      visible: (showBiPlot)
+      type: Image
+      width:  650
+      height: 600
+      renderFun: .biplot
+      clearWith:
+        - dimNum
+        - vars
+        - supplVars
+        - labelVar
+        - method
+        - normalization
+        - xaxis
+        - yaxis
+        - biplotTitleText
+        - titleFontFace
+        - titleFontSize
+        - titleAlign
+        - biplotSubtitleText
+        - subtitleFontFace
+        - subtitleFontSize
+        - subtitleAlign
+        - biplotCaptionText
+        - captionFontFace
+        - captionFontSize
+        - captionAlign
+        - xAxisText
+        - xAxisFontSize
+        - xAxisPosition
+        - yAxisText
+        - yAxisFontSize
+        - yAxisPosition
+        - legendText
+        - legendFontSize
+        - legendPosition
+        - obsColor
+        - colorPalette
+        - labelSize
+        - connectOrdinalCat
+        - propPoint
+        - descAsVarName
+        - ggrepel
+        - boldCat
+
+    - name: obsCoordOV
+      title: Observation Coordinates
+      type: Output
+      initInRun: true
+      clearWith:
+        - vars
+        - supplVars
+        - method
+        - normalization
+        - dimNum
+...

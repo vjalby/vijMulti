@@ -1,0 +1,60 @@
+---
+title: 'vijMulti: Multivariate Data Analyses'
+name: vijMulti
+version: 0.0.1
+jms: '1.0'
+authors:
+  - Vincent Jalby
+maintainer: Vincent Jalby <vincent.jalby@unilim.fr>
+date: '2026-09-09'
+category: multivariate
+type: R
+description: >-
+  <p><strong>Main classic multivariate data analyses</strong>:</p> <ul>
+  <li>Principal Component Analysis</li> <li>Correspondence Analysis</li>
+  <li>Multiple Correspondence Analysis</li> </ul> <p>The module is available in
+  the <strong>Multivariate</strong> tab.</p> <p>Project source (and changelog)
+  is available at <a href="https://github.com/vjalby/vijMulti"
+  target="_blank">Github</a>.</p>
+analyses:
+  - title: Principal Component Analysis
+    name: principal
+    ns: vijMulti
+    menuGroup: vijMulti
+    menuTitle: Principal Component Analysis
+    menuSubgroup: Multivariate
+    category: analyses
+  - title: Correspondence Analysis
+    name: corresp
+    ns: vijMulti
+    menuGroup: vijMulti
+    menuSubgroup: Multivariate
+    menuTitle: Correspondence Analysis
+    category: analyses
+  - title: Multiple Correspondence Analysis
+    name: multcorresp
+    ns: vijMulti
+    category: analyses
+    menuGroup: vijMulti
+    menuTitle: Multiple Correspondence Analysis
+    menuSubgroup: Multivariate
+datasets:
+  - name: Iris
+    path: iris.omv
+    description: A demonstration dataset for vijMulti/Principal Component Analysis.
+    tags:
+      - PCA
+  - name: Smoking
+    path: smoking.omv
+    description: A demonstration dataset for vijMulti/Correspondence Analysis.
+    tags:
+      - CA
+  - name: Cars
+    path: cars.omv
+    description: A demonstration dataset for vijMulti/Multiple Correspondence Analysis.
+    tags:
+      - MCA
+usesNative: true
+minApp: 2.7.1
+
+...
