@@ -1,13 +1,13 @@
 Package: vijMulti
 Type: Package
 Title: vijMulti: Multivariate Data Analyses
-Version: 0.0.1
+Version: 0.9.0
 Author: Vincent Jalby
 Maintainer: Vincent Jalby <vincent.jalby@unilim.fr>
 Description: Main classic multivariate data analyses (Principal Component
     Analysis, Correspondence Analysis and Multiple Correspondence Analysis),
     built with ggplot2 and offering extensive customization options.
-    The module is available in the <strong>Multivariate</strong> tab.
+    The module is available in the <strong>Analyses</strong> tab.
     Project source (and changelog) is available at
     <a href="https://github.com/vjalby/vijMulti" target="_blank">Github</a>.
 License: GPL (>=3)
