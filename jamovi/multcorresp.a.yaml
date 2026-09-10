@@ -430,7 +430,7 @@ options:
       max: 24
 
     - name: connectOrdinalCat
-      title: Connect ordinal categories
+      title: Connected ordinal categories
       type: Bool
       default: false
 
@@ -440,12 +440,12 @@ options:
       default: false
 
     - name: ggrepel
-      title: Improve label display
+      title: Non-overlapping labels
       type: Bool
       default: false
 
     - name: boldCat
-      title: Use boldface
+      title: Boldface categories
       type: Bool
       default: false
 
@@ -454,7 +454,7 @@ options:
       type: Output
 
     - name: descAsVarName
-      title: Use variable's description as name
+      title: Variable descriptions as names
       type: Bool
       default: false
 

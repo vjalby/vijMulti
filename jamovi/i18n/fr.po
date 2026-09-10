@@ -44,12 +44,12 @@ msgid ""
 "<p><strong>Main classic multivariate data analyses</strong>:</p> <ul> "
 "<li>Principal Component Analysis</li> <li>Correspondence Analysis</li> "
 "<li>Multiple Correspondence Analysis</li> </ul> <p>The module is available "
-"in the <strong>Analyses</strong> tab.</p> <p>Project source (and "
-"changelog) is available at <a href=\"https://github.com/vjalby/vijMulti\" "
+"in the <strong>Analyses</strong> tab.</p> <p>Project source (and changelog) "
+"is available at <a href=\"https://github.com/vjalby/vijMulti\" "
 "target=\"_blank\">Github</a>.</p>"
 msgstr ""
-"<p><strong>Principales analyses multivariées classiques</strong> :</p> "
-"<ul> <li>Analyse en composantes principales</li> <li>Analyse des "
+"<p><strong>Principales analyses multivariées classiques</strong> :</p> <ul> "
+"<li>Analyse en composantes principales</li> <li>Analyse des "
 "correspondances</li> <li>Analyse des correspondances multiples</li> </ul> "
 "<p>Le module est disponible dans l'onglet <strong>Analyses "
 "multivariées</strong>.</p> <p>Le code source du projet (et le changelog) est "
@@ -286,6 +286,10 @@ msgstr "Options avancées"
 msgid "Align"
 msgstr "Align."
 
+#: principal/options/biplotLines.title
+msgid "Arrow lines"
+msgstr "Droites des vecteurs"
+
 #: principal/options/varColor.title
 msgid "Arrows"
 msgstr "Vecteurs"
@@ -396,6 +400,10 @@ msgstr "Gras"
 #: principal/options/captionFontFace/bold.italic.title
 msgid "Bold Italic"
 msgstr "Gras Ital."
+
+#: multcorresp/options/boldCat.title
+msgid "Boldface categories"
+msgstr "Catégories en gras"
 
 #: corresp/options/yAxisPosition/0.title
 #: multcorresp/options/legendPosition/bottom.title
@@ -562,8 +570,8 @@ msgid "Component Plot"
 msgstr "Graphique des composantes"
 
 #: multcorresp/options/connectOrdinalCat.title
-msgid "Connect ordinal categories"
-msgstr "Joindre les catégories ordinales"
+msgid "Connected ordinal categories"
+msgstr "Catégories ordinales connectées"
 
 #: corresp/options/mode/contTable.title
 #: corresp/results/contingency.title
@@ -707,10 +715,6 @@ msgstr "Graphique des discriminations"
 msgid "Discrimination plot"
 msgstr "Discriminations"
 
-#: principal/options/biplotLines.title
-msgid "Draw arrow lines"
-msgstr "Droites des vecteurs"
-
 #: principal/results/summaryTable.columns.title
 msgid "Eigenvalue"
 msgstr "Valeur propre"
@@ -817,10 +821,6 @@ msgstr "Gris"
 #: principal/ui[0][2].label
 msgid "Group"
 msgstr "Groupe"
-
-#: multcorresp/options/ggrepel.title
-msgid "Improve label display"
-msgstr "Améliorer l'affichage des étiquettes"
 
 #: R/multcorresp.b.R
 #: multcorresp/options/method/Indicator.title
@@ -1055,6 +1055,10 @@ msgstr "Nom"
 #: R/principal.b.R
 msgid "No rotation used."
 msgstr "Aucune rotation appliquée."
+
+#: multcorresp/options/ggrepel.title
+msgid "Non-overlapping labels"
+msgstr "Étiquettes non-superposées"
 
 #: principal/options/rotation/none.title
 msgid "None"
@@ -1821,19 +1825,15 @@ msgstr "Impossible de calculer la statistique du χ2."
 msgid "Unable to use {rotation} rotation."
 msgstr "Impossible d'utiliser la rotation {rotation}."
 
-#: multcorresp/options/boldCat.title
-msgid "Use boldface"
-msgstr "Catégories en gras"
+#: multcorresp/results/discrim.columns.title
+msgid "Variable"
+msgstr "Variable"
 
 #: corresp/options/descAsVarName.title
 #: multcorresp/options/descAsVarName.title
 #: principal/options/descAsVarName.title
-msgid "Use variable's description as name"
-msgstr "Description des variables comme nom"
-
-#: multcorresp/results/discrim.columns.title
-msgid "Variable"
-msgstr "Variable"
+msgid "Variable descriptions as names"
+msgstr "Descriptions des variables comme noms"
 
 #: multcorresp/options/showDiscriminations.title
 #: multcorresp/options/showDiscriminationPlot.title

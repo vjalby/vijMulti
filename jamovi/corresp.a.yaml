@@ -424,7 +424,7 @@ options:
       default: "0.5"
 
     - name: descAsVarName
-      title: Use variable's description as name
+      title: Variable descriptions as names
       type: Bool
       default: false
 

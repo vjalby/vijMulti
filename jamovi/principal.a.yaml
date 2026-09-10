@@ -147,7 +147,7 @@ options:
       default: formPlot
 
     - name: biplotLines
-      title: Draw arrow lines
+      title: Arrow lines
       type: Bool
       default: false
 
@@ -579,7 +579,7 @@ options:
       default: false
 
     - name: descAsVarName
-      title: Use variable's description as name
+      title: Variable descriptions as names
       type: Bool
       default: false
 

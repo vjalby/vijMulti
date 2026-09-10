@@ -116,19 +116,19 @@ principalOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 "dimNum",
                 dimNum,
                 min=2,
-                max=99,
+                max=10,
                 default=2)
             private$..xaxis <- jmvcore::OptionNumber$new(
                 "xaxis",
                 xaxis,
                 min=1,
-                max=99,
+                max=10,
                 default=1)
             private$..yaxis <- jmvcore::OptionNumber$new(
                 "yaxis",
                 yaxis,
                 min=1,
-                max=99,
+                max=10,
                 default=2)
             private$..stdVariables <- jmvcore::OptionBool$new(
                 "stdVariables",
@@ -355,7 +355,9 @@ principalOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             private$..titleFontSize <- jmvcore::OptionNumber$new(
                 "titleFontSize",
                 titleFontSize,
-                default=16)
+                default=16,
+                min=8,
+                max=24)
             private$..titleFontFace <- jmvcore::OptionList$new(
                 "titleFontFace",
                 titleFontFace,
@@ -392,7 +394,9 @@ principalOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             private$..subtitleFontSize <- jmvcore::OptionNumber$new(
                 "subtitleFontSize",
                 subtitleFontSize,
-                default=12)
+                default=12,
+                min=8,
+                max=24)
             private$..subtitleFontFace <- jmvcore::OptionList$new(
                 "subtitleFontFace",
                 subtitleFontFace,

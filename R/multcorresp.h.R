@@ -113,16 +113,19 @@ multcorrespOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                 "dimNum",
                 dimNum,
                 min=2,
+                max=10,
                 default=2)
             private$..xaxis <- jmvcore::OptionNumber$new(
                 "xaxis",
                 xaxis,
                 min=1,
+                max=10,
                 default=1)
             private$..yaxis <- jmvcore::OptionNumber$new(
                 "yaxis",
                 yaxis,
                 min=1,
+                max=10,
                 default=2)
             private$..normalization <- jmvcore::OptionList$new(
                 "normalization",

@@ -44,8 +44,8 @@ msgid ""
 "<p><strong>Main classic multivariate data analyses</strong>:</p> <ul> "
 "<li>Principal Component Analysis</li> <li>Correspondence Analysis</li> "
 "<li>Multiple Correspondence Analysis</li> </ul> <p>The module is available "
-"in the <strong>Multivariate</strong> tab.</p> <p>Project source (and "
-"changelog) is available at <a href=\"https://github.com/vjalby/vijMulti\" "
+"in the <strong>Analyses</strong> tab.</p> <p>Project source (and changelog) "
+"is available at <a href=\"https://github.com/vjalby/vijMulti\" "
 "target=\"_blank\">Github</a>.</p>"
 msgstr ""
 
@@ -1708,14 +1708,14 @@ msgstr ""
 msgid "Use boldface"
 msgstr ""
 
+#: multcorresp/results/discrim.columns.title
+msgid "Variable"
+msgstr ""
+
 #: corresp/options/descAsVarName.title
 #: multcorresp/options/descAsVarName.title
 #: principal/options/descAsVarName.title
-msgid "Use variable's description as name"
-msgstr ""
-
-#: multcorresp/results/discrim.columns.title
-msgid "Variable"
+msgid "Variable descriptions as names"
 msgstr ""
 
 #: multcorresp/options/showDiscriminations.title

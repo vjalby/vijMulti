@@ -61,6 +61,9 @@
             "Align": [
                 "Align."
             ],
+            "Arrow lines": [
+                "Droites des vecteurs"
+            ],
             "Arrows": [
                 "Vecteurs"
             ],
@@ -111,6 +114,9 @@
             ],
             "Bold Italic": [
                 "Gras Ital."
+            ],
+            "Boldface categories": [
+                "Catégories en gras"
             ],
             "Bottom": [
                 "Bas"
@@ -205,8 +211,8 @@
             "Component Plot": [
                 "Graphique des composantes"
             ],
-            "Connect ordinal categories": [
-                "Joindre les catégories ordinales"
+            "Connected ordinal categories": [
+                "Catégories ordinales connectées"
             ],
             "Contingency Table": [
                 "Tableau de contingence"
@@ -283,9 +289,6 @@
             "Discrimination plot": [
                 "Discriminations"
             ],
-            "Draw arrow lines": [
-                "Droites des vecteurs"
-            ],
             "Eigenvalue": [
                 "Valeur propre"
             ],
@@ -345,9 +348,6 @@
             ],
             "Group": [
                 "Groupe"
-            ],
-            "Improve label display": [
-                "Améliorer l'affichage des étiquettes"
             ],
             "Indicator matrix": [
                 "Tableau disjonctif"
@@ -477,6 +477,9 @@
             ],
             "No rotation used.": [
                 "Aucune rotation appliquée."
+            ],
+            "Non-overlapping labels": [
+                "Étiquettes non-superposées"
             ],
             "None": [
                 "Aucun"
@@ -925,14 +928,11 @@
             "Unable to use {rotation} rotation.": [
                 "Impossible d'utiliser la rotation {rotation}."
             ],
-            "Use boldface": [
-                "Catégories en gras"
-            ],
-            "Use variable's description as name": [
-                "Description des variables comme nom"
-            ],
             "Variable": [
                 "Variable"
+            ],
+            "Variable descriptions as names": [
+                "Descriptions des variables comme noms"
             ],
             "Variable discriminations": [
                 "Discrimination des variables"
