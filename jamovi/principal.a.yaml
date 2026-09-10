@@ -62,21 +62,21 @@ options:
       type: Number
       title: "Number of dimensions"
       min: 2
-      max: 99
+      max: 10
       default: 2
 
     - name: xaxis
       type: Number
       title: "X-Axis"
       min: 1
-      max: 99
+      max: 10
       default: 1
 
     - name: yaxis
       type: Number
       title: "Y-Axis"
       min: 1
-      max: 99
+      max: 10
       default: 2
 
     - name: stdVariables
@@ -450,6 +450,8 @@ options:
       title: Font size
       type: Number
       default: 16
+      min: 8
+      max: 24
 
     - name: titleFontFace
       title: Font face
@@ -501,6 +503,8 @@ options:
       title: Font size
       type: Number
       default: 12
+      min: 8
+      max: 24
 
     - name: subtitleFontFace
       title: Font face
