@@ -65,7 +65,7 @@ items:
       columns:
         - name: dim
           title: Dimension
-          type: number
+          type: text
         - name: singular
           title: "Singular Value"
           type: number
@@ -76,7 +76,7 @@ items:
           format: zto
         - name: proportion
           title: "% of Inertia"
-          type: integer
+          type: number
           format: pc
         - name: cumulative
           title: "Cumulative %"

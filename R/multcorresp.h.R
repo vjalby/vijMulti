@@ -659,7 +659,7 @@ multcorrespResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                     list(
                         `name`="dim", 
                         `title`="Dimension", 
-                        `type`="number"),
+                        `type`="text"),
                     list(
                         `name`="inertia", 
                         `title`="Inertia", 
@@ -670,7 +670,7 @@ multcorrespResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                         `name`="proportion", 
                         `title`="% of Inertia", 
                         `superTitle`="Original Eigenvalues", 
-                        `type`="integer", 
+                        `type`="number", 
                         `format`="pc"),
                     list(
                         `name`="cumulative", 

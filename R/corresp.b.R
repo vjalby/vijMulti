@@ -241,7 +241,7 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 singular = "",
                 inertia = sum(res$eig[,1]),
                 proportion = 1,
-                cumulative = 1
+                cumulative = NA
             ))
             table$addFormat(rowKey="Total", 1, jmvcore::Cell.BEGIN_END_GROUP)
             # Chi-squared test

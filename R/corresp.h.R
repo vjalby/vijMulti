@@ -606,7 +606,7 @@ correspResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                     list(
                         `name`="dim", 
                         `title`="Dimension", 
-                        `type`="number"),
+                        `type`="text"),
                     list(
                         `name`="singular", 
                         `title`="Singular Value", 
@@ -620,7 +620,7 @@ correspResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                     list(
                         `name`="proportion", 
                         `title`="% of Inertia", 
-                        `type`="integer", 
+                        `type`="number", 
                         `format`="pc"),
                     list(
                         `name`="cumulative", 

@@ -14,7 +14,7 @@ items:
       columns:
         - name: dim
           title: Dimension
-          type: number
+          type: text
         - name: inertia
           title: "Inertia"
           superTitle: "Original Eigenvalues"
@@ -23,7 +23,7 @@ items:
         - name: proportion
           title: "% of Inertia"
           superTitle: "Original Eigenvalues"
-          type: integer
+          type: number
           format: pc
         - name: cumulative
           title: "Cumulative %"
