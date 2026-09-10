@@ -1,0 +1,1011 @@
+{
+    "domain": "messages",
+    "locale_data": {
+        "messages": {
+            "": {
+                "domain": "messages",
+                "lang": "ja",
+                "plural_forms": "nplurals=2; plural=(n!=1);"
+            },
+            "{rotation} rotation": [
+                "{rotation}回転"
+            ],
+            "{rotation} rotation was used.": [
+                "{rotation}回転が用いられました。"
+            ],
+            "{rotation} rotation with Kaiser normalization": [
+                "カイザー正規化を伴う{rotation}回転"
+            ],
+            "{rotation} rotation with Kaiser normalization was used.": [
+                "カイザー正規化を伴う{rotation}回転が用いられました。"
+            ],
+            "% Inertia": [
+                "%慣性"
+            ],
+            "% of Inertia": [
+                "慣性%"
+            ],
+            "% of Variance": [
+                "分散%"
+            ],
+            "<p><strong>Main classic multivariate data analyses</strong>:</p> <ul> <li>Principal Component Analysis</li> <li>Correspondence Analysis</li> <li>Multiple Correspondence Analysis</li> </ul> <p>The module is available in the <strong>Analyses</strong> tab.</p> <p>Project source (and changelog) is available at <a href=\"https://github.com/vjalby/vijMulti\" target=\"_blank\">Github</a>.</p>": [
+                "<p><strong>主要な古典的多変量データ分析</strong>：</p> <ul> <li>主成分分析</li> <li>対応分析</li> <li>多重対応分析</li> </ul> <p>このモジュールは<strong>Analyses</strong>タブから利用できます。</p> <p>プロジェクトのソースコード（および変更履歴）は<a href=\"https://github.com/vjalby/vijMulti\" target=\"_blank\">Github</a>で公開されています。</p>"
+            ],
+            "<p>This module computes <strong>Correspondence Analysis (CA)</strong> for two categorical variables. Computations are based on <a href = \"https://CRAN.R-project.org/package=FactoMineR\" target=\"_blank\">FactoMineR<a/> package by F. Husson, J. Josse, S. Le, J. Mazet.</p>\n<p>The data can be</p>\n<ul>\n<li>an <strong>Observation table</strong> (raw data), possibly weighted using <em>jamovi</em> built-in weight system or using the \"Counts\" variable</li>\n<li>or a <strong>Contingency table</strong></li>\n</ul>\n<p><strong>Supplementary row or column</strong> numbers may be entered as integer lists : 1,3,6</p>\n<p>Four normalizations (scaling of row and column scores before plotting) are available :</p>\n<ul>\n<li><strong>Principal:</strong> Row and column scores are scaled by eigenvalues.</li>\n<li><strong>Symmetric:</strong> Row and column scores are scaled by the square root of eigenvalues. </li>\n<li><strong>Row Principal:</strong> Only row scores are scaled by eigenvalues.</li>\n<li><strong>Column Principal:</strong> Only column scores are scaled by eigenvalues.</li>\n<li><strong>Standard:</strong> The raw coordinates without normalization.</li>\n</ul>\n<p>A sample file is included at Open > Data Library > vijMulti > Smoking</p>": [
+                "<p>このモジュールは、2つのカテゴリ変数に対する<strong>対応分析（CA）</strong>を実施します。計算は、F. Husson、J. Josse、S. Le、J. Mazetによるパッケージ<a href = \"https://CRAN.R-project.org/package=FactoMineR\" target=\"_blank\">FactoMineR<a/>に基づいています。</p>\n<p>データは以下のいずれかです。</p>\n<ul>\n<li><strong>観測データ表</strong>（生データ）。<em>jamovi</em>の組み込み重みづけ機能、または「度数」変数を用いて重みづけできます。</li>\n<li>または<strong>分割表</strong></li>\n</ul>\n<p><strong>補助行または補助列</strong>の番号は、整数のリスト（例：1,3,6）で指定できます。</p>\n<p>4種類の正規化（プロット前の行・列スコアのスケーリング）が利用できます。</p>\n<ul>\n<li><strong>主成分：</strong> 行と列のスコアを固有値でスケーリングします。</li>\n<li><strong>対象：</strong> 行と列のスコアを固有値の平方根でスケーリングします。</li>\n<li><strong>行主成分：</strong> 行スコアのみを固有値でスケーリングします。</li>\n<li><strong>列主成分：</strong> 列スコアのみを固有値でスケーリングします。</li>\n<li><strong>標準：</strong> 正規化を行わない生座標を使用します。</li>\n</ul>\n<p>サンプルファイルは、Open &gt; Data Library &gt; vijMulti &gt; Smoking に含まれています。</p>"
+            ],
+            "<p>This module computes <strong>Multiple Correspondence Analysis (MCA)</strong> for several categorical variables. Computations are based on <a href = \"https://CRAN.R-project.org/package=FactoMineR\" target=\"_blank\">FactoMineR<a/> package by F. Husson, J. Josse, S. Le, J. Mazet.</p>\n<p>Both classic methods are available:</p>\n<ul>\n<li><strong>Indicator matrix:</strong> CA of the indicator matrix</li>\n<li><strong>Burt matrix:</strong> CA of the Burt matrix. The eigenvalues are the squares of those of the indicator matrix method. </li>\n</ul>\n<p>Both methods give the same <em>standard</em> coordinates and discriminations (but different <em>principal</em> coordinates).</p>\n<p>When selected, <strong>Benzécri and Greenacre corrections</strong> are applied to eigenvalues only (<strong>Summary</strong> table). Principal coordinates (and inertia) of categories and observations are computed from the original eigenvalues of the Burt matrix.</p>\n<p>The <strong>Normalization</strong> options specify how the coordinates are scaled (by eigenvalues):</p>\n<ul>\n<li><strong>Principal:</strong> Both category and observation coordinates are scaled.</li>\n<li><strong>Category principal:</strong> Only category coordinates are scaled.</li>\n<li><strong>Observation principal:</strong> Only observation coordinates are scaled.</li>\n<li><strong>Standard:</strong> Both category and observation coordinates are standard.</li>\n</ul>\n<p>A sample file is included at Open > Data Library > vijMulti > Cars</p>": [
+                "<p>このモジュールは、複数のカテゴリ変数に対して<strong>多重コレスポンデンス分析 (MCA)</strong> を実行します。計算は、F. Husson、J. Josse、S. Le、J. Mazetらによる <a href = \"https://CRAN.R-project.org/package=FactoMineR\" target=\"_blank\">FactoMineR<a/> パッケージに基づいています。</p>\n<p>以下の2つの古典的な手法が利用可能です：</p>\n<ul>\n<li><strong>指示行列：</strong> 指示行列に対する対応分析</li>\n<li><strong>バート行列：</strong> バート行列に対する対応分析。固有値は指示行列法の固有値の2乗になります。</li>\n</ul>\n<p>どちらの手法を用いても、同じ <em>標準</em> 座標と判別結果が得られます（ただし異なる <em>主</em> 座標）。</p>\n<p>選択した場合、<strong>ベンゼクリおよびグリーンエーカーの補正</strong>は固有値のみに適用されます（<strong>要約</strong> テーブル）。カテゴリおよび観測値の主座標（および慣性）は、バート行列の元の固有値から計算されます。</p>\n<p><strong>標準化</strong> オプションは、座標を（固有値で）どのようにスケーリングするかを指定します：</p>\n<ul>\n<li><strong>主標準化：</strong> カテゴリと個体の両方の座標がスケーリングされます。</li>\n<li><strong>カテゴリ主標準化：</strong> カテゴリの座標のみがスケーリングされます。</li>\n<li><strong>観測値主標準化：</strong> 観測値の座標のみがスケーリングされます。</li>\n<li><strong>標準：</strong> カテゴリと観測値の両方の座標が標準となります。</li>\n</ul>\n<p>サンプルファイルは Open > Data Library > vijMulti > Cars に含まれています。</p>"
+            ],
+            "<p>This module computes <strong>Principal Component Analysis (PCA)</strong> for several continuous variables. Computations are based on <tt>stats::prcomp</tt> function.</p>\n<p>Although rotated components are not principal components, they are widely used. Only orthogonal rotations are available (from GPArotation package).</p>\n<p>Loadings (variable coordinates) and scores (observation coordinates) are principal (scaled by the square root of eigenvalues).</p>\n<p>Biplot follows \"Biplots in Practice\" (Michael Greenacre, 2010):</p>\n<ul>\n<li><strong>Form biplot:</strong> Scores are principal (scaled by eigenvalues) while loadings are standard.</li>\n<li><strong>Covariance biplot:</strong> Loadings are principal while scores are standard. </li>\n</ul>\n<p><strong>Advanced options</strong>:</p>\n<ul>\n<li><strong>Standardize loadings:</strong> loadings are normalized with sums of squared equal to 1 (instead of eigenvalues)</li>\n<li><strong>Standardize scores:</strong> scores are normalized with variances equal to 1 (instead of eigenvalues)</li>\n<li><strong>Rotate eigenvectors:</strong> the rotation (varimax, etc) is applied to eigenvectors (standard loadings) instead of principal loadings (STATA way).</li>\n</ul>\n<p>A sample file is included at Open > Data Library > vijMulti > Iris</p>": [
+                "<p>このモジュールは、複数の連続変数に対して<strong>主成分分析 (PCA)</strong> を実行します。計算は <tt>stats::prcomp</tt> 関数に基づいています。</p>\n<p>回転後の成分は厳密には主成分ではありませんが、広く利用されています。直交回転のみが利用可能です（GPArotation パッケージを使用）。</p>\n<p>主成分負荷量（変数座標）およびスコア（観測値座標）は主座標（固有値の平方根でスケーリングされたもの）です。</p>\n<p>バイプロットは \"Biplots in Practice\" (Michael Greenacre, 2010) に準拠しています：</p>\n<ul>\n<li><strong>フォーム・バイプロット：</strong> スコアは主座標（固有値でスケーリング）され、負荷量は標準座標となります。</li>\n<li><strong>共分散バイプロット：</strong> 負荷量は主座標となり、スコアは標準座標となります。</li>\n</ul>\n<p><strong>詳細設定</strong>:</p>\n<ul>\n<li><strong>負荷量の標準化：</strong> 負荷量を（固有値ではなく）2乗和が1になるように標準化します。</li>\n<li><strong>スコアの標準化</strong> スコアを（固有値ではなく）分散が1になるように標準化します。</li>\n<li><strong>固有ベクトルの回転：</strong> 主座標としての負荷量ではなく、固有ベクトル（標準負荷量）に対して回転（バリマックス回転など）を適用します（STATA方式）。</li>\n</ul>\n<p>サンプルファイルは「開く > データライブラリ > vijMulti > Iris」に含まれています。</p>"
+            ],
+            "A demonstration dataset for vijMulti/Correspondence Analysis.": [
+                "vijMulti/対応分析のデモンストレーション用データセット。"
+            ],
+            "A demonstration dataset for vijMulti/Multiple Correspondence Analysis.": [
+                "vijMulti/多重対応分析のデモンストレーション用データセット。"
+            ],
+            "A demonstration dataset for vijMulti/Principal Component Analysis.": [
+                "vijMulti/主成分分析のデモンストレーション用データセット。"
+            ],
+            "Accent": [
+                "アクセント"
+            ],
+            "Active Margin": [
+                "有効マージン"
+            ],
+            "Advanced Options": [
+                "詳細オプション"
+            ],
+            "Align": [
+                "整列"
+            ],
+            "Arrow lines": [
+                "矢印線"
+            ],
+            "Arrows": [
+                "矢印"
+            ],
+            "Axis numbers cannot be equal.": [
+                "軸番号は同じ値にはできません。"
+            ],
+            "Axis numbers must be less than or equal to the number of dimensions ({nDim}).": [
+                "軸番号は次元数（{nDim}）以下でなければなりません。"
+            ],
+            "Axis Titles": [
+                "軸タイトル"
+            ],
+            "Bartlett's Test of Sphericity": [
+                "バートレットの球面性検定"
+            ],
+            "Bentler T": [
+                "ベントラーのT"
+            ],
+            "Benzécri Correction": [
+                "ベンゼクリ補正"
+            ],
+            "Benzécri correction": [
+                "ベンゼクリ補正"
+            ],
+            "Biplot": [
+                "バイプロット"
+            ],
+            "Biplot Type": [
+                "バイプロットの種類"
+            ],
+            "Black": [
+                "黒"
+            ],
+            "Blue": [
+                "青"
+            ],
+            "Blue to Green": [
+                "青 → 緑"
+            ],
+            "Blue to Purple": [
+                "青 → 紫"
+            ],
+            "Blues": [
+                "青系"
+            ],
+            "Bold": [
+                "太字"
+            ],
+            "Bold Italic": [
+                "斜体太字"
+            ],
+            "Boldface categories": [
+                "カテゴリーを太字表示"
+            ],
+            "Bottom": [
+                "下"
+            ],
+            "Brown": [
+                "茶色"
+            ],
+            "Brown and Green": [
+                "茶色と緑"
+            ],
+            "Burt matrix": [
+                "バート行列"
+            ],
+            "Caption Style": [
+                "キャプションスタイル"
+            ],
+            "Caption Text": [
+                "キャプションテキスト"
+            ],
+            "Carbon:Dark": [
+                "Carbon:ダーク"
+            ],
+            "Carbon:Light": [
+                "Carbon:ライト"
+            ],
+            "Cars": [
+                "自動車（Cars）"
+            ],
+            "Categories": [
+                "カテゴリー"
+            ],
+            "Category Plot": [
+                "カテゴリープロット"
+            ],
+            "Category plot": [
+                "カテゴリープロット"
+            ],
+            "Category Plot Options": [
+                "カテゴリープロットオプション"
+            ],
+            "Category principal": [
+                "カテゴリー主成分"
+            ],
+            "Category principal coordinates": [
+                "カテゴリー主成分座標"
+            ],
+            "Category Summary": [
+                "カテゴリーの要約"
+            ],
+            "Center": [
+                "中央"
+            ],
+            "Colors": [
+                "配色"
+            ],
+            "Column": [
+                "列"
+            ],
+            "Column plot": [
+                "列プロット"
+            ],
+            "Column Plot": [
+                "列プロット"
+            ],
+            "Column Points for {cols}": [
+                "{cols} の列点"
+            ],
+            "Column principal": [
+                "列の主成分"
+            ],
+            "Column principal normalization": [
+                "列主正規化"
+            ],
+            "Column Profiles": [
+                "列のプロフィール"
+            ],
+            "Column Summary": [
+                "列の要約"
+            ],
+            "Column title": [
+                "列タイトル"
+            ],
+            "Columns": [
+                "列"
+            ],
+            "Component": [
+                "成分"
+            ],
+            "Component {n} ({perc} %)": [
+                "成分 {n} ({perc} %)"
+            ],
+            "Component Plot": [
+                "成分プロット"
+            ],
+            "Connected ordinal categories": [
+                "順序カテゴリーの接続"
+            ],
+            "Contingency Table": [
+                "分割表"
+            ],
+            "Contingency table": [
+                "分割表"
+            ],
+            "Contributions": [
+                "寄与"
+            ],
+            "Coordinates": [
+                "座標"
+            ],
+            "Correspondence Analysis": [
+                "対応分析"
+            ],
+            "COS2": [
+                "コサイン2乗"
+            ],
+            "Counts (optional)": [
+                "度数（任意）"
+            ],
+            "Counts may not be infinite.": [
+                "度数を無限大にすることはできません。"
+            ],
+            "Counts may not be negative.": [
+                "度数を負にすることはできません。"
+            ],
+            "Cov (Loading principal)": [
+                "共分散 (主成分負荷量)"
+            ],
+            "Covariance (Loading principal)": [
+                "共分散 (主成分負荷量)"
+            ],
+            "Covariance Biplot": [
+                "共分散バイプロット"
+            ],
+            "Cumulative %": [
+                "累積％"
+            ],
+            "Dark 2": [
+                "ダーク2"
+            ],
+            "Dark Gray": [
+                "ダークグレー"
+            ],
+            "default": [
+                "初期値"
+            ],
+            "df": [
+                "自由度"
+            ],
+            "Dichromat:Categorical": [
+                "2色型：カテゴリ"
+            ],
+            "Dim": [
+                "次元"
+            ],
+            "Dim {n}": [
+                "Dim {n}"
+            ],
+            "Dimension": [
+                "次元"
+            ],
+            "Dimension {n} ({perc} %)": [
+                "次元 {n} ({perc} %)"
+            ],
+            "Discrimination": [
+                "判別"
+            ],
+            "Discrimination Plot": [
+                "判別プロット"
+            ],
+            "Discrimination plot": [
+                "判別プロット"
+            ],
+            "Eigenvalue": [
+                "固有値"
+            ],
+            "Eigenvalues": [
+                "固有値"
+            ],
+            "Element Sizes": [
+                "要素サイズ"
+            ],
+            "Equamax": [
+                "エカマックス"
+            ],
+            "Extraction": [
+                "抽出"
+            ],
+            "Extraction Sums of Squared Loadings": [
+                "抽出された負荷量の2乗和"
+            ],
+            "Factor": [
+                "因子"
+            ],
+            "Font face": [
+                "書体"
+            ],
+            "Font size": [
+                "文字サイズ"
+            ],
+            "Form (Score principal)": [
+                "形式（主成分得点）"
+            ],
+            "Form Biplot": [
+                "形式バイプロット"
+            ],
+            "Gray": [
+                "グレー"
+            ],
+            "Green": [
+                "緑"
+            ],
+            "Green to Blue": [
+                "緑 → 青"
+            ],
+            "Greenacre Correction": [
+                "グリーンエーカー補正"
+            ],
+            "Greenacre correction": [
+                "グリーンエーカー補正"
+            ],
+            "Greenacre's corrected inertia = {inertia}": [
+                "グリーンエーカーの補正慣性 = {inertia}"
+            ],
+            "Greens": [
+                "緑系"
+            ],
+            "Greys": [
+                "グレー系"
+            ],
+            "Group": [
+                "グループ"
+            ],
+            "Indicator matrix": [
+                "指標行列"
+            ],
+            "Inertia": [
+                "慣性"
+            ],
+            "Inertia summary": [
+                "慣性の要約"
+            ],
+            "Initial Eigenvalues": [
+                "初期固有値"
+            ],
+            "Iris": [
+                "アヤメ（Iris）"
+            ],
+            "Italic": [
+                "斜体"
+            ],
+            "jmv Blue": [
+                "jmv 青"
+            ],
+            "jmv Default": [
+                "jmv 既定"
+            ],
+            "jmv Gray": [
+                "jmv グレー"
+            ],
+            "jmv Green": [
+                "jmv 緑"
+            ],
+            "jmv Red": [
+                "jmv 赤"
+            ],
+            "jmv Yellow": [
+                "jmv 黄"
+            ],
+            "Kaiser normalization": [
+                "カイザー正規化"
+            ],
+            "Kaiser-Meyer-Olkin Measure of Sampling Adequacy (MSA)": [
+                "カイザー・マイヤー・オルキン（KMO）のサンプリング適合度指標 (MSA)"
+            ],
+            "KMO & Bartlett's test": [
+                "KMO & バートレット検定"
+            ],
+            "KMO & Bartlett's Test": [
+                "KMO & バートレット検定"
+            ],
+            "Label": [
+                "ラベル"
+            ],
+            "Labels": [
+                "ラベル"
+            ],
+            "Left": [
+                "左"
+            ],
+            "Legend": [
+                "凡例"
+            ],
+            "Legend & Axis Titles": [
+                "凡例 & 軸タイトル"
+            ],
+            "Lémovice": [
+                "レモーヴィス"
+            ],
+            "Level": [
+                "レベル"
+            ],
+            "Light Blue": [
+                "薄い青"
+            ],
+            "Light Brown": [
+                "薄い茶"
+            ],
+            "Light Gray": [
+                "薄いグレー"
+            ],
+            "Light Green": [
+                "薄い緑"
+            ],
+            "Light Orange": [
+                "薄いオレンジ"
+            ],
+            "Light Pink": [
+                "薄いピンク"
+            ],
+            "Light Purple": [
+                "薄い紫"
+            ],
+            "Light Red": [
+                "薄い赤"
+            ],
+            "Light Yellow": [
+                "薄い黄"
+            ],
+            "Limited to the first 100 observations": [
+                "最初の100観測値に制限"
+            ],
+            "Mass": [
+                "質量"
+            ],
+            "MCA Principal Coordinates ({method})": [
+                "MCA主座標 ({method})"
+            ],
+            "MCA Standard Coordinates ({method})": [
+                "MCA標準座標 ({method})"
+            ],
+            "Method": [
+                "方法"
+            ],
+            "Method: {method}": [
+                "方法: {method}"
+            ],
+            "Minimum entropy": [
+                "最小エントロピー"
+            ],
+            "Multiple Correspondence Analysis": [
+                "多重対応分析"
+            ],
+            "Multivariate": [
+                "多変量"
+            ],
+            "Name": [
+                "名前"
+            ],
+            "No rotation used.": [
+                "回転されていません。"
+            ],
+            "Non-overlapping labels": [
+                "非重複ラベル"
+            ],
+            "None": [
+                "なし"
+            ],
+            "Normal": [
+                "正規"
+            ],
+            "Normalization": [
+                "正規化"
+            ],
+            "Not enough complete observations to perform PCA.": [
+                "PCAを実行するための完全な観測値が不足しています。"
+            ],
+            "Not enough data to compute CA.": [
+                "CAを計算するためのデータが不足しています。"
+            ],
+            "Number of dimensions": [
+                "次元数"
+            ],
+            "Number of dimensions must be less than or equal to {maxDim}.": [
+                "次元数は {maxDim} 以下でなければなりません。"
+            ],
+            "Obs color": [
+                "観測値の色"
+            ],
+            "Observation": [
+                "観測値"
+            ],
+            "Observation Coordinates": [
+                "観測値の座標"
+            ],
+            "Observation Plot": [
+                "観測値プロット"
+            ],
+            "Observation plot": [
+                "観測値プロット"
+            ],
+            "Observation Plot Options": [
+                "観測値プロットオプション"
+            ],
+            "Observation principal": [
+                "観測値主成分"
+            ],
+            "Observation principal coordinates": [
+                "観測値主成分座標"
+            ],
+            "Observation Summary": [
+                "観測値の要約"
+            ],
+            "Observation Table": [
+                "観測データ表"
+            ],
+            "Observations": [
+                "観測値"
+            ],
+            "Orange": [
+                "オレンジ"
+            ],
+            "Orange and Purple": [
+                "オレンジと紫"
+            ],
+            "Orange to Red": [
+                "オレンジ → 赤"
+            ],
+            "Oranges": [
+                "オレンジ系"
+            ],
+            "Original Eigenvalues": [
+                "元の固有値"
+            ],
+            "Paired": [
+                "ペア"
+            ],
+            "Palette": [
+                "パレット"
+            ],
+            "Parsimax": [
+                "パーシマックス"
+            ],
+            "Pastel 1": [
+                "パステル1"
+            ],
+            "Pastel 2": [
+                "パステル2"
+            ],
+            "PCA Principal Coordinates": [
+                "PCA 主座標"
+            ],
+            "PCA Principal Coordinates ({rot})": [
+                "PCA主座標 ({rot})"
+            ],
+            "PCA Standard Coordinates": [
+                "PCA標準座標"
+            ],
+            "PCA Standard Coordinates ({rot})": [
+                "PCA標準座標 ({rot})"
+            ],
+            "Pink": [
+                "ピンク"
+            ],
+            "Pink and Green": [
+                "ピンクと緑"
+            ],
+            "Plot Color": [
+                "プロットの色"
+            ],
+            "Plot Colors": [
+                "プロットの色"
+            ],
+            "Plot Options": [
+                "プロットオプション"
+            ],
+            "Plot Titles & Subtitles": [
+                "プロットタイトル & サブタイトル"
+            ],
+            "Plots": [
+                "プロット"
+            ],
+            "Point size": [
+                "点サイズ"
+            ],
+            "Points": [
+                "点"
+            ],
+            "Position": [
+                "位置"
+            ],
+            "Principal": [
+                "主成分"
+            ],
+            "Principal Component Analysis": [
+                "主成分分析"
+            ],
+            "Principal coordinates": [
+                "主成分座標"
+            ],
+            "Principal normalization": [
+                "主正規化"
+            ],
+            "Proportional point size": [
+                "点のサイズを割合で指定"
+            ],
+            "Purple": [
+                "紫"
+            ],
+            "Purple and Green": [
+                "紫と緑"
+            ],
+            "Purple to Blue": [
+                "紫 → 青"
+            ],
+            "Purple to Green": [
+                "紫 → 緑"
+            ],
+            "Purple to Red": [
+                "紫 → 赤"
+            ],
+            "Purples": [
+                "紫系"
+            ],
+            "QLT": [
+                "品質"
+            ],
+            "Quartimax": [
+                "クォーティマックス"
+            ],
+            "Red": [
+                "赤"
+            ],
+            "Red and Blue": [
+                "赤と青"
+            ],
+            "Red and Gray": [
+                "赤とグレー"
+            ],
+            "Red to Purple": [
+                "赤 → 紫"
+            ],
+            "Red, Yellow, Blue": [
+                "赤・黄・青"
+            ],
+            "Red, Yellow, Green": [
+                "赤・黄・緑"
+            ],
+            "Reds": [
+                "赤系"
+            ],
+            "Right": [
+                "右"
+            ],
+            "Rotate eigenvectors": [
+                "固有ベクトルを回転"
+            ],
+            "Rotation": [
+                "回転"
+            ],
+            "Row": [
+                "行"
+            ],
+            "Row and Column Points for {rows} and {cols}": [
+                "{rows}と{cols}の行と列の点"
+            ],
+            "Row and column profiles": [
+                "行・列のプロフィール"
+            ],
+            "Row and column summaries": [
+                "行・列の要約"
+            ],
+            "Row Labels": [
+                "行ラベル"
+            ],
+            "Row plot": [
+                "行プロット"
+            ],
+            "Row Plot": [
+                "行プロット"
+            ],
+            "Row Points for {rows}": [
+                "{rows} の行点"
+            ],
+            "Row principal": [
+                "行主成分"
+            ],
+            "Row principal normalization": [
+                "行主正規化"
+            ],
+            "Row Profiles": [
+                "行プロフィール"
+            ],
+            "Row Summary": [
+                "行の要約"
+            ],
+            "Rows": [
+                "行"
+            ],
+            "Same as point/arrow": [
+                "点／矢印と同じ"
+            ],
+            "Save": [
+                "保存"
+            ],
+            "Save observation coordinates": [
+                "観測値座標を保存"
+            ],
+            "Scree Plot": [
+                "スクリープロット"
+            ],
+            "Scree plot": [
+                "スクリープロット"
+            ],
+            "Set 1": [
+                "セット1"
+            ],
+            "Set 2": [
+                "セット2"
+            ],
+            "Set 3": [
+                "セット3"
+            ],
+            "Singular Value": [
+                "特異値"
+            ],
+            "Size": [
+                "サイズ"
+            ],
+            "Sizes & Colors": [
+                "サイズと色"
+            ],
+            "Smoking": [
+                "喫煙"
+            ],
+            "Solution": [
+                "解"
+            ],
+            "Some categories have zero counts and must be removed.": [
+                "度数が0のカテゴリーがあるため、削除する必要があります。"
+            ],
+            "Some values are missing from the contingency table.": [
+                "分割表に欠損値があります。"
+            ],
+            "Spectral": [
+                "スペクトル"
+            ],
+            "SS Loadings": [
+                "負荷量2乗和"
+            ],
+            "Standard": [
+                "標準"
+            ],
+            "Standard coordinates": [
+                "標準座標"
+            ],
+            "Standard normalization": [
+                "標準表示"
+            ],
+            "Standardize loadings (eigenvectors)": [
+                "負荷量（固有ベクトル）を標準化"
+            ],
+            "Standardize scores": [
+                "スコアを標準化"
+            ],
+            "Standardize variables": [
+                "変数を標準化"
+            ],
+            "Statistic": [
+                "統計量"
+            ],
+            "Stretch arrows by": [
+                "矢印の伸縮"
+            ],
+            "Subtitle Style": [
+                "サブタイトルスタイル"
+            ],
+            "Subtitle Text": [
+                "サブタイトル文字"
+            ],
+            "Summary": [
+                "要約"
+            ],
+            "Suppl. variables": [
+                "補助変数"
+            ],
+            "Supplement": [
+                "補助"
+            ],
+            "Supplementary column numbers must be a list of numbers, e.g. 1,2,9": [
+                "補助列番号は数値のリストで指定してください（例：1,2,9）"
+            ],
+            "Supplementary column numbers must be between 1 and {nmax}.": [
+                "補助列番号は 1 から {nmax} の数値でなくてはなりません。"
+            ],
+            "Supplementary columns": [
+                "補助列"
+            ],
+            "Supplementary Points": [
+                "補助点"
+            ],
+            "Supplementary row numbers must be a list of numbers, e.g. 1,2,9": [
+                "補助行番号は数値のリストで指定してください（例：1,2,9）"
+            ],
+            "Supplementary row numbers must be between 1 and {nmax}.": [
+                "補助行番号は 1 から {nmax} の数値でなければなりません。"
+            ],
+            "Supplementary rows": [
+                "補助行"
+            ],
+            "Supplementary rows/columns": [
+                "補助行／列"
+            ],
+            "Supplementary variables": [
+                "補助変数"
+            ],
+            "Supplementary Variables": [
+                "補助変数"
+            ],
+            "Symmetric": [
+                "対称"
+            ],
+            "Symmetric normalization": [
+                "対称正規化"
+            ],
+            "Tables": [
+                "表"
+            ],
+            "Text Size": [
+                "文字サイズ"
+            ],
+            "Text Size & Colors": [
+                "文字サイズと色"
+            ],
+            "The correlation matrix is nearly singular. Computations may not be accurate.": [
+                "相関行列がほぼ特異です。計算が正確でない可能性があります。"
+            ],
+            "The following variable(s) are constant and cannot be used in a principal component analysis: {vars}.": [
+                "次の変数は定数であるため、主成分分析に使用できません：{vars}。"
+            ],
+            "The number of dimensions cannot be greater than {max}.": [
+                "次元数は {max} を超えることはできません。"
+            ],
+            "The number of dimensions cannot be greater than the number of observations.": [
+                "次元数は観測値の数を超えることはできません。"
+            ],
+            "The number of dimensions cannot be greater than the number of variables.": [
+                "次元数は変数の数を超えることはできません。"
+            ],
+            "The singular value for dimension {n} is close to zero. The plots may not be accurate.": [
+                "次元 {n} の特異値がゼロに近いため、プロットが正確でない可能性があります。"
+            ],
+            "The χ2 statistic is equal to zero.": [
+                "χ2統計量がゼロです。"
+            ],
+            "Tidy:Alger": [
+                "Tidy：アルジェ"
+            ],
+            "Tidy:Apple": [
+                "Tidy：アップル"
+            ],
+            "Tidy:Candy": [
+                "Tidy：キャンディ"
+            ],
+            "Tidy:Friendly": [
+                "Tidy：フレンドリー"
+            ],
+            "Tidy:Ibm": [
+                "Tidy：IBM"
+            ],
+            "Tidy:Metro": [
+                "Tidy：メトロ"
+            ],
+            "Tidy:Rainbow": [
+                "Tidy：レインボー"
+            ],
+            "Tidy:Seaside": [
+                "Tidy：シーサイド"
+            ],
+            "Title Style": [
+                "タイトルスタイル"
+            ],
+            "Title Text": [
+                "タイトル"
+            ],
+            "Top": [
+                "上"
+            ],
+            "Total": [
+                "合計"
+            ],
+            "Unable to compute correspondence analysis for the selected data.": [
+                "選択したデータに対して対応分析を計算できません。"
+            ],
+            "Unable to compute MCA because of too many missing values.": [
+                "欠損値が多すぎるため、MCAを計算できません。"
+            ],
+            "Unable to compute MCA for the selected variables.": [
+                "選択した変数に対してMCAを計算できません。"
+            ],
+            "Unable to compute principal components for the selected variables.": [
+                "選択した変数に対して主成分を計算できません。"
+            ],
+            "Unable to compute the correlation matrix.": [
+                "相関行列を計算できません。"
+            ],
+            "Unable to compute the χ2 statistic.": [
+                "χ2統計量を計算できません。"
+            ],
+            "Unable to use {rotation} rotation.": [
+                "{rotation}回転を使用できません。"
+            ],
+            "Variable": [
+                "変数"
+            ],
+            "Variable descriptions as names": [
+                "変数の説明を名前に使用"
+            ],
+            "Variable discriminations": [
+                "変数の判別"
+            ],
+            "Variable Discriminations": [
+                "変数の識別"
+            ],
+            "Variable plot": [
+                "変数プロット"
+            ],
+            "Variable Plot": [
+                "変数プロット"
+            ],
+            "Variables": [
+                "変数"
+            ],
+            "Varimax": [
+                "バリマックス"
+            ],
+            "vijMulti": [
+                "vijMulti"
+            ],
+            "vijMulti: Multivariate Data Analyses": [
+                "vijMulti：多変量データ分析"
+            ],
+            "Viridis:Inferno": [
+                "Viridis：インフェルノ"
+            ],
+            "Viridis:Magma": [
+                "Viridis：マグマ"
+            ],
+            "Viridis:Plasma": [
+                "Viridis：プラズマ"
+            ],
+            "Viridis:Turbo": [
+                "Viridis：ターボ"
+            ],
+            "Viridis:Viridis": [
+                "Viridis：基本"
+            ],
+            "White": [
+                "白"
+            ],
+            "X-Axis": [
+                "X軸"
+            ],
+            "X-Axis and Y-Axis cannot be equal.": [
+                "X軸とY軸を同一にはできません。"
+            ],
+            "X-Axis and Y-Axis cannot be greater than the number of dimensions.": [
+                "X軸とY軸の値は、次元数を以下でなくてはなりません。"
+            ],
+            "Y-Axis": [
+                "Y軸"
+            ],
+            "Yellow": [
+                "黄"
+            ],
+            "Yellow to Blue": [
+                "黄 → 青"
+            ],
+            "Yellow to Brown": [
+                "黄 → 茶色"
+            ],
+            "Yellow to Green": [
+                "黄 → 緑"
+            ],
+            "Yellow to Red": [
+                "黄 → 赤"
+            ],
+            "χ² = {chisq}, df = {df}, p-value = {pval}": [
+                "χ² = {chisq}, df = {df}, p-value = {pval}"
+            ]
+        }
+    }
+}

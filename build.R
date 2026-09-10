@@ -35,6 +35,7 @@ vijMulti::principalOptions
 ## i18n (creation)
 jmvtools::i18nCreate('catalog')
 jmvtools::i18nCreate("fr")
+jmvtools::i18nCreate("es")
 
 # Testthat files
 

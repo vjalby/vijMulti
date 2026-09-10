@@ -5,39 +5,39 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2021-07-26 12:08:06+01000\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
-"Language: c\n"
+"Language: ja\n"
 
 #: R/principal.b.R
 msgid "{rotation} rotation"
-msgstr ""
+msgstr "{rotation}回転"
 
 #: R/principal.b.R
 msgid "{rotation} rotation was used."
-msgstr ""
+msgstr "{rotation}回転が用いられました。"
 
 #: R/principal.b.R
 msgid "{rotation} rotation with Kaiser normalization"
-msgstr ""
+msgstr "カイザー正規化を伴う{rotation}回転"
 
 #: R/principal.b.R
 msgid "{rotation} rotation with Kaiser normalization was used."
-msgstr ""
+msgstr "カイザー正規化を伴う{rotation}回転が用いられました。"
 
 #: R/corresp.b.R
 #: R/multcorresp.b.R
 #: multcorresp/results/categories.columns.title
 msgid "% Inertia"
-msgstr ""
+msgstr "%慣性"
 
 #: R/multcorresp.b.R
 #: corresp/results/eigenvalues.columns.title
 #: multcorresp/results/eigenvalues.columns.title
 msgid "% of Inertia"
-msgstr ""
+msgstr "慣性%"
 
 #: principal/results/summaryTable.columns.title
 msgid "% of Variance"
-msgstr ""
+msgstr "分散%"
 
 #: package.description
 msgid ""
@@ -48,6 +48,10 @@ msgid ""
 "is available at <a href=\"https://github.com/vjalby/vijMulti\" "
 "target=\"_blank\">Github</a>.</p>"
 msgstr ""
+"<p><strong>主要な古典的多変量データ分析</strong>：</p> <ul> <li>主成分分析</li> <li>対応分析</li> "
+"<li>多重対応分析</li> </ul> <p>このモジュールは<strong>Analyses</strong>タブから利用できます。</p> "
+"<p>プロジェクトのソースコード（および変更履歴）は<a href=\"https://github.com/vjalby/vijMulti\" "
+"target=\"_blank\">Github</a>で公開されています。</p>"
 
 #: R/corresp.b.R
 msgid ""
@@ -81,6 +85,26 @@ msgid ""
 "</ul>\n"
 "<p>A sample file is included at Open > Data Library > vijMulti > Smoking</p>"
 msgstr ""
+"<p>このモジュールは、2つのカテゴリ変数に対する<strong>対応分析（CA）</strong>を実施します。計算は、F. Husson、J. "
+"Josse、S. Le、J. Mazetによるパッケージ<a href = "
+"\"https://CRAN.R-project.org/package=FactoMineR\" "
+"target=\"_blank\">FactoMineR<a/>に基づいています。</p>\n"
+"<p>データは以下のいずれかです。</p>\n"
+"<ul>\n"
+"<li><strong>観測データ表</strong>（生データ）。<em>jamovi</"
+"em>の組み込み重みづけ機能、または「度数」変数を用いて重みづけできます。</li>\n"
+"<li>または<strong>分割表</strong></li>\n"
+"</ul>\n"
+"<p><strong>補助行または補助列</strong>の番号は、整数のリスト（例：1,3,6）で指定できます。</p>\n"
+"<p>4種類の正規化（プロット前の行・列スコアのスケーリング）が利用できます。</p>\n"
+"<ul>\n"
+"<li><strong>主成分：</strong> 行と列のスコアを固有値でスケーリングします。</li>\n"
+"<li><strong>対象：</strong> 行と列のスコアを固有値の平方根でスケーリングします。</li>\n"
+"<li><strong>行主成分：</strong> 行スコアのみを固有値でスケーリングします。</li>\n"
+"<li><strong>列主成分：</strong> 列スコアのみを固有値でスケーリングします。</li>\n"
+"<li><strong>標準：</strong> 正規化を行わない生座標を使用します。</li>\n"
+"</ul>\n"
+"<p>サンプルファイルは、Open &gt; Data Library &gt; vijMulti &gt; Smoking に含まれています。</p>"
 
 #: R/multcorresp.b.R
 msgid ""
@@ -115,6 +139,26 @@ msgid ""
 "</ul>\n"
 "<p>A sample file is included at Open > Data Library > vijMulti > Cars</p>"
 msgstr ""
+"<p>このモジュールは、複数のカテゴリ変数に対して<strong>多重コレスポンデンス分析 (MCA)</strong> を実行します。計算は、F. "
+"Husson、J. Josse、S. Le、J. Mazetらによる <a href = "
+"\"https://CRAN.R-project.org/package=FactoMineR\" "
+"target=\"_blank\">FactoMineR<a/> パッケージに基づいています。</p>\n"
+"<p>以下の2つの古典的な手法が利用可能です：</p>\n"
+"<ul>\n"
+"<li><strong>指示行列：</strong> 指示行列に対する対応分析</li>\n"
+"<li><strong>バート行列：</strong> バート行列に対する対応分析。固有値は指示行列法の固有値の2乗になります。</li>\n"
+"</ul>\n"
+"<p>どちらの手法を用いても、同じ <em>標準</em> 座標と判別結果が得られます（ただし異なる <em>主</em> 座標）。</p>\n"
+"<p>選択した場合、<strong>ベンゼクリおよびグリーンエーカーの補正</strong>は固有値のみに適用されます（<strong>要約</"
+"strong> テーブル）。カテゴリおよび観測値の主座標（および慣性）は、バート行列の元の固有値から計算されます。</p>\n"
+"<p><strong>標準化</strong> オプションは、座標を（固有値で）どのようにスケーリングするかを指定します：</p>\n"
+"<ul>\n"
+"<li><strong>主標準化：</strong> カテゴリと個体の両方の座標がスケーリングされます。</li>\n"
+"<li><strong>カテゴリ主標準化：</strong> カテゴリの座標のみがスケーリングされます。</li>\n"
+"<li><strong>観測値主標準化：</strong> 観測値の座標のみがスケーリングされます。</li>\n"
+"<li><strong>標準：</strong> カテゴリと観測値の両方の座標が標準となります。</li>\n"
+"</ul>\n"
+"<p>サンプルファイルは Open > Data Library > vijMulti > Cars に含まれています。</p>"
 
 #: R/principal.b.R
 msgid ""
@@ -145,31 +189,49 @@ msgid ""
 "</ul>\n"
 "<p>A sample file is included at Open > Data Library > vijMulti > Iris</p>"
 msgstr ""
+"<p>このモジュールは、複数の連続変数に対して<strong>主成分分析 (PCA)</strong> を実行します。計算は "
+"<tt>stats::prcomp</tt> 関数に基づいています。</p>\n"
+"<p>回転後の成分は厳密には主成分ではありませんが、広く利用されています。直交回転のみが利用可能です（GPArotation "
+"パッケージを使用）。</p>\n"
+"<p>主成分負荷量（変数座標）およびスコア（観測値座標）は主座標（固有値の平方根でスケーリングされたもの）です。</p>\n"
+"<p>バイプロットは \"Biplots in Practice\" (Michael Greenacre, 2010) に準拠しています：</p>\n"
+"<ul>\n"
+"<li><strong>フォーム・バイプロット：</strong> スコアは主座標（固有値でスケーリング）され、負荷量は標準座標となります。</li>\n"
+"<li><strong>共分散バイプロット：</strong> 負荷量は主座標となり、スコアは標準座標となります。</li>\n"
+"</ul>\n"
+"<p><strong>詳細設定</strong>:</p>\n"
+"<ul>\n"
+"<li><strong>負荷量の標準化：</strong> 負荷量を（固有値ではなく）2乗和が1になるように標準化します。</li>\n"
+"<li><strong>スコアの標準化</strong> スコアを（固有値ではなく）分散が1になるように標準化します。</li>\n"
+"<li><strong>固有ベクトルの回転：</strong> "
+"主座標としての負荷量ではなく、固有ベクトル（標準負荷量）に対して回転（バリマックス回転など）を適用します（STATA方式）。</li>\n"
+"</ul>\n"
+"<p>サンプルファイルは「開く > データライブラリ > vijMulti > Iris」に含まれています。</p>"
 
 #: package/datasets/Smoking.description
 msgid "A demonstration dataset for vijMulti/Correspondence Analysis."
-msgstr ""
+msgstr "vijMulti/対応分析のデモンストレーション用データセット。"
 
 #: package/datasets/Cars.description
 msgid "A demonstration dataset for vijMulti/Multiple Correspondence Analysis."
-msgstr ""
+msgstr "vijMulti/多重対応分析のデモンストレーション用データセット。"
 
 #: package/datasets/Iris.description
 msgid "A demonstration dataset for vijMulti/Principal Component Analysis."
-msgstr ""
+msgstr "vijMulti/主成分分析のデモンストレーション用データセット。"
 
 #: multcorresp/options/colorPalette/Accent.title
 #: principal/options/colorPalette/Accent.title
 msgid "Accent"
-msgstr ""
+msgstr "アクセント"
 
 #: R/corresp.b.R
 msgid "Active Margin"
-msgstr ""
+msgstr "有効マージン"
 
 #: principal/ui[7].label
 msgid "Advanced Options"
-msgstr ""
+msgstr "詳細オプション"
 
 #: corresp/options/titleAlign.title
 #: corresp/options/subtitleAlign.title
@@ -181,43 +243,43 @@ msgstr ""
 #: principal/options/subtitleAlign.title
 #: principal/options/captionAlign.title
 msgid "Align"
-msgstr ""
+msgstr "整列"
 
 #: principal/options/biplotLines.title
 msgid "Arrow lines"
-msgstr ""
+msgstr "矢印線"
 
 #: principal/options/varColor.title
 msgid "Arrows"
-msgstr ""
+msgstr "矢印"
 
 #: R/corresp.b.R
 msgid "Axis numbers cannot be equal."
-msgstr ""
+msgstr "軸番号は同じ値にはできません。"
 
 #: R/corresp.b.R
 msgid "Axis numbers must be less than or equal to the number of dimensions ({nDim})."
-msgstr ""
+msgstr "軸番号は次元数（{nDim}）以下でなければなりません。"
 
 #: corresp/ui[6].label
 msgid "Axis Titles"
-msgstr ""
+msgstr "軸タイトル"
 
 #: R/principal.b.R
 msgid "Bartlett's Test of Sphericity"
-msgstr ""
+msgstr "バートレットの球面性検定"
 
 #: principal/options/rotation/bentlerT.title
 msgid "Bentler T"
-msgstr ""
+msgstr "ベントラーのT"
 
 #: R/multcorresp.b.R
 msgid "Benzécri Correction"
-msgstr ""
+msgstr "ベンゼクリ補正"
 
 #: multcorresp/options/BenzecriAdj.title
 msgid "Benzécri correction"
-msgstr ""
+msgstr "ベンゼクリ補正"
 
 #: R/multcorresp.b.R
 #: corresp/options/showBiPlot.title
@@ -237,11 +299,11 @@ msgstr ""
 #: principal/ui[3][2][0].label
 #: principal/results/biPlot.title
 msgid "Biplot"
-msgstr ""
+msgstr "バイプロット"
 
 #: principal/options/biplotType.title
 msgid "Biplot Type"
-msgstr ""
+msgstr "バイプロットの種類"
 
 #: corresp/options/supColor/black.title
 #: multcorresp/options/obsColor/black.title
@@ -249,7 +311,7 @@ msgstr ""
 #: principal/options/labelColor/black.title
 #: principal/options/obsColor/black.title
 msgid "Black"
-msgstr ""
+msgstr "黒"
 
 #: corresp/options/rowColor/blue.title
 #: corresp/options/colColor/blue.title
@@ -257,22 +319,22 @@ msgstr ""
 #: principal/options/varColor/#377EB8.title
 #: principal/options/obsColor/#377EB8.title
 msgid "Blue"
-msgstr ""
+msgstr "青"
 
 #: multcorresp/options/colorPalette/BuGn.title
 #: principal/options/colorPalette/BuGn.title
 msgid "Blue to Green"
-msgstr ""
+msgstr "青 → 緑"
 
 #: multcorresp/options/colorPalette/BuPu.title
 #: principal/options/colorPalette/BuPu.title
 msgid "Blue to Purple"
-msgstr ""
+msgstr "青 → 紫"
 
 #: multcorresp/options/colorPalette/Blues.title
 #: principal/options/colorPalette/Blues.title
 msgid "Blues"
-msgstr ""
+msgstr "青系"
 
 #: corresp/options/titleFontFace/bold.title
 #: corresp/options/subtitleFontFace/bold.title
@@ -284,7 +346,7 @@ msgstr ""
 #: principal/options/subtitleFontFace/bold.title
 #: principal/options/captionFontFace/bold.title
 msgid "Bold"
-msgstr ""
+msgstr "太字"
 
 #: corresp/options/titleFontFace/bold.italic.title
 #: corresp/options/subtitleFontFace/bold.italic.title
@@ -296,11 +358,11 @@ msgstr ""
 #: principal/options/subtitleFontFace/bold.italic.title
 #: principal/options/captionFontFace/bold.italic.title
 msgid "Bold Italic"
-msgstr ""
+msgstr "斜体太字"
 
 #: multcorresp/options/boldCat.title
 msgid "Boldface categories"
-msgstr ""
+msgstr "カテゴリーを太字表示"
 
 #: corresp/options/yAxisPosition/0.title
 #: multcorresp/options/legendPosition/bottom.title
@@ -308,81 +370,81 @@ msgstr ""
 #: principal/options/legendPosition/bottom.title
 #: principal/options/yAxisPosition/0.title
 msgid "Bottom"
-msgstr ""
+msgstr "下"
 
 #: principal/options/varColor/#A65628.title
 #: principal/options/obsColor/#A65628.title
 msgid "Brown"
-msgstr ""
+msgstr "茶色"
 
 #: multcorresp/options/colorPalette/BrBG.title
 #: principal/options/colorPalette/BrBG.title
 msgid "Brown and Green"
-msgstr ""
+msgstr "茶色と緑"
 
 #: R/multcorresp.b.R
 #: multcorresp/options/method/Burt.title
 #: multcorresp/ui[3][0][0]/method_burt.label
 msgid "Burt matrix"
-msgstr ""
+msgstr "バート行列"
 
 #: corresp/ui[7][2][1][0].label
 #: multcorresp/ui[8][2][1][0].label
 #: principal/ui[6][2][1][0].label
 msgid "Caption Style"
-msgstr ""
+msgstr "キャプションスタイル"
 
 #: corresp/ui[7][2][0][0].label
 #: multcorresp/ui[8][2][0][0].label
 #: principal/ui[6][2][0][0].label
 msgid "Caption Text"
-msgstr ""
+msgstr "キャプションテキスト"
 
 #: multcorresp/options/colorPalette/custom::carbon_dark.title
 #: principal/options/colorPalette/custom::carbon_dark.title
 msgid "Carbon:Dark"
-msgstr ""
+msgstr "Carbon:ダーク"
 
 #: multcorresp/options/colorPalette/custom::carbon_light.title
 #: principal/options/colorPalette/custom::carbon_light.title
 msgid "Carbon:Light"
-msgstr ""
+msgstr "Carbon:ライト"
 
 #: package/datasets/Cars.name
 msgid "Cars"
-msgstr ""
+msgstr "自動車（Cars）"
 
 #: multcorresp/options/showCategories.title
 #: multcorresp/options/showCategoryPlot.title
 msgid "Categories"
-msgstr ""
+msgstr "カテゴリー"
 
 #: R/multcorresp.b.R
 #: multcorresp/results/categoryplot.title
 msgid "Category Plot"
-msgstr ""
+msgstr "カテゴリープロット"
 
 #: multcorresp/options/catTitleText.title
 #: multcorresp/options/catSubtitleText.title
 #: multcorresp/options/catCaptionText.title
 msgid "Category plot"
-msgstr ""
+msgstr "カテゴリープロット"
 
 #: multcorresp/ui[6][0][1][0].label
 msgid "Category Plot Options"
-msgstr ""
+msgstr "カテゴリープロットオプション"
 
 #: multcorresp/options/normalization/catprincipal.title
 msgid "Category principal"
-msgstr ""
+msgstr "カテゴリー主成分"
 
 #: R/multcorresp.b.R
 msgid "Category principal coordinates"
-msgstr ""
+msgstr "カテゴリー主成分座標"
 
 #: multcorresp/results/categories.title
 msgid "Category Summary"
-msgstr ""
+msgstr "カテゴリーの要約"
 
 #: corresp/options/titleAlign/0.5.title
 #: corresp/options/subtitleAlign/0.5.title
@@ -400,50 +462,50 @@ msgstr ""
 #: principal/options/xAxisPosition/0.5.title
 #: principal/options/yAxisPosition/0.5.title
 msgid "Center"
-msgstr ""
+msgstr "中央"
 
 #: corresp/ui[5][0][1][0].label
 msgid "Colors"
-msgstr ""
+msgstr "配色"
 
 #: corresp/options/colColor.title
 msgid "Column"
-msgstr ""
+msgstr "列"
 
 #: corresp/options/showColPlot.title
 #: corresp/options/columnTitleText.title
 #: corresp/options/columnSubtitleText.title
 #: corresp/options/columnCaptionText.title
 msgid "Column plot"
-msgstr ""
+msgstr "列プロット"
 
 #: corresp/results/colplot.title
 msgid "Column Plot"
-msgstr ""
+msgstr "列プロット"
 
 #: R/corresp.b.R
 msgid "Column Points for {cols}"
-msgstr ""
+msgstr "{cols} の列点"
 
 #: corresp/options/normalization/colprincipal.title
 msgid "Column principal"
-msgstr ""
+msgstr "列の主成分"
 
 #: R/corresp.b.R
 msgid "Column principal normalization"
-msgstr ""
+msgstr "列主正規化"
 
 #: corresp/results/colProfiles.title
 msgid "Column Profiles"
-msgstr ""
+msgstr "列のプロフィール"
 
 #: corresp/results/colSummary.title
 msgid "Column Summary"
-msgstr ""
+msgstr "列の要約"
 
 #: corresp/options/columnTitle.title
 msgid "Column title"
-msgstr ""
+msgstr "列タイトル"
 
 #: corresp/options/cols.title
 #: corresp/options/columns.title
@@ -451,43 +513,43 @@ msgstr ""
 #: corresp/ui/mode/obsTable[0][0][1].label
 #: corresp/ui/mode/contTable[0][0][0].label
 msgid "Columns"
-msgstr ""
+msgstr "列"
 
 #: R/principal.b.R
 #: principal/results/summaryTable.columns.title
 msgid "Component"
-msgstr ""
+msgstr "成分"
 
 #: R/principal.b.R
 msgid "Component {n} ({perc} %)"
-msgstr ""
+msgstr "成分 {n} ({perc} %)"
 
 #: R/principal.b.R
 msgid "Component Plot"
-msgstr ""
+msgstr "成分プロット"
 
 #: multcorresp/options/connectOrdinalCat.title
 msgid "Connected ordinal categories"
-msgstr ""
+msgstr "順序カテゴリーの接続"
 
 #: corresp/options/mode/contTable.title
 #: corresp/results/contingency.title
 msgid "Contingency Table"
-msgstr ""
+msgstr "分割表"
 
 #: corresp/options/showContingency.title
 msgid "Contingency table"
-msgstr ""
+msgstr "分割表"
 
 #: R/corresp.b.R
 #: R/multcorresp.b.R
 msgid "Contributions"
-msgstr ""
+msgstr "寄与"
 
 #: R/corresp.b.R
 #: R/multcorresp.b.R
 msgid "Coordinates"
-msgstr ""
+msgstr "座標"
 
 #: package/analyses/corresp.title
 #: package/analyses/corresp.menuTitle
@@ -495,52 +557,52 @@ msgstr ""
 #: corresp/ui.title
 #: corresp/results.title
 msgid "Correspondence Analysis"
-msgstr ""
+msgstr "対応分析"
 
 #: R/multcorresp.b.R
 msgid "COS2"
-msgstr ""
+msgstr "コサイン2乗"
 
 #: corresp/options/counts.title
 #: corresp/ui/mode/obsTable[0][0][2].label
 msgid "Counts (optional)"
-msgstr ""
+msgstr "度数（任意）"
 
 #: R/corresp.b.R
 msgid "Counts may not be infinite."
-msgstr ""
+msgstr "度数を無限大にすることはできません。"
 
 #: R/corresp.b.R
 msgid "Counts may not be negative."
-msgstr ""
+msgstr "度数を負にすることはできません。"
 
 #: principal/ui[3][2][0]/biplotType_covPlot.label
 msgid "Cov (Loading principal)"
-msgstr ""
+msgstr "共分散 (主成分負荷量)"
 
 #: principal/options/biplotType/covPlot.title
 msgid "Covariance (Loading principal)"
-msgstr ""
+msgstr "共分散 (主成分負荷量)"
 
 #: R/principal.b.R
 msgid "Covariance Biplot"
-msgstr ""
+msgstr "共分散バイプロット"
 
 #: R/multcorresp.b.R
 #: corresp/results/eigenvalues.columns.title
 #: multcorresp/results/eigenvalues.columns.title
 #: principal/results/summaryTable.columns.title
 msgid "Cumulative %"
-msgstr ""
+msgstr "累積％"
 
 #: multcorresp/options/colorPalette/Dark2.title
 #: principal/options/colorPalette/Dark2.title
 msgid "Dark 2"
-msgstr ""
+msgstr "ダーク2"
 
 #: multcorresp/options/obsColor/darkgray.title
 msgid "Dark Gray"
-msgstr ""
+msgstr "ダークグレー"
 
 #: R/utils.R
 #: corresp/options/columnTitleText.default
@@ -566,79 +628,79 @@ msgstr ""
 #: principal/options/varCaptionText.default
 #: principal/options/obsCaptionText.default
 msgid "default"
-msgstr ""
+msgstr "初期値"
 
 #: principal/results/kmoTable.columns.title
 msgid "df"
-msgstr ""
+msgstr "自由度"
 
 #: multcorresp/options/colorPalette/dichromat::Categorical.12.title
 #: principal/options/colorPalette/dichromat::Categorical.12.title
 msgid "Dichromat:Categorical"
-msgstr ""
+msgstr "2色型：カテゴリ"
 
 #: R/principal.b.R
 msgid "Dim"
-msgstr ""
+msgstr "次元"
 
 #: R/corresp.b.R
 #: R/multcorresp.b.R
 #: R/principal.b.R
 msgid "Dim {n}"
-msgstr ""
+msgstr "Dim {n}"
 
 #: corresp/results/eigenvalues.columns.title
 #: multcorresp/results/eigenvalues.columns.title
 msgid "Dimension"
-msgstr ""
+msgstr "次元"
 
 #: R/corresp.b.R
 #: R/multcorresp.b.R
 msgid "Dimension {n} ({perc} %)"
-msgstr ""
+msgstr "次元 {n} ({perc} %)"
 
 #: R/multcorresp.b.R
 msgid "Discrimination"
-msgstr ""
+msgstr "判別"
 
 #: R/multcorresp.b.R
 #: multcorresp/results/discrimplot.title
 msgid "Discrimination Plot"
-msgstr ""
+msgstr "判別プロット"
 
 #: multcorresp/options/discrimTitleText.title
 #: multcorresp/options/discrimSubtitleText.title
 #: multcorresp/options/discrimCaptionText.title
 msgid "Discrimination plot"
-msgstr ""
+msgstr "判別プロット"
 
 #: principal/results/summaryTable.columns.title
 msgid "Eigenvalue"
-msgstr ""
+msgstr "固有値"
 
 #: R/principal.b.R
 msgid "Eigenvalues"
-msgstr ""
+msgstr "固有値"
 
 #: principal/ui[4][0][0][1].label
 msgid "Element Sizes"
-msgstr ""
+msgstr "要素サイズ"
 
 #: principal/options/rotation/equamax.title
 msgid "Equamax"
-msgstr ""
+msgstr "エカマックス"
 
 #: R/principal.b.R
 msgid "Extraction"
-msgstr ""
+msgstr "抽出"
 
 #: principal/results/summaryTable.columns.superTitle
 msgid "Extraction Sums of Squared Loadings"
-msgstr ""
+msgstr "抽出された負荷量の2乗和"
 
 #: multcorresp/results/categories.columns.title
 msgid "Factor"
-msgstr ""
+msgstr "因子"
 
 #: corresp/options/titleFontFace.title
 #: corresp/options/subtitleFontFace.title
@@ -650,7 +712,7 @@ msgstr ""
 #: principal/options/subtitleFontFace.title
 #: principal/options/captionFontFace.title
 msgid "Font face"
-msgstr ""
+msgstr "書体"
 
 #: corresp/options/titleFontSize.title
 #: corresp/options/subtitleFontSize.title
@@ -662,86 +724,86 @@ msgstr ""
 #: principal/options/subtitleFontSize.title
 #: principal/options/captionFontSize.title
 msgid "Font size"
-msgstr ""
+msgstr "文字サイズ"
 
 #: principal/options/biplotType/formPlot.title
 #: principal/ui[3][2][0]/biplotType_formPlot.label
 msgid "Form (Score principal)"
-msgstr ""
+msgstr "形式（主成分得点）"
 
 #: R/principal.b.R
 msgid "Form Biplot"
-msgstr ""
+msgstr "形式バイプロット"
 
 #: corresp/options/supColor/darkgray.title
 #: multcorresp/options/obsColor/gray.title
 #: principal/options/varColor/#999999.title
 #: principal/options/obsColor/#999999.title
 msgid "Gray"
-msgstr ""
+msgstr "グレー"
 
 #: corresp/options/rowColor/forestgreen.title
 #: corresp/options/colColor/forestgreen.title
 #: principal/options/varColor/#4DAF4A.title
 #: principal/options/obsColor/#4DAF4A.title
 msgid "Green"
-msgstr ""
+msgstr "緑"
 
 #: multcorresp/options/colorPalette/GnBu.title
 #: principal/options/colorPalette/GnBu.title
 msgid "Green to Blue"
-msgstr ""
+msgstr "緑 → 青"
 
 #: R/multcorresp.b.R
 msgid "Greenacre Correction"
-msgstr ""
+msgstr "グリーンエーカー補正"
 
 #: multcorresp/options/GreenacreAdj.title
 msgid "Greenacre correction"
-msgstr ""
+msgstr "グリーンエーカー補正"
 
 #: R/multcorresp.b.R
 msgid "Greenacre's corrected inertia = {inertia}"
-msgstr ""
+msgstr "グリーンエーカーの補正慣性 = {inertia}"
 
 #: multcorresp/options/colorPalette/Greens.title
 #: principal/options/colorPalette/Greens.title
 msgid "Greens"
-msgstr ""
+msgstr "緑系"
 
 #: multcorresp/options/colorPalette/Greys.title
 #: principal/options/colorPalette/Greys.title
 msgid "Greys"
-msgstr ""
+msgstr "グレー系"
 
 #: principal/options/groupVar.title
 #: principal/ui[0][2].label
 msgid "Group"
-msgstr ""
+msgstr "グループ"
 
 #: R/multcorresp.b.R
 #: multcorresp/options/method/Indicator.title
 #: multcorresp/ui[3][0][0]/method_indicator.label
 msgid "Indicator matrix"
-msgstr ""
+msgstr "指標行列"
 
 #: R/multcorresp.b.R
 #: corresp/results/eigenvalues.columns.title
 #: multcorresp/results/eigenvalues.columns.title
 msgid "Inertia"
-msgstr ""
+msgstr "慣性"
 
 #: corresp/options/showInertia.title
 msgid "Inertia summary"
-msgstr ""
+msgstr "慣性の要約"
 
 #: principal/results/summaryTable.columns.superTitle
 msgid "Initial Eigenvalues"
-msgstr ""
+msgstr "初期固有値"
 
 #: package/datasets/Iris.name
 msgid "Iris"
-msgstr ""
+msgstr "アヤメ（Iris）"
 
 #: corresp/options/titleFontFace/italic.title
 #: corresp/options/subtitleFontFace/italic.title
@@ -753,53 +815,53 @@ msgstr ""
 #: principal/options/subtitleFontFace/italic.title
 #: principal/options/captionFontFace/italic.title
 msgid "Italic"
-msgstr ""
+msgstr "斜体"
 
 #: principal/options/varColor/#A6C4F1.title
 #: principal/options/obsColor/#A6C4F1.title
 msgid "jmv Blue"
-msgstr ""
+msgstr "jmv 青"
 
 #: multcorresp/options/colorPalette/jmv.title
 #: principal/options/colorPalette/jmv.title
 msgid "jmv Default"
-msgstr ""
+msgstr "jmv 既定"
 
 #: principal/options/varColor/#C5C5C5.title
 #: principal/options/obsColor/#C5C5C5.title
 msgid "jmv Gray"
-msgstr ""
+msgstr "jmv グレー"
 
 #: principal/options/varColor/#88C38B.title
 #: principal/options/obsColor/#88C38B.title
 msgid "jmv Green"
-msgstr ""
+msgstr "jmv 緑"
 
 #: principal/options/varColor/#E18A8A.title
 #: principal/options/obsColor/#E18A8A.title
 msgid "jmv Red"
-msgstr ""
+msgstr "jmv 赤"
 
 #: principal/options/varColor/#F0CD8C.title
 #: principal/options/obsColor/#F0CD8C.title
 msgid "jmv Yellow"
-msgstr ""
+msgstr "jmv 黄"
 
 #: principal/options/kaiser.title
 msgid "Kaiser normalization"
-msgstr ""
+msgstr "カイザー正規化"
 
 #: R/principal.b.R
 msgid "Kaiser-Meyer-Olkin Measure of Sampling Adequacy (MSA)"
-msgstr ""
+msgstr "カイザー・マイヤー・オルキン（KMO）のサンプリング適合度指標 (MSA)"
 
 #: principal/options/showKMO.title
 msgid "KMO & Bartlett's test"
-msgstr ""
+msgstr "KMO & バートレット検定"
 
 #: principal/results/kmoTable.title
 msgid "KMO & Bartlett's Test"
-msgstr ""
+msgstr "KMO & バートレット検定"
 
 #: corresp/options/labelSize.title
 #: multcorresp/options/labelVar.title
@@ -808,11 +870,11 @@ msgstr ""
 #: principal/options/labelVar.title
 #: principal/ui[0][1].label
 msgid "Label"
-msgstr ""
+msgstr "ラベル"
 
 #: principal/options/labelColor.title
 msgid "Labels"
-msgstr ""
+msgstr "ラベル"
 
 #: corresp/options/titleAlign/0.title
 #: corresp/options/subtitleAlign/0.title
@@ -829,104 +891,104 @@ msgstr ""
 #: principal/options/legendPosition/left.title
 #: principal/options/xAxisPosition/0.title
 msgid "Left"
-msgstr ""
+msgstr "左"
 
 #: multcorresp/ui[7][0].label
 #: principal/ui[5][0].label
 msgid "Legend"
-msgstr ""
+msgstr "凡例"
 
 #: multcorresp/ui[7].label
 #: principal/ui[5].label
 msgid "Legend & Axis Titles"
-msgstr ""
+msgstr "凡例 & 軸タイトル"
 
 #: multcorresp/options/colorPalette/custom::lemovice.title
 #: principal/options/colorPalette/custom::lemovice.title
 msgid "Lémovice"
-msgstr ""
+msgstr "レモーヴィス"
 
 #: multcorresp/results/categories.columns.title
 msgid "Level"
-msgstr ""
+msgstr "レベル"
 
 #: principal/options/varColor/#B3CDE3.title
 #: principal/options/obsColor/#B3CDE3.title
 msgid "Light Blue"
-msgstr ""
+msgstr "薄い青"
 
 #: principal/options/varColor/#E5D8BD.title
 #: principal/options/obsColor/#E5D8BD.title
 msgid "Light Brown"
-msgstr ""
+msgstr "薄い茶"
 
 #: multcorresp/options/obsColor/lightgray.title
 #: principal/options/varColor/#F2F2F2.title
 #: principal/options/obsColor/#F2F2F2.title
 msgid "Light Gray"
-msgstr ""
+msgstr "薄いグレー"
 
 #: principal/options/varColor/#CCEBC5.title
 #: principal/options/obsColor/#CCEBC5.title
 msgid "Light Green"
-msgstr ""
+msgstr "薄い緑"
 
 #: principal/options/varColor/#FED9A6.title
 #: principal/options/obsColor/#FED9A6.title
 msgid "Light Orange"
-msgstr ""
+msgstr "薄いオレンジ"
 
 #: principal/options/varColor/#FDDAEC.title
 #: principal/options/obsColor/#FDDAEC.title
 msgid "Light Pink"
-msgstr ""
+msgstr "薄いピンク"
 
 #: principal/options/varColor/#DECBE4.title
 #: principal/options/obsColor/#DECBE4.title
 msgid "Light Purple"
-msgstr ""
+msgstr "薄い紫"
 
 #: principal/options/varColor/#FBB4AE.title
 #: principal/options/obsColor/#FBB4AE.title
 msgid "Light Red"
-msgstr ""
+msgstr "薄い赤"
 
 #: principal/options/varColor/#FFFFCC.title
 #: principal/options/obsColor/#FFFFCC.title
 msgid "Light Yellow"
-msgstr ""
+msgstr "薄い黄"
 
 #: R/multcorresp.b.R
 #: R/principal.b.R
 msgid "Limited to the first 100 observations"
-msgstr ""
+msgstr "最初の100観測値に制限"
 
 #: R/corresp.b.R
 #: multcorresp/results/categories.columns.title
 #: multcorresp/results/observations.columns.title
 msgid "Mass"
-msgstr ""
+msgstr "質量"
 
 #: R/multcorresp.b.R
 msgid "MCA Principal Coordinates ({method})"
-msgstr ""
+msgstr "MCA主座標 ({method})"
 
 #: R/multcorresp.b.R
 msgid "MCA Standard Coordinates ({method})"
-msgstr ""
+msgstr "MCA標準座標 ({method})"
 
 #: multcorresp/options/method.title
 #: multcorresp/ui[3][0].label
 msgid "Method"
-msgstr ""
+msgstr "方法"
 
 #: R/multcorresp.b.R
 msgid "Method: {method}"
-msgstr ""
+msgstr "方法: {method}"
 
 #: principal/options/rotation/entropy.title
 msgid "Minimum entropy"
-msgstr ""
+msgstr "最小エントロピー"
 
 #: package/analyses/multcorresp.title
 #: package/analyses/multcorresp.menuTitle
@@ -934,7 +996,7 @@ msgstr ""
 #: multcorresp/ui.title
 #: multcorresp/results.title
 msgid "Multiple Correspondence Analysis"
-msgstr ""
+msgstr "多重対応分析"
 
 #: package/analyses/principal.menuSubgroup
 #: package/analyses/corresp.menuSubgroup
@@ -943,23 +1005,23 @@ msgstr ""
 #: multcorresp/options.menuSubgroup
 #: principal/options.menuSubgroup
 msgid "Multivariate"
-msgstr ""
+msgstr "多変量"
 
 #: multcorresp/results/observations.columns.title
 msgid "Name"
-msgstr ""
+msgstr "名前"
 
 #: R/principal.b.R
 msgid "No rotation used."
-msgstr ""
+msgstr "回転されていません。"
 
 #: multcorresp/options/ggrepel.title
 msgid "Non-overlapping labels"
-msgstr ""
+msgstr "非重複ラベル"
 
 #: principal/options/rotation/none.title
 msgid "None"
-msgstr ""
+msgstr "なし"
 
 #: corresp/options/titleFontFace/plain.title
 #: corresp/options/subtitleFontFace/plain.title
@@ -971,7 +1033,7 @@ msgstr ""
 #: principal/options/subtitleFontFace/plain.title
 #: principal/options/captionFontFace/plain.title
 msgid "Normal"
-msgstr ""
+msgstr "正規"
 
 #: corresp/options/normalization.title
 #: corresp/ui[3][0].label
@@ -979,46 +1041,46 @@ msgstr ""
 #: multcorresp/ui[4][0].label
 #: principal/ui[7][0][0][0].label
 msgid "Normalization"
-msgstr ""
+msgstr "正規化"
 
 #: R/principal.b.R
 msgid "Not enough complete observations to perform PCA."
-msgstr ""
+msgstr "PCAを実行するための完全な観測値が不足しています。"
 
 #: R/corresp.b.R
 msgid "Not enough data to compute CA."
-msgstr ""
+msgstr "CAを計算するためのデータが不足しています。"
 
 #: corresp/options/dimNum.title
 #: multcorresp/options/dimNum.title
 #: principal/options/dimNum.title
 msgid "Number of dimensions"
-msgstr ""
+msgstr "次元数"
 
 #: R/corresp.b.R
 msgid "Number of dimensions must be less than or equal to {maxDim}."
-msgstr ""
+msgstr "次元数は {maxDim} 以下でなければなりません。"
 
 #: multcorresp/options/obsColor.title
 msgid "Obs color"
-msgstr ""
+msgstr "観測値の色"
 
 #: R/principal.b.R
 #: principal/results/obsTable.columns.title
 msgid "Observation"
-msgstr ""
+msgstr "観測値"
 
 #: multcorresp/results/obsCoordOV.title
 #: principal/results/obsCoordOV.title
 msgid "Observation Coordinates"
-msgstr ""
+msgstr "観測値の座標"
 
 #: R/multcorresp.b.R
 #: R/principal.b.R
 #: multcorresp/results/obsplot.title
 #: principal/results/obsPlot.title
 msgid "Observation Plot"
-msgstr ""
+msgstr "観測値プロット"
 
 #: multcorresp/options/obsTitleText.title
 #: multcorresp/options/obsSubtitleText.title
@@ -1027,27 +1089,27 @@ msgstr ""
 #: principal/options/obsSubtitleText.title
 #: principal/options/obsCaptionText.title
 msgid "Observation plot"
-msgstr ""
+msgstr "観測値プロット"
 
 #: multcorresp/ui[6][0][1][1].label
 msgid "Observation Plot Options"
-msgstr ""
+msgstr "観測値プロットオプション"
 
 #: multcorresp/options/normalization/obsprincipal.title
 msgid "Observation principal"
-msgstr ""
+msgstr "観測値主成分"
 
 #: R/multcorresp.b.R
 msgid "Observation principal coordinates"
-msgstr ""
+msgstr "観測値主成分座標"
 
 #: multcorresp/results/observations.title
 msgid "Observation Summary"
-msgstr ""
+msgstr "観測値の要約"
 
 #: corresp/options/mode/obsTable.title
 msgid "Observation Table"
-msgstr ""
+msgstr "観測データ表"
 
 #: multcorresp/options/showObservations.title
 #: multcorresp/options/showObservationPlot.title
@@ -1056,117 +1118,117 @@ msgstr ""
 #: principal/options/obsLabelSize.title
 #: principal/results/obsTable.title
 msgid "Observations"
-msgstr ""
+msgstr "観測値"
 
 #: corresp/options/rowColor/darkorange1.title
 #: corresp/options/colColor/darkorange1.title
 #: principal/options/varColor/#FF7F00.title
 #: principal/options/obsColor/#FF7F00.title
 msgid "Orange"
-msgstr ""
+msgstr "オレンジ"
 
 #: multcorresp/options/colorPalette/PuOr.title
 #: principal/options/colorPalette/PuOr.title
 msgid "Orange and Purple"
-msgstr ""
+msgstr "オレンジと紫"
 
 #: multcorresp/options/colorPalette/OrRd.title
 #: principal/options/colorPalette/OrRd.title
 msgid "Orange to Red"
-msgstr ""
+msgstr "オレンジ → 赤"
 
 #: multcorresp/options/colorPalette/Oranges.title
 #: principal/options/colorPalette/Oranges.title
 msgid "Oranges"
-msgstr ""
+msgstr "オレンジ系"
 
 #: multcorresp/results/eigenvalues.columns.superTitle
 msgid "Original Eigenvalues"
-msgstr ""
+msgstr "元の固有値"
 
 #: multcorresp/options/colorPalette/Paired.title
 #: principal/options/colorPalette/Paired.title
 msgid "Paired"
-msgstr ""
+msgstr "ペア"
 
 #: multcorresp/options/colorPalette.title
 #: principal/options/colorPalette.title
 msgid "Palette"
-msgstr ""
+msgstr "パレット"
 
 #: principal/options/rotation/parsimax.title
 msgid "Parsimax"
-msgstr ""
+msgstr "パーシマックス"
 
 #: multcorresp/options/colorPalette/Pastel1.title
 #: principal/options/colorPalette/Pastel1.title
 msgid "Pastel 1"
-msgstr ""
+msgstr "パステル1"
 
 #: multcorresp/options/colorPalette/Pastel2.title
 #: principal/options/colorPalette/Pastel2.title
 msgid "Pastel 2"
-msgstr ""
+msgstr "パステル2"
 
 #: R/principal.b.R
 msgid "PCA Principal Coordinates"
-msgstr ""
+msgstr "PCA 主座標"
 
 #: R/principal.b.R
 msgid "PCA Principal Coordinates ({rot})"
-msgstr ""
+msgstr "PCA主座標 ({rot})"
 
 #: R/principal.b.R
 msgid "PCA Standard Coordinates"
-msgstr ""
+msgstr "PCA標準座標"
 
 #: R/principal.b.R
 msgid "PCA Standard Coordinates ({rot})"
-msgstr ""
+msgstr "PCA標準座標 ({rot})"
 
 #: corresp/options/rowColor/hotpink.title
 #: corresp/options/colColor/hotpink.title
 #: principal/options/varColor/#F781BF.title
 #: principal/options/obsColor/#F781BF.title
 msgid "Pink"
-msgstr ""
+msgstr "ピンク"
 
 #: multcorresp/options/colorPalette/PiYG.title
 #: principal/options/colorPalette/PiYG.title
 msgid "Pink and Green"
-msgstr ""
+msgstr "ピンクと緑"
 
 #: multcorresp/ui[6][0][0][0].label
 msgid "Plot Color"
-msgstr ""
+msgstr "プロットの色"
 
 #: principal/ui[4][0][1][0].label
 msgid "Plot Colors"
-msgstr ""
+msgstr "プロットの色"
 
 #: multcorresp/ui[6].label
 msgid "Plot Options"
-msgstr ""
+msgstr "プロットオプション"
 
 #: corresp/ui[7].label
 #: multcorresp/ui[8].label
 #: principal/ui[6].label
 msgid "Plot Titles & Subtitles"
-msgstr ""
+msgstr "プロットタイトル & サブタイトル"
 
 #: corresp/ui[4][1][0].label
 #: multcorresp/ui[5][1][0].label
 #: principal/ui[3][1][0].label
 msgid "Plots"
-msgstr ""
+msgstr "プロット"
 
 #: principal/options/pointSize.title
 msgid "Point size"
-msgstr ""
+msgstr "点サイズ"
 
 #: principal/options/obsColor.title
 msgid "Points"
-msgstr ""
+msgstr "点"
 
 #: corresp/options/xAxisPosition.title
 #: corresp/options/yAxisPosition.title
@@ -1177,12 +1239,12 @@ msgstr ""
 #: principal/options/xAxisPosition.title
 #: principal/options/yAxisPosition.title
 msgid "Position"
-msgstr ""
+msgstr "位置"
 
 #: corresp/options/normalization/principal.title
 #: multcorresp/options/normalization/principal.title
 msgid "Principal"
-msgstr ""
+msgstr "主成分"
 
 #: package/analyses/principal.title
 #: package/analyses/principal.menuTitle
@@ -1190,61 +1252,61 @@ msgstr ""
 #: principal/ui.title
 #: principal/results.title
 msgid "Principal Component Analysis"
-msgstr ""
+msgstr "主成分分析"
 
 #: R/multcorresp.b.R
 #: principal/results/loadingTable.notes.norm
 #: principal/results/obsTable.notes.norm
 msgid "Principal coordinates"
-msgstr ""
+msgstr "主成分座標"
 
 #: R/corresp.b.R
 msgid "Principal normalization"
-msgstr ""
+msgstr "主正規化"
 
 #: multcorresp/options/propPoint.title
 msgid "Proportional point size"
-msgstr ""
+msgstr "点のサイズを割合で指定"
 
 #: corresp/options/rowColor/purple.title
 #: corresp/options/colColor/purple.title
 #: principal/options/varColor/#984EA3.title
 #: principal/options/obsColor/#984EA3.title
 msgid "Purple"
-msgstr ""
+msgstr "紫"
 
 #: multcorresp/options/colorPalette/PRGn.title
 #: principal/options/colorPalette/PRGn.title
 msgid "Purple and Green"
-msgstr ""
+msgstr "紫と緑"
 
 #: multcorresp/options/colorPalette/PuBu.title
 #: principal/options/colorPalette/PuBu.title
 msgid "Purple to Blue"
-msgstr ""
+msgstr "紫 → 青"
 
 #: multcorresp/options/colorPalette/PuBuGn.title
 #: principal/options/colorPalette/PuBuGn.title
 msgid "Purple to Green"
-msgstr ""
+msgstr "紫 → 緑"
 
 #: multcorresp/options/colorPalette/PuRd.title
 #: principal/options/colorPalette/PuRd.title
 msgid "Purple to Red"
-msgstr ""
+msgstr "紫 → 赤"
 
 #: multcorresp/options/colorPalette/Purples.title
 #: principal/options/colorPalette/Purples.title
 msgid "Purples"
-msgstr ""
+msgstr "紫系"
 
 #: multcorresp/results/categories.columns.title
 msgid "QLT"
-msgstr ""
+msgstr "品質"
 
 #: principal/options/rotation/quartimax.title
 msgid "Quartimax"
-msgstr ""
+msgstr "クォーティマックス"
 
 #: corresp/options/rowColor/red.title
 #: corresp/options/colColor/red.title
@@ -1252,37 +1314,37 @@ msgstr ""
 #: principal/options/varColor/#E41A1C.title
 #: principal/options/obsColor/#E41A1C.title
 msgid "Red"
-msgstr ""
+msgstr "赤"
 
 #: multcorresp/options/colorPalette/RdBu.title
 #: principal/options/colorPalette/RdBu.title
 msgid "Red and Blue"
-msgstr ""
+msgstr "赤と青"
 
 #: multcorresp/options/colorPalette/RdGy.title
 #: principal/options/colorPalette/RdGy.title
 msgid "Red and Gray"
-msgstr ""
+msgstr "赤とグレー"
 
 #: multcorresp/options/colorPalette/RdPu.title
 #: principal/options/colorPalette/RdPu.title
 msgid "Red to Purple"
-msgstr ""
+msgstr "赤 → 紫"
 
 #: multcorresp/options/colorPalette/RdYlBu.title
 #: principal/options/colorPalette/RdYlBu.title
 msgid "Red, Yellow, Blue"
-msgstr ""
+msgstr "赤・黄・青"
 
 #: multcorresp/options/colorPalette/RdYlGn.title
 #: principal/options/colorPalette/RdYlGn.title
 msgid "Red, Yellow, Green"
-msgstr ""
+msgstr "赤・黄・緑"
 
 #: multcorresp/options/colorPalette/Reds.title
 #: principal/options/colorPalette/Reds.title
 msgid "Reds"
-msgstr ""
+msgstr "赤系"
 
 #: corresp/options/titleAlign/1.title
 #: corresp/options/subtitleAlign/1.title
@@ -1299,119 +1361,119 @@ msgstr ""
 #: principal/options/legendPosition/right.title
 #: principal/options/xAxisPosition/1.title
 msgid "Right"
-msgstr ""
+msgstr "右"
 
 #: principal/options/stataRotation.title
 msgid "Rotate eigenvectors"
-msgstr ""
+msgstr "固有ベクトルを回転"
 
 #: principal/options/rotation.title
 #: principal/ui[2][1][0].label
 #: principal/ui[7][0][1][0].label
 msgid "Rotation"
-msgstr ""
+msgstr "回転"
 
 #: corresp/options/rowColor.title
 msgid "Row"
-msgstr ""
+msgstr "行"
 
 #: R/corresp.b.R
 msgid "Row and Column Points for {rows} and {cols}"
-msgstr ""
+msgstr "{rows}と{cols}の行と列の点"
 
 #: corresp/options/showProfiles.title
 msgid "Row and column profiles"
-msgstr ""
+msgstr "行・列のプロフィール"
 
 #: corresp/options/showSummaries.title
 msgid "Row and column summaries"
-msgstr ""
+msgstr "行・列の要約"
 
 #: corresp/options/rowLabels.title
 #: corresp/ui/mode/contTable[0][0][1].label
 msgid "Row Labels"
-msgstr ""
+msgstr "行ラベル"
 
 #: corresp/options/showRowPlot.title
 #: corresp/options/rowTitleText.title
 #: corresp/options/rowSubtitleText.title
 #: corresp/options/rowCaptionText.title
 msgid "Row plot"
-msgstr ""
+msgstr "行プロット"
 
 #: corresp/results/rowplot.title
 msgid "Row Plot"
-msgstr ""
+msgstr "行プロット"
 
 #: R/corresp.b.R
 msgid "Row Points for {rows}"
-msgstr ""
+msgstr "{rows} の行点"
 
 #: corresp/options/normalization/rowprincipal.title
 msgid "Row principal"
-msgstr ""
+msgstr "行主成分"
 
 #: R/corresp.b.R
 msgid "Row principal normalization"
-msgstr ""
+msgstr "行主正規化"
 
 #: corresp/results/rowProfiles.title
 msgid "Row Profiles"
-msgstr ""
+msgstr "行プロフィール"
 
 #: corresp/results/rowSummary.title
 msgid "Row Summary"
-msgstr ""
+msgstr "行の要約"
 
 #: corresp/options/rows.title
 #: corresp/ui/mode/obsTable[0][0][0].label
 msgid "Rows"
-msgstr ""
+msgstr "行"
 
 #: principal/options/labelColor/none.title
 msgid "Same as point/arrow"
-msgstr ""
+msgstr "点／矢印と同じ"
 
 #: multcorresp/ui[9].label
 #: principal/ui[8].label
 msgid "Save"
-msgstr ""
+msgstr "保存"
 
 #: multcorresp/options/obsCoordOV.title
 #: principal/options/obsCoordOV.title
 msgid "Save observation coordinates"
-msgstr ""
+msgstr "観測値座標を保存"
 
 #: R/principal.b.R
 #: principal/results/screePlot.title
 msgid "Scree Plot"
-msgstr ""
+msgstr "スクリープロット"
 
 #: principal/options/showScreePlot.title
 #: principal/options/screeTitleText.title
 #: principal/options/screeSubtitleText.title
 #: principal/options/screeCaptionText.title
 msgid "Scree plot"
-msgstr ""
+msgstr "スクリープロット"
 
 #: multcorresp/options/colorPalette/Set1.title
 #: principal/options/colorPalette/Set1.title
 msgid "Set 1"
-msgstr ""
+msgstr "セット1"
 
 #: multcorresp/options/colorPalette/Set2.title
 #: principal/options/colorPalette/Set2.title
 msgid "Set 2"
-msgstr ""
+msgstr "セット2"
 
 #: multcorresp/options/colorPalette/Set3.title
 #: principal/options/colorPalette/Set3.title
 msgid "Set 3"
-msgstr ""
+msgstr "セット3"
 
 #: corresp/results/eigenvalues.columns.title
 msgid "Singular Value"
-msgstr ""
+msgstr "特異値"
 
 #: corresp/options/xAxisFontSize.title
 #: corresp/options/yAxisFontSize.title
@@ -1422,84 +1484,84 @@ msgstr ""
 #: principal/options/xAxisFontSize.title
 #: principal/options/yAxisFontSize.title
 msgid "Size"
-msgstr ""
+msgstr "サイズ"
 
 #: principal/ui[4].label
 msgid "Sizes & Colors"
-msgstr ""
+msgstr "サイズと色"
 
 #: package/datasets/Smoking.name
 msgid "Smoking"
-msgstr ""
+msgstr "喫煙"
 
 #: corresp/ui[1][0].label
 #: multcorresp/ui[2][0].label
 #: principal/ui[2][0][0].label
 msgid "Solution"
-msgstr ""
+msgstr "解"
 
 #: R/corresp.b.R
 msgid "Some categories have zero counts and must be removed."
-msgstr ""
+msgstr "度数が0のカテゴリーがあるため、削除する必要があります。"
 
 #: R/corresp.b.R
 msgid "Some values are missing from the contingency table."
-msgstr ""
+msgstr "分割表に欠損値があります。"
 
 #: multcorresp/options/colorPalette/Spectral.title
 #: principal/options/colorPalette/Spectral.title
 msgid "Spectral"
-msgstr ""
+msgstr "スペクトル"
 
 #: principal/results/summaryTable.columns.title
 msgid "SS Loadings"
-msgstr ""
+msgstr "負荷量2乗和"
 
 #: corresp/options/normalization/standard.title
 #: multcorresp/options/normalization/standard.title
 msgid "Standard"
-msgstr ""
+msgstr "標準"
 
 #: R/multcorresp.b.R
 #: R/principal.b.R
 msgid "Standard coordinates"
-msgstr ""
+msgstr "標準座標"
 
 #: R/corresp.b.R
 msgid "Standard normalization"
-msgstr ""
+msgstr "標準表示"
 
 #: principal/options/stdLoadings.title
 msgid "Standardize loadings (eigenvectors)"
-msgstr ""
+msgstr "負荷量（固有ベクトル）を標準化"
 
 #: principal/options/stdScores.title
 msgid "Standardize scores"
-msgstr ""
+msgstr "スコアを標準化"
 
 #: principal/options/stdVariables.title
 msgid "Standardize variables"
-msgstr ""
+msgstr "変数を標準化"
 
 #: principal/results/kmoTable.columns.title
 msgid "Statistic"
-msgstr ""
+msgstr "統計量"
 
 #: principal/options/biplotStretch.title
 msgid "Stretch arrows by"
-msgstr ""
+msgstr "矢印の伸縮"
 
 #: corresp/ui[7][1][1][0].label
 #: multcorresp/ui[8][1][1][0].label
 #: principal/ui[6][1][1][0].label
 msgid "Subtitle Style"
-msgstr ""
+msgstr "サブタイトルスタイル"
 
 #: corresp/ui[7][1][0][0].label
 #: multcorresp/ui[8][1][0][0].label
 #: principal/ui[6][1][0][0].label
 msgid "Subtitle Text"
-msgstr ""
+msgstr "サブタイトル文字"
 
 #: corresp/results/eigenvalues.title
 #: multcorresp/options/showSummary.title
@@ -1507,166 +1569,166 @@ msgstr ""
 #: principal/options/showSummary.title
 #: principal/results/summaryTable.title
 msgid "Summary"
-msgstr ""
+msgstr "要約"
 
 #: R/multcorresp.b.R
 msgid "Suppl. variables"
-msgstr ""
+msgstr "補助変数"
 
 #: corresp/options/supColor.title
 msgid "Supplement"
-msgstr ""
+msgstr "補助"
 
 #: R/corresp.b.R
 msgid "Supplementary column numbers must be a list of numbers, e.g. 1,2,9"
-msgstr ""
+msgstr "補助列番号は数値のリストで指定してください（例：1,2,9）"
 
 #: R/corresp.b.R
 msgid "Supplementary column numbers must be between 1 and {nmax}."
-msgstr ""
+msgstr "補助列番号は 1 から {nmax} の数値でなくてはなりません。"
 
 #: R/corresp.b.R
 #: corresp/options/supplementaryCols.title
 msgid "Supplementary columns"
-msgstr ""
+msgstr "補助列"
 
 #: corresp/ui[2][0].label
 msgid "Supplementary Points"
-msgstr ""
+msgstr "補助点"
 
 #: R/corresp.b.R
 msgid "Supplementary row numbers must be a list of numbers, e.g. 1,2,9"
-msgstr ""
+msgstr "補助行番号は数値のリストで指定してください（例：1,2,9）"
 
 #: R/corresp.b.R
 msgid "Supplementary row numbers must be between 1 and {nmax}."
-msgstr ""
+msgstr "補助行番号は 1 から {nmax} の数値でなければなりません。"
 
 #: R/corresp.b.R
 #: corresp/options/supplementaryRows.title
 msgid "Supplementary rows"
-msgstr ""
+msgstr "補助行"
 
 #: R/corresp.b.R
 msgid "Supplementary rows/columns"
-msgstr ""
+msgstr "補助行／列"
 
 #: R/multcorresp.b.R
 msgid "Supplementary variables"
-msgstr ""
+msgstr "補助変数"
 
 #: multcorresp/options/supplVars.title
 #: multcorresp/ui[0][1].label
 msgid "Supplementary Variables"
-msgstr ""
+msgstr "補助変数"
 
 #: corresp/options/normalization/symmetric.title
 msgid "Symmetric"
-msgstr ""
+msgstr "対称"
 
 #: R/corresp.b.R
 msgid "Symmetric normalization"
-msgstr ""
+msgstr "対称正規化"
 
 #: corresp/ui[4][0][0].label
 #: multcorresp/ui[5][0][0].label
 #: principal/ui[3][0][0].label
 msgid "Tables"
-msgstr ""
+msgstr "表"
 
 #: corresp/ui[5][0][0][0].label
 #: multcorresp/ui[6][0][0][1].label
 #: principal/ui[4][0][0][0].label
 msgid "Text Size"
-msgstr ""
+msgstr "文字サイズ"
 
 #: corresp/ui[5].label
 msgid "Text Size & Colors"
-msgstr ""
+msgstr "文字サイズと色"
 
 #: R/principal.b.R
 msgid "The correlation matrix is nearly singular. Computations may not be accurate."
-msgstr ""
+msgstr "相関行列がほぼ特異です。計算が正確でない可能性があります。"
 
 #: R/principal.b.R
 msgid ""
 "The following variable(s) are constant and cannot be used in a principal "
 "component analysis: {vars}."
-msgstr ""
+msgstr "次の変数は定数であるため、主成分分析に使用できません：{vars}。"
 
 #: R/multcorresp.b.R
 msgid "The number of dimensions cannot be greater than {max}."
-msgstr ""
+msgstr "次元数は {max} を超えることはできません。"
 
 #: R/principal.b.R
 msgid "The number of dimensions cannot be greater than the number of observations."
-msgstr ""
+msgstr "次元数は観測値の数を超えることはできません。"
 
 #: R/principal.b.R
 msgid "The number of dimensions cannot be greater than the number of variables."
-msgstr ""
+msgstr "次元数は変数の数を超えることはできません。"
 
 #: R/corresp.b.R
 msgid ""
 "The singular value for dimension {n} is close to zero. The plots may not be "
 "accurate."
-msgstr ""
+msgstr "次元 {n} の特異値がゼロに近いため、プロットが正確でない可能性があります。"
 
 #: R/corresp.b.R
 msgid "The χ2 statistic is equal to zero."
-msgstr ""
+msgstr "χ2統計量がゼロです。"
 
 #: multcorresp/options/colorPalette/tidy::alger.title
 #: principal/options/colorPalette/tidy::alger.title
 msgid "Tidy:Alger"
-msgstr ""
+msgstr "Tidy：アルジェ"
 
 #: multcorresp/options/colorPalette/tidy::apple.title
 #: principal/options/colorPalette/tidy::apple.title
 msgid "Tidy:Apple"
-msgstr ""
+msgstr "Tidy：アップル"
 
 #: multcorresp/options/colorPalette/tidy::candy.title
 #: principal/options/colorPalette/tidy::candy.title
 msgid "Tidy:Candy"
-msgstr ""
+msgstr "Tidy：キャンディ"
 
 #: multcorresp/options/colorPalette/tidy::friendly.title
 #: principal/options/colorPalette/tidy::friendly.title
 msgid "Tidy:Friendly"
-msgstr ""
+msgstr "Tidy：フレンドリー"
 
 #: multcorresp/options/colorPalette/tidy::ibm.title
 #: principal/options/colorPalette/tidy::ibm.title
 msgid "Tidy:Ibm"
-msgstr ""
+msgstr "Tidy：IBM"
 
 #: multcorresp/options/colorPalette/tidy::metro.title
 #: principal/options/colorPalette/tidy::metro.title
 msgid "Tidy:Metro"
-msgstr ""
+msgstr "Tidy：メトロ"
 
 #: multcorresp/options/colorPalette/tidy::rainbow.title
 #: principal/options/colorPalette/tidy::rainbow.title
 msgid "Tidy:Rainbow"
-msgstr ""
+msgstr "Tidy：レインボー"
 
 #: multcorresp/options/colorPalette/tidy::seaside.title
 #: principal/options/colorPalette/tidy::seaside.title
 msgid "Tidy:Seaside"
-msgstr ""
+msgstr "Tidy：シーサイド"
 
 #: corresp/ui[7][0][1][0].label
 #: multcorresp/ui[8][0][1][0].label
 #: principal/ui[6][0][1][0].label
 msgid "Title Style"
-msgstr ""
+msgstr "タイトルスタイル"
 
 #: corresp/ui[7][0][0][0].label
 #: multcorresp/ui[8][0][0][0].label
 #: principal/ui[6][0][0][0].label
 msgid "Title Text"
-msgstr ""
+msgstr "タイトル"
 
 #: corresp/options/yAxisPosition/1.title
 #: multcorresp/options/legendPosition/top.title
@@ -1674,68 +1736,68 @@ msgstr ""
 #: principal/options/legendPosition/top.title
 #: principal/options/yAxisPosition/1.title
 msgid "Top"
-msgstr ""
+msgstr "上"
 
 #: R/multcorresp.b.R
 msgid "Total"
-msgstr ""
+msgstr "合計"
 
 #: R/corresp.b.R
 msgid "Unable to compute correspondence analysis for the selected data."
-msgstr ""
+msgstr "選択したデータに対して対応分析を計算できません。"
 
 #: R/multcorresp.b.R
 msgid "Unable to compute MCA because of too many missing values."
-msgstr ""
+msgstr "欠損値が多すぎるため、MCAを計算できません。"
 
 #: R/multcorresp.b.R
 msgid "Unable to compute MCA for the selected variables."
-msgstr ""
+msgstr "選択した変数に対してMCAを計算できません。"
 
 #: R/principal.b.R
 msgid "Unable to compute principal components for the selected variables."
-msgstr ""
+msgstr "選択した変数に対して主成分を計算できません。"
 
 #: R/principal.b.R
 msgid "Unable to compute the correlation matrix."
-msgstr ""
+msgstr "相関行列を計算できません。"
 
 #: R/corresp.b.R
 msgid "Unable to compute the χ2 statistic."
-msgstr ""
+msgstr "χ2統計量を計算できません。"
 
 #: R/principal.b.R
 msgid "Unable to use {rotation} rotation."
-msgstr ""
+msgstr "{rotation}回転を使用できません。"
 
 #: multcorresp/results/discrim.columns.title
 msgid "Variable"
-msgstr ""
+msgstr "変数"
 
 #: corresp/options/descAsVarName.title
 #: multcorresp/options/descAsVarName.title
 #: principal/options/descAsVarName.title
 msgid "Variable descriptions as names"
-msgstr ""
+msgstr "変数の説明を名前に使用"
 
 #: multcorresp/options/showDiscriminations.title
 #: multcorresp/options/showDiscriminationPlot.title
 msgid "Variable discriminations"
-msgstr ""
+msgstr "変数の判別"
 
 #: multcorresp/results/discrim.title
 msgid "Variable Discriminations"
-msgstr ""
+msgstr "変数の識別"
 
 #: principal/options/varTitleText.title
 #: principal/options/varSubtitleText.title
 #: principal/options/varCaptionText.title
 msgid "Variable plot"
-msgstr ""
+msgstr "変数プロット"
 
 #: principal/results/varPlot.title
 msgid "Variable Plot"
-msgstr ""
+msgstr "変数プロット"
 
 #: R/multcorresp.b.R
 #: multcorresp/options/vars.title
@@ -1747,11 +1809,11 @@ msgstr ""
 #: principal/ui[0][0].label
 #: principal/results/loadingTable.title
 msgid "Variables"
-msgstr ""
+msgstr "変数"
 
 #: principal/options/rotation/Varimax.title
 msgid "Varimax"
-msgstr ""
+msgstr "バリマックス"
 
 #: package/analyses/principal.menuGroup
 #: package/analyses/corresp.menuGroup
@@ -1760,40 +1822,40 @@ msgstr ""
 #: multcorresp/options.menuGroup
 #: principal/options.menuGroup
 msgid "vijMulti"
-msgstr ""
+msgstr "vijMulti"
 
 #: package.title
 msgid "vijMulti: Multivariate Data Analyses"
-msgstr ""
+msgstr "vijMulti：多変量データ分析"
 
 #: multcorresp/options/colorPalette/viridis::inferno.title
 #: principal/options/colorPalette/viridis::inferno.title
 msgid "Viridis:Inferno"
-msgstr ""
+msgstr "Viridis：インフェルノ"
 
 #: multcorresp/options/colorPalette/viridis::magma.title
 #: principal/options/colorPalette/viridis::magma.title
 msgid "Viridis:Magma"
-msgstr ""
+msgstr "Viridis：マグマ"
 
 #: multcorresp/options/colorPalette/viridis::plasma.title
 #: principal/options/colorPalette/viridis::plasma.title
 msgid "Viridis:Plasma"
-msgstr ""
+msgstr "Viridis：プラズマ"
 
 #: multcorresp/options/colorPalette/viridis::turbo.title
 #: principal/options/colorPalette/viridis::turbo.title
 msgid "Viridis:Turbo"
-msgstr ""
+msgstr "Viridis：ターボ"
 
 #: multcorresp/options/colorPalette/viridis::viridis.title
 #: principal/options/colorPalette/viridis::viridis.title
 msgid "Viridis:Viridis"
-msgstr ""
+msgstr "Viridis：基本"
 
 #: corresp/options/supColor/white.title
 msgid "White"
-msgstr ""
+msgstr "白"
 
 #: corresp/options/xaxis.title
 #: corresp/ui[6][0].label
@@ -1802,17 +1864,17 @@ msgstr ""
 #: principal/options/xaxis.title
 #: principal/ui[5][1].label
 msgid "X-Axis"
-msgstr ""
+msgstr "X軸"
 
 #: R/multcorresp.b.R
 #: R/principal.b.R
 msgid "X-Axis and Y-Axis cannot be equal."
-msgstr ""
+msgstr "X軸とY軸を同一にはできません。"
 
 #: R/multcorresp.b.R
 #: R/principal.b.R
 msgid "X-Axis and Y-Axis cannot be greater than the number of dimensions."
-msgstr ""
+msgstr "X軸とY軸の値は、次元数を以下でなくてはなりません。"
 
 #: corresp/options/yaxis.title
 #: corresp/ui[6][1].label
@@ -1821,34 +1883,34 @@ msgstr ""
 #: principal/options/yaxis.title
 #: principal/ui[5][2].label
 msgid "Y-Axis"
-msgstr ""
+msgstr "Y軸"
 
 #: corresp/options/supColor/yellow2.title
 #: principal/options/varColor/#FFFF33.title
 #: principal/options/obsColor/#FFFF33.title
 msgid "Yellow"
-msgstr ""
+msgstr "黄"
 
 #: multcorresp/options/colorPalette/YlGnBu.title
 #: principal/options/colorPalette/YlGnBu.title
 msgid "Yellow to Blue"
-msgstr ""
+msgstr "黄 → 青"
 
 #: multcorresp/options/colorPalette/YlOrBr.title
 #: principal/options/colorPalette/YlOrBr.title
 msgid "Yellow to Brown"
-msgstr ""
+msgstr "黄 → 茶色"
 
 #: multcorresp/options/colorPalette/YlGn.title
 #: principal/options/colorPalette/YlGn.title
 msgid "Yellow to Green"
-msgstr ""
+msgstr "黄 → 緑"
 
 #: multcorresp/options/colorPalette/YlOrRd.title
 #: principal/options/colorPalette/YlOrRd.title
 msgid "Yellow to Red"
-msgstr ""
+msgstr "黄 → 赤"
 
 #: R/corresp.b.R
 msgid "χ² = {chisq}, df = {df}, p-value = {pval}"
-msgstr ""
+msgstr "χ² = {chisq}, df = {df}, p-value = {pval}"

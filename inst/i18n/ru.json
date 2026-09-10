@@ -1,0 +1,1011 @@
+{
+    "domain": "messages",
+    "locale_data": {
+        "messages": {
+            "": {
+                "domain": "messages",
+                "lang": "ru",
+                "plural_forms": "nplurals=2; plural=(n!=1);"
+            },
+            "{rotation} rotation": [
+                "{rotation} ротация"
+            ],
+            "{rotation} rotation was used.": [
+                "{rotation} ротация была использована."
+            ],
+            "{rotation} rotation with Kaiser normalization": [
+                "{rotation} с нормализацией Кайзера"
+            ],
+            "{rotation} rotation with Kaiser normalization was used.": [
+                "{rotation} было использовано вращение с нормализацией Кайзера."
+            ],
+            "% Inertia": [
+                "% Инерция"
+            ],
+            "% of Inertia": [
+                "% Инерции"
+            ],
+            "% of Variance": [
+                "% от дисперсии"
+            ],
+            "<p><strong>Main classic multivariate data analyses</strong>:</p> <ul> <li>Principal Component Analysis</li> <li>Correspondence Analysis</li> <li>Multiple Correspondence Analysis</li> </ul> <p>The module is available in the <strong>Analyses</strong> tab.</p> <p>Project source (and changelog) is available at <a href=\"https://github.com/vjalby/vijMulti\" target=\"_blank\">Github</a>.</p>": [
+                "<p><strong>Основные классические методы многомерного анализа данных</strong>:</p> <ul> <li>Анализ главных компонент</li> <li>Анализ соответствия</li> <li>Множественный анализ соответствия</li> </ul> <p>Модуль доступен на вкладке <strong>Analyses</strong>.</p> <p>Исходный код проекта (и список изменений) доступен на <a href=\"https://github.com/vjalby/vijMulti\" target=\"_blank\">Github</a>.</p>"
+            ],
+            "<p>This module computes <strong>Correspondence Analysis (CA)</strong> for two categorical variables. Computations are based on <a href = \"https://CRAN.R-project.org/package=FactoMineR\" target=\"_blank\">FactoMineR<a/> package by F. Husson, J. Josse, S. Le, J. Mazet.</p>\n<p>The data can be</p>\n<ul>\n<li>an <strong>Observation table</strong> (raw data), possibly weighted using <em>jamovi</em> built-in weight system or using the \"Counts\" variable</li>\n<li>or a <strong>Contingency table</strong></li>\n</ul>\n<p><strong>Supplementary row or column</strong> numbers may be entered as integer lists : 1,3,6</p>\n<p>Four normalizations (scaling of row and column scores before plotting) are available :</p>\n<ul>\n<li><strong>Principal:</strong> Row and column scores are scaled by eigenvalues.</li>\n<li><strong>Symmetric:</strong> Row and column scores are scaled by the square root of eigenvalues. </li>\n<li><strong>Row Principal:</strong> Only row scores are scaled by eigenvalues.</li>\n<li><strong>Column Principal:</strong> Only column scores are scaled by eigenvalues.</li>\n<li><strong>Standard:</strong> The raw coordinates without normalization.</li>\n</ul>\n<p>A sample file is included at Open > Data Library > vijMulti > Smoking</p>": [
+                "<p>Этот модуль вычисляет <strong>Анализ соответствия (CA)</strong> для двух категориальных переменных. Расчеты основаны на <a href = \"https://CRAN.R-project.org/package=FactoMineR\" target=\"_blank\">FactoMineR<a/> пакете от F. Husson, J. Josse, S. Le, J. Mazet.</p>\n<p>Данные могут быть</p>\n<ul>\n<li>таблицей <strong>наблюдений</strong> (сырые данные), возможно взвешенные с использованием встроенной системы весов <em>jamovi</em> или с использованием переменной \"Количество\"</li>\n<li>или таблицей <strong>сочетаний</strong></li>\n</ul>\n<p>Дополнительные номера строк или столбцов могут быть введены как целочисленные списки: 1,3,6</p>\n<p>Четыре нормализации (масштабирование баллов строк и столбцов до построения) доступны:</p>\n<ul>\n<li><strong>Основная:</strong> Баллы строк и столбцов масштабируются по собственным значениям.</li>\n<li><strong>Симметричная:</strong> Баллы строк и столбцов масштабируются по квадратному корню из собственных значений.</li>\n<li><strong>Основная строка:</strong> Только баллы строк масштабируются по собственным значениям.</li>\n<li><strong>Основной столбец:</strong> Только баллы столбцов масштабируются по собственным значениям.</li>\n<li><strong>Стандарт:</strong> Исходные координаты без нормализации.</li>\n</ul>\n<p>Пример файла включен в Открыть > Библиотека данных > vijMulti > Smoking</p>"
+            ],
+            "<p>This module computes <strong>Multiple Correspondence Analysis (MCA)</strong> for several categorical variables. Computations are based on <a href = \"https://CRAN.R-project.org/package=FactoMineR\" target=\"_blank\">FactoMineR<a/> package by F. Husson, J. Josse, S. Le, J. Mazet.</p>\n<p>Both classic methods are available:</p>\n<ul>\n<li><strong>Indicator matrix:</strong> CA of the indicator matrix</li>\n<li><strong>Burt matrix:</strong> CA of the Burt matrix. The eigenvalues are the squares of those of the indicator matrix method. </li>\n</ul>\n<p>Both methods give the same <em>standard</em> coordinates and discriminations (but different <em>principal</em> coordinates).</p>\n<p>When selected, <strong>Benzécri and Greenacre corrections</strong> are applied to eigenvalues only (<strong>Summary</strong> table). Principal coordinates (and inertia) of categories and observations are computed from the original eigenvalues of the Burt matrix.</p>\n<p>The <strong>Normalization</strong> options specify how the coordinates are scaled (by eigenvalues):</p>\n<ul>\n<li><strong>Principal:</strong> Both category and observation coordinates are scaled.</li>\n<li><strong>Category principal:</strong> Only category coordinates are scaled.</li>\n<li><strong>Observation principal:</strong> Only observation coordinates are scaled.</li>\n<li><strong>Standard:</strong> Both category and observation coordinates are standard.</li>\n</ul>\n<p>A sample file is included at Open > Data Library > vijMulti > Cars</p>": [
+                "<p>Этот модуль вычисляет <strong>Множественный анализ соответствия (MCA)</strong> для нескольких категориальных переменных. Расчеты основаны на пакете <a href = \"https://CRAN.R-project.org/package=FactoMineR\" target=\"_blank\">FactoMineR<a/> от F. Husson, J. Josse, S. Le, J. Mazet.</p>\n<p>Доступны оба классических метода:</p>\n<ul>\n<li><strong>Индикаторная матрица:</strong> CA индикаторной матрицы</li>\n<li><strong>Матрица Бёрта:</strong> CA матрицы Бёрта. Собственные значения равны квадратам собственных значений метода индикаторной матрицы.</li>\n</ul>\n<p>Оба метода дают одинаковые <em>стандартные</em> координаты и дискриминации (но разные <em>главные</em> координаты).</p>\n<p>При выборе поправки <strong>Бенцекри и Гринакра</strong> применяются только к собственным значениям (таблица <strong>Сводка</strong>). Главные координаты (и инерция) категорий и наблюдений рассчитываются на основе исходных собственных значений матрицы Бёрта.</p>\n<p>Параметры <strong>нормализации</strong> определяют, как масштабируются координаты (по собственным значениям):</p>\n<ul>\n<li><strong>Основная:</strong> Масштабируются координаты и категорий, и наблюдений.</li>\n<li><strong>Основная по категориям:</strong> Масштабируются только координаты категорий.</li>\n<li><strong>Основная по наблюдениям:</strong> Масштабируются только координаты наблюдений.</li>\n<li><strong>Стандартная:</strong> Координаты категорий и наблюдений являются стандартными.</li>\n</ul>\n<p>Пример файла включен в Открыть > Библиотека данных > vijMulti > Cars</p>"
+            ],
+            "<p>This module computes <strong>Principal Component Analysis (PCA)</strong> for several continuous variables. Computations are based on <tt>stats::prcomp</tt> function.</p>\n<p>Although rotated components are not principal components, they are widely used. Only orthogonal rotations are available (from GPArotation package).</p>\n<p>Loadings (variable coordinates) and scores (observation coordinates) are principal (scaled by the square root of eigenvalues).</p>\n<p>Biplot follows \"Biplots in Practice\" (Michael Greenacre, 2010):</p>\n<ul>\n<li><strong>Form biplot:</strong> Scores are principal (scaled by eigenvalues) while loadings are standard.</li>\n<li><strong>Covariance biplot:</strong> Loadings are principal while scores are standard. </li>\n</ul>\n<p><strong>Advanced options</strong>:</p>\n<ul>\n<li><strong>Standardize loadings:</strong> loadings are normalized with sums of squared equal to 1 (instead of eigenvalues)</li>\n<li><strong>Standardize scores:</strong> scores are normalized with variances equal to 1 (instead of eigenvalues)</li>\n<li><strong>Rotate eigenvectors:</strong> the rotation (varimax, etc) is applied to eigenvectors (standard loadings) instead of principal loadings (STATA way).</li>\n</ul>\n<p>A sample file is included at Open > Data Library > vijMulti > Iris</p>": [
+                "<p>Этот модуль вычисляет <strong>Принципал Компонентный Анализ (PCA)</strong> для нескольких непрерывных переменных. Вычисления основаны на функции <tt>stats::prcomp</tt>.</p>\n<p>Хотя повёрнутые компоненты не являются основными компонентами, они широко используются. Доступны только ортогональные вращения (из пакета GPArotation).</p>\n<p>Нагрузки (координаты переменных) и баллы (координаты наблюдений) являются основными (масштабируются по квадратному корню из собственных значений).</p>\n<p>Биплот следует \"Биплотам в практике\" (Майкл Гринакр, 2010):</p>\n<ul>\n<li><strong>Форма биплота:</strong> Баллы являются основными (масштабируются по собственным значениям), а нагрузки являются стандартными.</li>\n<li><strong>Ковариационный биплот:</strong> Нагрузки являются основными, а баллы являются стандартными.</li>\n</ul>\n<p><strong>Расширенные параметры</strong>:</p>\n<ul>\n<li><strong>Стандартизировать нагрузки:</strong> нагрузки нормализуются с суммами квадратов, равными 1 (вместо собственных значений)</li>\n<li><strong>Стандартизировать баллы:</strong> баллы нормализуются с дисперсиями, равными 1 (вместо собственных значений)</li>\n<li><strong>Повернуть собственный вектор:</strong> вращение (варимакс и т. д.) применяется к собственным векторам (стандартным нагрузкам) вместо основных нагрузок (способ STATA).</li>\n</ul>\n<p>Пример файла включен в Открыть > Библиотека данных > vijMulti > Iris</p>"
+            ],
+            "A demonstration dataset for vijMulti/Correspondence Analysis.": [
+                "Демонстрационный набор данных для vijMulti/Анализ соответствия."
+            ],
+            "A demonstration dataset for vijMulti/Multiple Correspondence Analysis.": [
+                "Демонстрационный набор данных для vijMulti/Множественный анализ соответствия."
+            ],
+            "A demonstration dataset for vijMulti/Principal Component Analysis.": [
+                "Демонстрационный набор данных для vijMulti/Анализа главных компонент."
+            ],
+            "Accent": [
+                "Акцент"
+            ],
+            "Active Margin": [
+                "Активная маржа"
+            ],
+            "Advanced Options": [
+                "Расширенные параметры"
+            ],
+            "Align": [
+                "Выровнять"
+            ],
+            "Arrow lines": [
+                "Линии стрелок"
+            ],
+            "Arrows": [
+                "Стрелки"
+            ],
+            "Axis numbers cannot be equal.": [
+                "Номера осей не могут быть равны."
+            ],
+            "Axis numbers must be less than or equal to the number of dimensions ({nDim}).": [
+                "Номера осей должны быть меньше или равны количеству измерений ({nDim})."
+            ],
+            "Axis Titles": [
+                "Подписи осей"
+            ],
+            "Bartlett's Test of Sphericity": [
+                "Тест Бартлетта на сферичность"
+            ],
+            "Bentler T": [
+                "Бентлер Т"
+            ],
+            "Benzécri Correction": [
+                "Поправка Бензекри"
+            ],
+            "Benzécri correction": [
+                "Поправка Бензекри"
+            ],
+            "Biplot": [
+                "Биплот"
+            ],
+            "Biplot Type": [
+                "Тип биплота"
+            ],
+            "Black": [
+                "Черный"
+            ],
+            "Blue": [
+                "Синий"
+            ],
+            "Blue to Green": [
+                "Синий к зеленому"
+            ],
+            "Blue to Purple": [
+                "От синего к фиолетовому"
+            ],
+            "Blues": [
+                "Блюз"
+            ],
+            "Bold": [
+                "Жирный"
+            ],
+            "Bold Italic": [
+                "Жирный курсив"
+            ],
+            "Boldface categories": [
+                "Категории жирным шрифтом"
+            ],
+            "Bottom": [
+                "Снизу"
+            ],
+            "Brown": [
+                "Коричневый"
+            ],
+            "Brown and Green": [
+                "Коричневый и Зеленый"
+            ],
+            "Burt matrix": [
+                "Матрица Берта"
+            ],
+            "Caption Style": [
+                "Стиль подписи"
+            ],
+            "Caption Text": [
+                "Текст подписи"
+            ],
+            "Carbon:Dark": [
+                "Carbon:Тёмная"
+            ],
+            "Carbon:Light": [
+                "Carbon:Светлая"
+            ],
+            "Cars": [
+                "Автомобили"
+            ],
+            "Categories": [
+                "Категории"
+            ],
+            "Category Plot": [
+                "Категориальный График"
+            ],
+            "Category plot": [
+                "Категориальный график"
+            ],
+            "Category Plot Options": [
+                "Параметры категориального графика"
+            ],
+            "Category principal": [
+                "Главная категория"
+            ],
+            "Category principal coordinates": [
+                "Категория главных координат"
+            ],
+            "Category Summary": [
+                "Сводная информация по категориям"
+            ],
+            "Center": [
+                "Центр"
+            ],
+            "Colors": [
+                "Цвета"
+            ],
+            "Column": [
+                "Столбец"
+            ],
+            "Column plot": [
+                "Столбчатый график"
+            ],
+            "Column Plot": [
+                "Столбчатый график"
+            ],
+            "Column Points for {cols}": [
+                "Указатели столбцов для {cols}"
+            ],
+            "Column principal": [
+                "Столбец главной компоненты"
+            ],
+            "Column principal normalization": [
+                "Главная нормализация столбца"
+            ],
+            "Column Profiles": [
+                "Профили столбцов"
+            ],
+            "Column Summary": [
+                "Сводка столбца"
+            ],
+            "Column title": [
+                "Заголовок столбца"
+            ],
+            "Columns": [
+                "Столбцы"
+            ],
+            "Component": [
+                "Компонент"
+            ],
+            "Component {n} ({perc} %)": [
+                "Компонента {n} ({perc} %)"
+            ],
+            "Component Plot": [
+                "График компонента"
+            ],
+            "Connected ordinal categories": [
+                "Соединённые порядковые категории"
+            ],
+            "Contingency Table": [
+                "Таблица Сопряжения"
+            ],
+            "Contingency table": [
+                "Таблица сопряжения"
+            ],
+            "Contributions": [
+                "Взносы"
+            ],
+            "Coordinates": [
+                "Координаты"
+            ],
+            "Correspondence Analysis": [
+                "Анализ соответствий"
+            ],
+            "COS2": [
+                "COS2"
+            ],
+            "Counts (optional)": [
+                "Счетчики (необязательно)"
+            ],
+            "Counts may not be infinite.": [
+                "Количество не может быть бесконечным."
+            ],
+            "Counts may not be negative.": [
+                "Количество не может быть отрицательным."
+            ],
+            "Cov (Loading principal)": [
+                "Cov (Загрузка главных)"
+            ],
+            "Covariance (Loading principal)": [
+                "Ковариация (Загрузка главных)"
+            ],
+            "Covariance Biplot": [
+                "Ковариационный биплот"
+            ],
+            "Cumulative %": [
+                "Совокупный %"
+            ],
+            "Dark 2": [
+                "Темный 2"
+            ],
+            "Dark Gray": [
+                "Темно-серый"
+            ],
+            "default": [
+                "по умолчанию"
+            ],
+            "df": [
+                "df"
+            ],
+            "Dichromat:Categorical": [
+                "Дихромат:Категориальный"
+            ],
+            "Dim": [
+                "Dim"
+            ],
+            "Dim {n}": [
+                "Dim {n}"
+            ],
+            "Dimension": [
+                "Измерение"
+            ],
+            "Dimension {n} ({perc} %)": [
+                "Измерение {n} ({perc} %)"
+            ],
+            "Discrimination": [
+                "Дискриминация"
+            ],
+            "Discrimination Plot": [
+                "График дискриминации"
+            ],
+            "Discrimination plot": [
+                "Дискриминационный график"
+            ],
+            "Eigenvalue": [
+                "Собственное значение"
+            ],
+            "Eigenvalues": [
+                "Собственные значения"
+            ],
+            "Element Sizes": [
+                "Размеры элемента"
+            ],
+            "Equamax": [
+                "Эквамакс"
+            ],
+            "Extraction": [
+                "Извлечение"
+            ],
+            "Extraction Sums of Squared Loadings": [
+                "Извлечение сумм квадратов нагрузок"
+            ],
+            "Factor": [
+                "Фактор"
+            ],
+            "Font face": [
+                "Шрифт"
+            ],
+            "Font size": [
+                "Размер шрифта"
+            ],
+            "Form (Score principal)": [
+                "Форма (Счет главных)"
+            ],
+            "Form Biplot": [
+                "Форма биграфика"
+            ],
+            "Gray": [
+                "Серый"
+            ],
+            "Green": [
+                "Зеленый"
+            ],
+            "Green to Blue": [
+                "От зеленого к синему"
+            ],
+            "Greenacre Correction": [
+                "Исправление Гринакра"
+            ],
+            "Greenacre correction": [
+                "Коррекция Гринакра"
+            ],
+            "Greenacre's corrected inertia = {inertia}": [
+                "Скорректированная инерция Гринакра = {inertia}"
+            ],
+            "Greens": [
+                "Зелень"
+            ],
+            "Greys": [
+                "Серые"
+            ],
+            "Group": [
+                "Группа"
+            ],
+            "Indicator matrix": [
+                "Матрица индикаторов"
+            ],
+            "Inertia": [
+                "Инерция"
+            ],
+            "Inertia summary": [
+                "Сводка по инерции"
+            ],
+            "Initial Eigenvalues": [
+                "Начальные собственные значения"
+            ],
+            "Iris": [
+                "Ирис"
+            ],
+            "Italic": [
+                "Курсив"
+            ],
+            "jmv Blue": [
+                "jmv Синий"
+            ],
+            "jmv Default": [
+                "jmv по умолчанию"
+            ],
+            "jmv Gray": [
+                "jmv Серый"
+            ],
+            "jmv Green": [
+                "jmv Зеленый"
+            ],
+            "jmv Red": [
+                "jmv Красный"
+            ],
+            "jmv Yellow": [
+                "jmv Желтый"
+            ],
+            "Kaiser normalization": [
+                "Нормализация Кайзера"
+            ],
+            "Kaiser-Meyer-Olkin Measure of Sampling Adequacy (MSA)": [
+                "Мера адекватности выборки Кайзера-Мейера-Олкина (MSA)"
+            ],
+            "KMO & Bartlett's test": [
+                "КМО и тест Бартлетта"
+            ],
+            "KMO & Bartlett's Test": [
+                "КМО и тест Бартлетта"
+            ],
+            "Label": [
+                "Этикетка"
+            ],
+            "Labels": [
+                "Метки"
+            ],
+            "Left": [
+                "Слева"
+            ],
+            "Legend": [
+                "Легенда"
+            ],
+            "Legend & Axis Titles": [
+                "Легенды и названия осей"
+            ],
+            "Lémovice": [
+                "Лемовице"
+            ],
+            "Level": [
+                "Уровень"
+            ],
+            "Light Blue": [
+                "Светло-голубой"
+            ],
+            "Light Brown": [
+                "Светло-коричневый"
+            ],
+            "Light Gray": [
+                "Светло-серый"
+            ],
+            "Light Green": [
+                "Светло-зеленый"
+            ],
+            "Light Orange": [
+                "Светло-оранжевый"
+            ],
+            "Light Pink": [
+                "Светло-розовый"
+            ],
+            "Light Purple": [
+                "Светло-фиолетовый"
+            ],
+            "Light Red": [
+                "Светло-красный"
+            ],
+            "Light Yellow": [
+                "Светло-желтый"
+            ],
+            "Limited to the first 100 observations": [
+                "Ограничено первыми 100 наблюдениями"
+            ],
+            "Mass": [
+                "Масса"
+            ],
+            "MCA Principal Coordinates ({method})": [
+                "Главные координаты МОС ({method})"
+            ],
+            "MCA Standard Coordinates ({method})": [
+                "Стандартные координаты МОС ({method})"
+            ],
+            "Method": [
+                "Метод"
+            ],
+            "Method: {method}": [
+                "Метод: {method}"
+            ],
+            "Minimum entropy": [
+                "Минимальная энтропия"
+            ],
+            "Multiple Correspondence Analysis": [
+                "Анализ множественного соответствия"
+            ],
+            "Multivariate": [
+                "Многомерный"
+            ],
+            "Name": [
+                "Имя"
+            ],
+            "No rotation used.": [
+                "Вращение не используется."
+            ],
+            "Non-overlapping labels": [
+                "Неперекрывающиеся подписи"
+            ],
+            "None": [
+                "Отсутствует"
+            ],
+            "Normal": [
+                "Нормальный"
+            ],
+            "Normalization": [
+                "Нормализация"
+            ],
+            "Not enough complete observations to perform PCA.": [
+                "Недостаточно полных наблюдений для выполнения PCA."
+            ],
+            "Not enough data to compute CA.": [
+                "Недостаточно данных для вычисления CA."
+            ],
+            "Number of dimensions": [
+                "Количество измерений"
+            ],
+            "Number of dimensions must be less than or equal to {maxDim}.": [
+                "Количество размерностей должно быть меньше или равно {maxDim}."
+            ],
+            "Obs color": [
+                "Цвет наблюдения"
+            ],
+            "Observation": [
+                "Наблюдение"
+            ],
+            "Observation Coordinates": [
+                "Координаты наблюдения"
+            ],
+            "Observation Plot": [
+                "График наблюдения"
+            ],
+            "Observation plot": [
+                "График наблюдения"
+            ],
+            "Observation Plot Options": [
+                "Опции графика наблюдения"
+            ],
+            "Observation principal": [
+                "Наблюдение главной"
+            ],
+            "Observation principal coordinates": [
+                "Наблюдения главных координат"
+            ],
+            "Observation Summary": [
+                "Резюме наблюдения"
+            ],
+            "Observation Table": [
+                "Таблица наблюдений"
+            ],
+            "Observations": [
+                "Наблюдения"
+            ],
+            "Orange": [
+                "Апельсин"
+            ],
+            "Orange and Purple": [
+                "Оранжевый и фиолетовый"
+            ],
+            "Orange to Red": [
+                "От оранжевого до красного"
+            ],
+            "Oranges": [
+                "Апельсины"
+            ],
+            "Original Eigenvalues": [
+                "Исходные собственные значения"
+            ],
+            "Paired": [
+                "Парный"
+            ],
+            "Palette": [
+                "Палитра"
+            ],
+            "Parsimax": [
+                "Парсимакс"
+            ],
+            "Pastel 1": [
+                "Пастель 1"
+            ],
+            "Pastel 2": [
+                "Пастель 2"
+            ],
+            "PCA Principal Coordinates": [
+                "Главные координаты МГК (PCA)"
+            ],
+            "PCA Principal Coordinates ({rot})": [
+                "Главные координаты МГК ({rot})"
+            ],
+            "PCA Standard Coordinates": [
+                "Стандартные координаты МГК (PCA)"
+            ],
+            "PCA Standard Coordinates ({rot})": [
+                "Стандартные координаты МГК ({rot})"
+            ],
+            "Pink": [
+                "Розовый"
+            ],
+            "Pink and Green": [
+                "Розовый и Зеленый"
+            ],
+            "Plot Color": [
+                "Цвет графика"
+            ],
+            "Plot Colors": [
+                "Цвета графика"
+            ],
+            "Plot Options": [
+                "Параметры графика"
+            ],
+            "Plot Titles & Subtitles": [
+                "Заголовки и подписи графика"
+            ],
+            "Plots": [
+                "Графики"
+            ],
+            "Point size": [
+                "Размер точки"
+            ],
+            "Points": [
+                "Точки"
+            ],
+            "Position": [
+                "Позиция"
+            ],
+            "Principal": [
+                "Главная"
+            ],
+            "Principal Component Analysis": [
+                "Анализ главных компонент"
+            ],
+            "Principal coordinates": [
+                "Главные координаты"
+            ],
+            "Principal normalization": [
+                "Главная нормализация"
+            ],
+            "Proportional point size": [
+                "Пропорциональный размер точки"
+            ],
+            "Purple": [
+                "Фиолетовый"
+            ],
+            "Purple and Green": [
+                "Фиолетовый и зеленый"
+            ],
+            "Purple to Blue": [
+                "От фиолетового до синего"
+            ],
+            "Purple to Green": [
+                "От фиолетового к зеленому"
+            ],
+            "Purple to Red": [
+                "От фиолетового к красному"
+            ],
+            "Purples": [
+                "Фиолетовые"
+            ],
+            "QLT": [
+                "QLT"
+            ],
+            "Quartimax": [
+                "Квартимакс"
+            ],
+            "Red": [
+                "Красный"
+            ],
+            "Red and Blue": [
+                "Красный и Синий"
+            ],
+            "Red and Gray": [
+                "Красный и Серый"
+            ],
+            "Red to Purple": [
+                "От красного к фиолетовому"
+            ],
+            "Red, Yellow, Blue": [
+                "Красный, Желтый, Синий"
+            ],
+            "Red, Yellow, Green": [
+                "Красный, Желтый, Зеленый"
+            ],
+            "Reds": [
+                "Красные"
+            ],
+            "Right": [
+                "Справа"
+            ],
+            "Rotate eigenvectors": [
+                "Поворот собственных векторов"
+            ],
+            "Rotation": [
+                "Вращение"
+            ],
+            "Row": [
+                "Строка"
+            ],
+            "Row and Column Points for {rows} and {cols}": [
+                "Точки строк и столбцов для {rows} и {cols}"
+            ],
+            "Row and column profiles": [
+                "Профили строк и столбцов"
+            ],
+            "Row and column summaries": [
+                "Сводные данные по строкам и столбцам"
+            ],
+            "Row Labels": [
+                "Метки строк"
+            ],
+            "Row plot": [
+                "Строковый график"
+            ],
+            "Row Plot": [
+                "Строковый график"
+            ],
+            "Row Points for {rows}": [
+                "Указатели строк для {rows}"
+            ],
+            "Row principal": [
+                "Строка главной"
+            ],
+            "Row principal normalization": [
+                "Главная нормализация строки"
+            ],
+            "Row Profiles": [
+                "Профили строк"
+            ],
+            "Row Summary": [
+                "Сводка строк"
+            ],
+            "Rows": [
+                "Строки"
+            ],
+            "Same as point/arrow": [
+                "То же, что точка/стрелка"
+            ],
+            "Save": [
+                "Сохранять"
+            ],
+            "Save observation coordinates": [
+                "Сохранить координаты наблюдения"
+            ],
+            "Scree Plot": [
+                "Каменистая осыпь"
+            ],
+            "Scree plot": [
+                "Каменистая осыпь"
+            ],
+            "Set 1": [
+                "Набор 1"
+            ],
+            "Set 2": [
+                "Набор 2"
+            ],
+            "Set 3": [
+                "Набор 3"
+            ],
+            "Singular Value": [
+                "Единственное значение"
+            ],
+            "Size": [
+                "Размер"
+            ],
+            "Sizes & Colors": [
+                "Размеры и цвета"
+            ],
+            "Smoking": [
+                "Курение"
+            ],
+            "Solution": [
+                "Решение"
+            ],
+            "Some categories have zero counts and must be removed.": [
+                "У некоторых категорий нулевое количество, и они должны быть удалены."
+            ],
+            "Some values are missing from the contingency table.": [
+                "В таблице сопряжённости отсутствуют некоторые значения."
+            ],
+            "Spectral": [
+                "Спектральный"
+            ],
+            "SS Loadings": [
+                "Нагрузки СС"
+            ],
+            "Standard": [
+                "Стандартный"
+            ],
+            "Standard coordinates": [
+                "Стандартные координаты"
+            ],
+            "Standard normalization": [
+                "Стандартная нормализация"
+            ],
+            "Standardize loadings (eigenvectors)": [
+                "Стандартизировать нагрузки (собственные векторы)"
+            ],
+            "Standardize scores": [
+                "Стандартизировать оценки"
+            ],
+            "Standardize variables": [
+                "Стандартизируйте переменные"
+            ],
+            "Statistic": [
+                "Статистика"
+            ],
+            "Stretch arrows by": [
+                "Растянуть стрелки на"
+            ],
+            "Subtitle Style": [
+                "Стиль субтитров"
+            ],
+            "Subtitle Text": [
+                "Текст субтитров"
+            ],
+            "Summary": [
+                "Краткое содержание"
+            ],
+            "Suppl. variables": [
+                "Доп. переменные"
+            ],
+            "Supplement": [
+                "Добавка"
+            ],
+            "Supplementary column numbers must be a list of numbers, e.g. 1,2,9": [
+                "Дополнительные номера столбцов должна быть списком чисел, например 1,2,9"
+            ],
+            "Supplementary column numbers must be between 1 and {nmax}.": [
+                "Дополнительные номера столбцов должны быть между 1 и {nmax}."
+            ],
+            "Supplementary columns": [
+                "Дополнительные столбцы"
+            ],
+            "Supplementary Points": [
+                "Дополнительные пункты"
+            ],
+            "Supplementary row numbers must be a list of numbers, e.g. 1,2,9": [
+                "Дополнительные номера строк должны быть списком чисел, например 1,2,9"
+            ],
+            "Supplementary row numbers must be between 1 and {nmax}.": [
+                "Дополнительные номера строк должны быть между 1 и {nmax}."
+            ],
+            "Supplementary rows": [
+                "Дополнительные строки"
+            ],
+            "Supplementary rows/columns": [
+                "Дополнительные строки/столбцы"
+            ],
+            "Supplementary variables": [
+                "Дополнительные переменные"
+            ],
+            "Supplementary Variables": [
+                "Дополнительные переменные"
+            ],
+            "Symmetric": [
+                "Симметричная"
+            ],
+            "Symmetric normalization": [
+                "Симметричная нормализация"
+            ],
+            "Tables": [
+                "Таблицы"
+            ],
+            "Text Size": [
+                "Размер текста"
+            ],
+            "Text Size & Colors": [
+                "Размер и цвет текста"
+            ],
+            "The correlation matrix is nearly singular. Computations may not be accurate.": [
+                "Корреляционная матрица почти вырождена. Расчёты могут быть неточными."
+            ],
+            "The following variable(s) are constant and cannot be used in a principal component analysis: {vars}.": [
+                "Следующие переменные являются константами и не могут быть использованы в анализе главных компонент: {vars}."
+            ],
+            "The number of dimensions cannot be greater than {max}.": [
+                "Количество измерений не может превышать {max}."
+            ],
+            "The number of dimensions cannot be greater than the number of observations.": [
+                "Количество измерений не может быть больше количества наблюдений."
+            ],
+            "The number of dimensions cannot be greater than the number of variables.": [
+                "Количество измерений не может быть больше количества переменных."
+            ],
+            "The singular value for dimension {n} is close to zero. The plots may not be accurate.": [
+                "Сингулярное значение для измерения {n} близко к нулю. Графики могут быть неточными."
+            ],
+            "The χ2 statistic is equal to zero.": [
+                "Статистика χ2 равна нулю."
+            ],
+            "Tidy:Alger": [
+                "Порядок: Алжир"
+            ],
+            "Tidy:Apple": [
+                "Порядок:Яблоко"
+            ],
+            "Tidy:Candy": [
+                "Порядок:Конфеты"
+            ],
+            "Tidy:Friendly": [
+                "Порядок: Дружелюбный"
+            ],
+            "Tidy:Ibm": [
+                "Порядок:lbm"
+            ],
+            "Tidy:Metro": [
+                "Порядок:Метро"
+            ],
+            "Tidy:Rainbow": [
+                "Порядок:Радуга"
+            ],
+            "Tidy:Seaside": [
+                "Порядок:Приморье"
+            ],
+            "Title Style": [
+                "Стиль заголовка"
+            ],
+            "Title Text": [
+                "Текст заголовка"
+            ],
+            "Top": [
+                "Верх"
+            ],
+            "Total": [
+                "Общий"
+            ],
+            "Unable to compute correspondence analysis for the selected data.": [
+                "Невозможно вычислить анализ соответствия для выбранных данных."
+            ],
+            "Unable to compute MCA because of too many missing values.": [
+                "Невозможно вычислить MCA из-за слишком большого количества пропущенных значений."
+            ],
+            "Unable to compute MCA for the selected variables.": [
+                "Невозможно вычислить MCA для выбранных переменных."
+            ],
+            "Unable to compute principal components for the selected variables.": [
+                "Невозможно вычислить главные компоненты для выбранных переменных."
+            ],
+            "Unable to compute the correlation matrix.": [
+                "Невозможно вычислить корреляционную матрицу."
+            ],
+            "Unable to compute the χ2 statistic.": [
+                "Невозможно вычислить статистику χ2."
+            ],
+            "Unable to use {rotation} rotation.": [
+                "Невозможно использовать вращение {rotation}."
+            ],
+            "Variable": [
+                "Переменная"
+            ],
+            "Variable descriptions as names": [
+                "Описания переменных в качестве имён"
+            ],
+            "Variable discriminations": [
+                "Дискриминации переменных"
+            ],
+            "Variable Discriminations": [
+                "Переменная дискриминация"
+            ],
+            "Variable plot": [
+                "Переменный график"
+            ],
+            "Variable Plot": [
+                "Переменный график"
+            ],
+            "Variables": [
+                "Переменные"
+            ],
+            "Varimax": [
+                "Варимакс"
+            ],
+            "vijMulti": [
+                "vijMulti"
+            ],
+            "vijMulti: Multivariate Data Analyses": [
+                "vijMulti: Многомерный анализ данных"
+            ],
+            "Viridis:Inferno": [
+                "Виридис: Инферно"
+            ],
+            "Viridis:Magma": [
+                "Виридис:Магма"
+            ],
+            "Viridis:Plasma": [
+                "Виридис:Плазма"
+            ],
+            "Viridis:Turbo": [
+                "Виридис:Турбо"
+            ],
+            "Viridis:Viridis": [
+                "Виридис:Виридис"
+            ],
+            "White": [
+                "Белый"
+            ],
+            "X-Axis": [
+                "Ось X"
+            ],
+            "X-Axis and Y-Axis cannot be equal.": [
+                "Ось X и ось Y не могут быть равны."
+            ],
+            "X-Axis and Y-Axis cannot be greater than the number of dimensions.": [
+                "Оси X и Y не могут быть больше числа размерностей."
+            ],
+            "Y-Axis": [
+                "Ось Y"
+            ],
+            "Yellow": [
+                "Желтый"
+            ],
+            "Yellow to Blue": [
+                "От желтого до синего"
+            ],
+            "Yellow to Brown": [
+                "От желтого до коричневого"
+            ],
+            "Yellow to Green": [
+                "От желтого к зеленому"
+            ],
+            "Yellow to Red": [
+                "Желтый к красному"
+            ],
+            "χ² = {chisq}, df = {df}, p-value = {pval}": [
+                "χ² = {chisq}, df = {df}, p-value = {pval}"
+            ]
+        }
+    }
+}
