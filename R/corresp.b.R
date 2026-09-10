@@ -136,10 +136,15 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             if (!is.null(supplementaryRows) || !is.null(supplementaryCols))
                 table$setNote("supp", paste("* :", .("Supplementary rows/columns")))
         },
-        .fillSummaryTable = function(table, items, labelCol, labelTitle, coord, coordSup, marge,
-                                      supplementary, suppText, nDim, normalizationString) {
-            # table = table to fill
-            # item = row/col names
+        .getVarNameStrings = function() {
+            # row/col display names, as shown in the summary table column headers and the contingency table
+            if (self$options$mode == "obsTable") {
+                list(row = private$.getVarName(self$options$rows), col = private$.getVarName(self$options$cols))
+            } else { # contTable
+                list(row = self$options$rowLabels, col = self$options$columnTitle)
+            }
+        },
+        .initSummaryTable = function(table, labelCol, labelTitle, nDim) {
             # labelCol = "row" or "col"
             # labelTitle = col/rowVarNameString
             dimN <- function(n) jmvcore::format(.("Dim {n}"), n = n)
@@ -154,7 +159,12 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             table$addColumn(name = "qlt", title = "QLT", type = "number", format = "zto")
             for (i in seq(nDim))
                 table$addColumn(name = paste0("cos",i), title = dimN(i), superTitle = "CO2", type = "number", format = "zto")
-            # Populate Summary table
+        },
+        .fillSummaryTable = function(table, items, labelCol, coord, coordSup, marge,
+                                      supplementary, suppText, nDim, normalizationString) {
+            # table = table to fill
+            # item = row/col names
+            # labelCol = "row" or "col"
             for (i in seq_along(items)) {
                 anItem <- items[i]
                 if (anItem %in% rownames(coord$coord)) { # Active row/col
@@ -254,8 +264,12 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         },
         .init = function() {
             #
-            if ((self$options$mode == "obsTable" && (is.null(self$options$rows) || is.null(self$options$cols))) ||
-                (self$options$mode == "contTable" && (is.null(self$options$rowLabels) || length(self$options$columns) < 3)) ) {
+            hasVars <- if (self$options$mode == "obsTable")
+                !is.null(self$options$rows) && !is.null(self$options$cols)
+            else # contTable
+                !is.null(self$options$rowLabels) && length(self$options$columns) >= 3
+
+            if (!hasVars) {
                 private$.showHelpMessage()
             } else if (self$options$mode == "obsTable") {
                 # Weight message
@@ -264,6 +278,14 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                     warningMessage <- ..('The data is weighted by the variable {}.', countsName)
                     vijWarningMessage(self, warningMessage, '.weights')
                 }
+            }
+
+            # Init row/col Summary Tables (adding columns)
+            if (hasVars && self$options$showSummaries) {
+                varNames <- private$.getVarNameStrings()
+                nDim <- self$options$dimNum
+                private$.initSummaryTable(self$results$rowSummary, "row", varNames$row, nDim)
+                private$.initSummaryTable(self$results$colSummary, "col", varNames$col, nDim)
             }
         },
         .run = function() {
@@ -282,10 +304,6 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
 
                 rowVarName <- self$options$rows
                 colVarName <- self$options$cols
-
-                # Set variable names
-                rowVarNameString <- private$.getVarName(rowVarName)
-                colVarNameString <- private$.getVarName(colVarName)
 
                 #Contingency Table (base)
                 formula <- jmvcore::composeFormula('.COUNTS', c(rowVarName, colVarName))
@@ -306,12 +324,12 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 }
                 row.names(contingencyTable) <- self$data[[self$options$rowLabels]]
                 contingencyTable <- as.matrix(contingencyTable)
-                # Set variable names
-                rowVarName <- self$options$rowLabels
-                rowVarNameString <- rowVarName
-                colVarName <- self$options$columnTitle
-                colVarNameString <- colVarName
             }
+
+            # Set variable names
+            varNames <- private$.getVarNameStrings()
+            rowVarNameString <- varNames$row
+            colVarNameString <- varNames$col
 
             #### Supplementary Rows & Column ####
 
@@ -390,10 +408,10 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             #### Summary Tables ####
 
             if(self$options$showSummaries) {
-                private$.fillSummaryTable(self$results$rowSummary, rownames(contingencyTable), "row", rowVarNameString,
+                private$.fillSummaryTable(self$results$rowSummary, rownames(contingencyTable), "row",
                                            res$row, res$row.sup, res$call$marge.row, supplementaryRows,
                                            .("Supplementary rows"), nDim, normalizationString)
-                private$.fillSummaryTable(self$results$colSummary, colnames(contingencyTable), "col", colVarNameString,
+                private$.fillSummaryTable(self$results$colSummary, colnames(contingencyTable), "col",
                                            res$col, res$col.sup, res$call$marge.col, supplementaryCols,
                                            .("Supplementary columns"), nDim, normalizationString)
             }

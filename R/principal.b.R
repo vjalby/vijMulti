@@ -37,6 +37,12 @@ principalClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                     image2$setSize2(600, 600, fixed_width, fixed_height)
                 }
             }
+            # Init Loadings and Observations Tables (adding columns)
+            nDim <- self$options$dimNum
+            if (self$options$showLoadings)
+                private$.initLoadingTable(self$results$loadingTable, nDim)
+            if (self$options$showObservations)
+                private$.initObservationTable(self$results$obsTable, nDim)
         },
         .run = function() {
             if (is.null(self$options$vars) || length(self$options$vars) < 2 || nrow(self$data) == 0)
@@ -408,13 +414,15 @@ principalClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             if (!is.null(res$rotationNote))
                 table$setNote('rot', res$rotationNote)
         },
-        .fillLoadingTable = function(table, res, nDim) {
+        .initLoadingTable = function(table, nDim) {
             for(i in 1:nDim) {
                 table$addColumn(name = paste0("loading:",i), title = as.character(i), superTitle = .("Component"), type = "number") #, format = "zto")
             }
             table$addColumn(name = "QLT",
                             title = .("Extraction"),
                             type = "number")
+        },
+        .fillLoadingTable = function(table, res, nDim) {
             for(aVar in rownames(res$loadings)) {
                 values = list()
                 values[["var"]] <- private$.getVarName(aVar)
@@ -432,7 +440,7 @@ principalClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             if (self$options$stdLoadings)
                 table$setNote('norm', .("Standard coordinates"))
         },
-        .fillObservationTable = function(table, res, nDim) {
+        .initObservationTable = function(table, nDim) {
             if (is.null(self$options$labelVar))
                 table$addColumn("obs", title = .("Observation"), type = "integer")
             else
@@ -443,7 +451,8 @@ principalClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 table$addColumn(as.character(i), title = as.character(i), superTitle = .("Component"), type = "number")
             }
             table$addColumn("qlt", title = .("Extraction"), type = "number", format = "zto")
-
+        },
+        .fillObservationTable = function(table, res, nDim) {
             nrows <- nrow(res$scores)
             if (nrows > 100) {
                 table$setNote("100", .("Limited to the first 100 observations"))

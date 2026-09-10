@@ -17,6 +17,16 @@ multcorrespClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             if (is.null(self$options$vars)) {
                 private$.showHelpMessage()
             }
+
+            # Init tables (adding columns)
+            nDim <- self$options$dimNum
+            private$.initInertiaTable(self$results$eigenvalues, self$options$method)
+            if (self$options$showDiscriminations)
+                private$.initDiscriminationTable(self$results$discrim, nDim)
+            if (self$options$showCategories)
+                private$.initCategoryTable(self$results$categories, nDim)
+            if (self$options$showObservations)
+                private$.initObservationTable(self$results$observations, nDim)
         },
         .run = function() {
             if (is.null(self$options$vars) || length(self$options$vars) < 3  || nrow(self$data) == 0)
@@ -262,7 +272,7 @@ multcorrespClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         },
         .dimN = function(n) jmvcore::format(.("Dim {n}"), n = n),
         .nullOrValue = function(x) if(is.na(x)) NULL else x,
-        .fillInertiaTable = function(table, res, method, methodStr) {
+        .initInertiaTable = function(table, method) {
             if (self$options$showSummary) {
                 if (method == "Burt" && self$options$BenzecriAdj) {
                     table$addColumn("adjB", title = .("Inertia"), type = "number", format = "zto", superTitle = .("Benzécri Correction"))
@@ -276,6 +286,10 @@ multcorrespClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                     table$addColumn("C%G", title = .("Cumulative %"), type = "number", format = "pc", superTitle = .("Greenacre Correction"))
 
                 }
+            }
+        },
+        .fillInertiaTable = function(table, res, method, methodStr) {
+            if (self$options$showSummary) {
                 for (i in seq_len(res$nd.max)) {
                     values = list(
                         dim = i,
@@ -319,9 +333,11 @@ multcorrespClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             if (method == "Burt" && self$options$GreenacreAdj)
                 table$setNote("adjusted", jmvcore::format(.("Greenacre's corrected inertia = {inertia}"), inertia = round(res$totalInrG,4)))
         },
-        .fillDiscriminationTable = function(table, res, nDim, supplIdx) {
+        .initDiscriminationTable = function(table, nDim) {
             for (j in seq_len(nDim))
                 table$addColumn(paste0("dim",j), title = private$.dimN(j), type = "number", format = "zto", superTitle = .("Discrimination"))
+        },
+        .fillDiscriminationTable = function(table, res, nDim, supplIdx) {
             for (i in seq_len(nrow(res$allvar$eta2))) {
                 values = list()
                 values[["var"]] <- rownames(res$allvar$eta2)[i]
@@ -332,13 +348,15 @@ multcorrespClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             if (!is.null(supplIdx))
                 table$setNote("sup", paste("* :", .("Suppl. variables")))
         },
-        .fillCategoryTable = function(table, res, nDim, supplIdx) {
+        .initCategoryTable = function(table, nDim) {
             for (j in seq_len(nDim))
                 table$addColumn(paste0("coord",j), title = private$.dimN(j), type = "number", format = "zto", superTitle = paste(.("Coordinates"),"†"))
             for (j in seq_len(nDim))
                 table$addColumn(paste0("ctr",j), title = private$.dimN(j), type = "number", format = "zto", superTitle = .("Contributions"))
             for (j in seq_len(nDim))
                 table$addColumn(paste0("co2",j), title = private$.dimN(j), type = "number", format = "zto", superTitle = .("COS2"))
+        },
+        .fillCategoryTable = function(table, res, nDim, supplIdx) {
             previousfactor <- res$cat$factors[1]
             for (i in seq_len(nrow(res$cat$coord))) {
                 values = list(
@@ -369,12 +387,7 @@ multcorrespClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             if (!is.null(supplIdx))
                 table$setNote("sup", paste("* :", .("Supplementary variables")))
         },
-        .fillObservationTable = function(table, res, nDim) {
-            nrows <- length(res$rowlabels)
-            if (nrows > 100) {
-                table$setNote("100", .("Limited to the first 100 observations"))
-                nrows <- 100
-            }
+        .initObservationTable = function(table, nDim) {
             table$addColumn("inertia", title = .("% Inertia"), type = "number", format = "zto")
             table$addColumn("qlt", title = "QLT", type = "number", format = "zto")
             for (j in seq_len(nDim))
@@ -383,6 +396,13 @@ multcorrespClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 table$addColumn(paste0("ctr",j), title = private$.dimN(j), type = "number", format = "zto", superTitle = .("Contributions"))
             for (j in seq_len(nDim))
                 table$addColumn(paste0("co2",j), title = private$.dimN(j), type = "number", format = "zto", superTitle = .("COS2"))
+        },
+        .fillObservationTable = function(table, res, nDim) {
+            nrows <- length(res$rowlabels)
+            if (nrows > 100) {
+                table$setNote("100", .("Limited to the first 100 observations"))
+                nrows <- 100
+            }
             for (i in seq_len(nrows)) {
                 values = list(
                     name = res$rowlabels[i],
