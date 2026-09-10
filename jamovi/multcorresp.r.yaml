@@ -102,6 +102,7 @@ items:
       clearWith:
         - vars
         - supplVars
+        - labelVar
         - method
         - normalization
         - dimNum

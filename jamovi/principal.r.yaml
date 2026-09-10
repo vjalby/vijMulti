@@ -105,6 +105,7 @@ items:
       clearWith:
         - vars
         - labelVar
+        - groupVar
         - descAsVarName
         - rotation
         - dimNum
@@ -259,6 +260,7 @@ items:
         - yaxis
         - groupVar
         - stdVariables
+        - kaiser
         - biplotType
         - biplotLines
         - biplotStretch
@@ -299,6 +301,7 @@ items:
       initInRun: true
       clearWith:
         - vars
+        - labelVar
         - rotation
         - dimNum
         - stdVariables

@@ -862,6 +862,7 @@ principalResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 clearWith=list(
                     "vars",
                     "labelVar",
+                    "groupVar",
                     "descAsVarName",
                     "rotation",
                     "dimNum",
@@ -1017,6 +1018,7 @@ principalResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                     "yaxis",
                     "groupVar",
                     "stdVariables",
+                    "kaiser",
                     "biplotType",
                     "biplotLines",
                     "biplotStretch",
@@ -1057,6 +1059,7 @@ principalResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 initInRun=TRUE,
                 clearWith=list(
                     "vars",
+                    "labelVar",
                     "rotation",
                     "dimNum",
                     "stdVariables",

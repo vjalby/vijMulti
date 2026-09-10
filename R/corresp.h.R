@@ -554,12 +554,16 @@ correspResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                         `title`="", 
                         `type`="text")),
                 clearWith=list(
+                    "mode",
                     "rows",
                     "cols",
+                    "counts",
                     "descAsVarName",
                     "columns",
                     "rowLabels",
-                    "columnTitle")))
+                    "columnTitle",
+                    "supplementaryRows",
+                    "supplementaryCols")))
             self$add(jmvcore::Table$new(
                 options=options,
                 name="rowProfiles",
@@ -572,12 +576,16 @@ correspResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                         `title`="", 
                         `type`="text")),
                 clearWith=list(
+                    "mode",
                     "rows",
                     "cols",
+                    "counts",
                     "descAsVarName",
                     "columns",
                     "rowLabels",
-                    "columnTitle")))
+                    "columnTitle",
+                    "supplementaryRows",
+                    "supplementaryCols")))
             self$add(jmvcore::Table$new(
                 options=options,
                 name="colProfiles",
@@ -590,12 +598,16 @@ correspResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                         `title`="", 
                         `type`="text")),
                 clearWith=list(
+                    "mode",
                     "rows",
                     "cols",
+                    "counts",
                     "descAsVarName",
                     "columns",
                     "rowLabels",
-                    "columnTitle")))
+                    "columnTitle",
+                    "supplementaryRows",
+                    "supplementaryCols")))
             self$add(jmvcore::Table$new(
                 options=options,
                 name="eigenvalues",
@@ -628,12 +640,15 @@ correspResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                         `type`="number", 
                         `format`="pc")),
                 clearWith=list(
+                    "mode",
                     "dimNum",
                     "rows",
                     "cols",
                     "counts",
                     "columns",
-                    "rowLabels")))
+                    "rowLabels",
+                    "supplementaryRows",
+                    "supplementaryCols")))
             self$add(jmvcore::Table$new(
                 options=options,
                 name="rowSummary",
@@ -650,6 +665,7 @@ correspResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                         `title`="", 
                         `type`="text")),
                 clearWith=list(
+                    "mode",
                     "rows",
                     "cols",
                     "counts",
@@ -657,7 +673,9 @@ correspResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                     "normalization",
                     "descAsVarName",
                     "columns",
-                    "rowLabels")))
+                    "rowLabels",
+                    "supplementaryRows",
+                    "supplementaryCols")))
             self$add(jmvcore::Table$new(
                 options=options,
                 name="colSummary",
@@ -674,6 +692,7 @@ correspResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                         `title`="", 
                         `type`="text")),
                 clearWith=list(
+                    "mode",
                     "rows",
                     "cols",
                     "counts",
@@ -682,7 +701,9 @@ correspResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                     "descAsVarName",
                     "columns",
                     "rowLabels",
-                    "columnTitle")))
+                    "columnTitle",
+                    "supplementaryRows",
+                    "supplementaryCols")))
             self$add(jmvcore::Image$new(
                 options=options,
                 name="rowplot",
@@ -692,6 +713,7 @@ correspResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 height=450,
                 renderFun=".rowplot",
                 clearWith=list(
+                    "mode",
                     "rows",
                     "cols",
                     "counts",
@@ -734,6 +756,7 @@ correspResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 height=450,
                 renderFun=".colplot",
                 clearWith=list(
+                    "mode",
                     "rows",
                     "cols",
                     "counts",
@@ -777,6 +800,7 @@ correspResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 height=450,
                 renderFun=".biplot",
                 clearWith=list(
+                    "mode",
                     "rows",
                     "cols",
                     "counts",

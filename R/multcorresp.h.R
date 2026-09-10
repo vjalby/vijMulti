@@ -758,6 +758,7 @@ multcorrespResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                 clearWith=list(
                     "vars",
                     "supplVars",
+                    "labelVar",
                     "method",
                     "normalization",
                     "dimNum")))

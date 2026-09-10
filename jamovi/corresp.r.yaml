@@ -16,12 +16,16 @@ items:
           title: ""
           type: text
       clearWith:
+        - mode
         - rows
         - cols
+        - counts
         - descAsVarName
         - columns
         - rowLabels
         - columnTitle
+        - supplementaryRows
+        - supplementaryCols
 
     - name:  rowProfiles
       title: Row Profiles
@@ -33,12 +37,16 @@ items:
           title: ""
           type: text
       clearWith:
+        - mode
         - rows
         - cols
+        - counts
         - descAsVarName
         - columns
         - rowLabels
         - columnTitle
+        - supplementaryRows
+        - supplementaryCols
 
     - name:  colProfiles
       title: Column Profiles
@@ -50,12 +58,16 @@ items:
           title: ""
           type: text
       clearWith:
+        - mode
         - rows
         - cols
+        - counts
         - descAsVarName
         - columns
         - rowLabels
         - columnTitle
+        - supplementaryRows
+        - supplementaryCols
 
     - name:  eigenvalues
       title: Summary
@@ -83,12 +95,15 @@ items:
           type: number
           format: pc
       clearWith:
+        - mode
         - dimNum
         - rows
         - cols
         - counts
         - columns
         - rowLabels
+        - supplementaryRows
+        - supplementaryCols
 
     - name:  rowSummary
       title: Row Summary
@@ -103,6 +118,7 @@ items:
           title: ""
           type: text
       clearWith:
+        - mode
         - rows
         - cols
         - counts
@@ -111,6 +127,8 @@ items:
         - descAsVarName
         - columns
         - rowLabels
+        - supplementaryRows
+        - supplementaryCols
 
     - name:  colSummary
       title: Column Summary
@@ -125,6 +143,7 @@ items:
           title: ""
           type: text
       clearWith:
+        - mode
         - rows
         - cols
         - counts
@@ -134,6 +153,8 @@ items:
         - columns
         - rowLabels
         - columnTitle
+        - supplementaryRows
+        - supplementaryCols
 
     - name: rowplot
       title: "Row Plot"
@@ -143,6 +164,7 @@ items:
       height: 450
       renderFun: .rowplot
       clearWith:
+        - mode
         - rows
         - cols
         - counts
@@ -185,6 +207,7 @@ items:
       height: 450
       renderFun: .colplot
       clearWith:
+        - mode
         - rows
         - cols
         - counts
@@ -228,6 +251,7 @@ items:
       height: 450
       renderFun: .biplot
       clearWith:
+        - mode
         - rows
         - cols
         - counts
