@@ -7,8 +7,6 @@ Maintainer: Vincent Jalby <vincent.jalby@unilim.fr>
 Description: Main classic multivariate data analyses (Principal Component
     Analysis, Correspondence Analysis and Multiple Correspondence Analysis),
     built with ggplot2 and offering extensive customization options.
-    The module is available in the Analyses tab. Project source (and changelog) 
-    is available at https://github.com/vjalby/vijMulti
 License: GPL (>=3)
 Encoding: UTF-8
 LazyData: true
