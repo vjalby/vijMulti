@@ -51,9 +51,9 @@ msgstr ""
 "<p><strong>Principales analyses multivariées classiques</strong> :</p> <ul> "
 "<li>Analyse en composantes principales</li> <li>Analyse des "
 "correspondances</li> <li>Analyse des correspondances multiples</li> </ul> "
-"<p>Le module est disponible dans l'onglet <strong>Analyses "
-"multivariées</strong>.</p> <p>Le code source du projet (et le changelog) est "
-"disponible sur <a href=\"https://github.com/vjalby/vijMulti\" "
+"<p>Le module est disponible dans l'onglet "
+"<strong>Analyses</strong>.</p><p>Le code source du projet (et le changelog) "
+"est disponible sur <a href=\"https://github.com/vjalby/vijMulti "
 "target=\"_blank\">Github</a>.</p>"
 
 #: R/corresp.b.R
