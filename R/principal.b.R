@@ -233,7 +233,7 @@ principalClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                     res$scores <- cbind(as.data.frame(res$scores), group = res$group)
 
                 obsData <- as.data.frame(res$scores)
-                obsData$Label <- rownames(obsData)
+                obsData$Label <- res$rowlabels #rownames(obsData)
 
                 if (self$options$labelColor == "none")
                     labelColor <- self$options$obsColor
@@ -460,7 +460,7 @@ principalClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             }
             for (i in 1:nrows) {
                 values = list()
-                values["obs"] <- rownames(res$scores)[i]
+                values["obs"] <- res$rowlabels[i] #rownames(res$scores)[i]
                 if (!is.null(self$options$groupVar))
                     values["group"] <- as.character(res$group[i])
                 values["qlt"] <- res$qlt[i]
@@ -487,13 +487,21 @@ principalClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 vijErrorMessage(self, .("Unable to compute principal components for the selected variables."))
             }
 
-            if (!is.null(self$options$labelVar)) {
-                rownames(res$scores) <- data[[self$options$labelVar]]
-                rownames(res$stdScores) <- data[[self$options$labelVar]]
-            } else {
-                rownames(res$scores) <- rownames(data)
-                rownames(res$stdScores) <- rownames(data)
-            }
+            # if (!is.null(self$options$labelVar)) {
+            #     rownames(res$scores) <- data[[self$options$labelVar]]
+            #     rownames(res$stdScores) <- data[[self$options$labelVar]]
+            # } else {
+            #     rownames(res$scores) <- rownames(data)
+            #     rownames(res$stdScores) <- rownames(data)
+            # }
+
+            rownames(res$scores) <- rownames(data)
+            rownames(res$stdScores) <- rownames(data)
+            if (!is.null(self$options$labelVar))
+                res$rowlabels <- data[[self$options$labelVar]]
+            else
+                res$rowlabels <- rownames(data)
+
             if (!is.null(self$options$groupVar))
                 res$group <- data[[self$options$groupVar]]
 
