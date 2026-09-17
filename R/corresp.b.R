@@ -585,7 +585,7 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             return(private$.caplot(plotType = 'biplot', image, ggtheme, theme))
         },
         .showHelpMessage = function() {
-            helpMsg <- .('<p>This module computes <strong>Correspondence Analysis (CA)</strong> for two categorical variables. Computations are based on <a href = "https://CRAN.R-project.org/package=FactoMineR" target="_blank">FactoMineR<a/> package by F. Husson, J. Josse, S. Le, J. Mazet.</p>
+            helpMsg <- .('<p>This module computes <strong>Correspondence Analysis (CA)</strong> for two categorical variables. Computations are based on <a href = "https://CRAN.R-project.org/package=FactoMineR" target="_blank">FactoMineR</a> package by F. Husson, J. Josse, S. Le, J. Mazet.</p>
 <p>The data can be</p>
 <ul>
 <li>an <strong>Observation table</strong> (raw data), possibly weighted using <em>jamovi</em> built-in weight system or using the "Counts" variable</li>
