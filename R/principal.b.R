@@ -487,14 +487,6 @@ principalClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 vijErrorMessage(self, .("Unable to compute principal components for the selected variables."))
             }
 
-            # if (!is.null(self$options$labelVar)) {
-            #     rownames(res$scores) <- data[[self$options$labelVar]]
-            #     rownames(res$stdScores) <- data[[self$options$labelVar]]
-            # } else {
-            #     rownames(res$scores) <- rownames(data)
-            #     rownames(res$stdScores) <- rownames(data)
-            # }
-
             rownames(res$scores) <- rownames(data)
             rownames(res$stdScores) <- rownames(data)
             if (!is.null(self$options$labelVar))
