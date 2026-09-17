@@ -6,7 +6,7 @@ jms: '1.0'
 authors:
   - Vincent Jalby
 maintainer: Vincent Jalby <vincent.jalby@unilim.fr>
-date: '2026-09-10'
+date: '2026-09-17'
 category: multivariate
 type: R
 description: >-

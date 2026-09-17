@@ -21,7 +21,7 @@ The module is available in the **Analyses** tab.
 
 ![](img/mca.jpg)
 
-## Last changes: vijMulti 1.0.0 (2026-09-13)
+## Last changes: vijMulti 1.0.0 (2026-09-17)
 
 * The three analyses PCA, CA and MCA have been moved from vijPlots to this new module
 * MCA (Burt method): Fixed variable discrimination computation
