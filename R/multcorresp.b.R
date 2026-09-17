@@ -40,6 +40,16 @@ multcorrespClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             else
                 supplIdx <- (length(activeVars)+1):(length(allVars))
 
+            # Display names (real variable name -> description, "*"-suffixed for
+            # supplementary variables), disambiguated with make.unique() so two
+            # variables never end up with the identical display string. Stored on
+            # res once it exists (see below).
+            varDisplayNameRaw <- vapply(allVars, function(aVar) {
+                aVarName <- private$.getVarName(aVar)
+                if (aVar %in% self$options$supplVars) paste(aVarName, "*") else aVarName
+            }, character(1), USE.NAMES = FALSE)
+            varDisplayName <- stats::setNames(make.unique(varDisplayNameRaw), allVars)
+
             # remove cases with with NA in vars
             data <- self$data[stats::complete.cases(self$data[, allVars, drop = FALSE]), , drop = FALSE]
             data <- droplevels(data)
@@ -48,21 +58,19 @@ multcorrespClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 vijErrorMessage(self, .("Unable to compute MCA because of too many missing values."))
             }
 
-            # list of ordered factors (used to draw path)
+            # list of ordered factors (used to draw path) - real variable names, not
+            # positions, so this stays correct even if two variables' display names
+            # later collide and merge in the category plot (see .mainplot)
             ordVars <- c()
-            for(i in seq_along(allVars)) {
-                if("ordered" %in% class(data[[allVars[i]]]))
-                    ordVars <- c(ordVars, i)
+            for (aVar in allVars) {
+                if ("ordered" %in% class(data[[aVar]]))
+                    ordVars <- c(ordVars, aVar)
             }
 
             if (!is.null(self$options$labelVar))
                 rowLabels <- as.character(data[[self$options$labelVar]])
             else
                 rowLabels <- NULL
-
-            # Set variable names
-            allVars <- vapply(allVars, FUN = private$.getVarName, FUN.VALUE = character(1), USE.NAMES = FALSE)
-            names(data) <- vapply(names(data), FUN = private$.getVarName, FUN.VALUE = character(1), USE.NAMES = FALSE)
 
             method <- self$options$method
             methodStr <- switch(method,
@@ -88,6 +96,7 @@ multcorrespClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 vijErrorMessage(self, errorMessage)
             }
 
+            res$varDisplayName <- varDisplayName
 
             #### Inertia Table ####
 
@@ -167,13 +176,12 @@ multcorrespClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 varFactors <- c(varFactors, rep(aVar, nlevels(data[[aVar]]))) # unused levels are now dropped from the begining
             }
             # Build the list of supplementary variable names for levels
-            supSymbol <- "*"
             supFactors <- c()
             if (!is.null(supcol)) {
                 varNames <- names(data)
                 varNames <- varNames[supcol]
                 for (aVar in varNames)
-                    supFactors <- c(supFactors, rep(paste(aVar,supSymbol), nlevels(factor(data[[aVar]]))))
+                    supFactors <- c(supFactors, rep(aVar, nlevels(factor(data[[aVar]]))))
             }
             res$cat$factors <- c(varFactors, supFactors)
             # convert % to decimal
@@ -241,7 +249,6 @@ multcorrespClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             res$varActive <- c(ncol(data) - length(supcol), length(supcol))  # (nb of active var, nb of supp var)
             # All var
             if (!is.null(supcol)) {
-                rownames(res$quali.sup$eta2) <- paste(rownames(res$quali.sup$eta2), supSymbol)
                 res$allvar$eta2 <- rbind(res$var$eta2,res$quali.sup$eta2)
             } else {
                 res$allvar$eta2 <- res$var$eta2
@@ -340,7 +347,7 @@ multcorrespClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         .fillDiscriminationTable = function(table, res, nDim, supplIdx) {
             for (i in seq_len(nrow(res$allvar$eta2))) {
                 values = list()
-                values[["var"]] <- rownames(res$allvar$eta2)[i]
+                values[["var"]] <- res$varDisplayName[[rownames(res$allvar$eta2)[i]]]
                 for (j in seq_len(nDim))
                     values[[paste0("dim",j)]] <- res$allvar$eta2[i,j]
                 table$addRow(rowKey = as.character(i), values = values)
@@ -360,7 +367,7 @@ multcorrespClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             previousfactor <- res$cat$factors[1]
             for (i in seq_len(nrow(res$cat$coord))) {
                 values = list(
-                    factor = res$cat$factors[i],
+                    factor = res$varDisplayName[[res$cat$factors[i]]],
                     level = rownames(res$cat$coord)[i],
                     mass = private$.nullOrValue(res$cat$mass[i]),
                     qlt = res$cat$qlt[i],
@@ -437,8 +444,9 @@ multcorrespClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
 
             data <- res$allvar$eta2[,c(dim1, dim2)]
             colnames(data) <- c("x","y")
+            labels <- unname(res$varDisplayName[rownames(data)])
 
-            plot <- ggplot2::ggplot(data, ggplot2::aes(x = x, y = y, label = rownames(data)))
+            plot <- ggplot2::ggplot(data, ggplot2::aes(x = x, y = y, label = labels))
             plot <- plot + ggplot2::geom_point()
             plot <- plot + ggplot2::geom_segment(ggplot2::aes(xend = 0, yend = 0))
             plot <- plot + ggrepel::geom_text_repel(show.legend = FALSE, nudge_y = 0.03/ggplot2::.pt, min.segment.length = 2,
@@ -523,7 +531,8 @@ multcorrespClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             if (plotType != "obs") {
                 catdata$level <- rownames(catdata)
                 # Order color levels
-                catdata$factors <- factor(res$cat$factors, levels = unique(res$cat$factors), ordered = TRUE)
+                catDisplayFactors <- unname(res$varDisplayName[res$cat$factors])
+                catdata$factors <- factor(catDisplayFactors, levels = unique(catDisplayFactors), ordered = TRUE)
                 if (self$options$boldCat) {
                     catFace <- "bold"
                     supCatFace <- "bold.italic"
@@ -538,9 +547,11 @@ multcorrespClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 plot <- plot + ggrepel::geom_text_repel(data = catdata,
                                                         ggplot2::aes(x = x, y = y, label = level, color = factors, fontface = factors),
                                                         size = self$options$labelSize/ggplot2::.pt, show.legend = FALSE, seed = 123)
-                if (self$options$connectOrdinalCat)
-                    plot <- plot + ggplot2::geom_path(data = catdata[catdata$factors %in% levels(catdata$factors)[res$ordVars],],
+                if (self$options$connectOrdinalCat) {
+                    ordDisplayFactors <- unique(catDisplayFactors[res$cat$factors %in% res$ordVars])
+                    plot <- plot + ggplot2::geom_path(data = catdata[catdata$factors %in% ordDisplayFactors,],
                                                       ggplot2::aes(x = x, y = y, color = factors), show.legend = FALSE)
+                }
             }
 
             plot <- plot + ggplot2::geom_hline(yintercept = 0, linetype = 2) + ggplot2::geom_vline(xintercept = 0, linetype = 2)
@@ -643,7 +654,7 @@ multcorrespClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
 
         },
         .showHelpMessage = function() {
-            helpMsg <- .('<p>This module computes <strong>Multiple Correspondence Analysis (MCA)</strong> for several categorical variables. Computations are based on <a href = "https://CRAN.R-project.org/package=FactoMineR" target="_blank">FactoMineR<a/> package by F. Husson, J. Josse, S. Le, J. Mazet.</p>
+            helpMsg <- .('<p>This module computes <strong>Multiple Correspondence Analysis (MCA)</strong> for several categorical variables. Computations are based on <a href = "https://CRAN.R-project.org/package=FactoMineR" target="_blank">FactoMineR</a> package by F. Husson, J. Josse, S. Le, J. Mazet.</p>
 <p>Both classic methods are available:</p>
 <ul>
 <li><strong>Indicator matrix:</strong> CA of the indicator matrix</li>
