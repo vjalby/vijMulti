@@ -130,22 +130,53 @@ multcorrespClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
 
             res$ordVars <- ordVars # List of ordered factors
 
+            # Which of cat$coord/cat$stdcoord and ind$coord/ind$stdcoord .mainplot()
+            # will actually use for this normalization - decided once here so only
+            # that one needs to travel into each plot's state below.
+            catCoordField <- if (self$options$normalization %in% c("principal", "catprincipal")) "coord" else "stdcoord"
+            indCoordField <- if (self$options$normalization %in% c("principal", "obsprincipal")) "coord" else "stdcoord"
+
+            # Each state below carries only the res fields that plot type actually
+            # reads (see .discrimplot()/.mainplot()), with coordinate matrices cut
+            # down from res$nd.max columns to the nDim actually ever displayed
+            # (dim1/dim2 <= nDim is enforced above). res itself stays untouched/full
+            # for the table-fill functions and .saveCoordinates() above, which don't
+            # need this trimming.
             if (self$options$showDiscriminationPlot) {
-                discrimplot <- self$results$discrimplot
-                discrimplot$setState(res)
+                self$results$discrimplot$setState(list(
+                    eig = res$eig[seq_len(nDim), , drop = FALSE],
+                    allvar = list(eta2 = res$allvar$eta2[, seq_len(nDim), drop = FALSE]),
+                    varDisplayName = res$varDisplayName
+                ))
             }
 
             if (self$options$showCategoryPlot) {
-                categoryplot <- self$results$categoryplot
-                categoryplot$setState(res)
+                self$results$categoryplot$setState(list(
+                    eig = res$eig[seq_len(nDim), , drop = FALSE],
+                    cat = list(coord = res$cat[[catCoordField]][, seq_len(nDim), drop = FALSE], factors = res$cat$factors),
+                    varDisplayName = res$varDisplayName,
+                    varActive = res$varActive,
+                    ordVars = res$ordVars
+                ))
             }
             if (self$options$showObservationPlot) {
-                obsplot <- self$results$obsplot
-                obsplot$setState(res)
+                self$results$obsplot$setState(list(
+                    eig = res$eig[seq_len(nDim), , drop = FALSE],
+                    ind = list(coord = res$ind[[indCoordField]][, seq_len(nDim), drop = FALSE]),
+                    rowlabels = res$rowlabels,
+                    varActive = res$varActive
+                ))
             }
             if (self$options$showBiPlot) {
-                biplot <- self$results$biplot
-                biplot$setState(res)
+                self$results$biplot$setState(list(
+                    eig = res$eig[seq_len(nDim), , drop = FALSE],
+                    cat = list(coord = res$cat[[catCoordField]][, seq_len(nDim), drop = FALSE], factors = res$cat$factors),
+                    ind = list(coord = res$ind[[indCoordField]][, seq_len(nDim), drop = FALSE]),
+                    rowlabels = res$rowlabels,
+                    varDisplayName = res$varDisplayName,
+                    varActive = res$varActive,
+                    ordVars = res$ordVars
+                ))
             }
 
             #### Saving coordinates  ####
@@ -202,6 +233,8 @@ multcorrespClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             res$var$stdcoord <- sweep(res$var$coord, 2, sqrt(res$eig [,1]), FUN = "/")
             # Observation Std coordinates
             res$ind$stdcoord <- sweep(res$ind$coord, 2, sqrt(res$eig [,1]), FUN = "/")
+            # Observation masses
+            res$ind$mass <- res$call$marge.row
 
             #### Burt fixes ####
             if (method == "Burt") {
@@ -272,9 +305,9 @@ multcorrespClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             }
 
             # Delete unused large tables (to save memory ?)
-            res$call$X <- NULL
-            res$call$Xtot <- NULL
             res$var <- NULL
+            res$svd <- NULL
+            res$call <- NULL
             return(res)
         },
         .dimN = function(n) jmvcore::format(.("Dim {n}"), n = n),
@@ -413,7 +446,7 @@ multcorrespClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             for (i in seq_len(nrows)) {
                 values = list(
                     name = res$rowlabels[i],
-                    mass = res$call$marge.row[i],
+                    mass = res$ind$mass[i],
                     qlt = res$ind$qlt[i],
                     inertia = res$ind$inertia[i]
                 )
@@ -476,27 +509,25 @@ multcorrespClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             dim2name <- jmvcore::format(.("Dimension {n} ({perc} %)"), n = dim2, perc = round(res$eig[dim2,2]*100,1))
 
             #### Prepare data ####
-            if (self$options$normalization == "principal") {
+            # catdata/obsdata are only built (hence only need res$cat/res$ind) for
+            # the plot types that actually render them below - "obs" never reads
+            # catdata, "cat" never reads obsdata. res$cat$coord/res$ind$coord are
+            # already whichever of coord/stdcoord self$options$normalization calls
+            # for - picked once in .run(), before building each plot's state.
+            if (plotType != "obs") {
                 catdata <- as.data.frame(res$cat$coord[,c(dim1,dim2)])
-                obsdata <- as.data.frame(round(res$ind$coord[,c(dim1,dim2)],4))
-            } else if (self$options$normalization == "obsprincipal") {
-                catdata <- as.data.frame(res$cat$stdcoord[,c(dim1,dim2)])
-                obsdata <- as.data.frame(round(res$ind$coord[,c(dim1,dim2)],4))
-            } else if (self$options$normalization == "catprincipal") {
-                catdata <- as.data.frame(res$cat$coord[,c(dim1,dim2)])
-                obsdata <- as.data.frame(round(res$ind$stdcoord[,c(dim1,dim2)],4))
-            } else {
-                catdata <- as.data.frame(res$cat$stdcoord[,c(dim1,dim2)])
-                obsdata <- as.data.frame(round(res$ind$stdcoord[,c(dim1,dim2)],4))
+                colnames(catdata) <- c("x","y")
             }
-            colnames(catdata) <- c("x","y")
-            colnames(obsdata) <- c("x","y")
+            if (plotType != "cat") {
+                obsdata <- as.data.frame(round(res$ind$coord[,c(dim1,dim2)],4))
+                colnames(obsdata) <- c("x","y")
 
-            # Height of the obs/bi plot (to nudge geom_text)
-            if (plotType == "biplot")
-                ggheight <- max(obsdata$y,catdata$y) - min(obsdata$y,catdata$y)
-            else
-                ggheight <- max(obsdata$y) - min(obsdata$y)
+                # Height of the obs/bi plot (to nudge geom_text)
+                ggheight <- if (plotType == "biplot")
+                    max(obsdata$y,catdata$y) - min(obsdata$y,catdata$y)
+                else
+                    max(obsdata$y) - min(obsdata$y)
+            }
 
             # Start the plot
             plot <- ggplot2::ggplot()
