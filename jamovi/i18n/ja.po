@@ -1007,10 +1007,6 @@ msgstr "多重対応分析"
 msgid "Multivariate"
 msgstr "多変量"
 
-#: multcorresp/results/observations.columns.title
-msgid "Name"
-msgstr "名前"
-
 #: R/principal.b.R
 msgid "No rotation used."
 msgstr "回転されていません。"
@@ -1064,11 +1060,6 @@ msgstr "次元数は {maxDim} 以下でなければなりません。"
 #: multcorresp/options/obsColor.title
 msgid "Obs color"
 msgstr "観測値の色"
-
-#: R/principal.b.R
-#: principal/results/obsTable.columns.title
-msgid "Observation"
-msgstr "観測値"
 
 #: multcorresp/results/obsCoordOV.title
 #: principal/results/obsCoordOV.title

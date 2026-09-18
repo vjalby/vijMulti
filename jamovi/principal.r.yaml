@@ -115,8 +115,8 @@ items:
         - stataRotation
       columns:
         - name: obs
-          title: Observation
-          type: text
+          title: "#"
+          type: integer
       notes:
         norm: Principal coordinates
 

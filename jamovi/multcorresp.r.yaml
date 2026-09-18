@@ -92,9 +92,9 @@ items:
       type: Table
       rows:  0
       columns:
-        - name: name
-          title: Name
-          type: text
+        - name: obs
+          title: "#"
+          type: integer
         - name: mass
           title: "Mass"
           type: number

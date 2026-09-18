@@ -1008,10 +1008,6 @@ msgstr "多重对应分析 (MCA)"
 msgid "Multivariate"
 msgstr "多元"
 
-#: multcorresp/results/observations.columns.title
-msgid "Name"
-msgstr "名称"
-
 #: R/principal.b.R
 msgid "No rotation used."
 msgstr "未使用旋转。"
@@ -1065,11 +1061,6 @@ msgstr "维度数量必须小于或等于 {maxDim}。"
 #: multcorresp/options/obsColor.title
 msgid "Obs color"
 msgstr "观测值颜色"
-
-#: R/principal.b.R
-#: principal/results/obsTable.columns.title
-msgid "Observation"
-msgstr "观测值"
 
 #: multcorresp/results/obsCoordOV.title
 #: principal/results/obsCoordOV.title

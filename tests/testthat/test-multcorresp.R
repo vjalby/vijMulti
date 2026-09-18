@@ -45,11 +45,38 @@ test_that("multcorresp: observations table (first 5 observations)", {
         showObservations = TRUE
     )
     obs <- head(r$observations$asDF, 5)
-    expect_equal(unname(obs$name), c("1", "2", "3", "4", "5"))
+    expect_equal(unname(obs$obs), c("1", "2", "3", "4", "5"))
     expect_equal(unname(obs$inertia), c(0.004641342497, 0.002180545112, 0.00156988241, 0.004641342497, 0.001939082425), tolerance = 1e-6)
     expect_equal(unname(obs$qlt), c(0.7281439941, 0.7185336034, 0.1752300992, 0.7281439941, 0.7092607679), tolerance = 1e-6)
     expect_equal(unname(obs$coord1), c(1.459169, -1.014399672, -0.3746485421, 1.459169, 0.807060557), tolerance = 1e-6)
     expect_equal(unname(obs$coord2), c(0.3855555546, 0.1643565993, 0.2122488358, 0.3855555546, -0.5249910742), tolerance = 1e-6)
+})
+
+test_that("multcorresp: observations table shows the observation number even when labelVar is set", {
+    r <- vijMulti::multcorresp(
+        data = testData,
+        vars = c("Origin", "Size", "Type"),
+        supplVars = NULL,
+        labelVar = "Sex",
+        showObservations = TRUE
+    )
+    obs <- head(r$observations$asDF, 5)
+    expect_equal(unname(obs$obs), c("1", "2", "3", "4", "5"))
+    expect_true("label" %in% names(obs))
+    expect_equal(which(names(obs) == "label"), which(names(obs) == "obs") + 1)
+    expect_equal(unname(obs$label), c("Male", "Male", "Male", "Male", "Male"))
+})
+
+test_that("multcorresp: observations table has no label column when labelVar is not set", {
+    r <- vijMulti::multcorresp(
+        data = testData,
+        vars = c("Origin", "Size", "Type"),
+        supplVars = NULL,
+        labelVar = NULL,
+        showObservations = TRUE
+    )
+    obs <- r$observations$asDF
+    expect_false("label" %in% names(obs))
 })
 
 test_that("multcorresp: Burt method with Benzecri and Greenacre corrections (summary table)", {

@@ -1037,10 +1037,6 @@ msgstr "Višestruke analize korespondencije"
 msgid "Multivariate"
 msgstr "Multivarijatno"
 
-#: multcorresp/results/observations.columns.title
-msgid "Name"
-msgstr "Ime"
-
 #: R/principal.b.R
 msgid "No rotation used."
 msgstr "Okretanje nije korišteno."
@@ -1094,11 +1090,6 @@ msgstr "Broj dimenzija mora biti manji ili jednak {maxDim}."
 #: multcorresp/options/obsColor.title
 msgid "Obs color"
 msgstr "Boja opažanja"
-
-#: R/principal.b.R
-#: principal/results/obsTable.columns.title
-msgid "Observation"
-msgstr "Promatranje"
 
 #: multcorresp/results/obsCoordOV.title
 #: principal/results/obsCoordOV.title

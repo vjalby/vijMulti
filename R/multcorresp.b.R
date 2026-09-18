@@ -428,6 +428,8 @@ multcorrespClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 table$setNote("sup", paste("* :", .("Supplementary variables")))
         },
         .initObservationTable = function(table, nDim) {
+            if (!is.null(self$options$labelVar))
+                table$addColumn("label", index = 2, title = private$.getVarName(self$options$labelVar), type = "text")
             table$addColumn("inertia", title = .("% Inertia"), type = "number", format = "zto")
             table$addColumn("qlt", title = "QLT", type = "number", format = "zto")
             for (j in seq_len(nDim))
@@ -445,11 +447,13 @@ multcorrespClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             }
             for (i in seq_len(nrows)) {
                 values = list(
-                    name = res$rowlabels[i],
+                    obs = rownames(res$ind$coord)[i],
                     mass = res$ind$mass[i],
                     qlt = res$ind$qlt[i],
                     inertia = res$ind$inertia[i]
                 )
+                if (!is.null(self$options$labelVar))
+                    values$label <- as.character(res$rowlabels[i])
                 for (j in seq_len(nDim)) {
                     if (self$options$normalization %in% c("principal", "obsprincipal"))
                         values[[paste0("coord",j)]] <- res$ind$coord[i,j]

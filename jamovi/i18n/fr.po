@@ -1048,10 +1048,6 @@ msgstr "Analyse des correspondances multiples"
 msgid "Multivariate"
 msgstr "Multivarié"
 
-#: multcorresp/results/observations.columns.title
-msgid "Name"
-msgstr "Nom"
-
 #: R/principal.b.R
 msgid "No rotation used."
 msgstr "Aucune rotation appliquée."
@@ -1105,11 +1101,6 @@ msgstr "Le nombre de dimensions doit être inférieur ou égal à {maxDim}."
 #: multcorresp/options/obsColor.title
 msgid "Obs color"
 msgstr "Couleur obs."
-
-#: R/principal.b.R
-#: principal/results/obsTable.columns.title
-msgid "Observation"
-msgstr "Observation"
 
 #: multcorresp/results/obsCoordOV.title
 #: principal/results/obsCoordOV.title

@@ -441,10 +441,8 @@ principalClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 table$setNote('norm', .("Standard coordinates"))
         },
         .initObservationTable = function(table, nDim) {
-            if (is.null(self$options$labelVar))
-                table$addColumn("obs", title = .("Observation"), type = "integer")
-            else
-                table$addColumn("obs", title = private$.getVarName(self$options$labelVar), type = "text")
+            if (!is.null(self$options$labelVar))
+                table$addColumn("label", title = private$.getVarName(self$options$labelVar), type = "text")
             if (!is.null(self$options$groupVar))
                 table$addColumn("group", title = private$.getVarName(self$options$groupVar), type = "text")
             for(i in 1:nDim) {
@@ -460,7 +458,9 @@ principalClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             }
             for (i in 1:nrows) {
                 values = list()
-                values["obs"] <- res$rowlabels[i] #rownames(res$scores)[i]
+                values["obs"] <- rownames(res$scores)[i]
+                if (!is.null(self$options$labelVar))
+                    values["label"] <- as.character(res$rowlabels[i])
                 if (!is.null(self$options$groupVar))
                     values["group"] <- as.character(res$group[i])
                 values["qlt"] <- res$qlt[i]

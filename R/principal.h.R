@@ -877,8 +877,8 @@ principalResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 columns=list(
                     list(
                         `name`="obs", 
-                        `title`="Observation", 
-                        `type`="text")),
+                        `title`="#", 
+                        `type`="integer")),
                 notes=list(
                     `norm`="Principal coordinates")))
             self$add(jmvcore::Image$new(

@@ -159,6 +159,33 @@ test_that("principal: custom dimensions and axes", {
     expect_plot_snapshot("principal-customDims", testPlot)
 })
 
+test_that("principal: observation table with a factor labelVar shows level labels, not codes", {
+    r <- vijMulti::principal(
+        data = testData,
+        vars = c("Sepal_Length", "Sepal_Width", "Petal_Length", "Petal_Width"),
+        labelVar = "Species",
+        groupVar = NULL,
+        showObservations = TRUE
+    )
+    obs <- head(r$obsTable$asDF, 5)
+    expect_equal(unname(obs$obs), c("1", "2", "3", "4", "5"))
+    expect_true("label" %in% names(obs))
+    expect_equal(which(names(obs) == "label"), which(names(obs) == "obs") + 1)
+    expect_equal(unname(obs$label), rep("setosa", 5))
+})
+
+test_that("principal: observation table has no label column when labelVar is not set", {
+    r <- vijMulti::principal(
+        data = testData,
+        vars = c("Sepal_Length", "Sepal_Width", "Petal_Length", "Petal_Width"),
+        labelVar = NULL,
+        groupVar = NULL,
+        showObservations = TRUE
+    )
+    obs <- r$obsTable$asDF
+    expect_false("label" %in% names(obs))
+})
+
 test_that("principal: point labels (labelVar)", {
     testPlot <- vijMulti::principal(
         data = testData,

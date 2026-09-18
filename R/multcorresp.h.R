@@ -750,9 +750,9 @@ multcorrespResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                 rows=0,
                 columns=list(
                     list(
-                        `name`="name", 
-                        `title`="Name", 
-                        `type`="text"),
+                        `name`="obs", 
+                        `title`="#", 
+                        `type`="integer"),
                     list(
                         `name`="mass", 
                         `title`="Mass", 

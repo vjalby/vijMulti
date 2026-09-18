@@ -472,9 +472,6 @@
             "Multivariate": [
                 "多変量"
             ],
-            "Name": [
-                "名前"
-            ],
             "No rotation used.": [
                 "回転されていません。"
             ],
@@ -504,9 +501,6 @@
             ],
             "Obs color": [
                 "観測値の色"
-            ],
-            "Observation": [
-                "観測値"
             ],
             "Observation Coordinates": [
                 "観測値の座標"

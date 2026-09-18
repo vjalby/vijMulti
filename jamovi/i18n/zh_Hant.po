@@ -1010,10 +1010,6 @@ msgstr "多重對應分析"
 msgid "Multivariate"
 msgstr "多變量"
 
-#: multcorresp/results/observations.columns.title
-msgid "Name"
-msgstr "名稱"
-
 #: R/principal.b.R
 msgid "No rotation used."
 msgstr "未使用任何旋轉。"
@@ -1067,11 +1063,6 @@ msgstr "維度數量必須小於或等於 {maxDim}。"
 #: multcorresp/options/obsColor.title
 msgid "Obs color"
 msgstr "觀察值顏色"
-
-#: R/principal.b.R
-#: principal/results/obsTable.columns.title
-msgid "Observation"
-msgstr "觀察值"
 
 #: multcorresp/results/obsCoordOV.title
 #: principal/results/obsCoordOV.title

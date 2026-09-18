@@ -945,10 +945,6 @@ msgstr ""
 msgid "Multivariate"
 msgstr ""
 
-#: multcorresp/results/observations.columns.title
-msgid "Name"
-msgstr ""
-
 #: R/principal.b.R
 msgid "No rotation used."
 msgstr ""
@@ -1001,11 +997,6 @@ msgstr ""
 
 #: multcorresp/options/obsColor.title
 msgid "Obs color"
-msgstr ""
-
-#: R/principal.b.R
-#: principal/results/obsTable.columns.title
-msgid "Observation"
 msgstr ""
 
 #: multcorresp/results/obsCoordOV.title

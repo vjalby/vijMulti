@@ -472,9 +472,6 @@
             "Multivariate": [
                 "多變量"
             ],
-            "Name": [
-                "名稱"
-            ],
             "No rotation used.": [
                 "未使用任何旋轉。"
             ],
@@ -504,9 +501,6 @@
             ],
             "Obs color": [
                 "觀察值顏色"
-            ],
-            "Observation": [
-                "觀察值"
             ],
             "Observation Coordinates": [
                 "觀察坐標"

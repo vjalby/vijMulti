@@ -1036,10 +1036,6 @@ msgstr "Анализ множественного соответствия"
 msgid "Multivariate"
 msgstr "Многомерный"
 
-#: multcorresp/results/observations.columns.title
-msgid "Name"
-msgstr "Имя"
-
 #: R/principal.b.R
 msgid "No rotation used."
 msgstr "Вращение не используется."
@@ -1093,11 +1089,6 @@ msgstr "Количество размерностей должно быть ме
 #: multcorresp/options/obsColor.title
 msgid "Obs color"
 msgstr "Цвет наблюдения"
-
-#: R/principal.b.R
-#: principal/results/obsTable.columns.title
-msgid "Observation"
-msgstr "Наблюдение"
 
 #: multcorresp/results/obsCoordOV.title
 #: principal/results/obsCoordOV.title
