@@ -568,6 +568,7 @@ msgstr ""
 msgid "default"
 msgstr ""
 
+#: corresp/results/chisq.columns.title
 #: principal/results/kmoTable.columns.title
 msgid "df"
 msgstr ""
@@ -1840,6 +1841,7 @@ msgstr ""
 msgid "Yellow to Red"
 msgstr ""
 
-#: R/corresp.b.R
-msgid "χ² = {chisq}, df = {df}, p-value = {pval}"
+#: corresp/options/showChisq.title
+#: corresp/results/chisq.title
+msgid "χ² Test"
 msgstr ""

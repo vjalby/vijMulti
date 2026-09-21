@@ -671,6 +671,7 @@ msgstr "Gris foncé"
 msgid "default"
 msgstr "par défaut"
 
+#: corresp/results/chisq.columns.title
 #: principal/results/kmoTable.columns.title
 msgid "df"
 msgstr "ddl"
@@ -1957,6 +1958,7 @@ msgstr "Jaune à vert"
 msgid "Yellow to Red"
 msgstr "Jaune à rouge"
 
-#: R/corresp.b.R
-msgid "χ² = {chisq}, df = {df}, p-value = {pval}"
-msgstr "χ² = {chisq}, df = {df}, p-value = {pval}"
+#: corresp/options/showChisq.title
+#: corresp/results/chisq.title
+msgid "χ² Test"
+msgstr "Test du χ²"

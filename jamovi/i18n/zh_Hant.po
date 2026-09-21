@@ -633,6 +633,7 @@ msgstr "深灰色"
 msgid "default"
 msgstr "預設"
 
+#: corresp/results/chisq.columns.title
 #: principal/results/kmoTable.columns.title
 msgid "df"
 msgstr "自由度"
@@ -1905,6 +1906,7 @@ msgstr "黃色到綠色"
 msgid "Yellow to Red"
 msgstr "黃色到紅色"
 
-#: R/corresp.b.R
-msgid "χ² = {chisq}, df = {df}, p-value = {pval}"
-msgstr "χ² = {chisq}, df = {df}, p-value = {pval}"
+#: corresp/options/showChisq.title
+#: corresp/results/chisq.title
+msgid "χ² Test"
+msgstr "χ² 檢定"

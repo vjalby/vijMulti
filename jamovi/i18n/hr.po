@@ -660,6 +660,7 @@ msgstr "Tamna siva"
 msgid "default"
 msgstr "zadano"
 
+#: corresp/results/chisq.columns.title
 #: principal/results/kmoTable.columns.title
 msgid "df"
 msgstr "df"
@@ -1936,6 +1937,7 @@ msgstr "Žuta u zelena"
 msgid "Yellow to Red"
 msgstr "Žuta u crvenu"
 
-#: R/corresp.b.R
-msgid "χ² = {chisq}, df = {df}, p-value = {pval}"
-msgstr "χ² = {chisq}, df = {df}, p-value = {pval}"
+#: corresp/options/showChisq.title
+#: corresp/results/chisq.title
+msgid "χ² Test"
+msgstr "χ² test"

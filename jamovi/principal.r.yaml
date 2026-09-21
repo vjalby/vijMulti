@@ -71,7 +71,7 @@ items:
         - name: p
           title: p
           type: number
-          format: "zto"
+          format: zto,pvalue
       rows: 2
       clearWith:
         - vars
@@ -143,10 +143,8 @@ items:
         - captionFontFace
         - captionFontSize
         - captionAlign
-        - xAxisText
         - xAxisFontSize
         - xAxisPosition
-        - yAxisText
         - yAxisFontSize
         - yAxisPosition
 
