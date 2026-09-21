@@ -14,7 +14,7 @@ principalClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             }
         },
         .init = function() {
-            if (is.null(self$options$vars)) {
+            if (is.null(self$options$vars) || length(self$options$vars) < 2) {
                 private$.showHelpMessage()
             }
 

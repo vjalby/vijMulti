@@ -831,7 +831,7 @@ principalResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                         `name`="p", 
                         `title`="p", 
                         `type`="number", 
-                        `format`="zto")),
+                        `format`="zto,pvalue")),
                 rows=2,
                 clearWith=list(
                     "vars")))
@@ -905,10 +905,8 @@ principalResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                     "captionFontFace",
                     "captionFontSize",
                     "captionAlign",
-                    "xAxisText",
                     "xAxisFontSize",
                     "xAxisPosition",
-                    "yAxisText",
                     "yAxisFontSize",
                     "yAxisPosition")))
             self$add(jmvcore::Image$new(
