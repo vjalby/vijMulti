@@ -24,7 +24,8 @@ test_that("corresp: contingency table mode (mode = contTable)", {
         columns = c("None", "Light", "Medium", "Heavy"),
         rowLabels = "STAFF",
         counts = NULL,
-        showContingency = TRUE
+        showContingency = TRUE,
+        showChisq = TRUE
     )
     ct <- r$contingency$asDF
     expect_equal(unname(ct$row), c("Senior Managers", "Junior Managers", "Senior Employees", "Junior Employees", "Secretaries", "Active Margin"))
@@ -35,7 +36,10 @@ test_that("corresp: contingency table mode (mode = contTable)", {
     expect_equal(unname(eig$dim), c("1", "2", "Total"))
     expect_equal(unname(eig$inertia), c(0.07475910589, 0.01001718051, 0.0847762864), tolerance = 1e-6)
     expect_equal(unname(eig$proportion), c(0.8775587314, 0.117586535, 1), tolerance = 1e-6)
-    expect_equal(r$eigenvalues$notes$chisq$note, "χ² = 16.44, df = 12, p-value = 0.17183")
+    chisq <- r$chisq$asDF
+    expect_equal(chisq$statistic, 16.44, tolerance = 1e-3)
+    expect_equal(chisq$df, 12)
+    expect_equal(chisq$p, 0.17183, tolerance = 1e-4)
 })
 
 test_that("corresp: negative counts are rejected (mode = contTable)", {
@@ -64,13 +68,17 @@ test_that("corresp: inertia (eigenvalues) table", {
         cols = "SMOKE",
         columns = NULL,
         rowLabels = NULL,
-        counts = "COUNT"
+        counts = "COUNT",
+        showChisq = TRUE
     )
     eig <- r$eigenvalues$asDF
     expect_equal(unname(eig$dim), c("1", "2", "Total"))
     expect_equal(unname(eig$inertia), c(0.03947232601, 0.02254491281, 0.06201723883), tolerance = 1e-6)
     expect_equal(unname(eig$proportion), c(0.6087989096, 0.3477200288, 1), tolerance = 1e-6)
-    expect_equal(r$eigenvalues$notes$chisq$note, "χ² = 25.03, df = 20, p-value = 0.20041")
+    chisq <- r$chisq$asDF
+    expect_equal(chisq$statistic, 25.03, tolerance = 1e-3)
+    expect_equal(chisq$df, 20)
+    expect_equal(chisq$p, 0.20041, tolerance = 1e-4)
 })
 
 test_that("corresp: contingency table", {

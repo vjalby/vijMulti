@@ -231,10 +231,14 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
 
             return(chisqres)
         },
-        .fillInertiaTable = function(table, res, chisqres) {
-            # rows is set to 1 in yaml to force jamovi to refresh the table note after a reject().
-            # we need to delete this (empty) row before to populate the table.
-            table$deleteRows()
+        .fillChisqTable = function(table, chisqres) {
+            table$setRow(rowNo = 1, values = list(
+                statistic = chisqres$statistic,
+                df = chisqres$parameter,
+                p = chisqres$p.value
+            ))
+        },
+        .fillInertiaTable = function(table, res) {
             # Populate the inertia table
             for (i in seq_along(res$sv)) {
                 table$addRow(i, values = list(
@@ -254,13 +258,6 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 cumulative = NA
             ))
             table$addFormat(rowKey="Total", 1, jmvcore::Cell.BEGIN_END_GROUP)
-            # Chi-squared test
-            chisqNote <- jmvcore::format(.("χ² = {chisq}, df = {df}, p-value = {pval}"),
-                                         chisq = round(chisqres$statistic,2),
-                                         df = chisqres$parameter,
-                                         pval = format.pval(chisqres$p.value, eps = 0.001)
-            )
-            table$setNote(key = "chisq", note = chisqNote, init = FALSE)
         },
         .init = function() {
             #
@@ -380,6 +377,9 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
 
             chisqres <- private$.computeChiSquared(contingencyTable, supplementaryRows, supplementaryCols)
 
+            if (self$options$showChisq)
+                private$.fillChisqTable(self$results$chisq, chisqres)
+
             # Check solution dimension
             maxDim = min(nrow(contingencyTable)-length(supplementaryRows), ncol(contingencyTable)-length(supplementaryCols)) - 1
             if (maxDim < 2) {
@@ -403,7 +403,7 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
 
             #### Inertia Table ####
 
-            private$.fillInertiaTable(self$results$eigenvalues, res, chisqres)
+            private$.fillInertiaTable(self$results$eigenvalues, res)
 
             #### Summary Tables ####
 

@@ -80,6 +80,11 @@ options:
       type: Bool
       default: false
 
+    - name: showChisq
+      title: χ² Test
+      type: Bool
+      default: false
+
     - name: showInertia
       title: Inertia summary
       type: Bool

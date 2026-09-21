@@ -69,11 +69,37 @@ items:
         - supplementaryRows
         - supplementaryCols
 
+    - name:  chisq
+      title: "χ² Test"
+      type: Table
+      visible: (showChisq)
+      rows:  1
+      columns:
+        - name: statistic
+          title: "χ²"
+          type: number
+        - name: df
+          title: df
+          type: integer
+        - name: p
+          title: p
+          type: number
+          format: zto,pvalue
+      clearWith:
+        - mode
+        - rows
+        - cols
+        - counts
+        - columns
+        - rowLabels
+        - supplementaryRows
+        - supplementaryCols
+
     - name:  eigenvalues
       title: Summary
       type: Table
       visible: (showInertia)
-      rows:  1
+      rows:  0
       columns:
         - name: dim
           title: Dimension

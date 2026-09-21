@@ -15,6 +15,7 @@ correspOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             counts = NULL,
             showContingency = FALSE,
             showProfiles = FALSE,
+            showChisq = FALSE,
             showInertia = TRUE,
             showSummaries = FALSE,
             showRowPlot = FALSE,
@@ -118,6 +119,10 @@ correspOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             private$..showProfiles <- jmvcore::OptionBool$new(
                 "showProfiles",
                 showProfiles,
+                default=FALSE)
+            private$..showChisq <- jmvcore::OptionBool$new(
+                "showChisq",
+                showChisq,
                 default=FALSE)
             private$..showInertia <- jmvcore::OptionBool$new(
                 "showInertia",
@@ -377,6 +382,7 @@ correspOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             self$.addOption(private$..counts)
             self$.addOption(private$..showContingency)
             self$.addOption(private$..showProfiles)
+            self$.addOption(private$..showChisq)
             self$.addOption(private$..showInertia)
             self$.addOption(private$..showSummaries)
             self$.addOption(private$..showRowPlot)
@@ -428,6 +434,7 @@ correspOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         counts = function() private$..counts$value,
         showContingency = function() private$..showContingency$value,
         showProfiles = function() private$..showProfiles$value,
+        showChisq = function() private$..showChisq$value,
         showInertia = function() private$..showInertia$value,
         showSummaries = function() private$..showSummaries$value,
         showRowPlot = function() private$..showRowPlot$value,
@@ -478,6 +485,7 @@ correspOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         ..counts = NA,
         ..showContingency = NA,
         ..showProfiles = NA,
+        ..showChisq = NA,
         ..showInertia = NA,
         ..showSummaries = NA,
         ..showRowPlot = NA,
@@ -527,6 +535,7 @@ correspResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         contingency = function() private$.items[["contingency"]],
         rowProfiles = function() private$.items[["rowProfiles"]],
         colProfiles = function() private$.items[["colProfiles"]],
+        chisq = function() private$.items[["chisq"]],
         eigenvalues = function() private$.items[["eigenvalues"]],
         rowSummary = function() private$.items[["rowSummary"]],
         colSummary = function() private$.items[["colSummary"]],
@@ -610,10 +619,39 @@ correspResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                     "supplementaryCols")))
             self$add(jmvcore::Table$new(
                 options=options,
+                name="chisq",
+                title="\u03C7\u00B2 Test",
+                visible="(showChisq)",
+                rows=1,
+                columns=list(
+                    list(
+                        `name`="statistic", 
+                        `title`="\u03C7\u00B2", 
+                        `type`="number"),
+                    list(
+                        `name`="df", 
+                        `title`="df", 
+                        `type`="integer"),
+                    list(
+                        `name`="p", 
+                        `title`="p", 
+                        `type`="number", 
+                        `format`="zto,pvalue")),
+                clearWith=list(
+                    "mode",
+                    "rows",
+                    "cols",
+                    "counts",
+                    "columns",
+                    "rowLabels",
+                    "supplementaryRows",
+                    "supplementaryCols")))
+            self$add(jmvcore::Table$new(
+                options=options,
                 name="eigenvalues",
                 title="Summary",
                 visible="(showInertia)",
-                rows=1,
+                rows=0,
                 columns=list(
                     list(
                         `name`="dim", 
@@ -871,6 +909,7 @@ correspBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @param counts .
 #' @param showContingency .
 #' @param showProfiles .
+#' @param showChisq .
 #' @param showInertia .
 #' @param showSummaries .
 #' @param showRowPlot .
@@ -916,6 +955,7 @@ correspBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #'   \code{results$contingency} \tab \tab \tab \tab \tab a table \cr
 #'   \code{results$rowProfiles} \tab \tab \tab \tab \tab a table \cr
 #'   \code{results$colProfiles} \tab \tab \tab \tab \tab a table \cr
+#'   \code{results$chisq} \tab \tab \tab \tab \tab a table \cr
 #'   \code{results$eigenvalues} \tab \tab \tab \tab \tab a table \cr
 #'   \code{results$rowSummary} \tab \tab \tab \tab \tab a table \cr
 #'   \code{results$colSummary} \tab \tab \tab \tab \tab a table \cr
@@ -942,6 +982,7 @@ corresp <- function(
     counts,
     showContingency = FALSE,
     showProfiles = FALSE,
+    showChisq = FALSE,
     showInertia = TRUE,
     showSummaries = FALSE,
     showRowPlot = FALSE,
@@ -1014,6 +1055,7 @@ corresp <- function(
         counts = counts,
         showContingency = showContingency,
         showProfiles = showProfiles,
+        showChisq = showChisq,
         showInertia = showInertia,
         showSummaries = showSummaries,
         showRowPlot = showRowPlot,
