@@ -133,26 +133,7 @@ principalClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
 
             #### Plots ####
 
-            rownames(res$loadings) <- vapply(rownames(res$loadings), FUN = private$.getVarName, FUN.VALUE = character(1), USE.NAMES = FALSE)
-            rownames(res$stdLoadings) <- vapply(rownames(res$stdLoadings), FUN = private$.getVarName, FUN.VALUE = character(1), USE.NAMES = FALSE)
-            res$groupVarName <- private$.getVarName(self$options$groupVar)
-
-            if (self$options$showScreePlot) {
-                screeplot <- self$results$screePlot
-                screeplot$setState(res$eigenvalues)
-            }
-            if (self$options$showVarPlot) {
-                varplot <- self$results$varPlot
-                varplot$setState(res)
-            }
-            if (self$options$showObsPlot) {
-                obsplot <- self$results$obsPlot
-                obsplot$setState(res)
-            }
-            if (self$options$showBiplot) {
-                biplot <- self$results$biPlot
-                biplot$setState(res)
-            }
+            private$.preparePlots(res)
 
             #### Saving coordinates  ####
 
@@ -161,6 +142,73 @@ principalClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             else
                 private$.saveCoordinates(res$scores, norm = "principal", rotation = res$rotation, rotationStr = res$rotationStr)
 
+        },
+        # Builds every plot's image$state from the PCA result:
+        # only the (x, y) columns for the two displayed dimensions
+        # picked between the principal/standard variant
+        .preparePlots = function(res) {
+            buildObsData <- function(scores, dim1, dim2) {
+                obsData <- data.frame(x = scores[, dim1], y = scores[, dim2])
+                if (!is.null(self$options$groupVar))
+                    obsData$group <- res$group
+                obsData$Label <- res$rowlabels
+                obsData
+            }
+            buildVarData <- function(loadings, dim1, dim2) {
+                varData <- data.frame(x = loadings[, dim1], y = loadings[, dim2])
+                varData$Label <- rownames(loadings)
+                varData
+            }
+
+            rownames(res$loadings) <- vapply(rownames(res$loadings), FUN = private$.getVarName, FUN.VALUE = character(1), USE.NAMES = FALSE)
+            rownames(res$stdLoadings) <- vapply(rownames(res$stdLoadings), FUN = private$.getVarName, FUN.VALUE = character(1), USE.NAMES = FALSE)
+            groupVarName <- private$.getVarName(self$options$groupVar)
+
+            xaxis <- self$options$xaxis
+            yaxis <- self$options$yaxis
+            eigenSum <- sum(res$eigenvalues)
+            propIn <- round(100 * res$SSL / eigenSum, 1)
+            dim1name <- jmvcore::format(.("Component {n} ({perc} %)"), n = xaxis, perc = propIn[xaxis])
+            dim2name <- jmvcore::format(.("Component {n} ({perc} %)"), n = yaxis, perc = propIn[yaxis])
+            subtitle <- if (res$rotation != "none") res$rotationStr else NULL
+
+            if (self$options$showScreePlot) {
+                screeplot <- self$results$screePlot
+                screeplot$setState(res$eigenvalues)
+            }
+            if (self$options$showVarPlot) {
+                varplot <- self$results$varPlot
+                varplot$setState(list(
+                    varData = buildVarData(if (self$options$stdLoadings) res$stdLoadings else res$loadings, xaxis, yaxis),
+                    dim1name = dim1name,
+                    dim2name = dim2name,
+                    subtitle = subtitle
+                ))
+            }
+            if (self$options$showObsPlot) {
+                obsplot <- self$results$obsPlot
+                obsplot$setState(list(
+                    obsData = buildObsData(if (self$options$stdScores) res$stdScores else res$scores, xaxis, yaxis),
+                    groupVarName = groupVarName,
+                    dim1name = dim1name,
+                    dim2name = dim2name,
+                    subtitle = subtitle
+                ))
+            }
+            if (self$options$showBiplot) {
+                biplot <- self$results$biPlot
+                biplotLoadings <- if (self$options$biplotType == "formPlot") res$stdLoadings else res$loadings
+                if (self$options$biplotStretch)
+                    biplotLoadings <- biplotLoadings * self$options$biplotStretchFactor
+                biplot$setState(list(
+                    varData = buildVarData(biplotLoadings, xaxis, yaxis),
+                    obsData = buildObsData(if (self$options$biplotType == "covPlot") res$stdScores else res$scores, xaxis, yaxis),
+                    groupVarName = groupVarName,
+                    dim1name = dim1name,
+                    dim2name = dim2name,
+                    subtitle = subtitle
+                ))
+            }
         },
         .screeplot = function(image, ggtheme, theme, ...) {
             res <- image$state
@@ -198,24 +246,9 @@ principalClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             if (is.null(res))
                 return(FALSE)
 
-            # Axe Titles
-            eigenSum <- sum(res$eigenvalues)
-            propIn <- round(100*res$SSL/eigenSum,1)
-            dim1 <- self$options$xaxis
-            dim2 <- self$options$yaxis
-            dim1name <- jmvcore::format(.("Component {n} ({perc} %)"), n = dim1, perc = propIn[dim1])
-            dim2name <- jmvcore::format(.("Component {n} ({perc} %)"), n = dim2, perc = propIn[dim2])
-
+            dim1name <- res$dim1name
+            dim2name <- res$dim2name
             type <- self$options$biplotType
-            if (plotType == "biplot" && type == "formPlot") {
-                res$loadings <- res$stdLoadings
-            } else if (plotType == "biplot" && type == "covPlot") {
-                res$scores <- res$stdScores
-            } else if (plotType == "var" && self$options$stdLoadings) {
-                res$loadings <- res$stdLoadings
-            } else if (plotType == "obs" && self$options$stdScores) {
-                res$scores <- res$stdScores
-            }
 
             plot <- ggplot2::ggplot()
 
@@ -228,33 +261,25 @@ principalClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             #### Obs Plot ####
 
             if (plotType != "var") {
-
-                if (!is.null(self$options$groupVar))
-                    res$scores <- cbind(as.data.frame(res$scores), group = res$group)
-
-                obsData <- as.data.frame(res$scores)
-                obsData$Label <- res$rowlabels #rownames(obsData)
+                obsData <- res$obsData
 
                 if (self$options$labelColor == "none")
                     labelColor <- self$options$obsColor
                 else
                     labelColor <- self$options$labelColor
 
-                c1 <- rlang::sym(names(obsData)[dim1])
-                c2 <- rlang::sym(names(obsData)[dim2])
-
                 if (!is.null(self$options$groupVar)) {
-                    plot <- plot + ggplot2::geom_point(data = obsData, ggplot2::aes(x = !!c1, y = !!c2, color = group), size = self$options$pointSize)
+                    plot <- plot + ggplot2::geom_point(data = obsData, ggplot2::aes(x = x, y = y, color = group), size = self$options$pointSize)
                 } else {
-                    plot <- plot + ggplot2::geom_point(data = obsData, ggplot2::aes(x = !!c1, y = !!c2), color = self$options$obsColor, size = self$options$pointSize)
+                    plot <- plot + ggplot2::geom_point(data = obsData, ggplot2::aes(x = x, y = y), color = self$options$obsColor, size = self$options$pointSize)
                 }
                 if (!is.null(self$options$labelVar)) {
                     if (!is.null(self$options$groupVar) && self$options$labelColor == "none") {
-                        plot <- plot + ggrepel::geom_text_repel(data = obsData, ggplot2::aes(x = !!c1, y = !!c2, label = Label, color = group),
+                        plot <- plot + ggrepel::geom_text_repel(data = obsData, ggplot2::aes(x = x, y = y, label = Label, color = group),
                                                                 check_overlap = TRUE, box.padding = 0.4, min.segment.length = 0.6,
                                                                 size = self$options$obsLabelSize/ggplot2::.pt, seed = 123)
                     } else {
-                        plot <- plot + ggrepel::geom_text_repel(data = obsData, ggplot2::aes(x = !!c1, y = !!c2, label = Label),
+                        plot <- plot + ggrepel::geom_text_repel(data = obsData, ggplot2::aes(x = x, y = y, label = Label),
                                                                 check_overlap = TRUE, color = labelColor, box.padding = 0.4, min.segment.length = 0.6,
                                                                 size = self$options$obsLabelSize/ggplot2::.pt, seed = 123)
                     }
@@ -263,24 +288,19 @@ principalClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
 
             #### Var Plot ####
             if (plotType !="obs") {
-                if (self$options$biplotStretch && plotType == "biplot")
-                    res$loadings <- res$loadings * self$options$biplotStretchFactor
-                varData <- as.data.frame.array(res$loadings)
-                varData$Label <- rownames(varData)
+                varData <- res$varData
 
                 if (self$options$labelColor == "none")
                     labelColor <- self$options$varColor
                 else
                     labelColor <- self$options$labelColor
 
-                c1 <- rlang::sym(names(varData)[self$options$xaxis])
-                c2 <- rlang::sym(names(varData)[self$options$yaxis])
                 if (self$options$biplotLines && plotType == "biplot")
-                    plot <- plot + ggplot2::geom_abline(data = varData, ggplot2::aes(intercept = 0, slope = !!c2/!!c1), linetype = 3, color="gray")
-                plot <- plot + ggplot2::geom_segment(data = varData, ggplot2::aes(x = 0, y = 0, xend = !!c1, yend = !!c2),
+                    plot <- plot + ggplot2::geom_abline(data = varData, ggplot2::aes(intercept = 0, slope = y/x), linetype = 3, color="gray")
+                plot <- plot + ggplot2::geom_segment(data = varData, ggplot2::aes(x = 0, y = 0, xend = x, yend = y),
                                             arrow = grid::arrow(length = grid::unit(0.05, "inches"), type = "closed"),
                                             color = self$options$varColor, linewidth = 0.8)
-                plot <- plot + ggrepel::geom_text_repel(data = varData, ggplot2::aes(x = !!c1, y = !!c2, label = Label),
+                plot <- plot + ggrepel::geom_text_repel(data = varData, ggplot2::aes(x = x, y = y, label = Label),
                                                         check_overlap = TRUE, min.segment.length = 2,
                                                         position = ggpp::position_nudge_center(x = 0.2, y = 0.01, center_x = 0, center_y = 0),
                                                         size = self$options$varLabelSize/ggplot2::.pt, color = labelColor, fontface="bold", seed = 123)
@@ -291,20 +311,20 @@ principalClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
 
             # Axe limits
             if (plotType == "var") {
-                xmin = 1.02*min(varData[[dim1]], -1)
-                xmax = 1.02*max(varData[[dim1]], 1)
-                ymin = 1.02*min(varData[[dim2]], -1)
-                ymax = 1.02*max(varData[[dim2]], 1)
+                xmin = 1.02*min(varData$x, -1)
+                xmax = 1.02*max(varData$x, 1)
+                ymin = 1.02*min(varData$y, -1)
+                ymax = 1.02*max(varData$y, 1)
             } else if (plotType == "obs") { # floor/ceiling *2 /2 => extend the plot to next 0.5 point
-                xmin = 1.01*floor(min(obsData[[dim1]])*2)/2
-                xmax = 1.01*ceiling(max(obsData[[dim1]])*2)/2
-                ymin = 1.01*floor(min(obsData[[dim2]])*2)/2
-                ymax = 1.01*ceiling(max(obsData[[dim2]])*2)/2
+                xmin = 1.01*floor(min(obsData$x)*2)/2
+                xmax = 1.01*ceiling(max(obsData$x)*2)/2
+                ymin = 1.01*floor(min(obsData$y)*2)/2
+                ymax = 1.01*ceiling(max(obsData$y)*2)/2
             } else { # biplot
-                xmin = 1.01*floor(min(obsData[[dim1]], varData[[dim1]])*2)/2
-                xmax = 1.01*ceiling(max(obsData[[dim1]], varData[[dim1]])*2)/2
-                ymin = 1.01*floor(min(obsData[[dim2]], varData[[dim2]])*2)/2
-                ymax = 1.01*ceiling(max(obsData[[dim2]], varData[[dim2]])*2)/2
+                xmin = 1.01*floor(min(obsData$x, varData$x)*2)/2
+                xmax = 1.01*ceiling(max(obsData$x, varData$x)*2)/2
+                ymin = 1.01*floor(min(obsData$y, varData$y)*2)/2
+                ymax = 1.01*ceiling(max(obsData$y, varData$y)*2)/2
             }
             # Security for singular data
             if (xmin==xmax) {
@@ -336,10 +356,7 @@ principalClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                                 biplot = ifelse(type == "covPlot", .("Covariance Biplot"), .("Form Biplot"))
                             )
             # Plot subtitle
-            if (res$rotation != "none")
-                subtitle <- res$rotationStr
-            else
-                subtitle <- NULL
+            subtitle <- res$subtitle
 
             # Plot Caption
             if ((plotType == "var" && self$options$stdLoadings) || (plotType == "obs" && self$options$stdScores))
@@ -676,7 +693,7 @@ principalClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
 <ul>
 <li><strong>Standardize loadings:</strong> loadings are normalized with sums of squared equal to 1 (instead of eigenvalues)</li>
 <li><strong>Standardize scores:</strong> scores are normalized with variances equal to 1 (instead of eigenvalues)</li>
-<li><strong>Rotate eigenvectors:</strong> the rotation (varimax, etc) is applied to eigenvectors (standard loadings) instead of principal loadings (STATA way).</li>
+<li><strong>Rotate eigenvectors:</strong> the rotation (varimax, etc) is applied to eigenvectors (standard loadings) instead of principal loadings (Stata way).</li>
 </ul>
 <p>A sample file is included at Open > Data Library > vijMulti > Iris</p>')
             vijHelpMessage(self, helpMsg)

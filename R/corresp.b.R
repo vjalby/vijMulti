@@ -286,6 +286,10 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             }
         },
         .run = function() {
+            # The χ² test used to be a note on the eigenvalues table (now its own table).
+            # Results saved by older versions restore that note, so clear it explicitly.
+            self$results$eigenvalues$setNote("chisq", NULL)
+
             if (self$options$mode == "obsTable") {
                 data <- private$.getData()
                 if (is.null(data) || nrow(data) == 0) {
@@ -434,15 +438,33 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
 
             #### Plots ####
 
-            res$rowVarNameString <- rowVarNameString
-            res$colVarNameString <- colVarNameString
-
-            rowplot <- self$results$rowplot
-            rowplot$setState(res)
-            colplot <- self$results$colplot
-            colplot$setState(res)
-            biplot <- self$results$biplot
-            biplot$setState(res)
+            if (self$options$showRowPlot) {
+                self$results$rowplot$setState(list(
+                    eig = res$eig,
+                    row = list(coord = res$row$coord),
+                    row.sup = list(coord = res$row.sup$coord),
+                    rowVarNameString = rowVarNameString
+                ))
+            }
+            if (self$options$showColPlot) {
+                self$results$colplot$setState(list(
+                    eig = res$eig,
+                    col = list(coord = res$col$coord),
+                    col.sup = list(coord = res$col.sup$coord),
+                    colVarNameString = colVarNameString
+                ))
+            }
+            if (self$options$showBiPlot) {
+                self$results$biplot$setState(list(
+                    eig = res$eig,
+                    row = list(coord = res$row$coord),
+                    row.sup = list(coord = res$row.sup$coord),
+                    col = list(coord = res$col$coord),
+                    col.sup = list(coord = res$col.sup$coord),
+                    rowVarNameString = rowVarNameString,
+                    colVarNameString = colVarNameString
+                ))
+            }
         },
         .ca = function(contingencyTable, ncp = 2, row.sup = NULL, col.sup = NULL, norm = "principal") {
             res <- FactoMineR::CA(contingencyTable, ncp = ncp, row.sup = row.sup, col.sup = col.sup, graph = FALSE)
