@@ -235,8 +235,8 @@ vijHelpMessage = function(self, htmlText) {
     # Hide other results
     for (resName in names(self$results)) {
         aResult <- get0(resName, self$results)
-        if (!is.null(aResult))
-            aResult$setVisible(FALSE)
+#        if (!is.null(aResult))
+#            aResult$setVisible(FALSE)
     }
     # Display Help message
     helpMsg <- paste(

@@ -1,0 +1,1005 @@
+{
+    "domain": "messages",
+    "locale_data": {
+        "messages": {
+            "": {
+                "domain": "messages",
+                "lang": "zh_Hans",
+                "plural_forms": "nplurals=2; plural=(n!=1);"
+            },
+            "{rotation} rotation": [
+                "{rotation} 旋转"
+            ],
+            "{rotation} rotation was used.": [
+                "采用了 {rotation} 旋转。"
+            ],
+            "{rotation} rotation with Kaiser normalization": [
+                "采用了 {rotation} 旋转及 Kaiser 标准化"
+            ],
+            "{rotation} rotation with Kaiser normalization was used.": [
+                "采用了 {rotation} 旋转及 Kaiser 标准化。"
+            ],
+            "% Inertia": [
+                "惯量占比 (%)"
+            ],
+            "% of Inertia": [
+                "惯量百分比（%）"
+            ],
+            "% of Variance": [
+                "方差占比 (%)"
+            ],
+            "<p><strong>Main classic multivariate data analyses</strong>:</p> <ul> <li>Principal Component Analysis (PCA)</li> <li>Correspondence Analysis (CA)</li> <li>Multiple Correspondence Analysis (MCA)</li> </ul> <p>The module is available in the <strong>Analyses</strong> tab.</p> <p>Project source (and changelog) is available at <a href=\"https://github.com/vjalby/vijMulti\" target=\"_blank\">Github</a>.</p>": [
+                "<p><strong>主要的多变量数据分析</strong>：</p> <ul> <li>主成分分析</li> <li>对应分析</li> <li>多重对应分析</li> </ul> <p>此模块可在<strong>Analyses</strong>选项卡中使用。</p> <p>项目源代码（及更新日志）可在 <a href=\"https://github.com/vjalby/vijMulti\" target=\"_blank\">Github</a> 上获取。</p>"
+            ],
+            "<p>This module computes <strong>Correspondence Analysis (CA)</strong> for two categorical variables. Computations are based on <a href = \"https://CRAN.R-project.org/package=FactoMineR\" target=\"_blank\">FactoMineR</a> package by F. Husson, J. Josse, S. Le, J. Mazet.</p>\n<p>The data can be</p>\n<ul>\n<li>an <strong>Observation table</strong> (raw data), possibly weighted using <em>jamovi</em> built-in weight system or using the \"Counts\" variable</li>\n<li>or a <strong>Contingency table</strong></li>\n</ul>\n<p><strong>Supplementary row or column</strong> numbers may be entered as integer lists : 1,3,6</p>\n<p>Four normalizations (scaling of row and column scores before plotting) are available :</p>\n<ul>\n<li><strong>Principal:</strong> Row and column scores are scaled by eigenvalues.</li>\n<li><strong>Symmetric:</strong> Row and column scores are scaled by the square root of eigenvalues. </li>\n<li><strong>Row Principal:</strong> Only row scores are scaled by eigenvalues.</li>\n<li><strong>Column Principal:</strong> Only column scores are scaled by eigenvalues.</li>\n<li><strong>Standard:</strong> The raw coordinates without normalization.</li>\n</ul>\n<p>A sample file is included at Open > Data Library > vijMulti > Smoking</p>": [
+                "<p>此模块计算两个分类变量的 <strong>相应分析 (CA)</strong>。计算基于 <a href = \"https://CRAN.R-project.org/package=FactoMineR\" target=\"_blank\">FactoMineR</a> 包，由 F. Husson, J. Josse, S. Le, J. Mazet 创建。</p>\n<p>数据可以是</p>\n<ul>\n<li>一个 <strong>观察表</strong> (原始数据)，可能使用 <em>jamovi</em> 内置权重系统或使用 \"计数\" 变量进行加权</li>\n<li>或一个 <strong>联表</strong></li>\n</ul>\n<p><strong>补充行或列</strong> 数字可以作为整数列表输入：1,3,6</p>\n<p>有四种归一化（在绘图前对行和列评分进行缩放）可用：</p>\n<ul>\n<li><strong>主导:</strong> 行和列评分按特征值缩放。</li>\n<li><strong>对称:</strong> 行和列评分按特征值平方根缩放。</li>\n<li><strong>行主导:</strong> 仅行评分按特征值缩放。</li>\n<li><strong>列主导:</strong> 仅列评分按特征值缩放。</li>\n<li><strong>标准:</strong> 原始坐标，无归一化。</li>\n</ul>\n<p>示例文件包含在 Open > 数据库 > vijMulti > Smoking 中</p>"
+            ],
+            "<p>This module computes <strong>Multiple Correspondence Analysis (MCA)</strong> for several categorical variables. Computations are based on <a href = \"https://CRAN.R-project.org/package=FactoMineR\" target=\"_blank\">FactoMineR</a> package by F. Husson, J. Josse, S. Le, J. Mazet.</p>\n<p>Both classic methods are available:</p>\n<ul>\n<li><strong>Indicator matrix:</strong> CA of the indicator matrix</li>\n<li><strong>Burt matrix:</strong> CA of the Burt matrix. The eigenvalues are the squares of those of the indicator matrix method. </li>\n</ul>\n<p>Both methods give the same <em>standard</em> coordinates and discriminations (but different <em>principal</em> coordinates).</p>\n<p>When selected, <strong>Benzécri and Greenacre corrections</strong> are applied to eigenvalues only (<strong>Summary</strong> table). Principal coordinates (and inertia) of categories and observations are computed from the original eigenvalues of the Burt matrix.</p>\n<p>The <strong>Normalization</strong> options specify how the coordinates are scaled (by eigenvalues):</p>\n<ul>\n<li><strong>Principal:</strong> Both category and observation coordinates are scaled.</li>\n<li><strong>Category principal:</strong> Only category coordinates are scaled.</li>\n<li><strong>Observation principal:</strong> Only observation coordinates are scaled.</li>\n<li><strong>Standard:</strong> Both category and observation coordinates are standard.</li>\n</ul>\n<p>A sample file is included at Open > Data Library > vijMulti > Cars</p>": [
+                "<p>此模块对多个分类变量进行<strong>多重对应分析 (MCA)</strong>。计算基于 F. Husson, J. Josse, S. Le, J. Mazet 开发的 <a href = \"https://CRAN.R-project.org/package=FactoMineR\" target=\"_blank\">FactoMineR</a> 软件包。</p>\n<p>提供以下两种经典方法：</p>\n<ul>\n<li><strong>指示矩阵 (Indicator matrix)：</strong> 指示矩阵的 CA 分析</li>\n<li><strong>Burt 矩阵 (Burt matrix)：</strong> Burt 矩阵的 CA 分析。其特征值是指示矩阵法特征值的平方。</li>\n</ul>\n<p>两种方法得到相同的<em>标准 (standard)</em> 坐标及判别结果（但<em>主 (principal)</em> 坐标不同）。</p>\n<p>选中时，<strong>Benzécri 和 Greenacre 校正</strong>仅应用于特征值（<strong>摘要</strong>表）。类别和观测值的主坐标（及惯量）根据 Burt 矩阵的原始特征值计算。</p>\n<p><strong>标准化 (Normalization)</strong> 选项指定坐标如何缩放（按特征值）：</p>\n<ul>\n<li><strong>主坐标 (Principal)：</strong> 类别和观测值坐标均进行缩放。</li>\n<li><strong>类别主坐标 (Category principal)：</strong> 仅对类别坐标进行缩放。</li>\n<li><strong>观测值主坐标 (Observation principal)：</strong> 仅对观测值坐标进行缩放。</li>\n<li><strong>标准坐标 (Standard)：</strong> 类别和观测值坐标均为标准坐标。</li>\n</ul>\n<p>示例文件位于：Open > Data Library > vijMulti > Cars</p>"
+            ],
+            "<p>This module computes <strong>Principal Component Analysis (PCA)</strong> for several continuous variables. Computations are based on <tt>stats::prcomp</tt> function.</p>\n<p>Although rotated components are not principal components, they are widely used. Only orthogonal rotations are available (from GPArotation package).</p>\n<p>Loadings (variable coordinates) and scores (observation coordinates) are principal (scaled by the square root of eigenvalues).</p>\n<p>Biplot follows \"Biplots in Practice\" (Michael Greenacre, 2010):</p>\n<ul>\n<li><strong>Form biplot:</strong> Scores are principal (scaled by eigenvalues) while loadings are standard.</li>\n<li><strong>Covariance biplot:</strong> Loadings are principal while scores are standard. </li>\n</ul>\n<p><strong>Advanced options</strong>:</p>\n<ul>\n<li><strong>Standardize loadings:</strong> loadings are normalized with sums of squared equal to 1 (instead of eigenvalues)</li>\n<li><strong>Standardize scores:</strong> scores are normalized with variances equal to 1 (instead of eigenvalues)</li>\n<li><strong>Rotate eigenvectors:</strong> the rotation (varimax, etc) is applied to eigenvectors (standard loadings) instead of principal loadings (STATA way).</li>\n</ul>\n<p>A sample file is included at Open > Data Library > vijMulti > Iris</p>": [
+                "<p>本模块对多个连续变量进行<strong>主成分分析 (PCA)</strong>。计算基于 <tt>stats::prcomp</tt> 函数。</p>\n<p>虽然旋转后的成分不再是主成分，但其应用非常广泛。目前仅支持正交旋转（由 GPArotation 包提供）。</p>\n<p>载荷（变量坐标）和得分（观测值坐标）均为“主坐标”（按特征值的平方根缩放）。</p>\n<p>双标图遵循《双标图实践》(Michael Greenacre, 2010) 的标准：</p>\n<ul>\n<li><strong>形状双标图 (Form biplot)：</strong> 得分为主坐标（按特征值缩放），载荷为标准坐标。</li>\n<li><strong>协方差双标图 (Covariance biplot)：</strong> 载荷为主坐标，得分为标准坐标。</li>\n</ul>\n<p><strong>高级选项</strong>：</p>\n<ul>\n<li><strong>标准化载荷：</strong> 对载荷进行归一化处理，使其平方和等于 1（而非特征值）。</li>\n<li><strong>标准化得分：</strong> 对得分进行归一化处理，使其方差等于 1（而非特征值）。</li>\n<li><strong>旋转特征向量：</strong> 对特征向量（标准载荷）而非主载荷进行旋转（如方差最大化旋转等），这是 STATA 的处理方式。</li>\n</ul>\n<p>示例文件见：打开 > 数据库 > vijMulti > Iris</p>"
+            ],
+            "A demonstration dataset for vijMulti/Correspondence Analysis.": [
+                "vijMulti/对应分析 演示数据集。"
+            ],
+            "A demonstration dataset for vijMulti/Multiple Correspondence Analysis.": [
+                "vijMulti/多重对应分析 演示数据集。"
+            ],
+            "A demonstration dataset for vijMulti/Principal Component Analysis.": [
+                "vijMulti/主成分分析 演示数据集。"
+            ],
+            "Accent": [
+                "强调"
+            ],
+            "Active Margin": [
+                "活动边际"
+            ],
+            "Advanced Options": [
+                "高级选项"
+            ],
+            "Align": [
+                "对齐"
+            ],
+            "Arrow lines": [
+                "箭头线"
+            ],
+            "Arrows": [
+                "箭头"
+            ],
+            "Axis numbers cannot be equal.": [
+                "坐标轴序号不能相同。"
+            ],
+            "Axis numbers must be less than or equal to the number of dimensions ({nDim}).": [
+                "坐标轴序号必须小于或等于维度总数（{nDim}）。"
+            ],
+            "Axis Titles": [
+                "轴标题"
+            ],
+            "Bartlett's Test of Sphericity": [
+                "Bartlett 球形检验"
+            ],
+            "Bentler T": [
+                "Bentler T 统计量"
+            ],
+            "Benzécri Correction": [
+                "Benzécri 校正"
+            ],
+            "Benzécri correction": [
+                "Benzécri 校正"
+            ],
+            "Biplot": [
+                "双标图"
+            ],
+            "Biplot Type": [
+                "双标图类型"
+            ],
+            "Black": [
+                "黑色"
+            ],
+            "Blue": [
+                "蓝色"
+            ],
+            "Blue to Green": [
+                "蓝-绿渐变"
+            ],
+            "Blue to Purple": [
+                "蓝-紫渐变"
+            ],
+            "Blues": [
+                "蓝色"
+            ],
+            "Bold": [
+                "粗体"
+            ],
+            "Bold Italic": [
+                "粗斜体"
+            ],
+            "Boldface categories": [
+                "类别加粗显示"
+            ],
+            "Bottom": [
+                "底部"
+            ],
+            "Brown": [
+                "棕色"
+            ],
+            "Brown and Green": [
+                "棕-绿渐变"
+            ],
+            "Burt matrix": [
+                "Burt 矩阵"
+            ],
+            "Caption Style": [
+                "图注样式"
+            ],
+            "Caption Text": [
+                "标题文字"
+            ],
+            "Carbon:Dark": [
+                "Carbon:深色"
+            ],
+            "Carbon:Light": [
+                "Carbon:浅色"
+            ],
+            "Cars": [
+                "Cars数据集"
+            ],
+            "Categories": [
+                "类别"
+            ],
+            "Category Plot": [
+                "分类图"
+            ],
+            "Category plot": [
+                "分类图"
+            ],
+            "Category Plot Options": [
+                "分类图选项"
+            ],
+            "Category principal": [
+                "主要类别"
+            ],
+            "Category principal coordinates": [
+                "主要类别坐标"
+            ],
+            "Category Summary": [
+                "分类变量汇总"
+            ],
+            "Center": [
+                "居中"
+            ],
+            "Colors": [
+                "颜色"
+            ],
+            "Column": [
+                "列"
+            ],
+            "Column plot": [
+                "柱状图"
+            ],
+            "Column Plot": [
+                "柱状图"
+            ],
+            "Column Points for {cols}": [
+                "针对{cols} 的列点"
+            ],
+            "Column principal": [
+                "列主坐标"
+            ],
+            "Column principal normalization": [
+                "列主成分归一化"
+            ],
+            "Column Profiles": [
+                "列构成"
+            ],
+            "Column Summary": [
+                "列摘要"
+            ],
+            "Column title": [
+                "列标题"
+            ],
+            "Columns": [
+                "列"
+            ],
+            "Component": [
+                "成分"
+            ],
+            "Component {n} ({perc} %)": [
+                "成分 {n} ({perc} %)"
+            ],
+            "Component Plot": [
+                "主成分图"
+            ],
+            "Connected ordinal categories": [
+                "已连接的有序类别"
+            ],
+            "Contingency Table": [
+                "列联表"
+            ],
+            "Contingency table": [
+                "列联表"
+            ],
+            "Contributions": [
+                "贡献值"
+            ],
+            "Coordinates": [
+                "坐标"
+            ],
+            "Correspondence Analysis": [
+                "对应分析"
+            ],
+            "COS2": [
+                "拟合优度平方"
+            ],
+            "Counts (optional)": [
+                "计数（可选）"
+            ],
+            "Counts may not be infinite.": [
+                "计数不能为无穷大。"
+            ],
+            "Counts may not be negative.": [
+                "计数不能为负数。"
+            ],
+            "Cov (Loading principal)": [
+                "协方差（主载荷）"
+            ],
+            "Covariance (Loading principal)": [
+                "协方差（主载荷）"
+            ],
+            "Covariance Biplot": [
+                "协方差双标图"
+            ],
+            "Cumulative %": [
+                "累计百分比"
+            ],
+            "Dark 2": [
+                "黑色 2"
+            ],
+            "Dark Gray": [
+                "深灰色"
+            ],
+            "default": [
+                "默认"
+            ],
+            "df": [
+                "自由度"
+            ],
+            "Dichromat:Categorical": [
+                "二分类变量：类别型"
+            ],
+            "Dim": [
+                "维度"
+            ],
+            "Dim {n}": [
+                "Dim {n}"
+            ],
+            "Dimension": [
+                "维度"
+            ],
+            "Dimension {n} ({perc} %)": [
+                "维度 {n} ({perc} %)"
+            ],
+            "Discrimination": [
+                "区分能力"
+            ],
+            "Discrimination Plot": [
+                "区分度图"
+            ],
+            "Discrimination plot": [
+                "区分度图"
+            ],
+            "Eigenvalue": [
+                "特征值"
+            ],
+            "Eigenvalues": [
+                "特征值"
+            ],
+            "Element Sizes": [
+                "元素大小"
+            ],
+            "Equamax": [
+                "Equamax旋转法"
+            ],
+            "Extraction": [
+                "提取"
+            ],
+            "Extraction Sums of Squared Loadings": [
+                "提取载荷平方和"
+            ],
+            "Factor": [
+                "因子"
+            ],
+            "Font face": [
+                "字体样式"
+            ],
+            "Font size": [
+                "字体大小"
+            ],
+            "Form (Score principal)": [
+                "得分形式（主成分法）"
+            ],
+            "Form Biplot": [
+                "Biplot 形式"
+            ],
+            "Gray": [
+                "灰色"
+            ],
+            "Green": [
+                "绿色"
+            ],
+            "Green to Blue": [
+                "绿-蓝渐变"
+            ],
+            "Greenacre Correction": [
+                "Greenacre 校正"
+            ],
+            "Greenacre correction": [
+                "Greenacre 校正"
+            ],
+            "Greenacre's corrected inertia = {inertia}": [
+                "Greenacre 校正惯量 = {inertia}"
+            ],
+            "Greens": [
+                "绿色"
+            ],
+            "Greys": [
+                "灰色"
+            ],
+            "Group": [
+                "分组"
+            ],
+            "Indicator matrix": [
+                "指示矩阵"
+            ],
+            "Inertia": [
+                "惯性"
+            ],
+            "Inertia summary": [
+                "惯量汇总"
+            ],
+            "Initial Eigenvalues": [
+                "初始特征值"
+            ],
+            "Iris": [
+                "Iris数据集"
+            ],
+            "Italic": [
+                "斜体"
+            ],
+            "jmv Blue": [
+                "jmv 蓝色"
+            ],
+            "jmv Default": [
+                "jmv 默认"
+            ],
+            "jmv Gray": [
+                "jmv 灰色"
+            ],
+            "jmv Green": [
+                "jmv 绿色"
+            ],
+            "jmv Red": [
+                "jmv 红色"
+            ],
+            "jmv Yellow": [
+                "jmv 黄色"
+            ],
+            "Kaiser normalization": [
+                "Kaiser 标准化"
+            ],
+            "Kaiser-Meyer-Olkin Measure of Sampling Adequacy (MSA)": [
+                "KMO 抽样适切性检验"
+            ],
+            "KMO & Bartlett's test": [
+                "KMO 和Bartlett 检验"
+            ],
+            "KMO & Bartlett's Test": [
+                "KMO & Bartlett 检验"
+            ],
+            "Label": [
+                "标签"
+            ],
+            "Labels": [
+                "标签"
+            ],
+            "Left": [
+                "左"
+            ],
+            "Legend": [
+                "图例"
+            ],
+            "Legend & Axis Titles": [
+                "图例与轴标题"
+            ],
+            "Lémovice": [
+                "Lémovice"
+            ],
+            "Level": [
+                "水平"
+            ],
+            "Light Blue": [
+                "浅蓝色"
+            ],
+            "Light Brown": [
+                "浅褐色"
+            ],
+            "Light Gray": [
+                "浅灰色"
+            ],
+            "Light Green": [
+                "浅绿色"
+            ],
+            "Light Orange": [
+                "浅橙色"
+            ],
+            "Light Pink": [
+                "浅粉色"
+            ],
+            "Light Purple": [
+                "浅紫色"
+            ],
+            "Light Red": [
+                "浅红色"
+            ],
+            "Light Yellow": [
+                "浅黄色"
+            ],
+            "Limited to the first 100 observations": [
+                "限制为前 100 行样本"
+            ],
+            "Mass": [
+                "质量"
+            ],
+            "MCA Principal Coordinates ({method})": [
+                "MCA 主坐标 ({method})"
+            ],
+            "MCA Standard Coordinates ({method})": [
+                "MCA 标准坐标 ({method})"
+            ],
+            "Method": [
+                "方法"
+            ],
+            "Method: {method}": [
+                "方法：{method}"
+            ],
+            "Minimum entropy": [
+                "最小熵"
+            ],
+            "Multiple Correspondence Analysis": [
+                "多重对应分析 (MCA)"
+            ],
+            "Multivariate": [
+                "多元"
+            ],
+            "No rotation used.": [
+                "未使用旋转。"
+            ],
+            "Non-overlapping labels": [
+                "不重叠标签"
+            ],
+            "None": [
+                "无"
+            ],
+            "Normal": [
+                "正态"
+            ],
+            "Normalization": [
+                "标准化"
+            ],
+            "Not enough complete observations to perform PCA.": [
+                "完整观测值数量不足，无法执行 PCA。"
+            ],
+            "Not enough data to compute CA.": [
+                "数据量不足，无法计算 CA。"
+            ],
+            "Number of dimensions": [
+                "维度数量"
+            ],
+            "Number of dimensions must be less than or equal to {maxDim}.": [
+                "维度数量必须小于或等于 {maxDim}。"
+            ],
+            "Obs color": [
+                "观测值颜色"
+            ],
+            "Observation Coordinates": [
+                "观测坐标"
+            ],
+            "Observation Plot": [
+                "观测图"
+            ],
+            "Observation plot": [
+                "观测图"
+            ],
+            "Observation Plot Options": [
+                "观测图选项"
+            ],
+            "Observation principal": [
+                "观测主成分"
+            ],
+            "Observation principal coordinates": [
+                "观测主坐标"
+            ],
+            "Observation Summary": [
+                "观测摘要"
+            ],
+            "Observation Table": [
+                "观察表"
+            ],
+            "Observations": [
+                "观测值"
+            ],
+            "Orange": [
+                "橙色"
+            ],
+            "Orange and Purple": [
+                "橙色和紫色"
+            ],
+            "Orange to Red": [
+                "橙红渐变"
+            ],
+            "Oranges": [
+                "橙色"
+            ],
+            "Original Eigenvalues": [
+                "原始特征值"
+            ],
+            "Paired": [
+                "配对"
+            ],
+            "Palette": [
+                "调色板"
+            ],
+            "Parsimax": [
+                "Parsimax"
+            ],
+            "Pastel 1": [
+                "浅色调 1"
+            ],
+            "Pastel 2": [
+                "浅色调 2"
+            ],
+            "PCA Principal Coordinates": [
+                "PCA 主坐标"
+            ],
+            "PCA Principal Coordinates ({rot})": [
+                "PCA 主坐标 ({rot})"
+            ],
+            "PCA Standard Coordinates": [
+                "PCA 标准坐标"
+            ],
+            "PCA Standard Coordinates ({rot})": [
+                "PCA 标准坐标 ({rot})"
+            ],
+            "Pink": [
+                "粉色"
+            ],
+            "Pink and Green": [
+                "粉色和绿色"
+            ],
+            "Plot Color": [
+                "图表颜色"
+            ],
+            "Plot Colors": [
+                "图表配色"
+            ],
+            "Plot Options": [
+                "绘图选项"
+            ],
+            "Plot Titles & Subtitles": [
+                "图表标题和子标题"
+            ],
+            "Plots": [
+                "绘图"
+            ],
+            "Point size": [
+                "散点大小"
+            ],
+            "Points": [
+                "点"
+            ],
+            "Position": [
+                "位置"
+            ],
+            "Principal": [
+                "主成分"
+            ],
+            "Principal Component Analysis": [
+                "主成分分析"
+            ],
+            "Principal coordinates": [
+                "主坐标"
+            ],
+            "Principal normalization": [
+                "主标准化"
+            ],
+            "Proportional point size": [
+                "比例点大小"
+            ],
+            "Purple": [
+                "紫色"
+            ],
+            "Purple and Green": [
+                "紫色 和 绿色"
+            ],
+            "Purple to Blue": [
+                "紫蓝渐变"
+            ],
+            "Purple to Green": [
+                "紫绿渐变"
+            ],
+            "Purple to Red": [
+                "紫红渐变"
+            ],
+            "Purples": [
+                "紫色"
+            ],
+            "QLT": [
+                "QLT"
+            ],
+            "Quartimax": [
+                "四次方极大法"
+            ],
+            "Red": [
+                "红色"
+            ],
+            "Red and Blue": [
+                "红色 和 蓝色"
+            ],
+            "Red and Gray": [
+                "红色和灰色"
+            ],
+            "Red to Purple": [
+                "红紫渐变"
+            ],
+            "Red, Yellow, Blue": [
+                "红、黄、蓝"
+            ],
+            "Red, Yellow, Green": [
+                "红、黄、绿"
+            ],
+            "Reds": [
+                "红色"
+            ],
+            "Right": [
+                "右"
+            ],
+            "Rotate eigenvectors": [
+                "旋转特征向量"
+            ],
+            "Rotation": [
+                "旋转"
+            ],
+            "Row": [
+                "行"
+            ],
+            "Row and Column Points for {rows} and {cols}": [
+                "{rows} 和 {cols} 的行列点"
+            ],
+            "Row and column profiles": [
+                "行剖面与列剖面"
+            ],
+            "Row and column summaries": [
+                "行摘要与列摘要"
+            ],
+            "Row Labels": [
+                "行标签"
+            ],
+            "Row plot": [
+                "行图"
+            ],
+            "Row Plot": [
+                "行图"
+            ],
+            "Row Points for {rows}": [
+                "针对 {rows} 的行点"
+            ],
+            "Row principal": [
+                "行主成分"
+            ],
+            "Row principal normalization": [
+                "行主成分归一化"
+            ],
+            "Row Profiles": [
+                "行剖面"
+            ],
+            "Row Summary": [
+                "行摘要"
+            ],
+            "Rows": [
+                "行"
+            ],
+            "Same as point/arrow": [
+                "与点/箭头一致"
+            ],
+            "Save": [
+                "保存"
+            ],
+            "Save observation coordinates": [
+                "保存观测值坐标"
+            ],
+            "Scree Plot": [
+                "碎石图"
+            ],
+            "Scree plot": [
+                "碎石图"
+            ],
+            "Set 1": [
+                "集合 1"
+            ],
+            "Set 2": [
+                "集合 2"
+            ],
+            "Set 3": [
+                "集合 3"
+            ],
+            "Singular Value": [
+                "奇异值"
+            ],
+            "Size": [
+                "大小"
+            ],
+            "Sizes & Colors": [
+                "大小和颜色"
+            ],
+            "Smoking": [
+                "吸烟"
+            ],
+            "Solution": [
+                "解决方案"
+            ],
+            "Some categories have zero counts and must be removed.": [
+                "部分类别的计数为零，必须删除。"
+            ],
+            "Some values are missing from the contingency table.": [
+                "列联表中存在缺失值。"
+            ],
+            "Spectral": [
+                "光谱"
+            ],
+            "SS Loadings": [
+                "载荷平方和"
+            ],
+            "Standard": [
+                "标准"
+            ],
+            "Standard coordinates": [
+                "标准坐标"
+            ],
+            "Standard normalization": [
+                "标准归一化"
+            ],
+            "Standardize loadings (eigenvectors)": [
+                "标准化载荷（特征向量）"
+            ],
+            "Standardize scores": [
+                "标准化评分"
+            ],
+            "Standardize variables": [
+                "标准化变量"
+            ],
+            "Statistic": [
+                "统计"
+            ],
+            "Stretch arrows by": [
+                "拉伸箭头系数："
+            ],
+            "Subtitle Style": [
+                "副标题样式"
+            ],
+            "Subtitle Text": [
+                "副标题文本"
+            ],
+            "Summary": [
+                "摘要"
+            ],
+            "Suppl. variables": [
+                "补充变量"
+            ],
+            "Supplement": [
+                "附加信息"
+            ],
+            "Supplementary column numbers must be a list of numbers, e.g. 1,2,9": [
+                "补充列号必须是数字列表（例如：1,2,9）"
+            ],
+            "Supplementary column numbers must be between 1 and {nmax}.": [
+                "补充列号必须在 1 到 {nmax} 之间。"
+            ],
+            "Supplementary columns": [
+                "补充列"
+            ],
+            "Supplementary Points": [
+                "附加点"
+            ],
+            "Supplementary row numbers must be a list of numbers, e.g. 1,2,9": [
+                "补充行号必须是一个数字列表，例如 1,2,9"
+            ],
+            "Supplementary row numbers must be between 1 and {nmax}.": [
+                "补充行号必须在 1 和 {nmax} 之间。"
+            ],
+            "Supplementary rows": [
+                "补充行"
+            ],
+            "Supplementary rows/columns": [
+                "补充行/列"
+            ],
+            "Supplementary variables": [
+                "补充变量"
+            ],
+            "Supplementary Variables": [
+                "补充变量"
+            ],
+            "Symmetric": [
+                "对称"
+            ],
+            "Symmetric normalization": [
+                "对称归一化"
+            ],
+            "Tables": [
+                "表格"
+            ],
+            "Text Size": [
+                "文字大小"
+            ],
+            "Text Size & Colors": [
+                "文字大小 & 颜色"
+            ],
+            "The correlation matrix is nearly singular. Computations may not be accurate.": [
+                "相关矩阵接近奇异，计算结果可能不准确。"
+            ],
+            "The following variable(s) are constant and cannot be used in a principal component analysis: {vars}.": [
+                "以下变量为常数，无法用于主成分分析：{vars}。"
+            ],
+            "The number of dimensions cannot be greater than {max}.": [
+                "维度数量不能大于 {max}。"
+            ],
+            "The number of dimensions cannot be greater than the number of observations.": [
+                "维度数量不能超过观测值总数。"
+            ],
+            "The number of dimensions cannot be greater than the number of variables.": [
+                "维度数量不能超过变量总数。"
+            ],
+            "The singular value for dimension {n} is close to zero. The plots may not be accurate.": [
+                "维度 {n} 的奇异值接近零，图形可能不准确。"
+            ],
+            "The χ2 statistic is equal to zero.": [
+                "χ2 统计量等于零。"
+            ],
+            "Tidy:Alger": [
+                "Tidy:Alger"
+            ],
+            "Tidy:Apple": [
+                "Tidy:Apple"
+            ],
+            "Tidy:Candy": [
+                "Tidy:Candy"
+            ],
+            "Tidy:Friendly": [
+                "Tidy:Friendly"
+            ],
+            "Tidy:Ibm": [
+                "Tidy:Ibm"
+            ],
+            "Tidy:Metro": [
+                "Tidy:Metro"
+            ],
+            "Tidy:Rainbow": [
+                "Tidy:彩虹色"
+            ],
+            "Tidy:Seaside": [
+                "Tidy:海滨配色"
+            ],
+            "Title Style": [
+                "标题格式"
+            ],
+            "Title Text": [
+                "标题文字"
+            ],
+            "Top": [
+                "顶部"
+            ],
+            "Total": [
+                "总计"
+            ],
+            "Unable to compute correspondence analysis for the selected data.": [
+                "无法对所选数据计算对应分析。"
+            ],
+            "Unable to compute MCA because of too many missing values.": [
+                "由于缺失值过多，无法计算 MCA。"
+            ],
+            "Unable to compute MCA for the selected variables.": [
+                "无法对所选变量计算 MCA。"
+            ],
+            "Unable to compute principal components for the selected variables.": [
+                "无法对所选变量计算主成分。"
+            ],
+            "Unable to compute the correlation matrix.": [
+                "无法计算相关矩阵。"
+            ],
+            "Unable to compute the χ2 statistic.": [
+                "无法计算 χ2 统计量。"
+            ],
+            "Unable to use {rotation} rotation.": [
+                "无法使用 {rotation} 旋转。"
+            ],
+            "Variable": [
+                "变量"
+            ],
+            "Variable descriptions as names": [
+                "使用变量描述作为名称"
+            ],
+            "Variable discriminations": [
+                "变量区分度"
+            ],
+            "Variable Discriminations": [
+                "变量区分度"
+            ],
+            "Variable plot": [
+                "变量图"
+            ],
+            "Variable Plot": [
+                "变量图"
+            ],
+            "Variables": [
+                "变量"
+            ],
+            "Varimax": [
+                "最大方差法"
+            ],
+            "vijMulti": [
+                "vijMulti"
+            ],
+            "vijMulti: Multivariate Data Analyses": [
+                "vijMulti：多变量数据分析"
+            ],
+            "Viridis:Inferno": [
+                "Viridis：Inferno"
+            ],
+            "Viridis:Magma": [
+                "Viridis:Magma"
+            ],
+            "Viridis:Plasma": [
+                "Viridis:Plasma"
+            ],
+            "Viridis:Turbo": [
+                "Viridis:Turbo"
+            ],
+            "Viridis:Viridis": [
+                "Viridis:Viridis"
+            ],
+            "White": [
+                "白色"
+            ],
+            "X-Axis": [
+                "X 轴"
+            ],
+            "X-Axis and Y-Axis cannot be equal.": [
+                "X轴和Y轴不能相同。"
+            ],
+            "X-Axis and Y-Axis cannot be greater than the number of dimensions.": [
+                "X 轴和 Y 轴的数量不能超过维度总数。"
+            ],
+            "Y-Axis": [
+                "Y 轴"
+            ],
+            "Yellow": [
+                "黄色"
+            ],
+            "Yellow to Blue": [
+                "黄-蓝渐变"
+            ],
+            "Yellow to Brown": [
+                "黄-棕渐变"
+            ],
+            "Yellow to Green": [
+                "黄-绿渐变色"
+            ],
+            "Yellow to Red": [
+                "黄-红渐变色"
+            ],
+            "χ² Test": [
+                "χ² 检验"
+            ]
+        }
+    }
+}

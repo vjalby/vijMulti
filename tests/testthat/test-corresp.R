@@ -132,7 +132,8 @@ test_that("corresp: row plot", {
         cols = "SMOKE",
         columns = NULL,
         rowLabels = NULL,
-        counts = "COUNT"
+        counts = "COUNT",
+        showRowPlot = TRUE
     )$rowplot
     expect_plot_snapshot("corresp-rowplot", testPlot)
 })
@@ -145,7 +146,8 @@ test_that("corresp: column plot", {
         cols = "SMOKE",
         columns = NULL,
         rowLabels = NULL,
-        counts = "COUNT"
+        counts = "COUNT",
+        showColPlot = TRUE
     )$colplot
     expect_plot_snapshot("corresp-colplot", testPlot)
 })
