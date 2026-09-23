@@ -23,12 +23,6 @@ msgstr "Rotation {rotation} avec normalisation de Kaiser"
 msgid "{rotation} rotation with Kaiser normalization was used."
 msgstr "La rotation {rotation} avec normalisation de Kaiser a été utilisée."
 
-#: R/corresp.b.R
-#: R/multcorresp.b.R
-#: multcorresp/results/categories.columns.title
-msgid "% Inertia"
-msgstr "% d'inertie"
-
 #: R/multcorresp.b.R
 #: corresp/results/eigenvalues.columns.title
 #: multcorresp/results/eigenvalues.columns.title
@@ -71,9 +65,9 @@ msgid ""
 "<li>or a <strong>Contingency table</strong></li>\n"
 "</ul>\n"
 "<p><strong>Supplementary row or column</strong> numbers may be entered as "
-"integer lists : 1,3,6</p>\n"
+"integer lists: 1,3,6</p>\n"
 "<p>Four normalizations (scaling of row and column scores before plotting) "
-"are available :</p>\n"
+"are available:</p>\n"
 "<ul>\n"
 "<li><strong>Principal:</strong> Row and column scores are scaled by "
 "eigenvalues.</li>\n"
@@ -231,8 +225,8 @@ msgstr ""
 "<li><strong>Form :</strong> Les coordonnées des observations sont "
 "principales (mis à l'échelle par les valeurs propres) tandis que celles des "
 "variables sont standardisées.</li>\n"
-"<li><strong>Cov :</strong> Les coordonnées des variables sont principales "
-"tandis que celles des observations sont standardisées. </li>\n"
+"<li><strong>Covariance :</strong> Les coordonnées des variables sont "
+"principales tandis que celles des observations sont standardisées. </li>\n"
 "</ul>\n"
 "<p><strong>Options avancées :</strong></p>\n"
 "<ul>\n"
@@ -600,9 +594,10 @@ msgstr "Coordonnées"
 msgid "Correspondence Analysis"
 msgstr "Analyse des correspondances"
 
+#: R/corresp.b.R
 #: R/multcorresp.b.R
-msgid "COS2"
-msgstr "COS2"
+msgid "Cos²"
+msgstr "Cos²"
 
 #: corresp/options/counts.title
 #: corresp/ui/mode/obsTable[0][0][2].label
@@ -617,13 +612,9 @@ msgstr "Les effectifs ne peuvent pas être infinis."
 msgid "Counts may not be negative."
 msgstr "Les effectifs ne peuvent pas être négatifs."
 
-#: principal/ui[3][2][0]/biplotType_covPlot.label
-msgid "Cov (Loading principal)"
-msgstr "Cov (Var. principales)"
-
 #: principal/options/biplotType/covPlot.title
-msgid "Covariance (Loading principal)"
-msgstr "Covariance (Variables principales)"
+msgid "Covariance"
+msgstr "Covariance"
 
 #: R/principal.b.R
 msgid "Covariance Biplot"
@@ -769,9 +760,8 @@ msgid "Font size"
 msgstr "Taille de police"
 
 #: principal/options/biplotType/formPlot.title
-#: principal/ui[3][2][0]/biplotType_formPlot.label
-msgid "Form (Score principal)"
-msgstr "Form (Obs. principales)"
+msgid "Form"
+msgstr "Form"
 
 #: R/principal.b.R
 msgid "Form Biplot"
@@ -829,9 +819,11 @@ msgstr "Groupe"
 msgid "Indicator matrix"
 msgstr "Tableau disjonctif"
 
+#: R/corresp.b.R
 #: R/multcorresp.b.R
 #: corresp/results/eigenvalues.columns.title
 #: multcorresp/results/eigenvalues.columns.title
+#: multcorresp/results/categories.columns.title
 msgid "Inertia"
 msgstr "Inertie"
 
@@ -1099,10 +1091,6 @@ msgstr "Nombre de dimensions"
 msgid "Number of dimensions must be less than or equal to {maxDim}."
 msgstr "Le nombre de dimensions doit être inférieur ou égal à {maxDim}."
 
-#: multcorresp/options/obsColor.title
-msgid "Obs color"
-msgstr "Couleur obs."
-
 #: multcorresp/results/obsCoordOV.title
 #: principal/results/obsCoordOV.title
 msgid "Observation Coordinates"
@@ -1146,6 +1134,7 @@ msgstr "Table des observations"
 
 #: multcorresp/options/showObservations.title
 #: multcorresp/options/showObservationPlot.title
+#: multcorresp/options/obsColor.title
 #: principal/options/showObservations.title
 #: principal/options/showObsPlot.title
 #: principal/options/obsLabelSize.title
@@ -1333,6 +1322,7 @@ msgstr "Violet à rouge"
 msgid "Purples"
 msgstr "Violets"
 
+#: R/corresp.b.R
 #: multcorresp/results/categories.columns.title
 msgid "QLT"
 msgstr "QLT"
@@ -1426,6 +1416,14 @@ msgstr "Résumés des lignes et colonnes"
 #: corresp/ui/mode/contTable[0][0][1].label
 msgid "Row Labels"
 msgstr "Étiquette des lignes"
+
+#: R/corresp.b.R
+msgid "Row labels may not be missing."
+msgstr "Les étiquettes de ligne ne doivent pas être manquantes."
+
+#: R/corresp.b.R
+msgid "Row labels must be unique."
+msgstr "Les étiquettes de ligne doivent être uniques."
 
 #: corresp/options/showRowPlot.title
 #: corresp/options/rowTitleText.title
@@ -1604,12 +1602,8 @@ msgstr "Texte des sous-titres"
 msgid "Summary"
 msgstr "Résumé"
 
-#: R/multcorresp.b.R
-msgid "Suppl. variables"
-msgstr "Variables sup."
-
 #: corresp/options/supColor.title
-msgid "Supplement"
+msgid "Supplementary"
 msgstr "Supplémentaire"
 
 #: R/corresp.b.R
