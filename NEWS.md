@@ -1,4 +1,9 @@
 
+# vijMulti 1.0.1 (2026-09-27)
+* Added χ² Test table
+* Reordered/renamed CA summary columns
+* Code optimization and fixes
+
 # vijMulti 1.0.0 (2026-09-17)
 * The three analyses PCA, CA and MCA have been moved from vijPlots to this new module
 * MCA (Burt method): Fixed variable discrimination computation
