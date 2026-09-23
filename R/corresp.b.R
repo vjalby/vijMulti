@@ -151,14 +151,14 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             table$addColumn(name = "id", title = "#", type = "integer")
             table$addColumn(name = labelCol, title = labelTitle, type = "text")
             table$addColumn(name = "margin", title = .("Mass"), type = "number", format = "zto")
+            table$addColumn(name = "inertia", title = .("Inertia"), type = "number", format = "zto")
+            table$addColumn(name = "qlt", title = .("QLT"), type = "number", format = "zto")
             for (i in seq(nDim))
                 table$addColumn(name = paste0("score",i), title = dimN(i), superTitle = paste(.("Coordinates"),"†"), type = "number", format = "zto")
-            table$addColumn(name = "inertia", title = .("% Inertia"), type = "number", format = "zto")
             for (i in seq(nDim))
                 table$addColumn(name = paste0("contrib",i), title = dimN(i), superTitle = .("Contributions"), type = "number", format = "zto")
-            table$addColumn(name = "qlt", title = "QLT", type = "number", format = "zto")
             for (i in seq(nDim))
-                table$addColumn(name = paste0("cos",i), title = dimN(i), superTitle = "CO2", type = "number", format = "zto")
+                table$addColumn(name = paste0("cos",i), title = dimN(i), superTitle = .("Cos²"), type = "number", format = "zto")
         },
         .fillSummaryTable = function(table, items, labelCol, coord, coordSup, marge,
                                       supplementary, suppText, nDim, normalizationString) {
@@ -323,7 +323,12 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 if (any(contingencyTable < 0)) {
                     vijErrorMessage(self, .('Counts may not be negative.'))
                 }
-                row.names(contingencyTable) <- self$data[[self$options$rowLabels]]
+                rowLabels <- self$data[[self$options$rowLabels]]
+                if (anyNA(rowLabels))
+                    vijErrorMessage(self, .("Row labels may not be missing."))
+                if (anyDuplicated(rowLabels))
+                    vijErrorMessage(self, .("Row labels must be unique."))
+                row.names(contingencyTable) <- rowLabels
                 contingencyTable <- as.matrix(contingencyTable)
             }
 
@@ -613,8 +618,8 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
 <li>an <strong>Observation table</strong> (raw data), possibly weighted using <em>jamovi</em> built-in weight system or using the "Counts" variable</li>
 <li>or a <strong>Contingency table</strong></li>
 </ul>
-<p><strong>Supplementary row or column</strong> numbers may be entered as integer lists : 1,3,6</p>
-<p>Four normalizations (scaling of row and column scores before plotting) are available :</p>
+<p><strong>Supplementary row or column</strong> numbers may be entered as integer lists: 1,3,6</p>
+<p>Four normalizations (scaling of row and column scores before plotting) are available:</p>
 <ul>
 <li><strong>Principal:</strong> Row and column scores are scaled by eigenvalues.</li>
 <li><strong>Symmetric:</strong> Row and column scores are scaled by the square root of eigenvalues. </li>

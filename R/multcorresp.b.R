@@ -383,10 +383,10 @@ multcorrespClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 values[["var"]] <- res$varDisplayName[[rownames(res$allvar$eta2)[i]]]
                 for (j in seq_len(nDim))
                     values[[paste0("dim",j)]] <- res$allvar$eta2[i,j]
-                table$addRow(rowKey = as.character(i), values = values)
+                table$setRow(rowNo = i, values = values)
             }
             if (!is.null(supplIdx))
-                table$setNote("sup", paste("* :", .("Suppl. variables")))
+                table$setNote("sup", paste("* :", .("Supplementary variables")))
         },
         .initCategoryTable = function(table, nDim) {
             for (j in seq_len(nDim))
@@ -394,7 +394,8 @@ multcorrespClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             for (j in seq_len(nDim))
                 table$addColumn(paste0("ctr",j), title = private$.dimN(j), type = "number", format = "zto", superTitle = .("Contributions"))
             for (j in seq_len(nDim))
-                table$addColumn(paste0("co2",j), title = private$.dimN(j), type = "number", format = "zto", superTitle = .("COS2"))
+                table$addColumn(paste0("co2",j), title = private$.dimN(j), type = "number", format = "zto", superTitle = .("Cos²"))
+            # Because of missing values/incomplete cases, the row number is unknown at init stage.
         },
         .fillCategoryTable = function(table, res, nDim, supplIdx) {
             previousfactor <- res$cat$factors[1]
@@ -430,14 +431,14 @@ multcorrespClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         .initObservationTable = function(table, nDim) {
             if (!is.null(self$options$labelVar))
                 table$addColumn("label", index = 2, title = private$.getVarName(self$options$labelVar), type = "text")
-            table$addColumn("inertia", title = .("% Inertia"), type = "number", format = "zto")
+            table$addColumn("inertia", title = .("Inertia"), type = "number", format = "zto")
             table$addColumn("qlt", title = "QLT", type = "number", format = "zto")
             for (j in seq_len(nDim))
                 table$addColumn(paste0("coord",j), title = private$.dimN(j), type = "number", format = "zto", superTitle = paste(.("Coordinates"),"†"))
             for (j in seq_len(nDim))
                 table$addColumn(paste0("ctr",j), title = private$.dimN(j), type = "number", format = "zto", superTitle = .("Contributions"))
             for (j in seq_len(nDim))
-                table$addColumn(paste0("co2",j), title = private$.dimN(j), type = "number", format = "zto", superTitle = .("COS2"))
+                table$addColumn(paste0("co2",j), title = private$.dimN(j), type = "number", format = "zto", superTitle = .("Cos²"))
         },
         .fillObservationTable = function(table, res, nDim) {
             nrows <- length(res$rowlabels)

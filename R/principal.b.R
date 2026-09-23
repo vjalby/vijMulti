@@ -405,8 +405,8 @@ principalClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             ssl <- res$SSL
             sslCum <- cumsum(ssl)
             for (i in 1:nDim) { # first dimensions
-                table$addRow(rowKey = i,
-                             list(comp = i,
+                table$setRow(rowNo = i,
+                             values = list(comp = i,
                                   eigenvalue = eigen[i],
                                   initVarProp = eigen[i]/eigenSum,
                                   initVarCum = eigenCum[i]/eigenSum,
@@ -417,8 +417,8 @@ principalClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             }
             if (length(eigen) > nDim) { # is there more dimensions ?
                 for (i in (nDim+1):length(eigen)) {
-                    table$addRow(rowKey = i,
-                                 list(comp = i,
+                    table$setRow(rowNo = i,
+                                 values = list(comp = i,
                                       eigenvalue = eigen[i],
                                       initVarProp = eigen[i]/eigenSum,
                                       initVarCum = eigenCum[i]/eigenSum,

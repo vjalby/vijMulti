@@ -60,6 +60,42 @@ test_that("corresp: negative counts are rejected (mode = contTable)", {
     )
 })
 
+test_that("corresp: duplicate row labels are rejected (mode = contTable)", {
+    dupData <- wideData
+    dupData$STAFF[2] <- dupData$STAFF[1]
+    expect_error(
+        vijMulti::corresp(
+            data = dupData,
+            mode = "contTable",
+            rows = NULL,
+            cols = NULL,
+            columns = c("None", "Light", "Medium", "Heavy"),
+            rowLabels = "STAFF",
+            counts = NULL,
+            showContingency = TRUE
+        ),
+        "Row labels must be unique."
+    )
+})
+
+test_that("corresp: missing row labels are rejected (mode = contTable)", {
+    naData <- wideData
+    naData$STAFF[1] <- NA
+    expect_error(
+        vijMulti::corresp(
+            data = naData,
+            mode = "contTable",
+            rows = NULL,
+            cols = NULL,
+            columns = c("None", "Light", "Medium", "Heavy"),
+            rowLabels = "STAFF",
+            counts = NULL,
+            showContingency = TRUE
+        ),
+        "Row labels may not be missing."
+    )
+})
+
 test_that("corresp: inertia (eigenvalues) table", {
     r <- vijMulti::corresp(
         data = testData,

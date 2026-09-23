@@ -693,6 +693,7 @@ multcorrespResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                 name="discrim",
                 title="Variable Discriminations",
                 visible="(showDiscriminations)",
+                rows="(c(vars, supplVars))",
                 columns=list(
                     list(
                         `name`="var", 
@@ -727,7 +728,7 @@ multcorrespResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                         `format`="zto"),
                     list(
                         `name`="inertia", 
-                        `title`="% Inertia", 
+                        `title`="Inertia", 
                         `type`="number", 
                         `format`="zto"),
                     list(

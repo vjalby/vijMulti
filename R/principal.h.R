@@ -761,6 +761,7 @@ principalResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 name="summaryTable",
                 title="Summary",
                 visible="(showSummary)",
+                rows="(vars)",
                 clearWith=list(
                     "vars",
                     "dimNum",
