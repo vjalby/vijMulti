@@ -140,9 +140,9 @@ options:
       title: Biplot Type
       type: List
       options:
-        - title: Form (Score principal)
+        - title: Form
           name:  formPlot
-        - title: Covariance (Loading principal)
+        - title: Covariance
           name:  covPlot
       default: formPlot
 

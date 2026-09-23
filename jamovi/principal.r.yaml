@@ -12,6 +12,7 @@ items:
       title: Summary
       visible: (showSummary)
       type: Table
+      rows: (vars)
       clearWith:
         - vars
         - dimNum

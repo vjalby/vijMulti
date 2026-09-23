@@ -42,6 +42,7 @@ items:
       title: Variable Discriminations
       type: Table
       visible: (showDiscriminations)
+      rows: (c(vars, supplVars))
       columns:
         - name: var
           title: 'Variable'
@@ -71,7 +72,7 @@ items:
           type: number
           format: zto
         - name: inertia
-          title: "% Inertia"
+          title: "Inertia"
           type: number
           format: zto
         - name: qlt

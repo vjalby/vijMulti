@@ -293,7 +293,7 @@ options:
       default: plain
 
     - name: obsColor
-      title: Obs color
+      title: Observations
       type: List
       options:
         - title: Black

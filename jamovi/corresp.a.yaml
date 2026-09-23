@@ -201,7 +201,7 @@ options:
       default: red
 
     - name: supColor
-      title: Supplement
+      title: Supplementary
       type: List
       options:
         - title: Gray

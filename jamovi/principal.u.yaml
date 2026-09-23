@@ -152,13 +152,11 @@ children:
                 name: biplotType_formPlot
                 optionName: biplotType
                 optionPart: formPlot
-                label: Form (Score principal)
                 enable: (showBiplot)
               - type: RadioButton
                 name: biplotType_covPlot
                 optionName: biplotType
                 optionPart: covPlot
-                label: Cov (Loading principal)
                 enable: (showBiplot)
               - type: CheckBox
                 name: biplotLines
