@@ -94,17 +94,17 @@ vijTitlesAndLabels = function(options, defaults = list(), plotType = '', plot = 
                  "இயல்பு", "ഡിഫോൾട്ട്",
                  "기본값", "初期値", "默认", "預設")
     # Title
-    if (title == "")
+    if (trimws(title) == "")
         title <- NULL
     else if (title %in% default)
         title <- defaults$title
     # Subtitle
-    if (subtitle == "")
+    if (trimws(subtitle) == "")
         subtitle <- NULL
     else if (subtitle %in% default)
         subtitle <- defaults$subtitle
     # Caption
-    if (caption == "")
+    if (trimws(caption) == "")
         caption <- NULL
     else if (caption %in% default)
         caption <- defaults$caption
