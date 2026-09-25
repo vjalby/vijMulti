@@ -73,8 +73,9 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             supplCols[supplementaryRows,] <- 0                              # Remplace NaN by 0
             rowProfiles[,supplementaryCols] <- supplCols                    # Replace supplementary cols in row profiles table
             #
-            rownames(rowProfiles)[nrow(rowProfiles)] <- .("Mass")
-            colnames(rowProfiles)[ncol(rowProfiles)] <- .("Active Margin")
+            # Margin keys, translated by .displayName() when filling the table
+            rownames(rowProfiles)[nrow(rowProfiles)] <- ".mass"
+            colnames(rowProfiles)[ncol(rowProfiles)] <- ".margin"
             return(rowProfiles)
         },
         .getContingencyTable = function(contingencyTable, supplementaryRows, supplementaryCols) {
@@ -96,14 +97,19 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             contingencyTable[nrow(contingencyTable), supplementaryCols] <- NA
             return(contingencyTable)
         },
+        .displayName = function(key) {
+            # Table column keys and row labels: the margins use reserved keys (".margin", ".mass")
+            # rather than their translated names, so a category can't collide with them
+            switch(key, ".margin" = .("Active Margin"), ".mass" = .("Mass"), key)
+        },
         .fillProfileTable = function(profileTable, profiles, suppl, rowName, colName) {
-            profileTable$addColumn("row", type = "text", title = rowName)
-            for (j in seq(ncol(profiles))) {
-                profileTable$addColumn(colnames(profiles)[j], type = "number", format = "zto", superTitle = colName)
+            profileTable$addColumn(".row", type = "text", title = rowName)
+            for (col in colnames(profiles)) {
+                profileTable$addColumn(col, title = private$.displayName(col), type = "number", format = "zto", superTitle = colName)
             }
             for (i in seq(nrow(profiles))) {
                 profileTable$addRow(i, values = profiles[i,])
-                profileTable$setCell(rowNo = i, "row", rownames(profiles)[i])
+                profileTable$setCell(rowNo = i, ".row", private$.displayName(rownames(profiles)[i]))
             }
             profileTable$addFormat(rowNo = nrow(profiles), 1, jmvcore::Cell.BEGIN_END_GROUP)
             if (suppl)
@@ -112,18 +118,19 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         .fillContingencyTable = function(table, contingencyTable, supplementaryRows, supplementaryCols,
                                           rowVarNameString, colVarNameString) {
             fullTable <- private$.getContingencyTable(contingencyTable, supplementaryRows, supplementaryCols)
-            rownames(fullTable)[nrow(fullTable)] <- .("Active Margin")
-            colnames(fullTable)[length(colnames(fullTable))] <- .("Active Margin")
-            table$addColumn("row", type="text", title = rowVarNameString)
+            # Margin keys, translated by .displayName() when filling the table
+            rownames(fullTable)[nrow(fullTable)] <- ".margin"
+            colnames(fullTable)[ncol(fullTable)] <- ".margin"
+            table$addColumn(".row", type="text", title = rowVarNameString)
             for (col in colnames(fullTable)) {
-                if (col != .("Active Margin"))
+                if (col != ".margin")
                     table$addColumn(col, type="integer", superTitle = colVarNameString)
                 else
-                    table$addColumn(col, type="integer")
+                    table$addColumn(col, title = private$.displayName(col), type="integer")
             }
             for (i in seq(nrow(fullTable))) {
                 table$addRow(i, values = fullTable[i,])
-                table$setCell(rowNo = i, "row", rownames(fullTable)[i])
+                table$setCell(rowNo = i, ".row", private$.displayName(rownames(fullTable)[i]))
             }
             table$addFormat(rowNo = nrow(fullTable), 1, jmvcore::Cell.BEGIN_END_GROUP)
             # Change NaN/NA to NULL. Is there another way to have empty cells ?
@@ -332,6 +339,14 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 contingencyTable <- as.matrix(contingencyTable)
             }
 
+            # ".row", ".margin" and ".mass" are used as row/column keys
+            reservedNames <- intersect(c(rownames(contingencyTable), colnames(contingencyTable)),
+                                       c(".row", ".margin", ".mass"))
+            if (length(reservedNames) > 0) {
+                vijErrorMessage(self, jmvcore::format(.("The category names {names} are reserved. Please rename these categories."),
+                                                      names = paste(reservedNames, collapse = ", ")))
+            }
+
             # Set variable names
             varNames <- private$.getVarNameStrings()
             rowVarNameString <- varNames$row
@@ -512,36 +527,16 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
 
             # Plot data
             res <- image$state
-            # Supplementary Row & Column Colors
-            # 1 = row, 2 = rowsup, 3 = column, 4 = colsup
-            if (plotType != 'column') { # rowplat and biplot
-                if (!is.null(res$row.sup$coord)) {
-                    ptcoord <- as.data.frame(rbind(
-                        cbind(res$row$coord, "sup" = 1),
-                        cbind(res$row.sup$coord, "sup" = 2)
-                    ))
-                } else {
-                    ptcoord <- as.data.frame(
-                        cbind(res$row$coord, "sup" = 1)
-                    )
-                }
-            } else {
-                ptcoord <- NULL #NA
+            # sup: 1 = row, 2 = rowsup, 3 = column, 4 = colsup
+            toDF <- function(coord, sup) {
+                if (is.null(coord))
+                    return(NULL)
+                data.frame(coord, sup = sup, label = rownames(coord), check.names = FALSE)
             }
-            if (plotType != 'row') { # colplot and biplot
-                if (!is.null(res$col.sup$coord)) {
-                    ptcoord <- as.data.frame(rbind(
-                        ptcoord,
-                        cbind(res$col$coord, "sup" = 3),
-                        cbind(res$col.sup$coord, "sup" = 4)
-                    ))
-                } else {
-                    ptcoord <- as.data.frame(rbind(
-                        ptcoord,
-                        cbind(res$col$coord, "sup" = 3)
-                    ))
-                }
-            }
+            ptcoord <- rbind(
+                if (plotType != 'column') rbind(toDF(res$row$coord, 1), toDF(res$row.sup$coord, 2)),
+                if (plotType != 'row') rbind(toDF(res$col$coord, 3), toDF(res$col.sup$coord, 4))
+            )
             ptcoord$sup <- factor(ptcoord$sup, levels = c(1,2,3,4))
             # ptcoord dataframe containt the row and column coordinates
             # ptcoord$sup is the type of point (1 = row, 2 = rowsup, 3 = column, 4 = colsup)
@@ -559,7 +554,7 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             # Building the plot
             plot <-  ggplot2::ggplot(ptcoord, ggplot2::aes(x = .data[[xaxisdim]], y = .data[[yaxisdim]], color = .data[["sup"]], shape = .data[["sup"]]))
             plot <- plot + ggplot2::geom_point()
-            plot <- plot + ggrepel::geom_text_repel(ggplot2::aes(label = rownames(ptcoord)), show.legend = FALSE, size = self$options$labelSize/ggplot2::.pt, seed = 123)
+            plot <- plot + ggrepel::geom_text_repel(ggplot2::aes(label = .data[["label"]]), show.legend = FALSE, size = self$options$labelSize/ggplot2::.pt, seed = 123)
             plot <- plot + ggplot2::geom_hline(yintercept = 0, linetype = 2) + ggplot2::geom_vline(xintercept = 0, linetype = 2)
 
             # Apply jmv theme

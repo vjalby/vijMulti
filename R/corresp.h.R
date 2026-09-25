@@ -559,7 +559,7 @@ correspResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 rows=0,
                 columns=list(
                     list(
-                        `name`="row", 
+                        `name`=".row", 
                         `title`="", 
                         `type`="text")),
                 clearWith=list(
@@ -581,7 +581,7 @@ correspResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 rows=0,
                 columns=list(
                     list(
-                        `name`="row", 
+                        `name`=".row", 
                         `title`="", 
                         `type`="text")),
                 clearWith=list(
@@ -603,7 +603,7 @@ correspResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 rows=0,
                 columns=list(
                     list(
-                        `name`="row", 
+                        `name`=".row", 
                         `title`="", 
                         `type`="text")),
                 clearWith=list(

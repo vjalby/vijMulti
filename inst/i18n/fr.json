@@ -838,6 +838,9 @@
             "Text Size & Colors": [
                 "Taille du texte & couleurs"
             ],
+            "The category names {names} are reserved. Please rename these categories.": [
+                "Les noms de catégories {names} sont réservés. Veuillez renommer ces catégories."
+            ],
             "The correlation matrix is nearly singular. Computations may not be accurate.": [
                 "La matrice des corrélations est quasi-singulière. Les calculs peuvent être approximatifs."
             ],

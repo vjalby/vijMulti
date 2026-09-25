@@ -1677,6 +1677,10 @@ msgstr "Taille du texte"
 msgid "Text Size & Colors"
 msgstr "Taille du texte & couleurs"
 
+#: R/corresp.b.R
+msgid "The category names {names} are reserved. Please rename these categories."
+msgstr "Les noms de catégories {names} sont réservés. Veuillez renommer ces catégories."
+
 #: R/principal.b.R
 msgid "The correlation matrix is nearly singular. Computations may not be accurate."
 msgstr ""

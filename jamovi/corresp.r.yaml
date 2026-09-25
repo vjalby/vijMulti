@@ -12,7 +12,7 @@ items:
       visible: (showContingency)
       rows:  0
       columns:
-        - name: row
+        - name: .row
           title: ""
           type: text
       clearWith:
@@ -33,7 +33,7 @@ items:
       visible: (showProfiles)
       rows:  0
       columns:
-        - name: row
+        - name: .row
           title: ""
           type: text
       clearWith:
@@ -54,7 +54,7 @@ items:
       visible: (showProfiles)
       rows:  0
       columns:
-        - name: row
+        - name: .row
           title: ""
           type: text
       clearWith:

@@ -28,9 +28,9 @@ test_that("corresp: contingency table mode (mode = contTable)", {
         showChisq = TRUE
     )
     ct <- r$contingency$asDF
-    expect_equal(unname(ct$row), c("Senior Managers", "Junior Managers", "Senior Employees", "Junior Employees", "Secretaries", "Active Margin"))
+    expect_equal(unname(ct$.row), c("Senior Managers", "Junior Managers", "Senior Employees", "Junior Employees", "Secretaries", "Active Margin"))
     expect_equal(unname(ct$None), c(4, 4, 25, 18, 10, 61))
-    expect_equal(unname(ct$`Active Margin`), c(11, 18, 51, 88, 25, 193))
+    expect_equal(unname(ct$.margin), c(11, 18, 51, 88, 25, 193))
 
     eig <- r$eigenvalues$asDF
     expect_equal(unname(eig$dim), c("1", "2", "Total"))
@@ -129,9 +129,73 @@ test_that("corresp: contingency table", {
         showContingency = TRUE
     )
     ct <- r$contingency$asDF
-    expect_equal(unname(ct$row), c("Senior Managers", "Junior Managers", "Senior Employees", "Junior Employees", "Secretaries", "Active Margin"))
+    expect_equal(unname(ct$.row), c("Senior Managers", "Junior Managers", "Senior Employees", "Junior Employees", "Secretaries", "Active Margin"))
     expect_equal(unname(ct$None), c(4, 4, 25, 18, 10, 61))
-    expect_equal(unname(ct$`Active Margin`), c(22, 36, 102, 176, 50, 386))
+    expect_equal(unname(ct$.margin), c(22, 36, 102, 176, 50, 386))
+})
+
+test_that("corresp: categories named like the label or margin columns keep their values", {
+    # Table columns are keyed by category name: a category named "row", "Active Margin"
+    # or "Mass" used to replace the row-label or margin column (now keyed ".row", ".margin", ".mass")
+    collideData <- data.frame(
+        A = factor(rep(c("Mass", "x", "y"), each = 3)),
+        B = factor(rep(c("row", "Active Margin", "Mass"), 3)),
+        COUNT = c(10L, 2L, 3L, 4L, 12L, 5L, 3L, 4L, 15L)
+    )
+    r <- vijMulti::corresp(
+        data = collideData,
+        mode = "obsTable",
+        rows = "A",
+        cols = "B",
+        columns = NULL,
+        rowLabels = NULL,
+        counts = "COUNT",
+        showContingency = TRUE,
+        showProfiles = TRUE
+    )
+    titles <- function(table) vapply(table$columns, function(col) col$title, character(1), USE.NAMES = FALSE)
+
+    ct <- r$contingency$asDF
+    expect_equal(names(ct), c(".row", "Active Margin", "Mass", "row", ".margin"))
+    expect_equal(titles(r$contingency), c("A", "Active Margin", "Mass", "row", "Active Margin"))
+    expect_equal(unname(ct$.row), c("Mass", "x", "y", "Active Margin"))
+    expect_equal(unname(ct$row), c(10, 4, 3, 17))
+    expect_equal(unname(ct$.margin), c(15, 21, 22, 58))
+
+    rp <- r$rowProfiles$asDF
+    expect_equal(names(rp), c(".row", "Active Margin", "Mass", "row", ".margin"))
+    expect_equal(titles(r$rowProfiles), c("A", "Active Margin", "Mass", "row", "Active Margin"))
+    expect_equal(unname(rp$.row), c("Mass", "x", "y", "Mass"))
+    expect_equal(unname(rp$.margin), c(1, 1, 1, 1))
+
+    cp <- r$colProfiles$asDF
+    expect_equal(names(cp), c(".row", "Active Margin", "Mass", "row", ".mass"))
+    expect_equal(titles(r$colProfiles), c("A", "Active Margin", "Mass", "row", "Mass"))
+    expect_equal(unname(cp$.row), c("Mass", "x", "y", "Active Margin"))
+    expect_equal(unname(cp$Mass), c(3, 5, 15, 23) / 23)
+    expect_equal(unname(cp$.mass), c(15, 21, 22, 58) / 58)
+})
+
+test_that("corresp: categories named like the reserved table keys are rejected", {
+    reservedData <- data.frame(
+        A = factor(rep(c(".margin", "x", "y"), each = 3)),
+        B = factor(rep(c(".mass", "u", "v"), 3)),
+        COUNT = c(10L, 2L, 3L, 4L, 12L, 5L, 3L, 4L, 15L)
+    )
+    # Rejected even when the contingency and profile tables are not shown
+    expect_error(
+        vijMulti::corresp(
+            data = reservedData,
+            mode = "obsTable",
+            rows = "A",
+            cols = "B",
+            columns = NULL,
+            rowLabels = NULL,
+            counts = "COUNT"
+        ),
+        "The category names .margin, .mass are reserved.",
+        fixed = TRUE
+    )
 })
 
 test_that("corresp: row and column summary tables (first row)", {
@@ -199,6 +263,32 @@ test_that("corresp: biplot", {
         counts = "COUNT"
     )$biplot
     expect_plot_snapshot("corresp-biplot", testPlot)
+})
+
+test_that("corresp: biplot keeps labels when rows and columns share category names", {
+    # Square table (same categories in rows and columns): the biplot labels used
+    # to come from rbind()-ed rownames, made unique as "A1", "B1", ...
+    squareData <- data.frame(
+        FATHER = factor(c("A", "A", "B", "B", "C", "C", "D", "D", "A", "C", "B", "D")),
+        SON = factor(c("A", "B", "B", "C", "C", "D", "D", "A", "C", "A", "D", "B")),
+        COUNT = c(20L, 5L, 18L, 4L, 22L, 6L, 15L, 3L, 7L, 2L, 9L, 8L)
+    )
+    r <- vijMulti::corresp(
+        data = squareData,
+        mode = "obsTable",
+        rows = "FATHER",
+        cols = "SON",
+        columns = NULL,
+        rowLabels = NULL,
+        counts = "COUNT",
+        supplementaryCols = "2"
+    )
+    # $plot is a jmvcore PlotObject; its $fun() returns the ggplot object.
+    # suppressMessages() as in jmvcore's Analysis$.render(): ggtheme already holds
+    # a colour scale, so scale_color_manual() triggers "Scale for colour is already present"
+    plot <- suppressMessages(r$biplot$plot$fun())
+    labels <- ggplot2::ggplot_build(plot)$data[[2]]$label
+    expect_equal(labels, c("A", "B", "C", "D", "A", "C", "D", "B *"))
 })
 
 test_that("corresp: alcohol columns as supplementary categories", {
