@@ -276,11 +276,11 @@ principalClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 if (!is.null(self$options$labelVar)) {
                     if (!is.null(self$options$groupVar) && self$options$labelColor == "none") {
                         plot <- plot + ggrepel::geom_text_repel(data = obsData, ggplot2::aes(x = x, y = y, label = Label, color = group),
-                                                                check_overlap = TRUE, box.padding = 0.4, min.segment.length = 0.6,
+                                                                box.padding = 0.4, min.segment.length = 0.6,
                                                                 size = self$options$obsLabelSize/ggplot2::.pt, seed = 123)
                     } else {
                         plot <- plot + ggrepel::geom_text_repel(data = obsData, ggplot2::aes(x = x, y = y, label = Label),
-                                                                check_overlap = TRUE, color = labelColor, box.padding = 0.4, min.segment.length = 0.6,
+                                                                color = labelColor, box.padding = 0.4, min.segment.length = 0.6,
                                                                 size = self$options$obsLabelSize/ggplot2::.pt, seed = 123)
                     }
                 }
@@ -300,8 +300,7 @@ principalClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 plot <- plot + ggplot2::geom_segment(data = varData, ggplot2::aes(x = 0, y = 0, xend = x, yend = y),
                                             arrow = grid::arrow(length = grid::unit(0.05, "inches"), type = "closed"),
                                             color = self$options$varColor, linewidth = 0.8)
-                plot <- plot + ggrepel::geom_text_repel(data = varData, ggplot2::aes(x = x, y = y, label = Label),
-                                                        check_overlap = TRUE, min.segment.length = 2,
+                plot <- plot + ggrepel::geom_text_repel(data = varData, ggplot2::aes(x = x, y = y, label = Label), min.segment.length = 2,
                                                         position = ggpp::position_nudge_center(x = 0.2, y = 0.01, center_x = 0, center_y = 0),
                                                         size = self$options$varLabelSize/ggplot2::.pt, color = labelColor, fontface="bold", seed = 123)
              }
@@ -337,12 +336,19 @@ principalClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             }
             plot <- plot + ggplot2::coord_fixed(xlim = c(xmin,xmax), ylim = c(ymin,ymax))
 
-            # Axis ticks (be sure there's a tick at each integer)
+            # Axis ticks (be sure there's a tick at each integer, unless there would be
+            # too many of them: back to pretty() breaks, integers at that scale anyway)
+            integerBreaks <- function(lo, hi) {
+                breaks <- seq(ceiling(lo), floor(hi))
+                if (length(breaks) > 12)
+                    breaks <- pretty(c(lo, hi), n = 10)
+                breaks
+            }
             if (plotType != "var" && self$options$stdVariables) {
                 if( xmin < -2 && xmax > 2)
-                    plot <- plot + ggplot2::scale_x_continuous(breaks = c(-5:5))
+                    plot <- plot + ggplot2::scale_x_continuous(breaks = integerBreaks(xmin, xmax))
                 if( ymin < -2 && ymax > 2)
-                    plot <- plot + ggplot2::scale_y_continuous(breaks = c(-5:5))
+                    plot <- plot + ggplot2::scale_y_continuous(breaks = integerBreaks(ymin, ymax))
             }
 
             # Plot frame
