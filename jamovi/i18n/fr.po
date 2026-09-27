@@ -606,7 +606,7 @@ msgstr "Effectifs (optionnel)"
 
 #: R/corresp.b.R
 msgid "Counts are not integers. The χ² test may not be valid."
-msgstr ""
+msgstr "Les effectifs ne sont pas entiers. Le test du χ² peut ne pas être valide."
 
 #: R/corresp.b.R
 msgid "Counts may not be infinite."

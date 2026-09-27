@@ -28,7 +28,7 @@
             "<p><strong>Main classic multivariate data analyses</strong>:</p> <ul> <li>Principal Component Analysis (PCA)</li> <li>Correspondence Analysis (CA)</li> <li>Multiple Correspondence Analysis (MCA)</li> </ul> <p>The module is available in the <strong>Analyses</strong> tab.</p> <p>Project source (and changelog) is available at <a href=\"https://github.com/vjalby/vijMulti\" target=\"_blank\">Github</a>.</p>": [
                 "<p><strong>Основные классические методы многомерного анализа данных</strong>:</p> <ul> <li>Анализ главных компонент</li> <li>Анализ соответствия</li> <li>Множественный анализ соответствия</li> </ul> <p>Модуль доступен на вкладке <strong>Analyses</strong>.</p> <p>Исходный код проекта (и список изменений) доступен на <a href=\"https://github.com/vjalby/vijMulti\" target=\"_blank\">Github</a>.</p>"
             ],
-            "<p>This module computes <strong>Correspondence Analysis (CA)</strong> for two categorical variables. Computations are based on <a href = \"https://CRAN.R-project.org/package=FactoMineR\" target=\"_blank\">FactoMineR</a> package by F. Husson, J. Josse, S. Le, J. Mazet.</p>\n<p>The data can be</p>\n<ul>\n<li>an <strong>Observation table</strong> (raw data), possibly weighted using <em>jamovi</em> built-in weight system or using the \"Counts\" variable</li>\n<li>or a <strong>Contingency table</strong></li>\n</ul>\n<p><strong>Supplementary row or column</strong> numbers may be entered as integer lists: 1,3,6</p>\n<p>Four normalizations (scaling of row and column scores before plotting) are available:</p>\n<ul>\n<li><strong>Principal:</strong> Row and column scores are scaled by eigenvalues.</li>\n<li><strong>Symmetric:</strong> Row and column scores are scaled by the square root of eigenvalues. </li>\n<li><strong>Row Principal:</strong> Only row scores are scaled by eigenvalues.</li>\n<li><strong>Column Principal:</strong> Only column scores are scaled by eigenvalues.</li>\n<li><strong>Standard:</strong> The raw coordinates without normalization.</li>\n</ul>\n<p>A sample file is included at Open > Data Library > vijMulti > Smoking</p>": [
+            "<p>This module computes <strong>Correspondence Analysis (CA)</strong> for two categorical variables. Computations are based on <a href = \"https://CRAN.R-project.org/package=FactoMineR\" target=\"_blank\">FactoMineR</a> package by F. Husson, J. Josse, S. Le, J. Mazet.</p>\n<p>The data can be</p>\n<ul>\n<li>an <strong>Observation table</strong> (raw data), possibly weighted using <em>jamovi</em> built-in weight system or using the \"Counts\" variable</li>\n<li>or a <strong>Contingency table</strong></li>\n</ul>\n<p><strong>Supplementary row or column</strong> numbers may be entered as integer lists: 1,3,6</p>\n<p>Five normalizations (scaling of row and column scores before plotting) are available:</p>\n<ul>\n<li><strong>Principal:</strong> Row and column scores are in principal coordinates, i.e. standard coordinates scaled by the singular values.</li>\n<li><strong>Symmetric:</strong> Row and column scores are standard coordinates scaled by the square root of the singular values.</li>\n<li><strong>Row principal:</strong> Row scores are in principal coordinates, column scores in standard coordinates.</li>\n<li><strong>Column principal:</strong> Column scores are in principal coordinates, row scores in standard coordinates.</li>\n<li><strong>Standard:</strong> Row and column scores are in standard coordinates (unit weighted variance on each dimension).</li>\n</ul>\n<p>A sample file is included at Open > Data Library > vijMulti > Smoking</p>": [
                 "<p>Этот модуль вычисляет <strong>Анализ соответствия (CA)</strong> для двух категориальных переменных. Расчеты основаны на <a href = \"https://CRAN.R-project.org/package=FactoMineR\" target=\"_blank\">FactoMineR</a> пакете от F. Husson, J. Josse, S. Le, J. Mazet.</p>\n<p>Данные могут быть</p>\n<ul>\n<li>таблицей <strong>наблюдений</strong> (сырые данные), возможно взвешенные с использованием встроенной системы весов <em>jamovi</em> или с использованием переменной \"Количество\"</li>\n<li>или таблицей <strong>сочетаний</strong></li>\n</ul>\n<p>Дополнительные номера строк или столбцов могут быть введены как целочисленные списки: 1,3,6</p>\n<p>Четыре нормализации (масштабирование баллов строк и столбцов до построения) доступны:</p>\n<ul>\n<li><strong>Основная:</strong> Баллы строк и столбцов масштабируются по собственным значениям.</li>\n<li><strong>Симметричная:</strong> Баллы строк и столбцов масштабируются по квадратному корню из собственных значений.</li>\n<li><strong>Основная строка:</strong> Только баллы строк масштабируются по собственным значениям.</li>\n<li><strong>Основной столбец:</strong> Только баллы столбцов масштабируются по собственным значениям.</li>\n<li><strong>Стандарт:</strong> Исходные координаты без нормализации.</li>\n</ul>\n<p>Пример файла включен в Открыть > Библиотека данных > vijMulti > Smoking</p>"
             ],
             "<p>This module computes <strong>Multiple Correspondence Analysis (MCA)</strong> for several categorical variables. Computations are based on <a href = \"https://CRAN.R-project.org/package=FactoMineR\" target=\"_blank\">FactoMineR</a> package by F. Husson, J. Josse, S. Le, J. Mazet.</p>\n<p>Both classic methods are available:</p>\n<ul>\n<li><strong>Indicator matrix:</strong> CA of the indicator matrix</li>\n<li><strong>Burt matrix:</strong> CA of the Burt matrix. The eigenvalues are the squares of those of the indicator matrix method. </li>\n</ul>\n<p>Both methods give the same <em>standard</em> coordinates and discriminations (but different <em>principal</em> coordinates).</p>\n<p>When selected, <strong>Benzécri and Greenacre corrections</strong> are applied to eigenvalues only (<strong>Summary</strong> table). Principal coordinates (and inertia) of categories and observations are computed from the original eigenvalues of the Burt matrix.</p>\n<p>The <strong>Normalization</strong> options specify how the coordinates are scaled (by eigenvalues):</p>\n<ul>\n<li><strong>Principal:</strong> Both category and observation coordinates are scaled.</li>\n<li><strong>Category principal:</strong> Only category coordinates are scaled.</li>\n<li><strong>Observation principal:</strong> Only observation coordinates are scaled.</li>\n<li><strong>Standard:</strong> Both category and observation coordinates are standard.</li>\n</ul>\n<p>A sample file is included at Open > Data Library > vijMulti > Cars</p>": [
@@ -232,17 +232,17 @@
             "Counts (optional)": [
                 "Счетчики (необязательно)"
             ],
+            "Counts are not integers. The χ² test may not be valid.": [
+                ""
+            ],
             "Counts may not be infinite.": [
                 "Количество не может быть бесконечным."
             ],
             "Counts may not be negative.": [
                 "Количество не может быть отрицательным."
             ],
-            "Cov (Loading principal)": [
-                "Cov (Загрузка главных)"
-            ],
-            "Covariance (Loading principal)": [
-                "Ковариация (Загрузка главных)"
+            "Covariance": [
+                ""
             ],
             "Covariance Biplot": [
                 "Ковариационный биплот"
@@ -313,8 +313,8 @@
             "Font size": [
                 "Размер шрифта"
             ],
-            "Form (Score principal)": [
-                "Форма (Счет главных)"
+            "Form": [
+                ""
             ],
             "Form Biplot": [
                 "Форма биграфика"
@@ -495,9 +495,6 @@
             ],
             "Number of dimensions must be less than or equal to {maxDim}.": [
                 "Количество размерностей должно быть меньше или равно {maxDim}."
-            ],
-            "Obs color": [
-                "Цвет наблюдения"
             ],
             "Observation Coordinates": [
                 "Координаты наблюдения"
@@ -682,6 +679,12 @@
             "Row Labels": [
                 "Метки строк"
             ],
+            "Row labels may not be missing.": [
+                ""
+            ],
+            "Row labels must be unique.": [
+                ""
+            ],
             "Row plot": [
                 "Строковый график"
             ],
@@ -790,11 +793,8 @@
             "Summary": [
                 "Краткое содержание"
             ],
-            "Suppl. variables": [
-                "Доп. переменные"
-            ],
-            "Supplement": [
-                "Добавка"
+            "Supplementary": [
+                ""
             ],
             "Supplementary column numbers must be a list of numbers, e.g. 1,2,9": [
                 "Дополнительные номера столбцов должна быть списком чисел, например 1,2,9"
@@ -840,6 +840,9 @@
             ],
             "Text Size & Colors": [
                 "Размер и цвет текста"
+            ],
+            "The category names {names} are reserved. Please rename these categories.": [
+                ""
             ],
             "The correlation matrix is nearly singular. Computations may not be accurate.": [
                 "Корреляционная матрица почти вырождена. Расчёты могут быть неточными."

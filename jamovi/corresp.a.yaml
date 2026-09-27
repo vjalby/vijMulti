@@ -6,7 +6,7 @@ menuSubgroup: Multivariate
 version: '1.0.0'
 jas: '1.2'
 
-weightsSupport: 'full'
+weightsSupport: full
 
 options:
     - name: data

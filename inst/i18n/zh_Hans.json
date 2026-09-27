@@ -28,7 +28,7 @@
             "<p><strong>Main classic multivariate data analyses</strong>:</p> <ul> <li>Principal Component Analysis (PCA)</li> <li>Correspondence Analysis (CA)</li> <li>Multiple Correspondence Analysis (MCA)</li> </ul> <p>The module is available in the <strong>Analyses</strong> tab.</p> <p>Project source (and changelog) is available at <a href=\"https://github.com/vjalby/vijMulti\" target=\"_blank\">Github</a>.</p>": [
                 "<p><strong>主要的多变量数据分析</strong>：</p> <ul> <li>主成分分析</li> <li>对应分析</li> <li>多重对应分析</li> </ul> <p>此模块可在<strong>Analyses</strong>选项卡中使用。</p> <p>项目源代码（及更新日志）可在 <a href=\"https://github.com/vjalby/vijMulti\" target=\"_blank\">Github</a> 上获取。</p>"
             ],
-            "<p>This module computes <strong>Correspondence Analysis (CA)</strong> for two categorical variables. Computations are based on <a href = \"https://CRAN.R-project.org/package=FactoMineR\" target=\"_blank\">FactoMineR</a> package by F. Husson, J. Josse, S. Le, J. Mazet.</p>\n<p>The data can be</p>\n<ul>\n<li>an <strong>Observation table</strong> (raw data), possibly weighted using <em>jamovi</em> built-in weight system or using the \"Counts\" variable</li>\n<li>or a <strong>Contingency table</strong></li>\n</ul>\n<p><strong>Supplementary row or column</strong> numbers may be entered as integer lists: 1,3,6</p>\n<p>Four normalizations (scaling of row and column scores before plotting) are available:</p>\n<ul>\n<li><strong>Principal:</strong> Row and column scores are scaled by eigenvalues.</li>\n<li><strong>Symmetric:</strong> Row and column scores are scaled by the square root of eigenvalues. </li>\n<li><strong>Row Principal:</strong> Only row scores are scaled by eigenvalues.</li>\n<li><strong>Column Principal:</strong> Only column scores are scaled by eigenvalues.</li>\n<li><strong>Standard:</strong> The raw coordinates without normalization.</li>\n</ul>\n<p>A sample file is included at Open > Data Library > vijMulti > Smoking</p>": [
+            "<p>This module computes <strong>Correspondence Analysis (CA)</strong> for two categorical variables. Computations are based on <a href = \"https://CRAN.R-project.org/package=FactoMineR\" target=\"_blank\">FactoMineR</a> package by F. Husson, J. Josse, S. Le, J. Mazet.</p>\n<p>The data can be</p>\n<ul>\n<li>an <strong>Observation table</strong> (raw data), possibly weighted using <em>jamovi</em> built-in weight system or using the \"Counts\" variable</li>\n<li>or a <strong>Contingency table</strong></li>\n</ul>\n<p><strong>Supplementary row or column</strong> numbers may be entered as integer lists: 1,3,6</p>\n<p>Five normalizations (scaling of row and column scores before plotting) are available:</p>\n<ul>\n<li><strong>Principal:</strong> Row and column scores are in principal coordinates, i.e. standard coordinates scaled by the singular values.</li>\n<li><strong>Symmetric:</strong> Row and column scores are standard coordinates scaled by the square root of the singular values.</li>\n<li><strong>Row principal:</strong> Row scores are in principal coordinates, column scores in standard coordinates.</li>\n<li><strong>Column principal:</strong> Column scores are in principal coordinates, row scores in standard coordinates.</li>\n<li><strong>Standard:</strong> Row and column scores are in standard coordinates (unit weighted variance on each dimension).</li>\n</ul>\n<p>A sample file is included at Open > Data Library > vijMulti > Smoking</p>": [
                 "<p>此模块计算两个分类变量的 <strong>相应分析 (CA)</strong>。计算基于 <a href = \"https://CRAN.R-project.org/package=FactoMineR\" target=\"_blank\">FactoMineR</a> 包，由 F. Husson, J. Josse, S. Le, J. Mazet 创建。</p>\n<p>数据可以是</p>\n<ul>\n<li>一个 <strong>观察表</strong> (原始数据)，可能使用 <em>jamovi</em> 内置权重系统或使用 \"计数\" 变量进行加权</li>\n<li>或一个 <strong>联表</strong></li>\n</ul>\n<p><strong>补充行或列</strong> 数字可以作为整数列表输入：1,3,6</p>\n<p>有四种归一化（在绘图前对行和列评分进行缩放）可用：</p>\n<ul>\n<li><strong>主导:</strong> 行和列评分按特征值缩放。</li>\n<li><strong>对称:</strong> 行和列评分按特征值平方根缩放。</li>\n<li><strong>行主导:</strong> 仅行评分按特征值缩放。</li>\n<li><strong>列主导:</strong> 仅列评分按特征值缩放。</li>\n<li><strong>标准:</strong> 原始坐标，无归一化。</li>\n</ul>\n<p>示例文件包含在 Open > 数据库 > vijMulti > Smoking 中</p>"
             ],
             "<p>This module computes <strong>Multiple Correspondence Analysis (MCA)</strong> for several categorical variables. Computations are based on <a href = \"https://CRAN.R-project.org/package=FactoMineR\" target=\"_blank\">FactoMineR</a> package by F. Husson, J. Josse, S. Le, J. Mazet.</p>\n<p>Both classic methods are available:</p>\n<ul>\n<li><strong>Indicator matrix:</strong> CA of the indicator matrix</li>\n<li><strong>Burt matrix:</strong> CA of the Burt matrix. The eigenvalues are the squares of those of the indicator matrix method. </li>\n</ul>\n<p>Both methods give the same <em>standard</em> coordinates and discriminations (but different <em>principal</em> coordinates).</p>\n<p>When selected, <strong>Benzécri and Greenacre corrections</strong> are applied to eigenvalues only (<strong>Summary</strong> table). Principal coordinates (and inertia) of categories and observations are computed from the original eigenvalues of the Burt matrix.</p>\n<p>The <strong>Normalization</strong> options specify how the coordinates are scaled (by eigenvalues):</p>\n<ul>\n<li><strong>Principal:</strong> Both category and observation coordinates are scaled.</li>\n<li><strong>Category principal:</strong> Only category coordinates are scaled.</li>\n<li><strong>Observation principal:</strong> Only observation coordinates are scaled.</li>\n<li><strong>Standard:</strong> Both category and observation coordinates are standard.</li>\n</ul>\n<p>A sample file is included at Open > Data Library > vijMulti > Cars</p>": [
@@ -232,17 +232,17 @@
             "Counts (optional)": [
                 "计数（可选）"
             ],
+            "Counts are not integers. The χ² test may not be valid.": [
+                ""
+            ],
             "Counts may not be infinite.": [
                 "计数不能为无穷大。"
             ],
             "Counts may not be negative.": [
                 "计数不能为负数。"
             ],
-            "Cov (Loading principal)": [
-                "协方差（主载荷）"
-            ],
-            "Covariance (Loading principal)": [
-                "协方差（主载荷）"
+            "Covariance": [
+                ""
             ],
             "Covariance Biplot": [
                 "协方差双标图"
@@ -313,8 +313,8 @@
             "Font size": [
                 "字体大小"
             ],
-            "Form (Score principal)": [
-                "得分形式（主成分法）"
+            "Form": [
+                ""
             ],
             "Form Biplot": [
                 "Biplot 形式"
@@ -495,9 +495,6 @@
             ],
             "Number of dimensions must be less than or equal to {maxDim}.": [
                 "维度数量必须小于或等于 {maxDim}。"
-            ],
-            "Obs color": [
-                "观测值颜色"
             ],
             "Observation Coordinates": [
                 "观测坐标"
@@ -682,6 +679,12 @@
             "Row Labels": [
                 "行标签"
             ],
+            "Row labels may not be missing.": [
+                ""
+            ],
+            "Row labels must be unique.": [
+                ""
+            ],
             "Row plot": [
                 "行图"
             ],
@@ -790,11 +793,8 @@
             "Summary": [
                 "摘要"
             ],
-            "Suppl. variables": [
-                "补充变量"
-            ],
-            "Supplement": [
-                "附加信息"
+            "Supplementary": [
+                ""
             ],
             "Supplementary column numbers must be a list of numbers, e.g. 1,2,9": [
                 "补充列号必须是数字列表（例如：1,2,9）"
@@ -840,6 +840,9 @@
             ],
             "Text Size & Colors": [
                 "文字大小 & 颜色"
+            ],
+            "The category names {names} are reserved. Please rename these categories.": [
+                ""
             ],
             "The correlation matrix is nearly singular. Computations may not be accurate.": [
                 "相关矩阵接近奇异，计算结果可能不准确。"

@@ -63,19 +63,19 @@ msgid ""
 "</ul>\n"
 "<p><strong>Supplementary row or column</strong> numbers may be entered as "
 "integer lists: 1,3,6</p>\n"
-"<p>Four normalizations (scaling of row and column scores before plotting) "
+"<p>Five normalizations (scaling of row and column scores before plotting) "
 "are available:</p>\n"
 "<ul>\n"
-"<li><strong>Principal:</strong> Row and column scores are scaled by "
-"eigenvalues.</li>\n"
-"<li><strong>Symmetric:</strong> Row and column scores are scaled by the "
-"square root of eigenvalues. </li>\n"
-"<li><strong>Row Principal:</strong> Only row scores are scaled by "
-"eigenvalues.</li>\n"
-"<li><strong>Column Principal:</strong> Only column scores are scaled by "
-"eigenvalues.</li>\n"
-"<li><strong>Standard:</strong> The raw coordinates without "
-"normalization.</li>\n"
+"<li><strong>Principal:</strong> Row and column scores are in principal "
+"coordinates, i.e. standard coordinates scaled by the singular values.</li>\n"
+"<li><strong>Symmetric:</strong> Row and column scores are standard "
+"coordinates scaled by the square root of the singular values.</li>\n"
+"<li><strong>Row principal:</strong> Row scores are in principal coordinates, "
+"column scores in standard coordinates.</li>\n"
+"<li><strong>Column principal:</strong> Column scores are in principal "
+"coordinates, row scores in standard coordinates.</li>\n"
+"<li><strong>Standard:</strong> Row and column scores are in standard "
+"coordinates (unit weighted variance on each dimension).</li>\n"
 "</ul>\n"
 "<p>A sample file is included at Open > Data Library > vijMulti > Smoking</p>"
 msgstr ""
@@ -564,6 +564,10 @@ msgid "Counts (optional)"
 msgstr "度数（任意）"
 
 #: R/corresp.b.R
+msgid "Counts are not integers. The χ² test may not be valid."
+msgstr ""
+
+#: R/corresp.b.R
 msgid "Counts may not be infinite."
 msgstr "度数を無限大にすることはできません。"
 
@@ -571,13 +575,9 @@ msgstr "度数を無限大にすることはできません。"
 msgid "Counts may not be negative."
 msgstr "度数を負にすることはできません。"
 
-#: principal/ui[3][2][0]/biplotType_covPlot.label
-msgid "Cov (Loading principal)"
-msgstr "共分散 (主成分負荷量)"
-
 #: principal/options/biplotType/covPlot.title
-msgid "Covariance (Loading principal)"
-msgstr "共分散 (主成分負荷量)"
+msgid "Covariance"
+msgstr ""
 
 #: R/principal.b.R
 msgid "Covariance Biplot"
@@ -723,9 +723,8 @@ msgid "Font size"
 msgstr "文字サイズ"
 
 #: principal/options/biplotType/formPlot.title
-#: principal/ui[3][2][0]/biplotType_formPlot.label
-msgid "Form (Score principal)"
-msgstr "形式（主成分得点）"
+msgid "Form"
+msgstr ""
 
 #: R/principal.b.R
 msgid "Form Biplot"
@@ -786,8 +785,8 @@ msgstr "指標行列"
 #: R/corresp.b.R
 #: R/multcorresp.b.R
 #: corresp/results/eigenvalues.columns.title
-#: multcorresp/results/categories.columns.title
 #: multcorresp/results/eigenvalues.columns.title
+#: multcorresp/results/categories.columns.title
 msgid "Inertia"
 msgstr "慣性"
 
@@ -1055,10 +1054,6 @@ msgstr "次元数"
 msgid "Number of dimensions must be less than or equal to {maxDim}."
 msgstr "次元数は {maxDim} 以下でなければなりません。"
 
-#: multcorresp/options/obsColor.title
-msgid "Obs color"
-msgstr "観測値の色"
-
 #: multcorresp/results/obsCoordOV.title
 #: principal/results/obsCoordOV.title
 msgid "Observation Coordinates"
@@ -1102,6 +1097,7 @@ msgstr "観測データ表"
 
 #: multcorresp/options/showObservations.title
 #: multcorresp/options/showObservationPlot.title
+#: multcorresp/options/obsColor.title
 #: principal/options/showObservations.title
 #: principal/options/showObsPlot.title
 #: principal/options/obsLabelSize.title
@@ -1384,6 +1380,14 @@ msgstr "行・列の要約"
 msgid "Row Labels"
 msgstr "行ラベル"
 
+#: R/corresp.b.R
+msgid "Row labels may not be missing."
+msgstr ""
+
+#: R/corresp.b.R
+msgid "Row labels must be unique."
+msgstr ""
+
 #: corresp/options/showRowPlot.title
 #: corresp/options/rowTitleText.title
 #: corresp/options/rowSubtitleText.title
@@ -1561,13 +1565,9 @@ msgstr "サブタイトル文字"
 msgid "Summary"
 msgstr "要約"
 
-#: R/multcorresp.b.R
-msgid "Suppl. variables"
-msgstr "補助変数"
-
 #: corresp/options/supColor.title
-msgid "Supplement"
-msgstr "補助"
+msgid "Supplementary"
+msgstr ""
 
 #: R/corresp.b.R
 msgid "Supplementary column numbers must be a list of numbers, e.g. 1,2,9"
@@ -1635,6 +1635,10 @@ msgstr "文字サイズ"
 #: corresp/ui[5].label
 msgid "Text Size & Colors"
 msgstr "文字サイズと色"
+
+#: R/corresp.b.R
+msgid "The category names {names} are reserved. Please rename these categories."
+msgstr ""
 
 #: R/principal.b.R
 msgid "The correlation matrix is nearly singular. Computations may not be accurate."
