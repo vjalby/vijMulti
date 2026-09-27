@@ -118,15 +118,17 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         .fillContingencyTable = function(table, contingencyTable, supplementaryRows, supplementaryCols,
                                           rowVarNameString, colVarNameString) {
             fullTable <- private$.getContingencyTable(contingencyTable, supplementaryRows, supplementaryCols)
+            # with decimal weights/counts, Contingency Table uses type = "number"
+            isDecimal <- any(abs(fullTable - round(fullTable)) > sqrt(.Machine$double.eps), na.rm = TRUE)
             # Margin keys, translated by .displayName() when filling the table
             rownames(fullTable)[nrow(fullTable)] <- ".margin"
             colnames(fullTable)[ncol(fullTable)] <- ".margin"
             table$addColumn(".row", type="text", title = rowVarNameString)
             for (col in colnames(fullTable)) {
                 if (col != ".margin")
-                    table$addColumn(col, type="integer", superTitle = colVarNameString)
+                    table$addColumn(col, type = ifelse(isDecimal,"number","integer"), superTitle = colVarNameString)
                 else
-                    table$addColumn(col, title = private$.displayName(col), type="integer")
+                    table$addColumn(col, title = private$.displayName(col), type = ifelse(isDecimal,"number","integer"))
             }
             for (i in seq(nrow(fullTable))) {
                 table$addRow(i, values = fullTable[i,])
@@ -244,6 +246,11 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 df = chisqres$parameter,
                 p = chisqres$p.value
             ))
+            observed <- chisqres$observed
+            if (any(abs(observed - round(observed)) > sqrt(.Machine$double.eps)))
+                table$setNote("nonint", .("Counts are not integers. The χ² test may not be valid."))
+            else
+                table$setNote("nonint", NULL)
         },
         .fillInertiaTable = function(table, res) {
             # Populate the inertia table
@@ -614,13 +621,13 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
 <li>or a <strong>Contingency table</strong></li>
 </ul>
 <p><strong>Supplementary row or column</strong> numbers may be entered as integer lists: 1,3,6</p>
-<p>Four normalizations (scaling of row and column scores before plotting) are available:</p>
+<p>Five normalizations (scaling of row and column scores before plotting) are available:</p>
 <ul>
-<li><strong>Principal:</strong> Row and column scores are scaled by eigenvalues.</li>
-<li><strong>Symmetric:</strong> Row and column scores are scaled by the square root of eigenvalues. </li>
-<li><strong>Row Principal:</strong> Only row scores are scaled by eigenvalues.</li>
-<li><strong>Column Principal:</strong> Only column scores are scaled by eigenvalues.</li>
-<li><strong>Standard:</strong> The raw coordinates without normalization.</li>
+<li><strong>Principal:</strong> Row and column scores are in principal coordinates, i.e. standard coordinates scaled by the singular values.</li>
+<li><strong>Symmetric:</strong> Row and column scores are standard coordinates scaled by the square root of the singular values.</li>
+<li><strong>Row principal:</strong> Row scores are in principal coordinates, column scores in standard coordinates.</li>
+<li><strong>Column principal:</strong> Column scores are in principal coordinates, row scores in standard coordinates.</li>
+<li><strong>Standard:</strong> Row and column scores are in standard coordinates (unit weighted variance on each dimension).</li>
 </ul>
 <p>A sample file is included at Open > Data Library > vijMulti > Smoking</p>')
             vijHelpMessage(self, helpMsg)
