@@ -96,12 +96,10 @@ don't exist in this module):
 - `jmvcore::select(df, character(0))` errors on the currently installed `jmvcore`, crashing inside
   the base `Analysis$init()` before a module's own "no variable selected" guard in `.run()` is ever
   reached. Don't write zero-variable tests that go through a full `analysis$run()`/wrapper call.
-- The generated `<name>(...)` wrapper's `for (v in ...)` loops (over `rows`/`cols`/`rowLabels` in
-  `corresp`, `vars`/`supplVars` in `multcorresp`, `groupVar` in `principal`) are only safe to omit
-  in a direct `data=` call because every one of those options already has an explicit `default:` in
-  its `.a.yaml` (so the generated argument defaults to `NULL`) — an option added later without a
-  `default:` would reintroduce the "argument is missing, with no default" crash. Check a new
-  option's generated `.h.R` signature before writing its test.
+- Variable/Variables options have no `default:` in their `.a.yaml`, so the generated `<name>(...)`
+  wrapper has no default for them either: a direct `data=` call (e.g. in tests) must pass every one
+  of them, using `NULL` for the unused ones (e.g. `corresp(..., rowLabels = NULL, columns = NULL)`
+  in `obsTable` mode), or it fails with "argument is missing, with no default".
 - `jmvcore::Analysis$.render()` wraps rendering in `suppressWarnings(suppressMessages(...))`,
   silently swallowing ggplot2 diagnostics (including `message`-class `cli_inform()` ones like
   "Ignoring unknown labels"). `vijDebugPlot()` (see above) is the workaround for surfacing these
