@@ -152,19 +152,19 @@ correspOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 "supplementaryCols",
                 supplementaryCols,
                 default="")
-            private$..dimNum <- jmvcore::OptionNumber$new(
+            private$..dimNum <- jmvcore::OptionInteger$new(
                 "dimNum",
                 dimNum,
                 min=2,
                 max=10,
                 default=2)
-            private$..xaxis <- jmvcore::OptionNumber$new(
+            private$..xaxis <- jmvcore::OptionInteger$new(
                 "xaxis",
                 xaxis,
                 min=1,
                 max=10,
                 default=1)
-            private$..yaxis <- jmvcore::OptionNumber$new(
+            private$..yaxis <- jmvcore::OptionInteger$new(
                 "yaxis",
                 yaxis,
                 min=1,
