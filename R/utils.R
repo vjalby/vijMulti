@@ -20,7 +20,7 @@ vijColorPalette = function(pal, type = "fill", theme) {
     } else if (palType == "viridis") {
         return(scales::pal_viridis(option = palName))
     } else if (palType == "dichromat") {
-        return(scales::pal_dichromat(palName))
+        return(scales::pal_dichromat(palName)) # required dichromat package
     } else if (palType == "tidy") {
         tidyColors <- switch(palName,
             friendly = c("#0072B2","#56B4E9","#009E73","#F5C710","#E69F00","#D55E00"),

@@ -114,6 +114,14 @@ don't exist in this module):
 - Prefer a `switch()` over `do.call(getFromNamespace(...), ...)` for dispatching on an option value
   — `principal.b.R`'s rotation option calls `GPArotation::Varimax()` etc. directly in a `switch()`,
   keeping every callable function grep-visible.
+- `corresp`'s `contingency`/`rowProfiles`/`colProfiles` tables deliberately get their columns and
+  rows in `.run()`, not `.init()` (unlike the Row/Column Summary tables): the contingency table's
+  column type (`integer` vs `number`) is decided from the actual count values — a `number` column
+  displays integers as `12.00`, and the Counts/jamovi-weights column type isn't a reliable proxy —
+  in contTable mode the rows come from the Row Labels values, and the `*` supplementary marks need
+  the supplementary options validated (via `reject()`) first. Moving only part of it to `.init()`
+  would add duplicated validation for a brief cosmetic gain on tables that are off by default.
+  Reviewed and declined (2026-09); don't reopen without a new argument.
 - `Table$setNote(key, NULL)` doesn't reliably clear a previously-shown note on a `rows: 0` table
   when a `reject()`-interrupted run leaves an unguarded `setNote()` call unreached — root-caused and
   fixed for `corresp`'s `eigenvalues`/`chisq` note (`rows: 1` + explicit `deleteRows()`; see

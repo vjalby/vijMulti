@@ -103,6 +103,8 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             switch(key, ".margin" = .("Active Margin"), ".mass" = .("Mass"), key)
         },
         .fillProfileTable = function(profileTable, profiles, suppl, rowName, colName) {
+            # Built in .run(), not .init(), like the contingency table (see .fillContingencyTable):
+            # rows/columns and "*" marks depend on the data and the validated supplementary options.
             profileTable$addColumn(".row", type = "text", title = rowName)
             for (col in colnames(profiles)) {
                 profileTable$addColumn(col, title = private$.displayName(col), type = "number", format = "zto", superTitle = colName)
@@ -117,6 +119,9 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         },
         .fillContingencyTable = function(table, contingencyTable, supplementaryRows, supplementaryCols,
                                           rowVarNameString, colVarNameString) {
+            # Built in .run(), not .init(), on purpose: the column type (integer vs number) depends on
+            # the actual count values (a "number" column shows 12 as 12.00), in contTable mode the rows
+            # come from the Row Labels values, and the "*" marks need the validated supplementary options.
             fullTable <- private$.getContingencyTable(contingencyTable, supplementaryRows, supplementaryCols)
             # with decimal weights/counts, Contingency Table uses type = "number"
             isDecimal <- any(abs(fullTable - round(fullTable)) > sqrt(.Machine$double.eps), na.rm = TRUE)
