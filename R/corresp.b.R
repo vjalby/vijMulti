@@ -115,7 +115,7 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             }
             profileTable$addFormat(rowNo = nrow(profiles), 1, jmvcore::Cell.BEGIN_END_GROUP)
             if (suppl)
-                profileTable$setNote("supp", paste("* :", .("Supplementary rows/columns")))
+                profileTable$setNote("supp", paste("*", .("Supplementary rows/columns")))
         },
         .fillContingencyTable = function(table, contingencyTable, supplementaryRows, supplementaryCols,
                                           rowVarNameString, colVarNameString) {
@@ -148,7 +148,7 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 }
             }
             if (!is.null(supplementaryRows) || !is.null(supplementaryCols))
-                table$setNote("supp", paste("* :", .("Supplementary rows/columns")))
+                table$setNote("supp", paste("*", .("Supplementary rows/columns")))
         },
         .getVarNameStrings = function() {
             # row/col display names, as shown in the summary table column headers and the contingency table
@@ -203,8 +203,8 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 table$addRow(i, values = theValues)
             }
             if (!is.null(supplementary))
-                table$setNote("supp", paste("* :", suppText))
-            table$setNote("norm", paste("† :", normalizationString))
+                table$setNote("supp", paste("*", suppText))
+            table$setNote("norm", paste("†", normalizationString))
         },
         .parseSupplementary = function(optionValue, nmax, parseErrorMsg, rangeErrorMsg) {
             if (is.null(optionValue) || optionValue == "0" || optionValue == "")
@@ -237,10 +237,10 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                         )
 
             if (is.null(chisqres) || !is.finite(chisqres$statistic) ) {
-                vijErrorMessage(self, .("Unable to compute the χ2 statistic."))
+                vijErrorMessage(self, .("Unable to compute the χ² statistic."))
             }
             if (chisqres$statistic <= .Machine$double.eps) {
-                vijErrorMessage(self, .("The χ2 statistic is equal to zero."))
+                vijErrorMessage(self, .("The χ² statistic is equal to zero."))
             }
 
             return(chisqres)
@@ -270,7 +270,7 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             }
             # Add total row
             table$addRow(rowKey="Total", values = list(
-                dim = "Total",
+                dim = .("Total"),
                 singular = "",
                 inertia = sum(res$eig[,1]),
                 proportion = 1,

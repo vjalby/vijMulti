@@ -386,7 +386,7 @@ multcorrespClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 table$setRow(rowNo = i, values = values)
             }
             if (!is.null(supplIdx))
-                table$setNote("sup", paste("* :", .("Supplementary variables")))
+                table$setNote("sup", paste("*", .("Supplementary variables")))
         },
         .initCategoryTable = function(table, nDim) {
             for (j in seq_len(nDim))
@@ -422,17 +422,17 @@ multcorrespClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 }
             }
             if (self$options$normalization %in% c("principal", "catprincipal"))
-                table$setNote("normalization",paste("† :",.("Principal coordinates")))
+                table$setNote("normalization", paste("†",.("Principal coordinates")))
             else
-                table$setNote("normalization",paste("† :",.("Standard coordinates")))
+                table$setNote("normalization", paste("†",.("Standard coordinates")))
             if (!is.null(supplIdx))
-                table$setNote("sup", paste("* :", .("Supplementary variables")))
+                table$setNote("sup", paste("*", .("Supplementary variables")))
         },
         .initObservationTable = function(table, nDim) {
             if (!is.null(self$options$labelVar))
                 table$addColumn("label", index = 2, title = private$.getVarName(self$options$labelVar), type = "text")
             table$addColumn("inertia", title = .("Inertia"), type = "number", format = "zto")
-            table$addColumn("qlt", title = "QLT", type = "number", format = "zto")
+            table$addColumn("qlt", title = .("QLT"), type = "number", format = "zto")
             for (j in seq_len(nDim))
                 table$addColumn(paste0("coord",j), title = private$.dimN(j), type = "number", format = "zto", superTitle = paste(.("Coordinates"),"†"))
             for (j in seq_len(nDim))
@@ -466,9 +466,9 @@ multcorrespClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 table$addRow(rowKey = as.character(i), values = values)
             }
             if (self$options$normalization %in% c("principal", "obsprincipal"))
-                table$setNote("normalization",paste("† :",.("Principal coordinates")))
+                table$setNote("normalization",paste("†", .("Principal coordinates")))
             else
-                table$setNote("normalization",paste("† :",.("Standard coordinates")))
+                table$setNote("normalization",paste("†", .("Standard coordinates")))
         },
         .discrimplot = function(image, ggtheme, theme, ...) {
             res <- image$state
