@@ -470,6 +470,10 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
 
             #### Plots ####
 
+            private$.preparePlots(res, rowVarNameString, colVarNameString)
+        },
+        # Builds every plot's image$state from the CA result
+        .preparePlots = function(res, rowVarNameString, colVarNameString) {
             if (self$options$showRowPlot) {
                 self$results$rowplot$setState(list(
                     eig = res$eig,
