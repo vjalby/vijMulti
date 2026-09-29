@@ -417,7 +417,7 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 private$.fillChisqTable(self$results$chisq, chisqres)
 
             # Check solution dimension
-            maxDim = min(nrow(contingencyTable)-length(supplementaryRows), ncol(contingencyTable)-length(supplementaryCols)) - 1
+            maxDim <- min(nrow(contingencyTable)-length(supplementaryRows), ncol(contingencyTable)-length(supplementaryCols)) - 1
             if (maxDim < 2) {
                 vijErrorMessage(self, .("Not enough data to compute CA."))
             }

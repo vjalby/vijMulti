@@ -1,5 +1,8 @@
 
-# vijMulti 1.0.1 (2026-09-29)
+# vijMulti 1.0.2 (2026-09-29)
+* Code optimization and fixes
+
+# vijMulti 1.0.1 (2026-09-27)
 * Added χ² Test table to CA output
 * Reordered/renamed CA summary columns
 * Improved support for decimal weights (CA)
