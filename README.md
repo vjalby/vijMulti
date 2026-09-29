@@ -21,7 +21,7 @@ The module is available in the **Analyses** tab.
 
 ![](img/mca.jpg)
 
-## Last changes: vijMulti 1.0.1 (2026-09-27)
+## Last changes: vijMulti 1.0.1 (2026-09-29)
 
 * Added χ² Test table to CA output
 * Reordered/renamed CA summary columns
