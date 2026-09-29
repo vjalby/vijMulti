@@ -158,6 +158,15 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 list(row = self$options$rowLabels, col = self$options$columnTitle)
             }
         },
+        .normalizationString = function() {
+            # summary tables note and plot subtitle
+            switch(self$options$normalization,
+                   principal = .("Principal normalization"),
+                   symmetric = .("Symmetric normalization"),
+                   rowprincipal = .("Row principal normalization"),
+                   colprincipal = .("Column principal normalization"),
+                   standard = .("Standard normalization"))
+        },
         .initSummaryTable = function(table, labelCol, labelTitle, nDim) {
             # labelCol = "row" or "col"
             # labelTitle = col/rowVarNameString
@@ -329,7 +338,7 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 formula <- jmvcore::composeFormula('.COUNTS', c(rowVarName, colVarName))
                 contingencyTable <- stats::xtabs(formula, data)
             } else { # self$options$mode == "contTable"
-                if (is.null(self$options$rowLabels) || length(self$options$columns) < 3 || nrow(self$data) < 3)
+                if (is.null(self$options$rowLabels) || length(self$options$columns) < 3 || nrow(self$data) == 0)
                     return(FALSE)
 
                 contingencyTable <- jmvcore::select(self$data,self$options$columns)
@@ -384,13 +393,7 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
 
             #### Normalisation ####
 
-            normalizationString <- switch(self$options$normalization,
-                                          principal = .("Principal normalization"),
-                                          symmetric = .("Symmetric normalization"),
-                                          rowprincipal = .("Row principal normalization"),
-                                          colprincipal = .("Column principal normalization"),
-                                          standard = .("Standard normalization")
-            )
+            normalizationString <- private$.normalizationString()
 
             #### Contingency Table (with supplementary rows/columns ####
 
@@ -464,7 +467,7 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             }
             if (res$sv[max(xaxis, yaxis)] < .Machine$double.eps) {
                 message <- jmvcore::format(.("The singular value for dimension {n} is close to zero. The plots may not be accurate."), n = max(xaxis, yaxis))
-                pos <- ifelse(is.null(self$countsName), 1, 2)
+                pos <- if (self$options$mode == "obsTable" && !is.null(self$countsName)) 2 else 1
                 vijWarningMessage(self, message, pos = pos)
             }
 
@@ -578,12 +581,10 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
 
             # Set point colors
             plot <- plot +
-                ggplot2::scale_color_manual(
-                    values=c("1" = self$options$rowColor, "2" = self$options$supColor, "3" = self$options$colColor, "4" = self$options$supColor),
-                    breaks=c("1", "3", "2", "4")) + ggplot2::labs(color = "") +
-                ggplot2::scale_shape_manual(values = c(19, 19, 17, 17), breaks = c("1","2","3","4")) +
-                ggplot2::theme(legend.text = ggplot2::element_text(size = 10))
-            plot <- plot + ggplot2::guides(color = "none", shape = "none")
+                ggplot2::scale_color_manual(values = c("1" = self$options$rowColor, "2" = self$options$supColor,
+                                                       "3" = self$options$colColor, "4" = self$options$supColor)) +
+                ggplot2::scale_shape_manual(values = c("1" = 19, "2" = 19, "3" = 17, "4" = 17)) +
+                ggplot2::guides(color = "none", shape = "none")
 
             # Plot frame
             plot <- plot + ggplot2::theme(axis.line = ggplot2::element_line(linewidth = 0), panel.border = ggplot2::element_rect(color = "black", fill = NA, linewidth = 1))
@@ -597,13 +598,7 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                                                      cols = res$colVarNameString)
             )
             # Plot subtitle
-            subtitle <- switch(self$options$normalization,
-                               principal = .("Principal normalization"),
-                               symmetric = .("Symmetric normalization"),
-                               rowprincipal = .("Row principal normalization"),
-                               colprincipal = .("Column principal normalization"),
-                               standard = .("Standard normalization")
-            )
+            subtitle <- private$.normalizationString()
 
             # Titles & Labels
             defaults <- list(title = title, subtitle = subtitle, y = dim2name, x = dim1name)
