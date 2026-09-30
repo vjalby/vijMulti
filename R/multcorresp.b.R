@@ -431,8 +431,6 @@ multcorrespClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         .initObservationTable = function(table, nDim) {
             if (!is.null(self$options$labelVar))
                 table$addColumn("label", index = 2, title = private$.getVarName(self$options$labelVar), type = "text")
-            table$addColumn("inertia", title = .("Inertia"), type = "number", format = "zto")
-            table$addColumn("qlt", title = .("QLT"), type = "number", format = "zto")
             for (j in seq_len(nDim))
                 table$addColumn(paste0("coord",j), title = private$.dimN(j), type = "number", format = "zto", superTitle = paste(.("Coordinates"),"†"))
             for (j in seq_len(nDim))

@@ -141,6 +141,7 @@ msgid ""
 msgstr ""
 
 #: package/datasets/Smoking.description
+#: package/datasets/Smoking(contingencytable).description
 msgid "A demonstration dataset for vijMulti/Correspondence Analysis."
 msgstr ""
 
@@ -720,11 +721,9 @@ msgstr ""
 msgid "Indicator matrix"
 msgstr ""
 
-#: R/corresp.b.R
 #: R/multcorresp.b.R
 #: corresp/results/eigenvalues.columns.title
 #: multcorresp/results/eigenvalues.columns.title
-#: multcorresp/results/categories.columns.title
 msgid "Inertia"
 msgstr ""
 
@@ -1224,8 +1223,8 @@ msgid "Purples"
 msgstr ""
 
 #: R/corresp.b.R
-#: R/multcorresp.b.R
 #: multcorresp/results/categories.columns.title
+#: multcorresp/results/observations.columns.title
 msgid "QLT"
 msgstr ""
 
@@ -1269,6 +1268,12 @@ msgstr ""
 #: multcorresp/options/colorPalette/Reds.title
 #: principal/options/colorPalette/Reds.title
 msgid "Reds"
+msgstr ""
+
+#: R/corresp.b.R
+#: multcorresp/results/categories.columns.title
+#: multcorresp/results/observations.columns.title
+msgid "Rel. Inertia"
 msgstr ""
 
 #: corresp/options/titleAlign/1.title
@@ -1425,6 +1430,10 @@ msgstr ""
 
 #: package/datasets/Smoking.name
 msgid "Smoking"
+msgstr ""
+
+#: package/datasets/Smoking(contingencytable).name
+msgid "Smoking (contingency table)"
 msgstr ""
 
 #: corresp/ui[1][0].label

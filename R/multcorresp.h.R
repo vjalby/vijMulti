@@ -728,7 +728,7 @@ multcorrespResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                         `format`="zto"),
                     list(
                         `name`="inertia", 
-                        `title`="Inertia", 
+                        `title`="Rel. Inertia", 
                         `type`="number", 
                         `format`="zto"),
                     list(
@@ -757,6 +757,16 @@ multcorrespResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                     list(
                         `name`="mass", 
                         `title`="Mass", 
+                        `type`="number", 
+                        `format`="zto"),
+                    list(
+                        `name`="inertia", 
+                        `title`="Rel. Inertia", 
+                        `type`="number", 
+                        `format`="zto"),
+                    list(
+                        `name`="qlt", 
+                        `title`="QLT", 
                         `type`="number", 
                         `format`="zto")),
                 clearWith=list(

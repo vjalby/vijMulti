@@ -655,6 +655,9 @@
             "Reds": [
                 "Rouges"
             ],
+            "Rel. Inertia": [
+                "Inertie rel."
+            ],
             "Right": [
                 "Droite"
             ],
@@ -744,6 +747,9 @@
             ],
             "Smoking": [
                 "Smoking"
+            ],
+            "Smoking (contingency table)": [
+                "Smoking (tableau de contingence)"
             ],
             "Solution": [
                 "Solution"
@@ -862,8 +868,8 @@
             "The singular value for dimension {n} is close to zero. The plots may not be accurate.": [
                 "La valeur singulière pour la dimension {n} est proche de zéro. Les graphiques peuvent être approximatifs."
             ],
-            "The χ2 statistic is equal to zero.": [
-                "La statistique du χ2 est égale à zéro."
+            "The χ² statistic is equal to zero.": [
+                "La statistique du χ² est égale à zéro."
             ],
             "Tidy:Alger": [
                 "Tidy:Alger"
@@ -916,8 +922,8 @@
             "Unable to compute the correlation matrix.": [
                 "Impossible de calculer la matrice de corrélation."
             ],
-            "Unable to compute the χ2 statistic.": [
-                "Impossible de calculer la statistique du χ2."
+            "Unable to compute the χ² statistic.": [
+                "Impossible de calculer la statistique du χ²."
             ],
             "Unable to use {rotation} rotation.": [
                 "Impossible d'utiliser la rotation {rotation}."

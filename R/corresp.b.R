@@ -159,7 +159,7 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             table$addColumn(name = "id", title = "#", type = "integer")
             table$addColumn(name = labelCol, title = labelTitle, type = "text")
             table$addColumn(name = "margin", title = .("Mass"), type = "number", format = "zto")
-            table$addColumn(name = "inertia", title = .("Inertia"), type = "number", format = "zto")
+            table$addColumn(name = "inertia", title = .("Rel. Inertia"), type = "number", format = "zto")
             table$addColumn(name = "qlt", title = .("QLT"), type = "number", format = "zto")
             for (i in seq(nDim))
                 table$addColumn(name = paste0("score",i), title = dimN(i), superTitle = paste(.("Coordinates"),"†"), type = "number", format = "zto")
