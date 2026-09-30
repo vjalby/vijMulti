@@ -42,6 +42,24 @@ test_that("corresp: contingency table mode (mode = contTable)", {
     expect_equal(chisq$p, 0.17183, tolerance = 1e-4)
 })
 
+test_that("corresp: jamovi weights are ignored with a notice (mode = contTable)", {
+    weightedData <- wideData
+    attr(weightedData, "jmv-weights") <- c(1, 2, 1, 1, 1)
+    attr(weightedData, "jmv-weights-name") <- "W"
+    r <- vijMulti::corresp(
+        data = weightedData,
+        mode = "contTable",
+        rows = NULL,
+        cols = NULL,
+        columns = c("None", "Light", "Medium", "Heavy"),
+        rowLabels = "STAFF",
+        counts = NULL,
+        showContingency = TRUE
+    )
+    expect_equal(r$get(".weights")$content, "Row weights are ignored when the data is a contingency table.")
+    expect_equal(unname(r$contingency$asDF$None), c(4, 4, 25, 18, 10, 61))
+})
+
 test_that("corresp: negative counts are rejected (mode = contTable)", {
     negData <- wideData
     negData$None[1] <- -4
