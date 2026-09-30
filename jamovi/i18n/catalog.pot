@@ -1224,6 +1224,7 @@ msgid "Purples"
 msgstr ""
 
 #: R/corresp.b.R
+#: R/multcorresp.b.R
 #: multcorresp/results/categories.columns.title
 msgid "QLT"
 msgstr ""
@@ -1607,7 +1608,7 @@ msgid ""
 msgstr ""
 
 #: R/corresp.b.R
-msgid "The χ2 statistic is equal to zero."
+msgid "The χ² statistic is equal to zero."
 msgstr ""
 
 #: multcorresp/options/colorPalette/tidy::alger.title
@@ -1670,6 +1671,7 @@ msgstr ""
 msgid "Top"
 msgstr ""
 
+#: R/corresp.b.R
 #: R/multcorresp.b.R
 msgid "Total"
 msgstr ""
@@ -1695,7 +1697,7 @@ msgid "Unable to compute the correlation matrix."
 msgstr ""
 
 #: R/corresp.b.R
-msgid "Unable to compute the χ2 statistic."
+msgid "Unable to compute the χ² statistic."
 msgstr ""
 
 #: R/principal.b.R
