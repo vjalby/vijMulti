@@ -1363,6 +1363,10 @@ msgstr ""
 msgid "Row Summary"
 msgstr ""
 
+#: R/corresp.b.R
+msgid "Row weights are ignored when the data is a contingency table."
+msgstr ""
+
 #: corresp/options/rows.title
 #: corresp/ui/mode/obsTable[0][0][0].label
 msgid "Rows"

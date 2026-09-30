@@ -288,6 +288,9 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                     warningMessage <- ..('The data is weighted by the variable {}.', countsName)
                     vijWarningMessage(self, warningMessage, '.weights')
                 }
+            } else if (!is.null(attr(self$data, "jmv-weights-name"))) { # contTable
+                # jamovi weights are not applied to a contingency table
+                vijWarningMessage(self, .('Row weights are ignored when the data is a contingency table.'), '.weights')
             }
 
             # Init row/col Summary Tables (adding columns)
