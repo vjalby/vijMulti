@@ -134,6 +134,37 @@ test_that("corresp: contingency table", {
     expect_equal(unname(ct$.margin), c(22, 36, 102, 176, 50, 386))
 })
 
+test_that("corresp: profiles with a supplementary row and column", {
+    # Only the profiles used by the analysis are shown: row profiles of every row
+    # over the active columns, column profiles of every column over the active rows
+    r <- vijMulti::corresp(
+        data = wideData,
+        mode = "contTable",
+        rows = NULL,
+        cols = NULL,
+        columns = c("None", "Light", "Medium", "Heavy"),
+        rowLabels = "STAFF",
+        counts = NULL,
+        supplementaryRows = "5",
+        supplementaryCols = "4",
+        showProfiles = TRUE
+    )
+    rp <- r$rowProfiles$asDF
+    expect_equal(names(rp), c(".row", "None", "Light", "Medium", ".margin"))
+    expect_equal(unname(rp$.row), c("Senior Managers", "Junior Managers", "Senior Employees", "Junior Employees", "Secretaries *", "Mass"))
+    expect_equal(unname(rp$None), c(4/9, 4/14, 25/47, 18/75, 10/23, 51/145))
+    expect_equal(unname(rp$.margin), rep(1, 6))
+    expect_equal(r$rowProfiles$notes$supp$note, "* Supplementary rows")
+
+    cp <- r$colProfiles$asDF
+    expect_equal(names(cp), c(".row", "None", "Light", "Medium", "Heavy *", ".mass"))
+    expect_equal(unname(cp$.row), c("Senior Managers", "Junior Managers", "Senior Employees", "Junior Employees", "Active Margin"))
+    expect_equal(unname(cp$None), c(4, 4, 25, 18, 51) / 51)
+    expect_equal(unname(cp[["Heavy *"]]), c(2, 4, 4, 13, 23) / 23)
+    expect_equal(unname(cp$.mass), c(9, 14, 47, 75, 145) / 145)
+    expect_equal(r$colProfiles$notes$supp$note, "* Supplementary columns")
+})
+
 test_that("corresp: categories named like the label or margin columns keep their values", {
     # Table columns are keyed by category name: a category named "row", "Active Margin"
     # or "Mass" used to replace the row-label or margin column (now keyed ".row", ".margin", ".mass")

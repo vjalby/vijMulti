@@ -49,30 +49,15 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             return(data)
         },
         .getProfile = function(contingencyTable, supplementaryRows, supplementaryCols) {
-            # This function is tricky because of supplementaryPoints. Maybe it's possible to simplify it.
-            # The idea is to build the contingencyTable of active columns and rows without deleting the supplementary ones
-            # but setting them to 0 then compute the % for the supplementary rows based on active margins
-            # then adds then back to the main table...
-            rowProfiles <- contingencyTable                     # copy contingencyTable
-            rowProfiles[supplementaryRows,] <- 0                # set supplementary rows to 0
-            rowProfiles <- stats::addmargins(rowProfiles, margin=1)    # Add margin row (sum)
-            rowProfiles[supplementaryRows,] <-contingencyTable[supplementaryRows,]  # set supplementary rows back
-            rowProfiles[,supplementaryCols] <- 0                # Empty supplementary columns
-            # Compute margin
-            tmpRowProfiles <- stats::addmargins(rowProfiles, margin=2)
-            rowMargins <- tmpRowProfiles[-nrow(tmpRowProfiles),ncol(tmpRowProfiles)]
-            rowMargins[supplementaryRows]<-0
-            rowMargins <- stats::addmargins(as.matrix(rowMargins), margin = 1)
-            #
-            rowProfiles <- proportions(rowProfiles, margin = 1)             # Compute % per lines
-            rowProfiles <- stats::addmargins(rowProfiles,margin=2)                 # Add margin column (sum)
-            supplCols <- as.matrix(contingencyTable[,supplementaryCols, drop = FALSE])    # Table of supplementary Cols
-            supplCols[supplementaryRows,] <- 0                              # set supplementary rows to 0
-            supplCols <- stats::addmargins(supplCols, margin = 1)                  # add margin
-            supplCols <-supplCols / rowMargins[,1]                          # compute % per lines
-            supplCols[supplementaryRows,] <- 0                              # Remplace NaN by 0
-            rowProfiles[,supplementaryCols] <- supplCols                    # Replace supplementary cols in row profiles table
-            #
+            # Row profiles of every row (active and supplementary) over the active columns only,
+            # plus a ".mass" row (active column masses). Supplementary columns are left out:
+            # their profiles (the ones projected) are in the column profiles.
+            activeCols <- setdiff(seq_len(ncol(contingencyTable)), supplementaryCols)
+            activeRows <- setdiff(seq_len(nrow(contingencyTable)), supplementaryRows)
+            rowProfiles <- contingencyTable[, activeCols, drop = FALSE]
+            rowProfiles <- rbind(rowProfiles, colSums(rowProfiles[activeRows, , drop = FALSE]))
+            rowProfiles <- proportions(rowProfiles, margin = 1)
+            rowProfiles <- stats::addmargins(rowProfiles, margin = 2)
             # Margin keys, translated by .displayName() when filling the table
             rownames(rowProfiles)[nrow(rowProfiles)] <- ".mass"
             colnames(rowProfiles)[ncol(rowProfiles)] <- ".margin"
@@ -102,7 +87,7 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             # rather than their translated names, so a category can't collide with them
             switch(key, ".margin" = .("Active Margin"), ".mass" = .("Mass"), key)
         },
-        .fillProfileTable = function(profileTable, profiles, suppl, rowName, colName) {
+        .fillProfileTable = function(profileTable, profiles, supplementary, suppText, rowName, colName) {
             # Built in .run(), not .init(), like the contingency table (see .fillContingencyTable):
             # rows/columns and "*" marks depend on the data and the validated supplementary options.
             profileTable$addColumn(".row", type = "text", title = rowName)
@@ -114,8 +99,8 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 profileTable$setCell(rowNo = i, ".row", private$.displayName(rownames(profiles)[i]))
             }
             profileTable$addFormat(rowNo = nrow(profiles), 1, jmvcore::Cell.BEGIN_END_GROUP)
-            if (suppl)
-                profileTable$setNote("supp", paste("*", .("Supplementary rows/columns")))
+            if (!is.null(supplementary))
+                profileTable$setNote("supp", paste("*", suppText))
         },
         .fillContingencyTable = function(table, contingencyTable, supplementaryRows, supplementaryCols,
                                           rowVarNameString, colVarNameString) {
@@ -403,13 +388,14 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             #### Row and Column Profile Tables ####
 
             if(self$options$showProfiles) {
-                hasSupp <- !is.null(supplementaryRows) || !is.null(supplementaryCols)
-                # Row Profiles
+                # Row Profiles (supplementary columns left out)
                 rowProfiles <- private$.getProfile(contingencyTable, supplementaryRows, supplementaryCols)
-                private$.fillProfileTable(self$results$rowProfiles, rowProfiles, hasSupp, rowVarNameString, colVarNameString)
-                # Column Profiles
+                private$.fillProfileTable(self$results$rowProfiles, rowProfiles, supplementaryRows,
+                                          .("Supplementary rows"), rowVarNameString, colVarNameString)
+                # Column Profiles (supplementary rows left out)
                 colProfiles <- t(private$.getProfile(t(contingencyTable),supplementaryCols, supplementaryRows))
-                private$.fillProfileTable(self$results$colProfiles, colProfiles, hasSupp, rowVarNameString, colVarNameString)
+                private$.fillProfileTable(self$results$colProfiles, colProfiles, supplementaryCols,
+                                          .("Supplementary columns"), rowVarNameString, colVarNameString)
             }
 
             #### Chi-Squared test ####
