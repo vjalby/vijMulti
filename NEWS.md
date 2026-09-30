@@ -1,3 +1,5 @@
+# vijMulti 1.0.3 (2026-09-30)
+* CA: Improved handling of supplementary points in profile tables (SAS-like)
 
 # vijMulti 1.0.2 (2026-09-29)
 * Code optimization and fixes

@@ -21,11 +21,12 @@ The module is available in the **Analyses** tab.
 
 ![](img/mca.jpg)
 
-## Last changes: vijMulti 1.0.2 (2026-09-29)
+## Last changes: vijMulti 1.0.3 (2026-09-30)
 
 * Added χ² Test table to CA output
 * Reordered/renamed CA summary columns
 * Improved support for decimal weights (CA)
+* CA: Improved handling of supplementary points in profile tables (SAS-like)
 * Code optimization and fixes
 
 ## References
