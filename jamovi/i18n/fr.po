@@ -1468,7 +1468,9 @@ msgstr "Résumé des lignes"
 
 #: R/corresp.b.R
 msgid "Row weights are ignored when the data is a contingency table."
-msgstr "Les poids des lignes sont ignorés lorsque les données sont un tableau de contingence."
+msgstr ""
+"Les poids des lignes sont ignorés lorsque les données sont un tableau de "
+"contingence."
 
 #: corresp/options/rows.title
 #: corresp/ui/mode/obsTable[0][0][0].label

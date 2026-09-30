@@ -709,6 +709,9 @@
             "Row Summary": [
                 "Résumé des lignes"
             ],
+            "Row weights are ignored when the data is a contingency table.": [
+                "Les poids des lignes sont ignorés lorsque les données sont un tableau de contingence."
+            ],
             "Rows": [
                 "Lignes"
             ],
