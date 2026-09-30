@@ -29,6 +29,8 @@ multcorrespClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 private$.initObservationTable(self$results$observations, nDim)
         },
         .run = function() {
+            # Long by design (reviewed 2026-09-30): a linear validate -> compute (.mca) ->
+            # fill-tables sequence; splitting it further would just scatter it.
             if (is.null(self$options$vars) || length(self$options$vars) < 3  || nrow(self$data) == 0)
                 return(FALSE)
 
@@ -187,6 +189,7 @@ multcorrespClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 private$.saveCoordinates(res$ind$stdcoord, "standard")
         },
         .mca = function(data, method, nd, supcol, rowlabels = NULL, rownames = NULL) {
+            # Long by design (reviewed 2026-09-30): one post-processing pass over FactoMineR's result.
             res <- FactoMineR::MCA(data, method = method, ncp = 999, quali.sup = supcol, graph = FALSE)
             res$nd.max <- nrow(res$eig)
             if (nd > res$nd.max)
@@ -501,6 +504,8 @@ multcorrespClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             return(plot)
         },
         .mainplot = function(plotType, image, ggtheme, theme) {
+            # Long by design (reviewed 2026-09-30): a linear `plot <- plot + ...` build; splitting
+            # it would scatter the plot's construction without simplifying it.
             res <- image$state
             if (is.null(res))
                 return(FALSE)

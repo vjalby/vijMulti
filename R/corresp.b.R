@@ -48,6 +48,45 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             data <- jmvcore::naOmit(data)
             return(data)
         },
+        # Contingency table cross-tabulated from an observation table (NULL if no data)
+        .contTableFromObs = function() {
+            data <- private$.getData()
+            if (is.null(data) || nrow(data) == 0)
+                return(NULL)
+
+            if (any(data$.COUNTS < 0)) {
+                vijErrorMessage(self, .('Counts may not be negative.'))
+            }
+            if (any(is.infinite(data$.COUNTS))) {
+                vijErrorMessage(self, .('Counts may not be infinite.'))
+            }
+
+            formula <- jmvcore::composeFormula('.COUNTS', c(self$options$rows, self$options$cols))
+            return(stats::xtabs(formula, data))
+        },
+        # Contingency table read as-is from the Columns cells (NULL if no data)
+        .contTableFromCells = function() {
+            if (is.null(self$options$rowLabels) || length(self$options$columns) < 3 || nrow(self$data) == 0)
+                return(NULL)
+
+            contingencyTable <- jmvcore::select(self$data, self$options$columns)
+            for (colName in self$options$columns)
+                contingencyTable[[colName]] <- jmvcore::toNumeric(contingencyTable[[colName]])
+
+            if (anyNA(contingencyTable)) {
+                vijErrorMessage(self, .("Some values are missing from the contingency table."))
+            }
+            if (any(contingencyTable < 0)) {
+                vijErrorMessage(self, .('Counts may not be negative.'))
+            }
+            rowLabels <- self$data[[self$options$rowLabels]]
+            if (anyNA(rowLabels))
+                vijErrorMessage(self, .("Row labels may not be missing."))
+            if (anyDuplicated(rowLabels))
+                vijErrorMessage(self, .("Row labels must be unique."))
+            row.names(contingencyTable) <- rowLabels
+            return(as.matrix(contingencyTable))
+        },
         .getProfile = function(contingencyTable, supplementaryRows, supplementaryCols) {
             # Row profiles of every row (active and supplementary) over the active columns only,
             # plus a ".mass" row (active column masses). Supplementary columns are left out:
@@ -273,11 +312,10 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             table$addFormat(rowKey="Total", 1, jmvcore::Cell.BEGIN_END_GROUP)
         },
         .init = function() {
-            #
-            hasVars <- if (self$options$mode == "obsTable")
-                !is.null(self$options$rows) && !is.null(self$options$cols)
+            if (self$options$mode == "obsTable")
+                hasVars <- !is.null(self$options$rows) && !is.null(self$options$cols)
             else # contTable
-                !is.null(self$options$rowLabels) && length(self$options$columns) >= 3
+                hasVars <- !is.null(self$options$rowLabels) && length(self$options$columns) >= 3
 
             if (!hasVars) {
                 private$.showHelpMessage()
@@ -306,47 +344,15 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             # Results saved by older versions restore that note, so clear it explicitly.
             self$results$eigenvalues$setNote("chisq", NULL)
 
-            if (self$options$mode == "obsTable") {
-                data <- private$.getData()
-                if (is.null(data) || nrow(data) == 0) {
-                    return(FALSE)
-                }
-
-                if (any(data$.COUNTS < 0)) {
-                    vijErrorMessage(self, .('Counts may not be negative.'))
-                }
-                if (any(is.infinite(data$.COUNTS))) {
-                    vijErrorMessage(self, .('Counts may not be infinite.'))
-                }
-
-                rowVarName <- self$options$rows
-                colVarName <- self$options$cols
-
-                #Contingency Table (base)
-                formula <- jmvcore::composeFormula('.COUNTS', c(rowVarName, colVarName))
-                contingencyTable <- stats::xtabs(formula, data)
-            } else { # self$options$mode == "contTable"
-                if (is.null(self$options$rowLabels) || length(self$options$columns) < 3 || nrow(self$data) == 0)
-                    return(FALSE)
-
-                contingencyTable <- jmvcore::select(self$data,self$options$columns)
-                for (colName in self$options$columns)
-                    contingencyTable[[colName]] <- jmvcore::toNumeric(contingencyTable[[colName]])
-
-                if (anyNA(contingencyTable)) {
-                    vijErrorMessage(self, .("Some values are missing from the contingency table."))
-                }
-                if (any(contingencyTable < 0)) {
-                    vijErrorMessage(self, .('Counts may not be negative.'))
-                }
-                rowLabels <- self$data[[self$options$rowLabels]]
-                if (anyNA(rowLabels))
-                    vijErrorMessage(self, .("Row labels may not be missing."))
-                if (anyDuplicated(rowLabels))
-                    vijErrorMessage(self, .("Row labels must be unique."))
-                row.names(contingencyTable) <- rowLabels
-                contingencyTable <- as.matrix(contingencyTable)
-            }
+            # Long by design (reviewed 2026-09-30): after building the contingency table, it is a
+            # linear validate -> compute -> fill-tables sequence. Only the two input modes' data
+            # preparation was worth extracting; further splitting would just scatter it.
+            contingencyTable <- if (self$options$mode == "obsTable")
+                private$.contTableFromObs()
+            else # contTable
+                private$.contTableFromCells()
+            if (is.null(contingencyTable))
+                return(FALSE)
 
             # ".row", ".margin" and ".mass" are used as row/column keys
             reservedNames <- intersect(c(rownames(contingencyTable), colnames(contingencyTable)),

@@ -225,7 +225,11 @@ principalClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             # Titles & Labels
             defaults <- list(title = .("Scree Plot"), y = .("Eigenvalues"), x = .("Component"))
             plot <- plot + vijTitlesAndLabels(self$options, defaults, plotType = "scree", plot = plot) + vijTitleAndLabelFormat(self$options)
-            # Reset x and y labs (which cannot be common with other plots)
+            # Reset x and y labs: the X/Y-Axis title boxes are shared by the factorial maps
+            # (variable plot, observation plot, biplot), whose axes are dimensions, so a title
+            # typed for them would be wrong on the scree plot. Font size and position still apply.
+            # Deliberate (reviewed 2026-09-30): don't drop this labs() call. A UI label saying
+            # so was tried and removed as clutter.
             plot <- plot + ggplot2::labs(x = .("Component"), y = .("Eigenvalues"))
 
             vijDebugPlot(self, plot)
@@ -242,6 +246,8 @@ principalClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             return(private$.pcaplot("biplot", image, ggtheme, theme))
         },
         .pcaplot = function(plotType, image, ggtheme, theme, ...) {
+            # Long by design (reviewed 2026-09-30): a linear `plot <- plot + ...` build; splitting
+            # it would scatter the plot's construction without simplifying it.
             res <- image$state
             if (is.null(res))
                 return(FALSE)
