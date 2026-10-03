@@ -21,19 +21,17 @@ The module is available in the **Analyses** tab.
 
 ![](img/mca.jpg)
 
-## Last changes: vijMulti 1.0.3 (2026-09-30)
+## Last changes: vijMulti 1.0.3 (2026-10-04)
 
-* Added χ² Test table to CA output
-* Reordered/renamed CA summary columns
-* Improved support for decimal weights (CA)
 * CA: Improved handling of supplementary points in profile tables (SAS-like)
-* Code optimization and fixes
+* Some ggsci color palettes added
 
 ## References
 
 - Bernaards, C., Gilbert, P., Jennrich, R. (2026), GPArotation: Gradient Projection Factor Rotation. R package version 2026.4.1, <https://cran.r-project.org/package=GPArotation>
 - Greenacre, M. (2010), Biplots in Practice, Fundación BBVA. <https://www.fbbva.es/en/publicaciones/biplots-in-practice-7/>
 - Husson, F., Josse, J., Le, S., Mazet, J. (2026). FactoMineR: Multivariate Exploratory Data Analysis and Data Mining. R package version 2.14, <https://cran.r-project.org/package=FactoMineR>
-- Engler, J.B. (2026). tidyplots: Tidy Plots for Scientific Papers, R package version 0.4.0, <https://CRAN.R-project.org/package=tidyplots>
+- Engler, J.B. (2026). tidyplots: Tidy Plots for Scientific Papers, <https://tidyplots.org>
+- Nan Xiao (2026). ggsci: Scientific Journal and Sci-Fi Themed Color Palettes, <https://nanx.me/ggsci/>
 - IBM. Carbon Design System — Color palettes. <https://carbondesignsystem.com/data-visualization/color-palettes/>
 

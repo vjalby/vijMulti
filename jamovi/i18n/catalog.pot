@@ -669,6 +669,41 @@ msgstr ""
 msgid "Form Biplot"
 msgstr ""
 
+#: multcorresp/options/colorPalette/ggsci::aaas.title
+#: principal/options/colorPalette/ggsci::aaas.title
+msgid "Ggsci:AAAS"
+msgstr ""
+
+#: multcorresp/options/colorPalette/ggsci::bmj.title
+#: principal/options/colorPalette/ggsci::bmj.title
+msgid "Ggsci:BMJ"
+msgstr ""
+
+#: multcorresp/options/colorPalette/ggsci::jama.title
+#: principal/options/colorPalette/ggsci::jama.title
+msgid "Ggsci:JAMA"
+msgstr ""
+
+#: multcorresp/options/colorPalette/ggsci::jco.title
+#: principal/options/colorPalette/ggsci::jco.title
+msgid "Ggsci:JCO"
+msgstr ""
+
+#: multcorresp/options/colorPalette/ggsci::lancet.title
+#: principal/options/colorPalette/ggsci::lancet.title
+msgid "Ggsci:Lancet"
+msgstr ""
+
+#: multcorresp/options/colorPalette/ggsci::nejm.title
+#: principal/options/colorPalette/ggsci::nejm.title
+msgid "Ggsci:NEJM"
+msgstr ""
+
+#: multcorresp/options/colorPalette/ggsci::npg.title
+#: principal/options/colorPalette/ggsci::npg.title
+msgid "Ggsci:NPG"
+msgstr ""
+
 #: corresp/options/supColor/darkgray.title
 #: multcorresp/options/obsColor/gray.title
 #: principal/options/varColor/#999999.title
