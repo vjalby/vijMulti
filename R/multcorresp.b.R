@@ -317,6 +317,138 @@ multcorrespClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             res$call <- NULL
             return(res)
         },
+        .mca2 = function(data, method, nd, supcol, rowlabels = NULL, rownames = NULL) {
+            # TEST: alternative to .mca() based on ca::mjca instead of FactoMineR::MCA.
+            # Returns the same structure as .mca(). Not called anywhere yet; ca is not in DESCRIPTION.
+            # Axis signs may differ from .mca() (orientation is arbitrary).
+            m <- ca::mjca(data, lambda = if (method == "Burt") "Burt" else "indicator", nd = NA,
+                          supcol = if (is.null(supcol)) NA else supcol)
+            sv <- m$sv                                   # Indicator: sqrt(lambda) ; Burt: lambda
+            ev <- sv^2                                   # eigenvalues of the analysed table
+            lambdaI <- if (method == "Burt") sv else ev  # indicator eigenvalues
+            K <- length(ev)
+            dimNames <- paste("Dim", seq_len(K))
+            res <- list()
+            res$eig <- cbind("eigenvalue" = ev,
+                             "percentage of variance" = ev / sum(ev),
+                             "cumulative percentage of variance" = cumsum(ev) / sum(ev))
+            rownames(res$eig) <- paste("dim", seq_len(K))
+            res$nd.max <- K
+            if (nd > res$nd.max)
+                return(res)
+            if (!is.null(rowlabels))
+                res$rowlabels <- rowlabels
+            else
+                res$rowlabels <- as.character(rownames)
+
+            #### Variable and level names (FactoMineR style) ####
+            supIdx <- if (is.null(supcol)) integer(0) else supcol
+            actIdx <- setdiff(seq_along(data), supIdx)
+            levList <- lapply(data, levels)
+            allLevels <- unlist(levList)
+            levOwner <- rep(seq_along(levList), lengths(levList))
+            for (j in seq_along(levList)) {
+                # prefix "var_" only for variables whose levels collide with another variable's levels
+                if (any(levList[[j]] %in% allLevels[levOwner != j]))
+                    levList[[j]] <- paste(names(data)[j], levList[[j]], sep = "_")
+            }
+            nLev <- lengths(levList)
+            actCat <- unlist(lapply(actIdx, function(j) sum(nLev[seq_len(j - 1)]) + seq_len(nLev[j])))
+            supCat <- unlist(lapply(supIdx, function(j) sum(nLev[seq_len(j - 1)]) + seq_len(nLev[j])))
+            res$cat$factors <- c(rep(names(data)[actIdx], nLev[actIdx]), rep(names(data)[supIdx], nLev[supIdx]))
+            Q <- length(actIdx)
+            n <- nrow(data)
+
+            #### Active categories ####
+            catStd <- m$colcoord[actCat, seq_len(K), drop = FALSE]
+            catCoord <- sweep(catStd, 2, sv, FUN = "*")
+            catMass <- stats::setNames(m$colmass[actCat], unlist(levList[actIdx], use.names = FALSE))
+            dimnames(catStd) <- dimnames(catCoord) <- list(unlist(levList[actIdx], use.names = FALSE), dimNames)
+            catContrib <- catMass * catStd^2
+            catCos2 <- catCoord^2 / rowSums(catCoord^2)
+            catInertia <- catContrib %*% ev
+            catInertia <- catInertia / sum(catInertia)
+            # eta2 (discrimination) is scale-independent: computed from indicator principal coordinates
+            fac <- factor(rep(names(data)[actIdx], nLev[actIdx]), levels = names(data)[actIdx])
+            eta2 <- rowsum(Q * catMass * sweep(catStd^2, 2, lambdaI, FUN = "*"), fac)
+            colnames(eta2) <- dimNames
+
+            #### Observations (indicator approach, as in Stata, for both methods) ####
+            # mjca's rowpcoord = s * sqrt(lambdaI) in both modes, where s = indicator standard coordinates
+            indStd <- sweep(m$rowpcoord[, seq_len(K), drop = FALSE], 2, sqrt(lambdaI), FUN = "/")
+            indCoord <- sweep(indStd, 2, sv, FUN = "*")
+            dimnames(indStd) <- dimnames(indCoord) <- list(rownames, dimNames)
+            res$ind$coord <- indCoord
+            res$ind$stdcoord <- indStd
+            res$ind$mass <- stats::setNames(rep(1 / n, n), rownames)
+            res$ind$contrib <- indStd^2 / n
+            res$ind$cos2 <- indCoord^2 / rowSums(indCoord^2)
+            res$ind$qlt <- rowSums(res$ind$cos2[, 1:nd, drop = FALSE])
+            indinertia <- res$ind$contrib %*% ev
+            res$ind$inertia <- indinertia / sum(indinertia)
+
+            #### Supplementary categories ####
+            if (length(supIdx) > 0) {
+                # Not m$colpcoord: in indicator mode, mjca computes it from Burt profiles
+                supStd <- m$colcoord[supCat, seq_len(K), drop = FALSE]
+                supCoord <- sweep(supStd, 2, sv, FUN = "*")
+                dimnames(supCoord) <- dimnames(supStd) <- list(unlist(levList[supIdx], use.names = FALSE), dimNames)
+                supCount <- unlist(lapply(data[supIdx], function(x) as.vector(table(x))))
+                if (method == "Burt") {
+                    supCos2 <- m$colcor[supCat, seq_len(K), drop = FALSE]
+                } else {
+                    # cos2 in the indicator space (as FactoMineR): squared chi2 distance = n/n_c - 1
+                    supCos2 <- supCoord^2 / (n / supCount - 1)
+                }
+                dimnames(supCos2) <- dimnames(supCoord)
+                # eta2 of supplementary variables, from indicator principal coordinates
+                supFac <- factor(rep(names(data)[supIdx], nLev[supIdx]), levels = names(data)[supIdx])
+                supEta2 <- rowsum((supCount / n) * sweep(supStd^2, 2, lambdaI, FUN = "*"), supFac)
+                colnames(supEta2) <- dimNames
+                res$quali.sup$coord <- supCoord
+                res$quali.sup$stdcoord <- supStd
+                res$quali.sup$cos2 <- supCos2
+                res$quali.sup$qlt <- rowSums(supCos2[, 1:nd, drop = FALSE])
+                res$quali.sup$eta2 <- supEta2
+                nSup <- nrow(supCoord)
+                res$cat$coord <- rbind(catCoord, supCoord)
+                res$cat$stdcoord <- rbind(catStd, supStd)
+                res$cat$cos2 <- rbind(catCos2, supCos2)
+                res$cat$contrib <- rbind(catContrib, matrix(NA, nSup, K))
+                res$cat$inertia <- rbind(catInertia, matrix(NA, nSup, 1))
+                res$cat$qlt <- c(rowSums(catCos2[, 1:nd, drop = FALSE]), res$quali.sup$qlt)
+                res$cat$mass <- c(catMass, rep(NA, nSup))
+                res$allvar$eta2 <- rbind(eta2, supEta2)
+            } else {
+                res$cat$coord <- catCoord
+                res$cat$stdcoord <- catStd
+                res$cat$cos2 <- catCos2
+                res$cat$contrib <- catContrib
+                res$cat$inertia <- catInertia
+                res$cat$qlt <- rowSums(catCos2[, 1:nd, drop = FALSE])
+                res$cat$mass <- catMass
+                res$allvar$eta2 <- eta2
+            }
+            res$varActive <- c(Q, length(supIdx))  # (nb of active var, nb of supp var)
+
+            #### Benzecri / Greenacre Adjusment ####
+            if (method == "Burt") {
+                p <- Q                     # Nb of variables
+                mc <- length(actCat)       # Nb of categories
+                res$totalInertia <- sum(res$eig[,1])
+                res$adjEig <- matrix(nrow = K, ncol = 5)
+                res$adjEig[,1] <- (p/(p-1))**2 * (sqrt(res$eig[,1]) - 1/p)**2
+                res$adjEig[sqrt(res$eig[,1]) <= 1/p,1] <- 0
+                res$totalInrB <- sum(res$adjEig[,1])
+                res$totalInrG <- (p/(p-1)) * (res$totalInertia - (mc-p)/p**2)
+                res$adjEig[,2] <- res$adjEig[,1] / res$totalInrB
+                res$adjEig[,3] <- cumsum(res$adjEig[,2])
+                res$adjEig[,4] <- res$adjEig[,1] / res$totalInrG
+                res$adjEig[,5] <- cumsum(res$adjEig[,4])
+                res$adjEig[sqrt(res$eig[,1]) <= 1/p,] <- rep(NA,5)
+            }
+            return(res)
+        },
         .dimN = function(n) jmvcore::format(.("Dim {n}"), n = n),
         .nullOrValue = function(x) if(is.na(x)) NULL else x,
         .initInertiaTable = function(table, method) {
