@@ -240,11 +240,15 @@ multcorrespClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             res$ind$mass <- res$call$marge.row
 
             #### Burt fixes ####
-            if (method == "Burt") {
-                # var eta2 : Error. eta2 is scale-independent.
-                    #res$var$eta2 <- sweep(res$var$eta2, 2, sqrt(res$eig[,1]), FUN = "*")
-                    #if (!is.null(supcol))
-                    #    res$quali.sup$eta2 <- sweep(res$quali.sup$eta2, 2, sqrt(res$eig[,1]), FUN = "*")
+
+            ## Burt: observations are not rows of the Burt table, so their coordinates are a convention.
+            ## FactoMineR (and ca::mjca) project them as supplementary rows: pcoord = s*sqrt(lambda),
+            ## stdcoord = s/sqrt(lambda), where s = indicator std coord and lambda = indicator eigenvalue.
+            ## We follow Stata (predict, rowscores after mca, method(burt)): stdcoord = s (unit variance,
+            ## same as Indicator) and pcoord = s*lambda (variance = Burt eigenvalue, same scaling as categories).
+            ## Checked against Stata 17 (issp93): identical. cos2 & qlt recomputed; contrib unchanged.
+
+            if (method == "Burt" && TRUE) {
                 ## MCA compute Pal Coordinates for Indicator Inertia only. So we have to rebuild std coordinates from
                 ## indicator-principal coordinates and redo the computation of co2 & qlt. contrib are unchanged. Inertia computed above is ok.
                 # Obs coordinates
@@ -699,9 +703,12 @@ multcorrespClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
 <li><strong>Indicator matrix:</strong> CA of the indicator matrix</li>
 <li><strong>Burt matrix:</strong> CA of the Burt matrix. The eigenvalues are the squares of those of the indicator matrix method. </li>
 </ul>
-<p>Both methods give the same <em>standard</em> coordinates and discriminations (but different <em>principal</em> coordinates).</p>
+<p>Both methods give the same <em>standard</em> coordinates and discriminations (but different <em>principal</em> coordinates).
+With the Burt method, observations, which are not part of the Burt matrix, are positioned using the indicator approach (as in Stata):
+their standard coordinates are identical to those of the indicator method, and their principal coordinates are rescaled by the square roots
+of the eigenvalues of the Burt matrix, like the categories.</p>
 <p>When selected, <strong>Benzécri and Greenacre corrections</strong> are applied to eigenvalues only (<strong>Summary</strong> table). Principal coordinates (and inertia) of categories and observations are computed from the original eigenvalues of the Burt matrix.</p>
-<p>The <strong>Normalization</strong> options specify how the coordinates are scaled (by eigenvalues):</p>
+<p>The <strong>Normalization</strong> options specify how the coordinates are scaled (by the square roots of the eigenvalues):</p>
 <ul>
 <li><strong>Principal:</strong> Both category and observation coordinates are scaled.</li>
 <li><strong>Category principal:</strong> Only category coordinates are scaled.</li>

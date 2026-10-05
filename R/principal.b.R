@@ -698,7 +698,7 @@ principalClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
 <p>Loadings (variable coordinates) and scores (observation coordinates) are principal (scaled by the square root of eigenvalues).</p>
 <p>Biplot follows "Biplots in Practice" (Michael Greenacre, 2010):</p>
 <ul>
-<li><strong>Form biplot:</strong> Scores are principal (scaled by eigenvalues) while loadings are standard.</li>
+<li><strong>Form biplot:</strong> Scores are principal while loadings are standard.</li>
 <li><strong>Covariance biplot:</strong> Loadings are principal while scores are standard. </li>
 </ul>
 <p><strong>Advanced options</strong>:</p>
