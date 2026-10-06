@@ -12,7 +12,7 @@ Encoding: UTF-8
 LazyData: true
 Imports: jmvcore (>= 0.8.5), R6, utils, stats, grDevices, psych, rlang,
          ggplot2, scales, ggpp, ggrepel, ggforce, GPArotation, FactoMineR,
-         grid
+         ca, grid
 Suggests:
     testthat (>= 3.0.0),
     vdiffr

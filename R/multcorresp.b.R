@@ -155,7 +155,7 @@ multcorrespClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             if (self$options$showCategoryPlot) {
                 self$results$categoryplot$setState(list(
                     eig = res$eig[seq_len(nDim), , drop = FALSE],
-                    cat = list(coord = res$cat[[catCoordField]][, seq_len(nDim), drop = FALSE], factors = res$cat$factors),
+                    cat = list(coord = res$cat[[catCoordField]][, seq_len(nDim), drop = FALSE], factors = res$cat$factors, level = res$cat$level),
                     varDisplayName = res$varDisplayName,
                     varActive = res$varActive,
                     ordVars = res$ordVars
@@ -172,7 +172,7 @@ multcorrespClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             if (self$options$showBiPlot) {
                 self$results$biplot$setState(list(
                     eig = res$eig[seq_len(nDim), , drop = FALSE],
-                    cat = list(coord = res$cat[[catCoordField]][, seq_len(nDim), drop = FALSE], factors = res$cat$factors),
+                    cat = list(coord = res$cat[[catCoordField]][, seq_len(nDim), drop = FALSE], factors = res$cat$factors, level = res$cat$level),
                     ind = list(coord = res$ind[[indCoordField]][, seq_len(nDim), drop = FALSE]),
                     rowlabels = res$rowlabels,
                     varDisplayName = res$varDisplayName,
@@ -189,263 +189,97 @@ multcorrespClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 private$.saveCoordinates(res$ind$stdcoord, "standard")
         },
         .mca = function(data, method, nd, supcol, rowlabels = NULL, rownames = NULL) {
-            # Long by design (reviewed 2026-09-30): one post-processing pass over FactoMineR's result.
-            res <- FactoMineR::MCA(data, method = method, ncp = 999, quali.sup = supcol, graph = FALSE)
-            res$nd.max <- nrow(res$eig)
+            # MCA based on ca::mjca.
+
+            #### Variables ####
+            Q <- ncol(data) - length(supcol)   # Nb of active variables
+            n <- nrow(data)                    # Nb of observations
+
+            #### MCA ####
+            mca <- ca::mjca(data, nd = NA,
+                            lambda = if (method == "Burt") "Burt" else "indicator",
+                            supcol = if (is.null(supcol)) NA else supcol)
+            sv <- mca$sv                                   # Indicator: sqrt(lambda) ; Burt: lambda
+            eig <- sv^2                                    # Eigenvalues of the analysed matrix
+            lambdaI <- if (method == "Burt") sv else eig   # Eigenvalues of the indicator matrix
+            K <- length(eig)
+
+            #### Axis orientation ####
+            # Arbitrary in the computation: on each axis, the active category farthest from the origin is positive
+            actCat <- setdiff(seq_len(nrow(mca$colcoord)), mca$colsup)
+            flip <- apply(mca$colcoord[actCat, seq_len(K), drop = FALSE], 2, function(x) sign(x[which.max(abs(x))]))
+            mca$colcoord <- sweep(mca$colcoord[, seq_len(K), drop = FALSE], 2, flip, FUN = "*")
+            mca$rowpcoord <- sweep(mca$rowpcoord[, seq_len(K), drop = FALSE], 2, flip, FUN = "*")
+
+            #### Eigenvalues ####
+            res <- list()
+            res$eig <- cbind("eigenvalue" = eig,
+                             "percentage of variance" = eig / sum(eig),
+                             "cumulative percentage of variance" = cumsum(eig) / sum(eig))
+            res$nd.max <- K
             if (nd > res$nd.max)
                 return(res)
-            # res$rowlabels is used for Observation table and plot
-            if (!is.null(rowlabels))
-                res$rowlabels <- rowlabels
-            else
-                res$rowlabels <- as.character(rownames)
-            # rownames = rownames(self$data-without-NA) is used for saving coordinates
-            rownames(res$ind$coord) <- rownames
-            # Build the list of variable names for levels (hmmm, i'm sure there's a better way to do that)
-            varNames <- names(data)     # variable list
-            if (!is.null(supcol))
-                varNames <- varNames[-supcol]   # remove supplementary variables
-            varFactors <- c()
-            for (aVar in varNames) {
-                varFactors <- c(varFactors, rep(aVar, nlevels(data[[aVar]]))) # unused levels are now dropped from the begining
-            }
-            # Build the list of supplementary variable names for levels
-            supFactors <- c()
-            if (!is.null(supcol)) {
-                varNames <- names(data)
-                varNames <- varNames[supcol]
-                for (aVar in varNames)
-                    supFactors <- c(supFactors, rep(aVar, nlevels(factor(data[[aVar]]))))
-            }
-            res$cat$factors <- c(varFactors, supFactors)
-            # convert % to decimal
-            res$eig[,2:3] <- res$eig[,2:3] / 100
-            res$var$contrib <- res$var$contrib / 100
-            res$ind$contrib <- res$ind$contrib / 100
-            # var QLT
-            res$var$qlt <- rowSums(res$var$cos2[,1:nd, drop = FALSE])
-            # var Inertia
-            varinertia <- res$var$contrib %*% res$eig[,1]
-            res$var$inertia <- varinertia / sum(varinertia)
-            # ind QLT
-            res$ind$qlt <- rowSums(res$ind$cos2[,1:nd, drop = FALSE])
-            # ind Inertia
-            indinertia <- res$ind$contrib %*% res$eig[,1]
-            res$ind$inertia <- indinertia / sum(indinertia)
-            # Cat Std coordinates
-            res$var$stdcoord <- sweep(res$var$coord, 2, sqrt(res$eig [,1]), FUN = "/")
-            # Observation Std coordinates
-            res$ind$stdcoord <- sweep(res$ind$coord, 2, sqrt(res$eig [,1]), FUN = "/")
-            # Observation masses
-            res$ind$mass <- res$call$marge.row
 
-            #### Burt fixes ####
+            #### Labels ####
+            res$rowlabels <- if (!is.null(rowlabels)) rowlabels else as.character(rownames)
 
-            ## Burt: observations are not rows of the Burt table, so their coordinates are a convention.
-            ## FactoMineR (and ca::mjca) project them as supplementary rows: pcoord = s*sqrt(lambda),
-            ## stdcoord = s/sqrt(lambda), where s = indicator std coord and lambda = indicator eigenvalue.
-            ## We follow Stata (predict, rowscores after mca, method(burt)): stdcoord = s (unit variance,
-            ## same as Indicator) and pcoord = s*lambda (variance = Burt eigenvalue, same scaling as categories).
-            ## Checked against Stata 17 (issp93): identical. cos2 & qlt recomputed; contrib unchanged.
+            #### Observations ####
+            # Indicator approach for both methods, as in Stata (predict after mca, method(burt)).
+            # mjca's rowpcoord = s * sqrt(lambdaI) in both modes, where s = indicator standard coordinates.
+            ind <- list()
+            ind$stdcoord <- sweep(mca$rowpcoord[, seq_len(K), drop = FALSE], 2, sqrt(lambdaI), FUN = "/")
+            rownames(ind$stdcoord) <- rownames             # used by the Observations table and saved coordinates
+            ind$coord <- sweep(ind$stdcoord, 2, sv, FUN = "*")
+            ind$mass <- rep(1 / n, n)
+            ind$contrib <- ind$stdcoord^2 / n
+            ind$cos2 <- ind$coord^2 / rowSums(ind$coord^2)
+            ind$qlt <- rowSums(ind$cos2[, 1:nd, drop = FALSE])
+            ind$inertia <- (ind$contrib %*% eig) / sum(ind$contrib %*% eig)
+            res$ind <- ind
 
-            if (method == "Burt" && TRUE) {
-                ## MCA compute Pal Coordinates for Indicator Inertia only. So we have to rebuild std coordinates from
-                ## indicator-principal coordinates and redo the computation of co2 & qlt. contrib are unchanged. Inertia computed above is ok.
-                # Obs coordinates
-                res$ind$stdcoord <- sweep(res$ind$coord, 2, res$eig [,1]**(1/4), FUN = "/")
-                res$ind$coord <- sweep(res$ind$stdcoord, 2, sqrt(res$eig [,1]), FUN = "*")
-                # Obs CO2
-                res$ind$cos2 <- sweep(res$ind$coord**2, 1, rowSums(res$ind$coord**2), FUN = "/")
-                res$ind$qlt <- rowSums(res$ind$cos2[,1:nd, drop = FALSE])
-            }
+            #### Categories (active and supplementary together) ####
+            # In mjca's column order, i.e. data order: .run() puts supplementary variables last
+            # (relied on by res$varActive for point shapes and fonts in the plots).
+            supCat <- mca$colsup[!is.na(mca$colsup)]       # mjca returns NA when there is no supplementary category
+            count <- unlist(lapply(data, function(x) as.vector(table(x))), use.names = FALSE)   # n_c
+            categ <- list()
+            categ$factors <- mca$factors[, "factor"]
+            categ$level <- mca$factors[, "level"]           # displayed label
+            # Not mca$colpcoord: for supplementary categories in indicator mode, mjca computes it from Burt profiles
+            categ$stdcoord <- mca$colcoord[, seq_len(K), drop = FALSE]
+            categ$coord <- sweep(categ$stdcoord, 2, sv, FUN = "*")
+            if (method == "Burt")
+                categ$cos2 <- mca$colcor[, seq_len(K), drop = FALSE]
+            else  # squared chi2 distance in the indicator space = n/n_c - 1
+                categ$cos2 <- categ$coord^2 / (n / count - 1)
+            categ$qlt <- rowSums(categ$cos2[, 1:nd, drop = FALSE])
+            # Mass, contributions and inertia are not defined for supplementary categories
+            categ$mass <- count / (n * Q)
+            categ$mass[supCat] <- NA
+            categ$contrib <- categ$mass * categ$stdcoord^2
+            categ$inertia <- (categ$contrib %*% eig) / sum(categ$contrib %*% eig, na.rm = TRUE)
+            res$cat <- categ
 
-            #### Supp Categories ####
-            if (!is.null(supcol)) {
-                res$quali.sup$qlt <- rowSums(res$quali.sup$cos2[,1:nd, drop = FALSE])
-                res$quali.sup$stdcoord <- sweep(res$quali.sup$coord, 2, sqrt(res$eig [,1]), FUN = "/")
-            }
-
-            #### All categories ####
-            if (!is.null(supcol)) {
-                res$cat$coord <- rbind(res$var$coord, res$quali.sup$coord)
-                res$cat$stdcoord <- rbind(res$var$stdcoord, res$quali.sup$stdcoord)
-                res$cat$cos2 <- rbind(res$var$cos2, res$quali.sup$cos2)
-                null <- matrix(NA, nrow(res$quali.sup$coord), ncol(res$quali.sup$coord))
-                res$cat$contrib <- rbind(res$var$contrib, null)
-                null <- matrix(NA, nrow(res$quali.sup$coord), ncol = 1)
-                res$cat$inertia <- rbind(res$var$inertia, null)
-                res$cat$qlt <- c(res$var$qlt, res$quali.sup$qlt)
-                null <- rep(NA, nrow(res$quali.sup$coord))
-                res$cat$mass <- c(res$call$marge.col, null)
-            } else {
-                res$cat$coord <- res$var$coord
-                res$cat$stdcoord <- res$var$stdcoord
-                res$cat$cos2 <- res$var$cos2
-                res$cat$contrib <- res$var$contrib
-                res$cat$inertia <- res$var$inertia
-                res$cat$qlt <- res$var$qlt
-                res$cat$mass <- res$call$marge.col
-            }
-            res$varActive <- c(ncol(data) - length(supcol), length(supcol))  # (nb of active var, nb of supp var)
-            # All var
-            if (!is.null(supcol)) {
-                res$allvar$eta2 <- rbind(res$var$eta2,res$quali.sup$eta2)
-            } else {
-                res$allvar$eta2 <- res$var$eta2
-            }
+            #### Variables ####
+            # Discrimination (eta2) is scale-independent: computed from indicator principal coordinates
+            res$allvar$eta2 <- rowsum((count / n) * sweep(categ$stdcoord^2, 2, lambdaI, FUN = "*"), categ$factors, reorder = FALSE)
+            res$varActive <- c(Q, length(supcol))  # (nb of active var, nb of supp var)
 
             #### Benzecri / Greenacre Adjusment ####
             if (method == "Burt") {
-                p <- length(res$call$quali) # Nb of variables
-                m <- length(res$call$marge.col) # Nb of categories
-                res$totalInertia <- sum(res$eig[,1])
-                res$adjEig <- matrix(nrow = length(res$eig[,1]), ncol = 5)
-                res$adjEig[,1] <- (p/(p-1))**2 * (sqrt(res$eig[,1]) - 1/p)**2
-                res$adjEig[sqrt(res$eig[,1]) <= 1/p,1] <- 0
+                p <- Q                     # Nb of variables
+                m <- length(categ$factors) - length(supCat)   # Nb of active categories
+                res$totalInertia <- sum(eig)
+                res$adjEig <- matrix(nrow = K, ncol = 5)
+                res$adjEig[,1] <- (p/(p-1))**2 * (sqrt(eig) - 1/p)**2
+                res$adjEig[sqrt(eig) <= 1/p,1] <- 0
                 res$totalInrB <- sum(res$adjEig[,1])
                 res$totalInrG <- (p/(p-1)) * (res$totalInertia - (m-p)/p**2)
                 res$adjEig[,2] <- res$adjEig[,1] / res$totalInrB
                 res$adjEig[,3] <- cumsum(res$adjEig[,2])
                 res$adjEig[,4] <- res$adjEig[,1] / res$totalInrG
                 res$adjEig[,5] <- cumsum(res$adjEig[,4])
-                res$adjEig[sqrt(res$eig[,1]) <= 1/p,] <- rep(NA,5)
-            }
-
-            # Delete unused large tables (to save memory ?)
-            res$var <- NULL
-            res$svd <- NULL
-            res$call <- NULL
-            return(res)
-        },
-        .mca2 = function(data, method, nd, supcol, rowlabels = NULL, rownames = NULL) {
-            # TEST: alternative to .mca() based on ca::mjca instead of FactoMineR::MCA.
-            # Returns the same structure as .mca(). Not called anywhere yet; ca is not in DESCRIPTION.
-            # Axis signs may differ from .mca() (orientation is arbitrary).
-            m <- ca::mjca(data, lambda = if (method == "Burt") "Burt" else "indicator", nd = NA,
-                          supcol = if (is.null(supcol)) NA else supcol)
-            sv <- m$sv                                   # Indicator: sqrt(lambda) ; Burt: lambda
-            ev <- sv^2                                   # eigenvalues of the analysed table
-            lambdaI <- if (method == "Burt") sv else ev  # indicator eigenvalues
-            K <- length(ev)
-            dimNames <- paste("Dim", seq_len(K))
-            res <- list()
-            res$eig <- cbind("eigenvalue" = ev,
-                             "percentage of variance" = ev / sum(ev),
-                             "cumulative percentage of variance" = cumsum(ev) / sum(ev))
-            rownames(res$eig) <- paste("dim", seq_len(K))
-            res$nd.max <- K
-            if (nd > res$nd.max)
-                return(res)
-            if (!is.null(rowlabels))
-                res$rowlabels <- rowlabels
-            else
-                res$rowlabels <- as.character(rownames)
-
-            #### Variable and level names (FactoMineR style) ####
-            supIdx <- if (is.null(supcol)) integer(0) else supcol
-            actIdx <- setdiff(seq_along(data), supIdx)
-            levList <- lapply(data, levels)
-            allLevels <- unlist(levList)
-            levOwner <- rep(seq_along(levList), lengths(levList))
-            for (j in seq_along(levList)) {
-                # prefix "var_" only for variables whose levels collide with another variable's levels
-                if (any(levList[[j]] %in% allLevels[levOwner != j]))
-                    levList[[j]] <- paste(names(data)[j], levList[[j]], sep = "_")
-            }
-            nLev <- lengths(levList)
-            actCat <- unlist(lapply(actIdx, function(j) sum(nLev[seq_len(j - 1)]) + seq_len(nLev[j])))
-            supCat <- unlist(lapply(supIdx, function(j) sum(nLev[seq_len(j - 1)]) + seq_len(nLev[j])))
-            res$cat$factors <- c(rep(names(data)[actIdx], nLev[actIdx]), rep(names(data)[supIdx], nLev[supIdx]))
-            Q <- length(actIdx)
-            n <- nrow(data)
-
-            #### Active categories ####
-            catStd <- m$colcoord[actCat, seq_len(K), drop = FALSE]
-            catCoord <- sweep(catStd, 2, sv, FUN = "*")
-            catMass <- stats::setNames(m$colmass[actCat], unlist(levList[actIdx], use.names = FALSE))
-            dimnames(catStd) <- dimnames(catCoord) <- list(unlist(levList[actIdx], use.names = FALSE), dimNames)
-            catContrib <- catMass * catStd^2
-            catCos2 <- catCoord^2 / rowSums(catCoord^2)
-            catInertia <- catContrib %*% ev
-            catInertia <- catInertia / sum(catInertia)
-            # eta2 (discrimination) is scale-independent: computed from indicator principal coordinates
-            fac <- factor(rep(names(data)[actIdx], nLev[actIdx]), levels = names(data)[actIdx])
-            eta2 <- rowsum(Q * catMass * sweep(catStd^2, 2, lambdaI, FUN = "*"), fac)
-            colnames(eta2) <- dimNames
-
-            #### Observations (indicator approach, as in Stata, for both methods) ####
-            # mjca's rowpcoord = s * sqrt(lambdaI) in both modes, where s = indicator standard coordinates
-            indStd <- sweep(m$rowpcoord[, seq_len(K), drop = FALSE], 2, sqrt(lambdaI), FUN = "/")
-            indCoord <- sweep(indStd, 2, sv, FUN = "*")
-            dimnames(indStd) <- dimnames(indCoord) <- list(rownames, dimNames)
-            res$ind$coord <- indCoord
-            res$ind$stdcoord <- indStd
-            res$ind$mass <- stats::setNames(rep(1 / n, n), rownames)
-            res$ind$contrib <- indStd^2 / n
-            res$ind$cos2 <- indCoord^2 / rowSums(indCoord^2)
-            res$ind$qlt <- rowSums(res$ind$cos2[, 1:nd, drop = FALSE])
-            indinertia <- res$ind$contrib %*% ev
-            res$ind$inertia <- indinertia / sum(indinertia)
-
-            #### Supplementary categories ####
-            if (length(supIdx) > 0) {
-                # Not m$colpcoord: in indicator mode, mjca computes it from Burt profiles
-                supStd <- m$colcoord[supCat, seq_len(K), drop = FALSE]
-                supCoord <- sweep(supStd, 2, sv, FUN = "*")
-                dimnames(supCoord) <- dimnames(supStd) <- list(unlist(levList[supIdx], use.names = FALSE), dimNames)
-                supCount <- unlist(lapply(data[supIdx], function(x) as.vector(table(x))))
-                if (method == "Burt") {
-                    supCos2 <- m$colcor[supCat, seq_len(K), drop = FALSE]
-                } else {
-                    # cos2 in the indicator space (as FactoMineR): squared chi2 distance = n/n_c - 1
-                    supCos2 <- supCoord^2 / (n / supCount - 1)
-                }
-                dimnames(supCos2) <- dimnames(supCoord)
-                # eta2 of supplementary variables, from indicator principal coordinates
-                supFac <- factor(rep(names(data)[supIdx], nLev[supIdx]), levels = names(data)[supIdx])
-                supEta2 <- rowsum((supCount / n) * sweep(supStd^2, 2, lambdaI, FUN = "*"), supFac)
-                colnames(supEta2) <- dimNames
-                res$quali.sup$coord <- supCoord
-                res$quali.sup$stdcoord <- supStd
-                res$quali.sup$cos2 <- supCos2
-                res$quali.sup$qlt <- rowSums(supCos2[, 1:nd, drop = FALSE])
-                res$quali.sup$eta2 <- supEta2
-                nSup <- nrow(supCoord)
-                res$cat$coord <- rbind(catCoord, supCoord)
-                res$cat$stdcoord <- rbind(catStd, supStd)
-                res$cat$cos2 <- rbind(catCos2, supCos2)
-                res$cat$contrib <- rbind(catContrib, matrix(NA, nSup, K))
-                res$cat$inertia <- rbind(catInertia, matrix(NA, nSup, 1))
-                res$cat$qlt <- c(rowSums(catCos2[, 1:nd, drop = FALSE]), res$quali.sup$qlt)
-                res$cat$mass <- c(catMass, rep(NA, nSup))
-                res$allvar$eta2 <- rbind(eta2, supEta2)
-            } else {
-                res$cat$coord <- catCoord
-                res$cat$stdcoord <- catStd
-                res$cat$cos2 <- catCos2
-                res$cat$contrib <- catContrib
-                res$cat$inertia <- catInertia
-                res$cat$qlt <- rowSums(catCos2[, 1:nd, drop = FALSE])
-                res$cat$mass <- catMass
-                res$allvar$eta2 <- eta2
-            }
-            res$varActive <- c(Q, length(supIdx))  # (nb of active var, nb of supp var)
-
-            #### Benzecri / Greenacre Adjusment ####
-            if (method == "Burt") {
-                p <- Q                     # Nb of variables
-                mc <- length(actCat)       # Nb of categories
-                res$totalInertia <- sum(res$eig[,1])
-                res$adjEig <- matrix(nrow = K, ncol = 5)
-                res$adjEig[,1] <- (p/(p-1))**2 * (sqrt(res$eig[,1]) - 1/p)**2
-                res$adjEig[sqrt(res$eig[,1]) <= 1/p,1] <- 0
-                res$totalInrB <- sum(res$adjEig[,1])
-                res$totalInrG <- (p/(p-1)) * (res$totalInertia - (mc-p)/p**2)
-                res$adjEig[,2] <- res$adjEig[,1] / res$totalInrB
-                res$adjEig[,3] <- cumsum(res$adjEig[,2])
-                res$adjEig[,4] <- res$adjEig[,1] / res$totalInrG
-                res$adjEig[,5] <- cumsum(res$adjEig[,4])
-                res$adjEig[sqrt(res$eig[,1]) <= 1/p,] <- rep(NA,5)
+                res$adjEig[sqrt(eig) <= 1/p,] <- rep(NA,5)
             }
             return(res)
         },
@@ -541,7 +375,7 @@ multcorrespClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             for (i in seq_len(nrow(res$cat$coord))) {
                 values = list(
                     factor = res$varDisplayName[[res$cat$factors[i]]],
-                    level = rownames(res$cat$coord)[i],
+                    level = res$cat$level[i],
                     mass = private$.nullOrValue(res$cat$mass[i]),
                     qlt = res$cat$qlt[i],
                     inertia = private$.nullOrValue(res$cat$inertia[i])
@@ -704,7 +538,7 @@ multcorrespClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
 
             #### Category Plot ####
             if (plotType != "obs") {
-                catdata$level <- rownames(catdata)
+                catdata$level <- res$cat$level
                 # Order color levels
                 catDisplayFactors <- unname(res$varDisplayName[res$cat$factors])
                 catdata$factors <- factor(catDisplayFactors, levels = unique(catDisplayFactors), ordered = TRUE)
@@ -829,16 +663,15 @@ multcorrespClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
 
         },
         .showHelpMessage = function() {
-            helpMsg <- .('<p>This module computes <strong>Multiple Correspondence Analysis (MCA)</strong> for several categorical variables. Computations are based on <a href = "https://CRAN.R-project.org/package=FactoMineR" target="_blank">FactoMineR</a> package by F. Husson, J. Josse, S. Le, J. Mazet.</p>
+            helpMsg <- .('<p>This module computes <strong>Multiple Correspondence Analysis (MCA)</strong> for several categorical variables. Computations are based on <a href = "https://CRAN.R-project.org/package=ca" target="_blank">ca package</a> by M. Greenacre, O. Nenadic, M. Friendly.</p>
 <p>Both classic methods are available:</p>
 <ul>
 <li><strong>Indicator matrix:</strong> CA of the indicator matrix</li>
 <li><strong>Burt matrix:</strong> CA of the Burt matrix. The eigenvalues are the squares of those of the indicator matrix method. </li>
 </ul>
-<p>Both methods give the same <em>standard</em> coordinates and discriminations (but different <em>principal</em> coordinates).
-With the Burt method, observations, which are not part of the Burt matrix, are positioned using the indicator approach (as in Stata):
-their standard coordinates are identical to those of the indicator method, and their principal coordinates are rescaled by the square roots
-of the eigenvalues of the Burt matrix, like the categories.</p>
+<p>Both methods give the same <em>standard</em> coordinates and discriminations, but different <em>principal</em> coordinates.</p>
+<p>With the <strong>Burt method</strong>, since observations are not part of the Burt matrix, their standard coordinates come from the indicator method
+and their principal coordinates are scaled like those of the categories. Cos² and QLT are then computed in the Burt space.</p>
 <p>When selected, <strong>Benzécri and Greenacre corrections</strong> are applied to eigenvalues only (<strong>Summary</strong> table). Principal coordinates (and inertia) of categories and observations are computed from the original eigenvalues of the Burt matrix.</p>
 <p>The <strong>Normalization</strong> options specify how the coordinates are scaled (by the square roots of the eigenvalues):</p>
 <ul>

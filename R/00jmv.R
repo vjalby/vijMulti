@@ -16,6 +16,13 @@
         `title`="psych: Procedures for Psychological, Psychometric, and Personality Research", 
         `publisher`="[R package]. Retrieved from https://cran.r-project.org/package=psych", 
         `url`="https://cran.r-project.org/package=psych"), 
+    `capackage`=list(
+        `type`="software", 
+        `author`="Greenacre, M., Nenadic, O., Friendly, M.", 
+        `year`=2026, 
+        `title`="ca: Simple, Multiple and Joint Correspondence Analysis", 
+        `publisher`="[R package]. Retrieved from https://cran.r-project.org/package=ca", 
+        `url`="https://cran.r-project.org/package=ca"), 
     `greenacre`=list(
         `type`="book", 
         `author`="Greenacre, M.", 
