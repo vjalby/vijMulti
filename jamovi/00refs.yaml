@@ -1,12 +1,5 @@
 ---
 refs:
-    factominer:
-        type: 'software'
-        author: Husson, F., Josse, J., Le, S., Mazet, J.
-        year: 2026
-        title: "FactoMineR: Multivariate Exploratory Data Analysis and Data Mining"
-        publisher: '[R package]. Retrieved from https://cran.r-project.org/package=FactoMineR'
-        url: https://cran.r-project.org/package=FactoMineR
     psych:
         type: 'software'
         author: Revelle, W.

@@ -21,8 +21,9 @@ The module is available in the **Analyses** tab.
 
 ![](img/mca.jpg)
 
-## Last changes: vijMulti 1.0.3 (2026-10-04)
+## Last changes: vijMulti 1.1.0 (2026-10-07)
 
+* CA/MCA computations are now based on Greenacre's ca package
 * CA: Improved handling of supplementary points in profile tables (SAS-like)
 * Some ggsci color palettes added
 

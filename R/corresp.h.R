@@ -550,7 +550,7 @@ correspResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 name="",
                 title="Correspondence Analysis",
                 refs=list(
-                    "factominer"))
+                    "capackage"))
             self$add(jmvcore::Table$new(
                 options=options,
                 name="contingency",

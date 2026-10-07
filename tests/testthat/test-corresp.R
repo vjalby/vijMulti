@@ -33,13 +33,15 @@ test_that("corresp: contingency table mode (mode = contTable)", {
     expect_equal(unname(ct$.margin), c(11, 18, 51, 88, 25, 193))
 
     eig <- r$eigenvalues$asDF
-    expect_equal(unname(eig$dim), c("1", "2", "Total"))
-    expect_equal(unname(eig$inertia), c(0.07475910589, 0.01001718051, 0.0847762864), tolerance = 1e-6)
-    expect_equal(unname(eig$proportion), c(0.8775587314, 0.117586535, 1), tolerance = 1e-6)
+    expect_equal(unname(eig$dim), c("1", "2", "3", "Total"))
+    expect_equal(unname(eig$inertia), c(0.07475910589, 0.01001718051, 0.0004135740799, 0.08518986048), tolerance = 1e-6)
+    expect_equal(unname(eig$proportion), c(0.8775587314, 0.117586535, 0.004854733621, 1), tolerance = 1e-6)
     chisq <- r$chisq$asDF
     expect_equal(chisq$statistic, 16.44, tolerance = 1e-3)
     expect_equal(chisq$df, 12)
     expect_equal(chisq$p, 0.17183, tolerance = 1e-4)
+    # Total inertia = chi2 / n (all dimensions, not only the displayed ones)
+    expect_equal(unname(eig$inertia[nrow(eig)]), chisq$statistic / sum(wideData[, -1]), tolerance = 1e-6)
 })
 
 test_that("corresp: jamovi weights are ignored with a notice (mode = contTable)", {
@@ -126,13 +128,15 @@ test_that("corresp: inertia (eigenvalues) table", {
         showChisq = TRUE
     )
     eig <- r$eigenvalues$asDF
-    expect_equal(unname(eig$dim), c("1", "2", "Total"))
-    expect_equal(unname(eig$inertia), c(0.03947232601, 0.02254491281, 0.06201723883), tolerance = 1e-6)
-    expect_equal(unname(eig$proportion), c(0.6087989096, 0.3477200288, 1), tolerance = 1e-6)
+    expect_equal(unname(eig$dim), c("1", "2", "3", "4", "Total"))
+    expect_equal(unname(eig$inertia), c(0.03947232601, 0.02254491281, 0.002649068675, 0.0001700865699, 0.06483639407), tolerance = 1e-6)
+    expect_equal(unname(eig$proportion), c(0.6087989096, 0.3477200288, 0.04085774222, 0.002623319392, 1), tolerance = 1e-6)
     chisq <- r$chisq$asDF
     expect_equal(chisq$statistic, 25.03, tolerance = 1e-3)
     expect_equal(chisq$df, 20)
     expect_equal(chisq$p, 0.20041, tolerance = 1e-4)
+    # Total inertia = chi2 / n (all dimensions, not only the displayed ones)
+    expect_equal(unname(eig$inertia[nrow(eig)]), chisq$statistic / sum(testData$COUNT), tolerance = 1e-6)
 })
 
 test_that("corresp: contingency table", {

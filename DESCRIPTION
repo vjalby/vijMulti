@@ -1,7 +1,7 @@
 Package: vijMulti
 Type: Package
 Title: vijMulti: Multivariate Data Analyses
-Version: 1.0.3
+Version: 1.1.0.0
 Author: Vincent Jalby
 Maintainer: Vincent Jalby <vincent.jalby@unilim.fr>
 Description: Main classic multivariate data analyses (Principal Component
@@ -11,8 +11,7 @@ License: GPL (>=3)
 Encoding: UTF-8
 LazyData: true
 Imports: jmvcore (>= 0.8.5), R6, utils, stats, grDevices, psych, rlang,
-         ggplot2, scales, ggpp, ggrepel, ggforce, GPArotation, FactoMineR,
-         ca, grid
+         ggplot2, scales, ggpp, ggrepel, ggforce, GPArotation, ca, grid
 Suggests:
     testthat (>= 3.0.0),
     vdiffr

@@ -3,7 +3,7 @@ name:  corresp
 title: Correspondence Analysis
 jrs:   '1.1'
 refs:
-    - factominer
+    - capackage
 
 items:
     - name: contingency

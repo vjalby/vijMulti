@@ -501,38 +501,55 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             }
         },
         .ca = function(contingencyTable, ncp = 2, row.sup = NULL, col.sup = NULL, norm = "principal") {
-            res <- FactoMineR::CA(contingencyTable, ncp = ncp, row.sup = row.sup, col.sup = col.sup, graph = FALSE)
-            res$sv <- sqrt(res$eig[,1]) # singular values
-            res$eig[,2:3] <- res$eig[,2:3] / 100
-            res$col$contrib <- res$col$contrib / 100
-            res$row$contrib <- res$row$contrib / 100
-            res$row$inertia <- res$row$inertia / sum(res$eig[,1])
-            res$col$inertia <- res$col$inertia / sum(res$eig[,1])
-            names(res$row$inertia) <- rownames(res$row$coord)
-            names(res$col$inertia) <- rownames(res$col$coord)
-            if (norm == "symmetric") {
-                res$col$coord <- sweep(res$col$coord, 2, sqrt(res$sv[1:ncp]), FUN = "/")
-                res$row$coord <- sweep(res$row$coord, 2, sqrt(res$sv[1:ncp]), FUN = "/")
-                if (!is.null(col.sup))
-                    res$col.sup$coord <- sweep(res$col.sup$coord, 2, sqrt(res$sv[1:ncp]), FUN = "/")
-                if (!is.null(row.sup))
-                    res$row.sup$coord <- sweep(res$row.sup$coord, 2, sqrt(res$sv[1:ncp]), FUN = "/")
-            } else if (norm == "rowprincipal") {
-                res$col$coord <- sweep(res$col$coord, 2, res$sv[1:ncp], FUN = "/")
-                if (!is.null(col.sup))
-                    res$col.sup$coord <- sweep(res$col.sup$coord, 2, res$sv[1:ncp], FUN = "/")
-            } else if (norm == "colprincipal") {
-                res$row$coord <- sweep(res$row$coord, 2, res$sv[1:ncp], FUN = "/")
-                if (!is.null(row.sup))
-                    res$row.sup$coord <- sweep(res$row.sup$coord, 2, res$sv[1:ncp], FUN = "/")
-            } else if (norm == "standard") {
-                res$col$coord <- sweep(res$col$coord, 2, res$sv[1:ncp], FUN = "/")
-                if (!is.null(col.sup))
-                    res$col.sup$coord <- sweep(res$col.sup$coord, 2, res$sv[1:ncp], FUN = "/")
-                res$row$coord <- sweep(res$row$coord, 2, res$sv[1:ncp], FUN = "/")
-                if (!is.null(row.sup))
-                    res$row.sup$coord <- sweep(res$row.sup$coord, 2, res$sv[1:ncp], FUN = "/")
+            # CA based on ca::ca. Changed from factoMineR::CA with vijMulti 1.1.0
+            #### CA ####
+            ca <- ca::ca(contingencyTable, nd = NA,
+                         suprow = if (is.null(row.sup)) NA else row.sup,
+                         supcol = if (is.null(col.sup)) NA else col.sup)
+            sv <- ca$sv                                    # singular values
+            eig <- sv^2                                    # eigenvalues (principal inertias)
+            K <- length(sv)
+            dims <- seq_len(ncp)
+            actRow <- setdiff(seq_along(ca$rownames), row.sup)
+            actCol <- setdiff(seq_along(ca$colnames), col.sup)
+
+            #### Axis orientation ####
+            # Arbitrary in the computation: on each axis, the active column farthest from the origin is positive
+            flip <- apply(ca$colcoord[actCol, , drop = FALSE], 2, function(x) sign(x[which.max(abs(x))]))
+            rowStd <- sweep(ca$rowcoord, 2, flip, FUN = "*")
+            colStd <- sweep(ca$colcoord, 2, flip, FUN = "*")
+            dimnames(rowStd) <- list(ca$rownames, paste("Dim", seq_len(K)))   # "Dim k": used by the plots
+            dimnames(colStd) <- list(ca$colnames, paste("Dim", seq_len(K)))
+
+            #### Eigenvalues ####
+            res <- list()
+            res$sv <- sv
+            res$eig <- cbind("eigenvalue" = eig,
+                             "percentage of variance" = eig / sum(eig),
+                             "cumulative percentage of variance" = cumsum(eig) / sum(eig))
+
+            #### Rows and columns ####
+            # Coordinates scaled according to the normalization; cos2 and contributions use principal coordinates
+            rowScale <- switch(norm, principal = sv, symmetric = sqrt(sv), rowprincipal = sv, colprincipal = 1, standard = 1)
+            colScale <- switch(norm, principal = sv, symmetric = sqrt(sv), rowprincipal = 1, colprincipal = sv, standard = 1)
+            points <- function(std, mass, dist, inertia, act, sup, scale) {
+                coord <- sweep(std, 2, scale, FUN = "*")[, dims, drop = FALSE]
+                cos2 <- (sweep(std, 2, sv, FUN = "*")^2 / dist^2)[, dims, drop = FALSE]
+                out <- list(coord = coord[act, , drop = FALSE],
+                            contrib = (mass * std^2)[act, dims, drop = FALSE],
+                            cos2 = cos2[act, , drop = FALSE],
+                            inertia = stats::setNames(inertia[act] / sum(eig), rownames(std)[act]))
+                outSup <- if (length(sup) > 0) list(coord = coord[sup, , drop = FALSE], cos2 = cos2[sup, , drop = FALSE])
+                list(act = out, sup = outSup, mass = stats::setNames(mass[act], rownames(std)[act]))
             }
+            rows <- points(rowStd, ca$rowmass, ca$rowdist, ca$rowinertia, actRow, row.sup, rowScale)
+            cols <- points(colStd, ca$colmass, ca$coldist, ca$colinertia, actCol, col.sup, colScale)
+            res$row <- rows$act
+            res$row.sup <- rows$sup
+            res$col <- cols$act
+            res$col.sup <- cols$sup
+            res$call$marge.row <- rows$mass
+            res$call$marge.col <- cols$mass
             return(res)
         },
         .caplot = function(plotType, image, ggtheme, theme) {
@@ -613,7 +630,7 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             return(private$.caplot(plotType = 'biplot', image, ggtheme, theme))
         },
         .showHelpMessage = function() {
-            helpMsg <- .('<p>This module computes <strong>Correspondence Analysis (CA)</strong> for two categorical variables. Computations are based on <a href = "https://CRAN.R-project.org/package=FactoMineR" target="_blank">FactoMineR</a> package by F. Husson, J. Josse, S. Le, J. Mazet.</p>
+            helpMsg <- .('<p>This module computes <strong>Correspondence Analysis (CA)</strong> for two categorical variables. Computations are based on <a href = "https://CRAN.R-project.org/package=ca" target="_blank">ca package</a> by M. Greenacre, O. Nenadic, M. Friendly.</p>
 <p>The data can be</p>
 <ul>
 <li>an <strong>Observation table</strong> (raw data), possibly weighted using <em>jamovi</em> built-in weight system or using the "Counts" variable</li>
