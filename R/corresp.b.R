@@ -45,14 +45,17 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 data[['.COUNTS']] <- as.integer(rep(1, nrow(data)))
             }
 
-            data <- jmvcore::naOmit(data)
+            data <- droplevels(jmvcore::naOmit(data))   # categories left without observations are dropped
             return(data)
         },
         # Contingency table cross-tabulated from an observation table (NULL if no data)
         .contTableFromObs = function() {
             data <- private$.getData()
-            if (is.null(data) || nrow(data) == 0)
+            if (is.null(data))
                 return(NULL)
+            if (nrow(data) == 0) {
+                vijErrorMessage(self, .("Not enough data to compute CA."))
+            }
 
             if (any(data$.COUNTS < 0)) {
                 vijErrorMessage(self, .('Counts may not be negative.'))
@@ -174,6 +177,12 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             if (!is.null(supplementaryRows) || !is.null(supplementaryCols))
                 table$setNote("supp", paste("*", .("Supplementary rows/columns")))
         },
+        # Position of a warning raised in .run(): below the weights notice added by .init(), if any
+        .warningPos = function() {
+            weighted <- if (self$options$mode == "obsTable") !is.null(self$countsName)
+                        else !is.null(attr(self$data, "jmv-weights-name"))
+            if (weighted) 2 else 1
+        },
         .getVarNameStrings = function() {
             # row/col display names, as shown in the summary table column headers and the contingency table
             if (self$options$mode == "obsTable") {
@@ -207,31 +216,19 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             for (i in seq(nDim))
                 table$addColumn(name = paste0("cos",i), title = dimN(i), superTitle = .("Cos²"), type = "number", format = "zto")
         },
-        .fillSummaryTable = function(table, items, labelCol, coord, coordSup, marge,
-                                      supplementary, suppText, nDim, normalizationString) {
+        .fillSummaryTable = function(table, points, labelCol, supplementary, suppText, nDim, normalizationString) {
             # table = table to fill
-            # item = row/col names
+            # points = res$row or res$col (all rows/cols, table order; NA for undefined values of supplementary points)
             # labelCol = "row" or "col"
-            for (i in seq_along(items)) {
-                anItem <- items[i]
-                if (anItem %in% rownames(coord$coord)) { # Active row/col
-                    theValues <- list(id = i, margin = marge[anItem], inertia = coord$inertia[anItem],
-                                       qlt = sum(coord$cos2[anItem,1:nDim]))
-                    theValues[[labelCol]] <- anItem
-                    for (j in seq(nDim)) {
-                        theValues[[paste0("score",j)]] <- coord$coord[anItem,j]
-                        theValues[[paste0("contrib",j)]] <- coord$contrib[anItem,j]
-                        theValues[[paste0("cos",j)]] <- coord$cos2[anItem,j]
-                    }
-                } else { # Supplementary row/col
-                    theValues <- list(id = i, margin = "", inertia = "",
-                                       qlt = sum(coordSup$cos2[anItem,1:nDim], na.rm = TRUE))
-                    theValues[[labelCol]] <- anItem
-                    for (j in seq(nDim)) {
-                        theValues[[paste0("score",j)]] <- coordSup$coord[anItem,j]
-                        theValues[[paste0("contrib",j)]] <- ""
-                        theValues[[paste0("cos",j)]] <- coordSup$cos2[anItem,j]
-                    }
+            blank <- function(x) if (is.na(x)) "" else x
+            for (i in seq_len(nrow(points$coord))) {
+                theValues <- list(id = i, margin = blank(points$mass[i]), inertia = blank(points$inertia[i]),
+                                  qlt = sum(points$cos2[i, 1:nDim], na.rm = TRUE))
+                theValues[[labelCol]] <- rownames(points$coord)[i]
+                for (j in seq(nDim)) {
+                    theValues[[paste0("score",j)]] <- points$coord[i,j]
+                    theValues[[paste0("contrib",j)]] <- blank(points$contrib[i,j])
+                    theValues[[paste0("cos",j)]] <- points$cos2[i,j]
                 }
                 table$addRow(i, values = theValues)
             }
@@ -242,7 +239,7 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         .parseSupplementary = function(optionValue, nmax, parseErrorMsg, rangeErrorMsg) {
             if (is.null(optionValue) || optionValue == "0" || optionValue == "")
                 return(NULL)
-            supp <- as.integer(unlist(strsplit(optionValue, ",")))
+            supp <- suppressWarnings(as.integer(unlist(strsplit(optionValue, ","))))   # non-numbers become NA, rejected below
             if (any(is.na(supp))) {
                 vijErrorMessage(self, parseErrorMsg)
             } else {
@@ -252,6 +249,26 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             }
             supp
         },
+        # Category names: reject the reserved keys, warn about a trailing "*" (the supplementary mark),
+        # then mark the supplementary rows and columns with " *"
+        .checkCategoryNames = function(contingencyTable, supplementaryRows, supplementaryCols) {
+            catNames <- c(rownames(contingencyTable), colnames(contingencyTable))
+            # ".row", ".margin" and ".mass" are used as row/column keys
+            reservedNames <- intersect(catNames, c(".row", ".margin", ".mass"))
+            if (length(reservedNames) > 0) {
+                vijErrorMessage(self, jmvcore::format(.("The category names {names} are reserved. Please rename these categories."),
+                                                      names = paste(reservedNames, collapse = ", ")))
+            }
+            if (length(supplementaryRows) + length(supplementaryCols) > 0 && any(grepl("\\*\\s*$", catNames))) {
+                vijWarningMessage(self, .('Some row or column names end with "*", which is also used to mark supplementary rows and columns. Consider renaming them to avoid confusion.'),
+                                  pos = private$.warningPos())
+            }
+            for (i in supplementaryRows)
+                rownames(contingencyTable)[i] <- paste(rownames(contingencyTable)[i], "*")
+            for (j in supplementaryCols)
+                colnames(contingencyTable)[j] <- paste(colnames(contingencyTable)[j], "*")
+            return(contingencyTable)
+        },
         .computeChiSquared = function(contingencyTable, supplementaryRows, supplementaryCols) {
             activeContingencyTable <- contingencyTable
             if (!is.null(supplementaryRows))
@@ -259,8 +276,12 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             if (!is.null(supplementaryCols))
                 activeContingencyTable <- activeContingencyTable[,-supplementaryCols, drop = FALSE]
 
-            if (any(rowSums(activeContingencyTable) == 0) ||
-                any(colSums(activeContingencyTable) == 0)) {
+            # Every row (column), active or supplementary, needs counts in the active columns (rows):
+            # otherwise its profile, hence its coordinates, are undefined
+            activeRows <- setdiff(seq_len(nrow(contingencyTable)), supplementaryRows)
+            activeCols <- setdiff(seq_len(ncol(contingencyTable)), supplementaryCols)
+            if (any(rowSums(contingencyTable[, activeCols, drop = FALSE]) == 0) ||
+                any(colSums(contingencyTable[activeRows, , drop = FALSE]) == 0)) {
                 vijErrorMessage(self, .("Some categories have zero counts and must be removed."))
             }
 
@@ -354,14 +375,6 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             if (is.null(contingencyTable))
                 return(FALSE)
 
-            # ".row", ".margin" and ".mass" are used as row/column keys
-            reservedNames <- intersect(c(rownames(contingencyTable), colnames(contingencyTable)),
-                                       c(".row", ".margin", ".mass"))
-            if (length(reservedNames) > 0) {
-                vijErrorMessage(self, jmvcore::format(.("The category names {names} are reserved. Please rename these categories."),
-                                                      names = paste(reservedNames, collapse = ", ")))
-            }
-
             # Set variable names
             varNames <- private$.getVarNameStrings()
             rowVarNameString <- varNames$row
@@ -379,11 +392,8 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 .("Supplementary column numbers must be a list of numbers, e.g. 1,2,9"),
                 .("Supplementary column numbers must be between 1 and {nmax}.")
             )
-            # Modify the supplementary row/col names
-            for (i in supplementaryRows)
-                rownames(contingencyTable)[i] <- paste(rownames(contingencyTable)[i], "*")
-            for (j in supplementaryCols)
-                colnames(contingencyTable)[j] <- paste(colnames(contingencyTable)[j], "*")
+
+            contingencyTable <- private$.checkCategoryNames(contingencyTable, supplementaryRows, supplementaryCols)
 
             #### Normalisation ####
 
@@ -442,11 +452,9 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             #### Summary Tables ####
 
             if(self$options$showSummaries) {
-                private$.fillSummaryTable(self$results$rowSummary, rownames(contingencyTable), "row",
-                                           res$row, res$row.sup, res$call$marge.row, supplementaryRows,
+                private$.fillSummaryTable(self$results$rowSummary, res$row, "row", supplementaryRows,
                                            .("Supplementary rows"), nDim, normalizationString)
-                private$.fillSummaryTable(self$results$colSummary, colnames(contingencyTable), "col",
-                                           res$col, res$col.sup, res$call$marge.col, supplementaryCols,
+                private$.fillSummaryTable(self$results$colSummary, res$col, "col", supplementaryCols,
                                            .("Supplementary columns"), nDim, normalizationString)
             }
 
@@ -462,7 +470,7 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             }
             if (res$sv[max(xaxis, yaxis)] < .Machine$double.eps) {
                 message <- jmvcore::format(.("The singular value for dimension {n} is close to zero. The plots may not be accurate."), n = max(xaxis, yaxis))
-                pos <- if (self$options$mode == "obsTable" && !is.null(self$countsName)) 2 else 1
+                pos <- private$.warningPos()
                 vijWarningMessage(self, message, pos = pos)
             }
 
@@ -475,26 +483,22 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             if (self$options$showRowPlot) {
                 self$results$rowplot$setState(list(
                     eig = res$eig,
-                    row = list(coord = res$row$coord),
-                    row.sup = list(coord = res$row.sup$coord),
+                    row = res$row[c("coord", "sup")],
                     rowVarNameString = rowVarNameString
                 ))
             }
             if (self$options$showColPlot) {
                 self$results$colplot$setState(list(
                     eig = res$eig,
-                    col = list(coord = res$col$coord),
-                    col.sup = list(coord = res$col.sup$coord),
+                    col = res$col[c("coord", "sup")],
                     colVarNameString = colVarNameString
                 ))
             }
             if (self$options$showBiPlot) {
                 self$results$biplot$setState(list(
                     eig = res$eig,
-                    row = list(coord = res$row$coord),
-                    row.sup = list(coord = res$row.sup$coord),
-                    col = list(coord = res$col$coord),
-                    col.sup = list(coord = res$col.sup$coord),
+                    row = res$row[c("coord", "sup")],
+                    col = res$col[c("coord", "sup")],
                     rowVarNameString = rowVarNameString,
                     colVarNameString = colVarNameString
                 ))
@@ -510,7 +514,6 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             eig <- sv^2                                    # eigenvalues (principal inertias)
             K <- length(sv)
             dims <- seq_len(ncp)
-            actRow <- setdiff(seq_along(ca$rownames), row.sup)
             actCol <- setdiff(seq_along(ca$colnames), col.sup)
 
             #### Axis orientation ####
@@ -532,24 +535,18 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             # Coordinates scaled according to the normalization; cos2 and contributions use principal coordinates
             rowScale <- switch(norm, principal = sv, symmetric = sqrt(sv), rowprincipal = sv, colprincipal = 1, standard = 1)
             colScale <- switch(norm, principal = sv, symmetric = sqrt(sv), rowprincipal = 1, colprincipal = sv, standard = 1)
-            points <- function(std, mass, dist, inertia, act, sup, scale) {
-                coord <- sweep(std, 2, scale, FUN = "*")[, dims, drop = FALSE]
-                cos2 <- (sweep(std, 2, sv, FUN = "*")^2 / dist^2)[, dims, drop = FALSE]
-                out <- list(coord = coord[act, , drop = FALSE],
-                            contrib = (mass * std^2)[act, dims, drop = FALSE],
-                            cos2 = cos2[act, , drop = FALSE],
-                            inertia = stats::setNames(inertia[act] / sum(eig), rownames(std)[act]))
-                outSup <- if (length(sup) > 0) list(coord = coord[sup, , drop = FALSE], cos2 = cos2[sup, , drop = FALSE])
-                list(act = out, sup = outSup, mass = stats::setNames(mass[act], rownames(std)[act]))
+            # All rows (columns) in table order; mass, contributions and inertia are NA for supplementary points
+            points <- function(std, mass, dist, inertia, sup, scale) {
+                mass[sup] <- NA
+                list(coord = sweep(std, 2, scale, FUN = "*")[, dims, drop = FALSE],
+                     contrib = (mass * std^2)[, dims, drop = FALSE],
+                     cos2 = (sweep(std, 2, sv, FUN = "*")^2 / dist^2)[, dims, drop = FALSE],
+                     inertia = ifelse(is.na(mass), NA, inertia / sum(eig)),
+                     mass = mass,
+                     sup = seq_len(nrow(std)) %in% sup)
             }
-            rows <- points(rowStd, ca$rowmass, ca$rowdist, ca$rowinertia, actRow, row.sup, rowScale)
-            cols <- points(colStd, ca$colmass, ca$coldist, ca$colinertia, actCol, col.sup, colScale)
-            res$row <- rows$act
-            res$row.sup <- rows$sup
-            res$col <- cols$act
-            res$col.sup <- cols$sup
-            res$call$marge.row <- rows$mass
-            res$call$marge.col <- cols$mass
+            res$row <- points(rowStd, ca$rowmass, ca$rowdist, ca$rowinertia, row.sup, rowScale)
+            res$col <- points(colStd, ca$colmass, ca$coldist, ca$colinertia, col.sup, colScale)
             return(res)
         },
         .caplot = function(plotType, image, ggtheme, theme) {
@@ -559,14 +556,13 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             # Plot data
             res <- image$state
             # sup: 1 = row, 2 = rowsup, 3 = column, 4 = colsup
-            toDF <- function(coord, sup) {
-                if (is.null(coord))
-                    return(NULL)
-                data.frame(coord, sup = sup, label = rownames(coord), check.names = FALSE)
+            toDF <- function(points, type) {
+                df <- data.frame(points$coord, sup = type + points$sup, label = rownames(points$coord), check.names = FALSE)
+                df[order(points$sup), ]   # active points first, then supplementary ones
             }
             ptcoord <- rbind(
-                if (plotType != 'column') rbind(toDF(res$row$coord, 1), toDF(res$row.sup$coord, 2)),
-                if (plotType != 'row') rbind(toDF(res$col$coord, 3), toDF(res$col.sup$coord, 4))
+                if (plotType != 'column') toDF(res$row, 1),
+                if (plotType != 'row') toDF(res$col, 3)
             )
             ptcoord$sup <- factor(ptcoord$sup, levels = c(1,2,3,4))
             # ptcoord dataframe containt the row and column coordinates

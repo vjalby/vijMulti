@@ -1780,6 +1780,15 @@ msgstr ""
 "graphiques peuvent être approximatifs."
 
 #: R/corresp.b.R
+msgid ""
+"Some row or column names end with \"*\", which is also used to mark "
+"supplementary rows and columns. Consider renaming them to avoid confusion."
+msgstr ""
+"Certains noms de lignes ou de colonnes se terminent par « * », qui sert "
+"aussi à marquer les lignes et colonnes supplémentaires. Pensez à les "
+"renommer pour éviter toute confusion."
+
+#: R/corresp.b.R
 msgid "The χ² statistic is equal to zero."
 msgstr "La statistique du χ² est égale à zéro."
 

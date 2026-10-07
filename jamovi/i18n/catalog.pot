@@ -1658,6 +1658,12 @@ msgid ""
 msgstr ""
 
 #: R/corresp.b.R
+msgid ""
+"Some row or column names end with \"*\", which is also used to mark "
+"supplementary rows and columns. Consider renaming them to avoid confusion."
+msgstr ""
+
+#: R/corresp.b.R
 msgid "The χ² statistic is equal to zero."
 msgstr ""
 

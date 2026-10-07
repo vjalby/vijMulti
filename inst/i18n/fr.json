@@ -892,6 +892,9 @@
             "The singular value for dimension {n} is close to zero. The plots may not be accurate.": [
                 "La valeur singulière pour la dimension {n} est proche de zéro. Les graphiques peuvent être approximatifs."
             ],
+            "Some row or column names end with \"*\", which is also used to mark supplementary rows and columns. Consider renaming them to avoid confusion.": [
+                "Certains noms de lignes ou de colonnes se terminent par « * », qui sert aussi à marquer les lignes et colonnes supplémentaires. Pensez à les renommer pour éviter toute confusion."
+            ],
             "The χ² statistic is equal to zero.": [
                 "La statistique du χ² est égale à zéro."
             ],
