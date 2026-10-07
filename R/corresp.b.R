@@ -361,13 +361,13 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             }
         },
         .run = function() {
-            # The χ² test used to be a note on the eigenvalues table (now its own table).
-            # Results saved by older versions restore that note, so clear it explicitly.
-            self$results$eigenvalues$setNote("chisq", NULL)
-
             # Long by design (reviewed 2026-09-30): after building the contingency table, it is a
             # linear validate -> compute -> fill-tables sequence. Only the two input modes' data
             # preparation was worth extracting; further splitting would just scatter it.
+
+            # Clear χ² test note (from 1.0.0 version).
+            self$results$eigenvalues$setNote("chisq", NULL)
+
             contingencyTable <- if (self$options$mode == "obsTable")
                 private$.contTableFromObs()
             else # contTable
@@ -417,6 +417,12 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                                           .("Supplementary columns"), rowVarNameString, colVarNameString)
             }
 
+            # Check minimum dimension
+            maxDim <- min(nrow(contingencyTable)-length(supplementaryRows), ncol(contingencyTable)-length(supplementaryCols)) - 1
+            if (maxDim < 2) {
+                vijErrorMessage(self, .("Not enough data to compute CA."))
+            }
+
             #### Chi-Squared test ####
 
             chisqres <- private$.computeChiSquared(contingencyTable, supplementaryRows, supplementaryCols)
@@ -425,11 +431,7 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 private$.fillChisqTable(self$results$chisq, chisqres)
 
             # Check solution dimension
-            maxDim <- min(nrow(contingencyTable)-length(supplementaryRows), ncol(contingencyTable)-length(supplementaryCols)) - 1
-            if (maxDim < 2) {
-                vijErrorMessage(self, .("Not enough data to compute CA."))
-            }
-            nDim <-self$options$dimNum
+            nDim <- self$options$dimNum
             if (nDim > maxDim) {
                 errorMessage <- jmvcore::format(.("Number of dimensions must be less than or equal to {maxDim}."), maxDim = maxDim)
                 vijErrorMessage(self,errorMessage)
