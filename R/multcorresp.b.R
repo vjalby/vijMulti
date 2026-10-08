@@ -65,7 +65,7 @@ multcorrespClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             # later collide and merge in the category plot (see .mainplot)
             ordVars <- c()
             for (aVar in allVars) {
-                if ("ordered" %in% class(data[[aVar]]))
+                if (is.ordered(data[[aVar]]))
                     ordVars <- c(ordVars, aVar)
             }
 

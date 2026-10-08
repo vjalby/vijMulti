@@ -220,14 +220,14 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             # table = table to fill
             # points = res$row or res$col (all rows/cols, table order; NA for undefined values of supplementary points)
             # labelCol = "row" or "col"
-            blank <- function(x) if (is.na(x)) "" else x
+            nullOrValue <- function(x) if (is.na(x)) NULL else x
             for (i in seq_len(nrow(points$coord))) {
-                theValues <- list(id = i, margin = blank(points$mass[i]), inertia = blank(points$inertia[i]),
+                theValues <- list(id = i, margin = nullOrValue(points$mass[i]), inertia = nullOrValue(points$inertia[i]),
                                   qlt = sum(points$cos2[i, 1:nDim], na.rm = TRUE))
                 theValues[[labelCol]] <- rownames(points$coord)[i]
                 for (j in seq(nDim)) {
                     theValues[[paste0("score",j)]] <- points$coord[i,j]
-                    theValues[[paste0("contrib",j)]] <- blank(points$contrib[i,j])
+                    theValues[[paste0("contrib",j)]] <- nullOrValue(points$contrib[i,j])
                     theValues[[paste0("cos",j)]] <- points$cos2[i,j]
                 }
                 table$addRow(i, values = theValues)
@@ -275,15 +275,6 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 activeContingencyTable <- activeContingencyTable[-supplementaryRows,, drop = FALSE]
             if (!is.null(supplementaryCols))
                 activeContingencyTable <- activeContingencyTable[,-supplementaryCols, drop = FALSE]
-
-            # Every row (column), active or supplementary, needs counts in the active columns (rows):
-            # otherwise its profile, hence its coordinates, are undefined
-            activeRows <- setdiff(seq_len(nrow(contingencyTable)), supplementaryRows)
-            activeCols <- setdiff(seq_len(ncol(contingencyTable)), supplementaryCols)
-            if (any(rowSums(contingencyTable[, activeCols, drop = FALSE]) == 0) ||
-                any(colSums(contingencyTable[activeRows, , drop = FALSE]) == 0)) {
-                vijErrorMessage(self, .("Some categories have zero counts and must be removed."))
-            }
 
             chisqres <- tryCatch(
                             suppressWarnings(stats::chisq.test(activeContingencyTable)),
@@ -404,6 +395,21 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             private$.fillContingencyTable(self$results$contingency, contingencyTable, supplementaryRows, supplementaryCols,
                                            rowVarNameString, colVarNameString)
 
+            # Check minimum dimension
+            maxDim <- min(nrow(contingencyTable)-length(supplementaryRows), ncol(contingencyTable)-length(supplementaryCols)) - 1
+            if (maxDim < 2) {
+                vijErrorMessage(self, .("Not enough data to compute CA."))
+            }
+
+            # Every row (column), active or supplementary, needs counts in the active columns (rows):
+            # otherwise its profile, hence its coordinates, are undefined
+            activeRows <- setdiff(seq_len(nrow(contingencyTable)), supplementaryRows)
+            activeCols <- setdiff(seq_len(ncol(contingencyTable)), supplementaryCols)
+            if (any(rowSums(contingencyTable[, activeCols, drop = FALSE]) == 0) ||
+                any(colSums(contingencyTable[activeRows, , drop = FALSE]) == 0)) {
+                vijErrorMessage(self, .("Some categories have zero counts and must be removed."))
+            }
+
             #### Row and Column Profile Tables ####
 
             if(self$options$showProfiles) {
@@ -415,12 +421,6 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 colProfiles <- t(private$.getProfile(t(contingencyTable),supplementaryCols, supplementaryRows))
                 private$.fillProfileTable(self$results$colProfiles, colProfiles, supplementaryCols,
                                           .("Supplementary columns"), rowVarNameString, colVarNameString)
-            }
-
-            # Check minimum dimension
-            maxDim <- min(nrow(contingencyTable)-length(supplementaryRows), ncol(contingencyTable)-length(supplementaryCols)) - 1
-            if (maxDim < 2) {
-                vijErrorMessage(self, .("Not enough data to compute CA."))
             }
 
             #### Chi-Squared test ####
