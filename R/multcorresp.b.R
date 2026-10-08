@@ -95,7 +95,7 @@ multcorrespClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
 
             if (nDim > res$nd.max) {
                 errorMessage <- jmvcore::format(.("The number of dimensions cannot be greater than {max}."), max = res$nd.max)
-                vijErrorMessage(self, warningMessage)
+                vijErrorMessage(self, errorMessage)
             }
 
             res$varDisplayName <- varDisplayName
