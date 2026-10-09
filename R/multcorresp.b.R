@@ -14,7 +14,7 @@ multcorrespClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             }
         },
         .init = function() {
-            if (is.null(self$options$vars) || length(self$options$vars) < 3) {
+            if (is.null(self$options$vars) || length(self$options$vars) < 2) {
                 private$.showHelpMessage()
             }
 
@@ -31,7 +31,7 @@ multcorrespClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         .run = function() {
             # Long by design (reviewed 2026-09-30): a linear validate -> compute (.mca) ->
             # fill-tables sequence; splitting it further would just scatter it.
-            if (is.null(self$options$vars) || length(self$options$vars) < 3  || nrow(self$data) == 0)
+            if (is.null(self$options$vars) || length(self$options$vars) < 2  || nrow(self$data) == 0)
                 return(FALSE)
 
             activeVars <- self$options$vars
