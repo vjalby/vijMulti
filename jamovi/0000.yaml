@@ -44,14 +44,18 @@ datasets:
     description: A demonstration dataset for vijMulti/Principal Component Analysis.
     tags:
       - PCA
-  - name: Smoking
+  - name: Smoking (observation table)
     path: smoking.omv
-    description: A demonstration dataset for vijMulti/Correspondence Analysis.
+    description: >-
+      A demonstration dataset for vijMulti/Correspondence Analysis (observation
+      table with a Counts variable).
     tags:
       - CA
   - name: Smoking (contingency table)
     path: smoking2.omv
-    description: A demonstration dataset for vijMulti/Correspondence Analysis.
+    description: >-
+      A demonstration dataset for vijMulti/Correspondence Analysis (contingency
+      table).
     tags:
       - CA
   - name: Cars

@@ -643,7 +643,7 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
 <li><strong>Column principal:</strong> Column scores are in principal coordinates, row scores in standard coordinates.</li>
 <li><strong>Standard:</strong> Row and column scores are in standard coordinates (unit weighted variance on each dimension).</li>
 </ul>
-<p>A sample file is included at Open > Data Library > vijMulti > Smoking</p>')
+<p>Sample files are included at Open > Data Library > vijMulti > Smoking (observation table) and Smoking (contingency table)</p>')
             vijHelpMessage(self, helpMsg)
         }
     )
