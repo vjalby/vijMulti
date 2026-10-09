@@ -66,7 +66,7 @@ Each analysis `<name>` (`principal`, `corresp`, `multcorresp`) is defined by:
 - `jamovi/<name>.a.yaml` / `.u.yaml` / `.r.yaml` — option definitions, UI layout, result items.
 
 All three are registered in `jamovi/0000.yaml` (`ns: vijMulti`, `menuGroup: vijMulti`,
-`menuSubgroup: Multivariate`) and in `jamovi/00refs.yaml` (citations: `factominer`, `psych`,
+`menuSubgroup: Multivariate`) and in `jamovi/00refs.yaml` (citations: `capackage`, `psych`,
 `greenacre`, `gpa` — only the subset actually referenced by these three analyses' `.r.yaml` files,
 trimmed down from vijPlots' full reference list).
 
@@ -76,13 +76,25 @@ Copied in full from vijPlots (all functions are used by at least one of the thre
 prefixed `vij*`: `vijColorScale()`/`vijColorPalette()`/`vijColorPaletteNlevels()`/
 `vijOneColorOfPalette()` build palette scales from the `colorPalette` option; `vijVar()` wraps an
 optional `rlang::sym`-or-`NULL`; `vijTitlesAndLabels()`/`vijTitleAndLabelFormat()` build `labs()`
-and axis/legend theme; `vijHelpMessage()`/`vijErrorMessage()`/`vijWarningMessage()`/
-`vijDebugMessage()` write to `self$results$todo`; `vijDebugPlot(self, plot)` — called at the end of
-every `.plot()` — forces an eager build to surface any ggplot2 warning/message as a Notice instead
-of letting jmvcore silently swallow it (only active when `DESCRIPTION`'s `Version` has a 4th
-component, e.g. `0.0.1.0` — no-op on a plain `x.y.z` release version; it checks
-`utils::packageVersion("vijMulti")` specifically, so this string must stay in sync if the package
-is ever renamed again).
+and axis/legend theme; `vijHelpMessage()`/`vijWarningMessage()`/`vijDebugMessage()` insert a
+Notice/Html item at the top of `self$results` (`vijErrorMessage()` calls `jmvcore::reject()`, which
+stops the analysis); `vijDebugPlot(self, plot)` — called at the end of every `.plot()` — forces an
+eager build to surface any ggplot2 warning/message as a Notice instead of letting jmvcore silently
+swallow it (only active when `DESCRIPTION`'s `Version` has a 4th component, e.g. `0.0.1.0` — no-op
+on a plain `x.y.z` release version; the package is found via `utils::packageName()`).
+
+### CA/MCA backends (`ca` package)
+
+Both analyses use Greenacre's `ca` package (FactoMineR was dropped in 1.1.0: lighter module, and
+FactoMineR 2.16 silently truncates `$eig` to `ncp` eigenvalues). `corresp`'s `.ca()` wraps
+`ca::ca()`, `multcorresp`'s `.mca()` wraps `ca::mjca()` (always pass `lambda` explicitly: its
+default is `"adjusted"`). Both return all rows/categories together, in data order, with `NA`
+mass/contributions/inertia for supplementary points. Axis signs follow a fixed rule: on each axis,
+the active column (CA) or active category (MCA) farthest from the origin is positive. `mjca`
+pitfalls: in indicator mode, `colpcoord`/`colcor` of supplementary categories are computed from
+Burt profiles, so `.mca()` uses `colcoord × sv` and `coord² / (n/n_c − 1)` instead; in Burt mode,
+`rowctr`/`rowcor` are `NA`. Burt observation coordinates follow Stata's convention (indicator
+standard coordinates), not the supplementary projection of `ca`/FactoMineR.
 
 ### Non-obvious runtime gotchas
 
@@ -126,7 +138,7 @@ don't exist in this module):
   when a `reject()`-interrupted run leaves an unguarded `setNote()` call unreached — root-caused and
   fixed for `corresp`'s `eigenvalues`/`chisq` note (`rows: 1` + explicit `deleteRows()`; see
   `corresp.b.R`'s `.run()`). `multcorresp.b.R` has the same *unfixed* pattern on `eigenvalues`'s
-  `'method'`/`'adjusted'` notes, `discrim`'s `'sup'` note, `categories`'s `'normalization'`/`'sup'`
+  `'method'` note, `discrim`'s `'sup'` note, `categories`'s `'normalization'`/`'sup'`
   notes, and `observations`'s `"100"`/`'normalization'` notes — left unfixed on the same basis as
   vijPlots (narrow repro surface, and the real fix belongs upstream in jmvcore/jamovi).
 
