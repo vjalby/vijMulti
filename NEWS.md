@@ -1,6 +1,7 @@
-# vijMulti 1.1.0 (2026-10-07)
+# vijMulti 1.1.0 (2026-10-09)
 * CA/MCA computations are now based on Greenacre's ca package
 * CA: Improved handling of supplementary points in profile tables (SAS-like)
+* MCA: Analysis now possible with only two variables
 * Some ggsci color palettes added
 
 # vijMulti 1.0.2 (2026-09-29)
