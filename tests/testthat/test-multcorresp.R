@@ -94,9 +94,9 @@ test_that("multcorresp: Burt method with Benzecri and Greenacre corrections (sum
     expect_equal(unname(eig$inertia), c(0.3030537743, 0.1595559115, 0.1222366053, 0.07718254421, 0.06164456791, 0.03039027571, 0.7540636788), tolerance = 1e-6)
     expect_equal(unname(eig$adjB), c(0.1061161907, 0.009834045375, 0.0005970828578, NA, NA, NA, 0.1165473189), tolerance = 1e-6)
     expect_equal(unname(eig$`%B`), c(0.9104987714, 0.0843781347, 0.005123093893, NA, NA, NA, 1), tolerance = 1e-6)
-    expect_equal(unname(eig$adjG), c(0.1061161907, 0.009834045375, 0.0005970828578, NA, NA, NA, 0.1165473189), tolerance = 1e-6)
-    expect_equal(unname(eig$`%G`), c(0.8094570441, 0.07501435219, 0.004554563465, NA, NA, NA, 0.8890259598), tolerance = 1e-6)
-    expect_equal(r$eigenvalues$notes$adjusted$note, "Greenacre's corrected inertia = 0.1311")
+    # Greenacre: the total is the adjusted total inertia, which the adjusted axes don't fully account for
+    expect_equal(unname(eig$adjG), c(0.1061161907, 0.009834045375, 0.0005970828578, NA, NA, NA, 0.1310955182), tolerance = 1e-6)
+    expect_equal(unname(eig$`%G`), c(0.8094570441, 0.07501435219, 0.004554563465, NA, NA, NA, 1), tolerance = 1e-6)
 })
 
 test_that("multcorresp: categories table", {

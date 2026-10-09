@@ -75,9 +75,6 @@ multcorrespClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 rowLabels <- NULL
 
             method <- self$options$method
-            methodStr <- switch(method,
-                                "Indicator" = .("Indicator matrix"),
-                                "Burt" = .("Burt matrix"))
 
             #### Compute MCA ####
 
@@ -102,7 +99,7 @@ multcorrespClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
 
             #### Inertia Table ####
 
-            private$.fillInertiaTable(self$results$eigenvalues, res, method, methodStr)
+            private$.fillInertiaTable(self$results$eigenvalues, res, method)
 
             #### Discrimination Table ####
 
@@ -301,7 +298,7 @@ multcorrespClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 }
             }
         },
-        .fillInertiaTable = function(table, res, method, methodStr) {
+        .fillInertiaTable = function(table, res, method) {
             if (self$options$showSummary) {
                 for (i in seq_len(res$nd.max)) {
                     values = list(
@@ -335,16 +332,14 @@ multcorrespClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                     values[["C%B"]] <- NULL
                 }
                 if (method == "Burt" && self$options$GreenacreAdj) {
-                    values[["adjG"]] <- res$totalInrB
-                    values[["%G"]] <- sum(res$adjEig[,4], na.rm=TRUE)
+                    values[["adjG"]] <- res$totalInrG
+                    values[["%G"]] <- 1
                     values[["C%G"]] <- NULL
                 }
                 table$addRow(rowKey = "Total", values = values)
                 table$addFormat(rowKey = "Total", 1, jmvcore::Cell.BEGIN_END_GROUP)
             }
-            table$setNote("method", jmvcore::format(.("Method: {method}"), method = methodStr))
-            if (method == "Burt" && self$options$GreenacreAdj)
-                table$setNote("adjusted", jmvcore::format(.("Greenacre's corrected inertia = {inertia}"), inertia = round(res$totalInrG,4)))
+            table$setNote("method", if (method == "Burt") .("Burt matrix method") else .("Indicator matrix method"))
         },
         .initDiscriminationTable = function(table, nDim) {
             for (j in seq_len(nDim))
