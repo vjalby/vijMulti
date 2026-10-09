@@ -79,7 +79,8 @@ msgid ""
 "<li><strong>Standard:</strong> Row and column scores are in standard "
 "coordinates (unit weighted variance on each dimension).</li>\n"
 "</ul>\n"
-"<p>A sample file is included at Open > Data Library > vijMulti > Smoking</p>"
+"<p>Sample files are included at Open > Data Library > vijMulti > Smoking "
+"(observation table) and Smoking (contingency table)</p>"
 msgstr ""
 "<p>Ce module effectue une <strong>Analyse des Correspondances (CA)</strong> "
 "pour deux variables catégorielles. Les calculs sont basés sur le <a "
@@ -109,8 +110,9 @@ msgstr ""
 "<li><strong>Standard :</strong> Les coordonnées ne sont pas "
 "normalisées.</li>\n"
 "</ul>\n"
-"<p>Un fichier de démonstration est disponible dans Ouvrir > Bibliothèque de "
-"données > vijMulti > Smoking</p>"
+"<p>Des fichiers de démonstration sont disponibles dans Ouvrir > Bibliothèque "
+"de données > vijMulti > Smoking (tableau d'observations) et Smoking (tableau "
+"de contingence)</p>"
 
 #: R/multcorresp.b.R
 msgid ""
@@ -250,10 +252,21 @@ msgstr ""
 "<p>Un fichier de démonstration est disponible dans Ouvrir > Bibliothèque de "
 "données > vijMulti > Iris</p>"
 
-#: package/datasets/Smoking.description
 #: package/datasets/Smoking(contingencytable).description
-msgid "A demonstration dataset for vijMulti/Correspondence Analysis."
-msgstr "Fichier de démonstration pour vijMulti/Analyse des correspondances."
+msgid ""
+"A demonstration dataset for vijMulti/Correspondence Analysis (contingency "
+"table)."
+msgstr ""
+"Fichier de démonstration pour vijMulti/Analyse des correspondances (tableau "
+"de contingence)."
+
+#: package/datasets/Smoking(observationtable).description
+msgid ""
+"A demonstration dataset for vijMulti/Correspondence Analysis (observation "
+"table with a Counts variable)."
+msgstr ""
+"Fichier de démonstration pour vijMulti/Analyse des correspondances (tableau "
+"d'observations avec une variable d'effectifs)."
 
 #: package/datasets/Cars.description
 msgid "A demonstration dataset for vijMulti/Multiple Correspondence Analysis."
@@ -430,6 +443,10 @@ msgstr "Marron à vert"
 #: multcorresp/ui[3][0][0]/method_burt.label
 msgid "Burt matrix"
 msgstr "Tableau de Burt"
+
+#: R/multcorresp.b.R
+msgid "Burt matrix method"
+msgstr "Méthode du tableau de Burt"
 
 #: corresp/ui[7][2][1][0].label
 #: multcorresp/ui[8][2][1][0].label
@@ -841,10 +858,6 @@ msgstr "Correction de Greenacre"
 msgid "Greenacre correction"
 msgstr "Correction de Greenacre"
 
-#: R/multcorresp.b.R
-msgid "Greenacre's corrected inertia = {inertia}"
-msgstr "Inertie corrigée (Greenacre) = {inertia}"
-
 #: multcorresp/options/colorPalette/Greens.title
 #: principal/options/colorPalette/Greens.title
 msgid "Greens"
@@ -865,6 +878,10 @@ msgstr "Groupe"
 #: multcorresp/ui[3][0][0]/method_indicator.label
 msgid "Indicator matrix"
 msgstr "Tableau disjonctif"
+
+#: R/multcorresp.b.R
+msgid "Indicator matrix method"
+msgstr "Méthode du tableau disjonctif"
 
 #: R/multcorresp.b.R
 #: corresp/results/eigenvalues.columns.title
@@ -1060,10 +1077,6 @@ msgstr "Coordonnées standardisées ACM ({method})"
 #: multcorresp/ui[3][0].label
 msgid "Method"
 msgstr "Méthode"
-
-#: R/multcorresp.b.R
-msgid "Method: {method}"
-msgstr "Méthode : {method}"
 
 #: principal/options/rotation/entropy.title
 msgid "Minimum entropy"
@@ -1579,13 +1592,13 @@ msgstr "Taille"
 msgid "Sizes & Colors"
 msgstr "Tailles & couleurs"
 
-#: package/datasets/Smoking.name
-msgid "Smoking"
-msgstr "Smoking"
-
 #: package/datasets/Smoking(contingencytable).name
 msgid "Smoking (contingency table)"
 msgstr "Smoking (tableau de contingence)"
+
+#: package/datasets/Smoking(observationtable).name
+msgid "Smoking (observation table)"
+msgstr "Smoking (tableau d'observations)"
 
 #: corresp/ui[1][0].label
 #: multcorresp/ui[2][0].label
@@ -1596,6 +1609,15 @@ msgstr "Solution"
 #: R/corresp.b.R
 msgid "Some categories have zero counts and must be removed."
 msgstr "Certaines catégories ont des effectifs nuls et doivent être supprimées."
+
+#: R/corresp.b.R
+msgid ""
+"Some row or column names end with \"*\", which is also used to mark "
+"supplementary rows and columns. Consider renaming them to avoid confusion."
+msgstr ""
+"Certains noms de lignes ou de colonnes se terminent par « * », qui sert "
+"aussi à marquer les lignes et colonnes supplémentaires. Pensez à les "
+"renommer pour éviter toute confusion."
 
 #: R/corresp.b.R
 msgid "Some values are missing from the contingency table."
@@ -1778,15 +1800,6 @@ msgid ""
 msgstr ""
 "La valeur singulière pour la dimension {n} est proche de zéro. Les "
 "graphiques peuvent être approximatifs."
-
-#: R/corresp.b.R
-msgid ""
-"Some row or column names end with \"*\", which is also used to mark "
-"supplementary rows and columns. Consider renaming them to avoid confusion."
-msgstr ""
-"Certains noms de lignes ou de colonnes se terminent par « * », qui sert "
-"aussi à marquer les lignes et colonnes supplémentaires. Pensez à les "
-"renommer pour éviter toute confusion."
 
 #: R/corresp.b.R
 msgid "The χ² statistic is equal to zero."
