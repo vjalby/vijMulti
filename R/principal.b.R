@@ -316,20 +316,20 @@ principalClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
 
             # Axe limits
             if (plotType == "var") {
-                xmin = 1.02*min(varData$x, -1)
-                xmax = 1.02*max(varData$x, 1)
-                ymin = 1.02*min(varData$y, -1)
-                ymax = 1.02*max(varData$y, 1)
+                xmin <- 1.02*min(varData$x, -1)
+                xmax <- 1.02*max(varData$x, 1)
+                ymin <- 1.02*min(varData$y, -1)
+                ymax <- 1.02*max(varData$y, 1)
             } else if (plotType == "obs") { # floor/ceiling *2 /2 => extend the plot to next 0.5 point
-                xmin = 1.01*floor(min(obsData$x)*2)/2
-                xmax = 1.01*ceiling(max(obsData$x)*2)/2
-                ymin = 1.01*floor(min(obsData$y)*2)/2
-                ymax = 1.01*ceiling(max(obsData$y)*2)/2
+                xmin <- 1.01*floor(min(obsData$x)*2)/2
+                xmax <- 1.01*ceiling(max(obsData$x)*2)/2
+                ymin <- 1.01*floor(min(obsData$y)*2)/2
+                ymax <- 1.01*ceiling(max(obsData$y)*2)/2
             } else { # biplot
-                xmin = 1.01*floor(min(obsData$x, varData$x)*2)/2
-                xmax = 1.01*ceiling(max(obsData$x, varData$x)*2)/2
-                ymin = 1.01*floor(min(obsData$y, varData$y)*2)/2
-                ymax = 1.01*ceiling(max(obsData$y, varData$y)*2)/2
+                xmin <- 1.01*floor(min(obsData$x, varData$x)*2)/2
+                xmax <- 1.01*ceiling(max(obsData$x, varData$x)*2)/2
+                ymin <- 1.01*floor(min(obsData$y, varData$y)*2)/2
+                ymax <- 1.01*ceiling(max(obsData$y, varData$y)*2)/2
             }
             # Security for singular data
             if (xmin==xmax) {
@@ -453,7 +453,7 @@ principalClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         },
         .fillLoadingTable = function(table, res, nDim) {
             for(aVar in rownames(res$loadings)) {
-                values = list()
+                values <- list()
                 values[["var"]] <- private$.getVarName(aVar)
                 for(i in 1:nDim) {
                     if (self$options$stdLoadings)
@@ -486,7 +486,7 @@ principalClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 nrows <- 100
             }
             for (i in 1:nrows) {
-                values = list()
+                values <- list()
                 values["obs"] <- rownames(res$scores)[i]
                 if (!is.null(self$options$labelVar))
                     values["label"] <- as.character(res$rowlabels[i])
@@ -676,7 +676,7 @@ principalClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 }
 
                 for (i in keys) {
-                    descriptions[i] = descriptionString
+                    descriptions[i] <- descriptionString
                 }
 
                 self$results$obsCoordOV$set(

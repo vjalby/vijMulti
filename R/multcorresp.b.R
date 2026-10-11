@@ -301,7 +301,7 @@ multcorrespClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         .fillInertiaTable = function(table, res, method) {
             if (self$options$showSummary) {
                 for (i in seq_len(res$nd.max)) {
-                    values = list(
+                    values <- list(
                         dim = i,
                         inertia = res$eig[i,1],
                         proportion = res$eig[i,2],
@@ -320,7 +320,7 @@ multcorrespClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                     table$addRow(rowKey = as.character(i), values = values)
                 }
                 # Add total row
-                values = list(
+                values <- list(
                     dim = .("Total"),
                     inertia = sum(res$eig[,1]),
                     proportion = sum(res$eig[,2]),
@@ -347,7 +347,7 @@ multcorrespClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         },
         .fillDiscriminationTable = function(table, res, nDim, supplIdx) {
             for (i in seq_len(nrow(res$allvar$eta2))) {
-                values = list()
+                values <- list()
                 values[["var"]] <- res$varDisplayName[[rownames(res$allvar$eta2)[i]]]
                 for (j in seq_len(nDim))
                     values[[paste0("dim",j)]] <- res$allvar$eta2[i,j]
@@ -368,7 +368,7 @@ multcorrespClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         .fillCategoryTable = function(table, res, nDim, supplIdx) {
             previousfactor <- res$cat$factors[1]
             for (i in seq_len(nrow(res$cat$coord))) {
-                values = list(
+                values <- list(
                     factor = res$varDisplayName[[res$cat$factors[i]]],
                     level = res$cat$level[i],
                     mass = private$.nullOrValue(res$cat$mass[i]),
@@ -413,7 +413,7 @@ multcorrespClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 nrows <- 100
             }
             for (i in seq_len(nrows)) {
-                values = list(
+                values <- list(
                     obs = rownames(res$ind$coord)[i],
                     mass = res$ind$mass[i],
                     qlt = res$ind$qlt[i],
@@ -640,7 +640,7 @@ multcorrespClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
 
                 descriptions <- character(length(keys))
                 for (i in keys) {
-                    descriptions[i] = descriptionString
+                    descriptions[i] <- descriptionString
                 }
 
                 self$results$obsCoordOV$set(
