@@ -782,7 +782,8 @@ multcorrespResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                     "labelVar",
                     "method",
                     "normalization",
-                    "dimNum")))
+                    "dimNum",
+                    "descAsVarName")))
             self$add(jmvcore::Image$new(
                 options=options,
                 name="discrimplot",
@@ -796,7 +797,6 @@ multcorrespResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                     "vars",
                     "supplVars",
                     "method",
-                    "normalization",
                     "xaxis",
                     "yaxis",
                     "discrimTitleText",
@@ -896,9 +896,6 @@ multcorrespResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                     "yAxisText",
                     "yAxisFontSize",
                     "yAxisPosition",
-                    "legendText",
-                    "legendFontSize",
-                    "legendPosition",
                     "obsColor",
                     "labelSize",
                     "propPoint",

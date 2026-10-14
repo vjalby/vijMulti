@@ -222,7 +222,7 @@ children:
                     enable: (showObservationPlot || showBiPlot)
                   - type: CheckBox
                     name: ggrepel
-                    enable: (showObservationPlot || showBiPlot)
+                    enable: (!(!labelVar) && (showObservationPlot || showBiPlot))
   - type: CollapseBox
     label: Legend & Axis Titles
     collapsed: true

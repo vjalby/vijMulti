@@ -129,7 +129,6 @@ items:
       visible: (showScreePlot)
       renderFun: .screeplot
       clearWith:
-        - dimNum
         - vars
         - stdVariables
         - screeTitleText
@@ -165,13 +164,9 @@ items:
         - yaxis
         - stdVariables
         - kaiser
-        - obsColor
         - varColor
-        - colorPalette
         - labelColor
-        - obsLabelSize
         - varLabelSize
-        - pointSize
         - varTitleText
         - titleFontFace
         - titleFontSize
@@ -212,11 +207,9 @@ items:
         - stdVariables
         - kaiser
         - obsColor
-        - varColor
         - colorPalette
         - labelColor
         - obsLabelSize
-        - varLabelSize
         - pointSize
         - obsTitleText
         - titleFontFace
@@ -300,7 +293,6 @@ items:
       initInRun: true
       clearWith:
         - vars
-        - labelVar
         - rotation
         - dimNum
         - stdVariables
