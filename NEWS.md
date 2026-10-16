@@ -1,3 +1,7 @@
+# vijMulti 1.1.1 (2026-10-16)
+* MCA: Fixed total inertia for Greenacre correction
+* small fixes and optimizations
+
 # vijMulti 1.1.0 (2026-10-09)
 * CA/MCA computations are now based on Greenacre's ca package
 * CA: Improved handling of supplementary points in profile tables (SAS-like)
