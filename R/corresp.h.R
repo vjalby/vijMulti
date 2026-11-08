@@ -679,7 +679,6 @@ correspResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                         `format`="pc")),
                 clearWith=list(
                     "mode",
-                    "dimNum",
                     "rows",
                     "cols",
                     "counts",

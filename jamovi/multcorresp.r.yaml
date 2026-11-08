@@ -31,7 +31,6 @@ items:
           type: number
           format: pc
       clearWith:
-        - dimNum
         - vars
         - supplVars
         - method
@@ -50,7 +49,6 @@ items:
       clearWith:
         - vars
         - supplVars
-        - method
         - dimNum
         - descAsVarName
 

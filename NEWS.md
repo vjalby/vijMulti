@@ -1,3 +1,6 @@
+# vijMulti 1.1.2 (2026-11-08)
+
+
 # vijMulti 1.1.1 (2026-10-16)
 * MCA: Fixed total inertia for Greenacre correction
 * small fixes and optimizations

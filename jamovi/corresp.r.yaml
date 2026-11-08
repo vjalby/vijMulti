@@ -122,7 +122,6 @@ items:
           format: pc
       clearWith:
         - mode
-        - dimNum
         - rows
         - cols
         - counts

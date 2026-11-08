@@ -366,7 +366,7 @@ multcorrespClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             # Because of missing values/incomplete cases, the row number is unknown at init stage.
         },
         .fillCategoryTable = function(table, res, nDim, supplIdx) {
-            previousfactor <- res$cat$factors[1]
+            factors <- res$cat$factors
             for (i in seq_len(nrow(res$cat$coord))) {
                 values <- list(
                     factor = res$varDisplayName[[res$cat$factors[i]]],
@@ -384,10 +384,10 @@ multcorrespClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                     values[[paste0("ctr",j)]] <- private$.nullOrValue(res$cat$contrib[i,j])
                 }
                 table$addRow(rowKey = as.character(i), values = values)
-                if( res$cat$factors[i] != previousfactor) {
-                    table$addFormat(rowKey = as.character(i), 1, jmvcore::Cell.BEGIN_END_GROUP)
-                    previousfactor <- res$cat$factors[i]
-                }
+                if (i == 1 || factors[i] != factors[i - 1])
+                    table$addFormat(rowKey = as.character(i), 1, jmvcore::Cell.BEGIN_GROUP)
+                if (i == length(factors) || factors[i + 1] != factors[i])
+                    table$addFormat(rowKey = as.character(i), 1, jmvcore::Cell.END_GROUP)
             }
             if (self$options$normalization %in% c("principal", "catprincipal"))
                 table$setNote("normalization", paste("†",.("Principal coordinates")))

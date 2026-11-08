@@ -83,6 +83,11 @@ eager build to surface any ggplot2 warning/message as a Notice instead of lettin
 swallow it (only active when `DESCRIPTION`'s `Version` has a 4th component, e.g. `0.0.1.0` — no-op
 on a plain `x.y.z` release version; the package is found via `utils::packageName()`).
 
+**To do later (noted 2026-11-02):** vijPlots' `utils.R` now has `vijLabelNA(self)` (missing values
+kept as a category labelled `"(Missing)"`, fr "(Manquant)", plus a `labels` argument on
+`vijColorScale()`), not yet brought over here. The two `utils.R` have other differences, not
+reviewed: don't copy the file wholesale without comparing them first. See vijPlots' `CLAUDE.md`.
+
 ### CA/MCA backends (`ca` package)
 
 Both analyses use Greenacre's `ca` package (FactoMineR was dropped in 1.1.0: lighter module, and

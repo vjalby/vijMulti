@@ -689,7 +689,6 @@ multcorrespResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                         `type`="number", 
                         `format`="pc")),
                 clearWith=list(
-                    "dimNum",
                     "vars",
                     "supplVars",
                     "method",
@@ -709,7 +708,6 @@ multcorrespResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                 clearWith=list(
                     "vars",
                     "supplVars",
-                    "method",
                     "dimNum",
                     "descAsVarName")))
             self$add(jmvcore::Table$new(
