@@ -7,6 +7,10 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
 "Language: fr\n"
 
+#: R/corresp.b.R
+msgid "\"{var}\" is a reserved name. Please rename this variable."
+msgstr "« {var} » est un nom réservé. Veuillez renommer cette variable."
+
 #: R/principal.b.R
 msgid "{rotation} rotation"
 msgstr "Rotation {rotation}"
@@ -634,12 +638,20 @@ msgid "Counts are not integers. The χ² test may not be valid."
 msgstr "Les effectifs ne sont pas entiers. Le test du χ² peut ne pas être valide."
 
 #: R/corresp.b.R
+msgid "Counts may not all be zero."
+msgstr "Les effectifs ne peuvent pas être tous nuls."
+
+#: R/corresp.b.R
 msgid "Counts may not be infinite."
 msgstr "Les effectifs ne peuvent pas être infinis."
 
 #: R/corresp.b.R
 msgid "Counts may not be negative."
 msgstr "Les effectifs ne peuvent pas être négatifs."
+
+#: R/corresp.b.R
+msgid "Counts may not contain missing values."
+msgstr "Les effectifs ne peuvent pas contenir de valeurs manquantes."
 
 #: principal/options/biplotType/covPlot.title
 msgid "Covariance"
@@ -1763,7 +1775,7 @@ msgstr "Taille du texte & couleurs"
 
 #: R/corresp.b.R
 msgid "The category names {names} are reserved. Please rename these categories."
-msgstr ""
+msgstr "Les noms de catégories {names} sont réservés. Veuillez renommer ces catégories."
 "Les noms de catégories {names} sont réservés. Veuillez renommer ces "
 "catégories."
 

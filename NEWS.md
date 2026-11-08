@@ -1,4 +1,5 @@
 # vijMulti 1.1.2 (2026-11-08)
+* CA: missing, negative or infinite counts are now always rejected; zero counts are treated as no observation
 
 
 # vijMulti 1.1.1 (2026-10-16)

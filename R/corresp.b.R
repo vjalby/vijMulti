@@ -30,6 +30,10 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             if (is.null(rowVarName) || is.null(colVarName))
                 return(NULL)
 
+            reservedVar <- intersect(c(rowVarName, colVarName), ".COUNTS")
+            if (length(reservedVar) > 0)
+                vijErrorMessage(self, jmvcore::format(.("\"{var}\" is a reserved name. Please rename this variable."), var = reservedVar[1]))
+
             data <- jmvcore::select(self$data, c(rowVarName, colVarName))
 
             # Weight data
@@ -45,7 +49,19 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 data[['.COUNTS']] <- as.integer(rep(1, nrow(data)))
             }
 
-            data <- droplevels(jmvcore::naOmit(data))   # categories left without observations are dropped
+            # Validate .COUNTS on every row, before leaving out missing values
+            if (any(is.na(data$.COUNTS)))
+                vijErrorMessage(self, .('Counts may not contain missing values.'))
+            if (any(data$.COUNTS < 0))
+                vijErrorMessage(self, .('Counts may not be negative.'))
+            if (any(is.infinite(data$.COUNTS)))
+                vijErrorMessage(self, .('Counts may not be infinite.'))
+
+            data <- jmvcore::naOmit(data)
+            if (nrow(data) > 0 && sum(data$.COUNTS) == 0)
+                vijErrorMessage(self, .('Counts may not all be zero.'))
+            # A zero weight means no observation: those rows are dropped, then the categories left without observations
+            data <- droplevels(data[data$.COUNTS > 0, , drop = FALSE])
             return(data)
         },
         # Contingency table cross-tabulated from an observation table (NULL if no data)
@@ -55,13 +71,6 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 return(NULL)
             if (nrow(data) == 0) {
                 vijErrorMessage(self, .("Not enough data to compute CA."))
-            }
-
-            if (any(data$.COUNTS < 0)) {
-                vijErrorMessage(self, .('Counts may not be negative.'))
-            }
-            if (any(is.infinite(data$.COUNTS))) {
-                vijErrorMessage(self, .('Counts may not be infinite.'))
             }
 
             formula <- jmvcore::composeFormula('.COUNTS', c(self$options$rows, self$options$cols))

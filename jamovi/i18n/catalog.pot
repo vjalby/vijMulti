@@ -7,6 +7,10 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
 "Language: c\n"
 
+#: R/corresp.b.R
+msgid "\"{var}\" is a reserved name. Please rename this variable."
+msgstr ""
+
 #: R/principal.b.R
 msgid "{rotation} rotation"
 msgstr ""
@@ -521,11 +525,19 @@ msgid "Counts are not integers. The χ² test may not be valid."
 msgstr ""
 
 #: R/corresp.b.R
+msgid "Counts may not all be zero."
+msgstr ""
+
+#: R/corresp.b.R
 msgid "Counts may not be infinite."
 msgstr ""
 
 #: R/corresp.b.R
 msgid "Counts may not be negative."
+msgstr ""
+
+#: R/corresp.b.R
+msgid "Counts may not contain missing values."
 msgstr ""
 
 #: principal/options/biplotType/covPlot.title

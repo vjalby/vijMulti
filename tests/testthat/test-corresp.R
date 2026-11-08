@@ -156,6 +156,58 @@ test_that("corresp: contingency table", {
     expect_equal(unname(ct$.margin), c(22, 36, 102, 176, 50, 386))
 })
 
+# Small aggregated observation table (3 x 3), for testing the counts (weights) checks
+weightData <- data.frame(
+    R = factor(c("a", "a", "b", "b", "c", "c", "a", "b", "c")),
+    C = factor(c("x", "y", "x", "y", "x", "y", "z", "z", "z")),
+    N = c(5, 3, 2, 6, 4, 4, 3, 2, 5)
+)
+
+# do.call(): the generated wrapper quotes its variable arguments, so `rows = rows` would pass the name "rows"
+corresp_weighted <- function(data, rows = "R") {
+    do.call(vijMulti::corresp, list(
+        data = data,
+        mode = "obsTable",
+        rows = rows,
+        cols = "C",
+        columns = NULL,
+        rowLabels = NULL,
+        counts = "N",
+        showContingency = TRUE
+    ))
+}
+
+test_that("corresp: missing counts are rejected (mode = obsTable)", {
+    naData <- weightData
+    naData$N[9] <- NA
+    expect_error(corresp_weighted(naData), "Counts may not contain missing values.")
+})
+
+test_that("corresp: negative counts are rejected even on a row with a missing value (mode = obsTable)", {
+    negData <- weightData
+    negData$R[1] <- NA
+    negData$N[1] <- -5
+    expect_error(corresp_weighted(negData), "Counts may not be negative.")
+})
+
+test_that("corresp: zero counts mean no observation (mode = obsTable)", {
+    # Category "d" only has zero counts: it is dropped, like a category without observations
+    zeroData <- rbind(weightData, data.frame(R = "d", C = c("x", "y"), N = 0))
+    ct <- corresp_weighted(zeroData)$contingency$asDF
+    expect_equal(unname(ct$.row), c("a", "b", "c", "Active Margin"))
+    expect_equal(unname(ct$.margin), c(11, 10, 13, 34))
+
+    allZeroData <- weightData
+    allZeroData$N <- 0
+    expect_error(corresp_weighted(allZeroData), "Counts may not all be zero.")
+})
+
+test_that("corresp: a variable named .COUNTS is rejected (mode = obsTable)", {
+    reservedData <- weightData
+    names(reservedData)[1] <- ".COUNTS"
+    expect_error(corresp_weighted(reservedData, rows = ".COUNTS"), "\".COUNTS\" is a reserved name.", fixed = TRUE)
+})
+
 test_that("corresp: profiles with a supplementary row and column", {
     # Only the profiles used by the analysis are shown: row profiles of every row
     # over the active columns, column profiles of every column over the active rows
