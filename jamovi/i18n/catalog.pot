@@ -11,6 +11,10 @@ msgstr ""
 msgid "\"{var}\" is a reserved name. Please rename this variable."
 msgstr ""
 
+#: R/utils.R
+msgid "(Missing)"
+msgstr ""
+
 #: R/principal.b.R
 msgid "{rotation} rotation"
 msgstr ""

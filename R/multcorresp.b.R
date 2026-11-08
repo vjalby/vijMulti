@@ -520,13 +520,13 @@ multcorrespClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                         plot <- plot + ggrepel::geom_text_repel(data = unique(obsdata),
                                                                 ggplot2::aes(x = x, y = y, label = label),
                                                                 size = self$options$labelSize/ggplot2::.pt,
-                                                                color = self$options$obsColor, seed = 123)
+                                                                color = self$options$obsColor, seed = 123, na.rm = TRUE)
                     } else {
                         plot <- plot + ggplot2::geom_text(data = unique(obsdata),
                                                           ggplot2::aes(x = x, y = y, label = label),
                                                     size = self$options$labelSize/ggplot2::.pt,
                                                     color = self$options$obsColor,
-                                                    nudge_y = ggheight*0.03, hjust = 0.5, check_overlap = TRUE)
+                                                    nudge_y = ggheight*0.03, hjust = 0.5, check_overlap = TRUE, na.rm = TRUE)
                     }
                 }
             }

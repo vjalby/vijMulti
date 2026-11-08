@@ -83,10 +83,18 @@ eager build to surface any ggplot2 warning/message as a Notice instead of lettin
 swallow it (only active when `DESCRIPTION`'s `Version` has a 4th component, e.g. `0.0.1.0` — no-op
 on a plain `x.y.z` release version; the package is found via `utils::packageName()`).
 
-**To do later (noted 2026-11-02):** vijPlots' `utils.R` now has `vijLabelNA(self)` (missing values
-kept as a category labelled `"(Missing)"`, fr "(Manquant)", plus a `labels` argument on
-`vijColorScale()`), not yet brought over here. The two `utils.R` have other differences, not
-reviewed: don't copy the file wholesale without comparing them first. See vijPlots' `CLAUDE.md`.
+`vijLabelNA(self)` (from vijPlots, 2026-11-08) returns a labelling function showing `NA` as
+`"(Missing)"` (fr "(Manquant)"). Used only for PCA's group variable: its legend (through the
+`labels` argument of `vijColorScale()`) and the Observations table's Group column. The real `NA`
+stays in the plot state, labelled at plot time (so in the current language, as in vijPlots).
+Deliberately not used for a missing *label* (PCA/MCA `labelVar`): the point is left without a text
+label, rather than showing several identical "(Missing)" labels (user's choice, 2026-11-08).
+The observation text layers have `na.rm = TRUE`, so a missing label just drops that text, without
+ggplot2's "Removed 1 row containing missing values" warning (surfaced by `vijDebugPlot()` in dev
+versions) — the same mechanism as vijPlots' `piechart`/`barplot` hidden labels.
+Compared with vijPlots' `utils.R` on 2026-11-08: vijMulti's is a strict subset; the only functions
+left out (`vijFormatCount()`, `vijGridLines()`, `vijHideAxis()`) are unused here — don't copy the
+file wholesale.
 
 ### CA/MCA backends (`ca` package)
 

@@ -11,6 +11,10 @@ msgstr ""
 msgid "\"{var}\" is a reserved name. Please rename this variable."
 msgstr "« {var} » est un nom réservé. Veuillez renommer cette variable."
 
+#: R/utils.R
+msgid "(Missing)"
+msgstr "(Manquant)"
+
 #: R/principal.b.R
 msgid "{rotation} rotation"
 msgstr "Rotation {rotation}"
@@ -1775,7 +1779,7 @@ msgstr "Taille du texte & couleurs"
 
 #: R/corresp.b.R
 msgid "The category names {names} are reserved. Please rename these categories."
-msgstr "Les noms de catégories {names} sont réservés. Veuillez renommer ces catégories."
+msgstr ""
 "Les noms de catégories {names} sont réservés. Veuillez renommer ces "
 "catégories."
 

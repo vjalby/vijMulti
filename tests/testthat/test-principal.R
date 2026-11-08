@@ -214,3 +214,18 @@ test_that("principal: titles, axis and legend text options", {
     )$obsPlot
     expect_plot_snapshot("principal-titles-axis-legend", testPlot)
 })
+
+test_that("principal: a missing group is shown as (Missing)", {
+    naData <- testData
+    naData$Species[2] <- NA
+    r <- vijMulti::principal(
+        data = naData,
+        vars = c("Sepal_Length", "Sepal_Width", "Petal_Length", "Petal_Width"),
+        labelVar = NULL,
+        groupVar = "Species",
+        showObservations = TRUE
+    )
+    expect_equal(unname(r$obsTable$asDF$group[1:3]), c("setosa", "(Missing)", "setosa"))
+    # The plot state keeps the real NA (labelled at plot time, in the current language)
+    expect_true(is.na(r$obsPlot$state$obsData$group[2]))
+})

@@ -7,6 +7,12 @@
                 "lang": "fr",
                 "plural_forms": "nplurals=2; plural=(n!=1);"
             },
+            "\"{var}\" is a reserved name. Please rename this variable.": [
+                "« {var} » est un nom réservé. Veuillez renommer cette variable."
+            ],
+            "(Missing)": [
+                "(Manquant)"
+            ],
             "{rotation} rotation": [
                 "Rotation {rotation}"
             ],
@@ -241,11 +247,17 @@
             "Counts are not integers. The χ² test may not be valid.": [
                 "Les effectifs ne sont pas entiers. Le test du χ² peut ne pas être valide."
             ],
+            "Counts may not all be zero.": [
+                "Les effectifs ne peuvent pas être tous nuls."
+            ],
             "Counts may not be infinite.": [
                 "Les effectifs ne peuvent pas être infinis."
             ],
             "Counts may not be negative.": [
                 "Les effectifs ne peuvent pas être négatifs."
+            ],
+            "Counts may not contain missing values.": [
+                "Les effectifs ne peuvent pas contenir de valeurs manquantes."
             ],
             "Covariance": [
                 "Covariance"

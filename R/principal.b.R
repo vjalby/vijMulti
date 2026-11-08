@@ -283,11 +283,11 @@ principalClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                     if (!is.null(self$options$groupVar) && self$options$labelColor == "none") {
                         plot <- plot + ggrepel::geom_text_repel(data = obsData, ggplot2::aes(x = x, y = y, label = Label, color = group),
                                                                 box.padding = 0.4, min.segment.length = 0.6,
-                                                                size = self$options$obsLabelSize/ggplot2::.pt, seed = 123)
+                                                                size = self$options$obsLabelSize/ggplot2::.pt, seed = 123, na.rm = TRUE)
                     } else {
                         plot <- plot + ggrepel::geom_text_repel(data = obsData, ggplot2::aes(x = x, y = y, label = Label),
                                                                 color = labelColor, box.padding = 0.4, min.segment.length = 0.6,
-                                                                size = self$options$obsLabelSize/ggplot2::.pt, seed = 123)
+                                                                size = self$options$obsLabelSize/ggplot2::.pt, seed = 123, na.rm = TRUE)
                     }
                 }
             }
@@ -312,7 +312,7 @@ principalClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
              }
 
             # Theme and colors
-            plot <- plot + ggtheme + vijColorScale(self$options$colorPalette, "color", theme)
+            plot <- plot + ggtheme + vijColorScale(self$options$colorPalette, "color", theme, labels = vijLabelNA(self))
 
             # Axe limits
             if (plotType == "var") {
@@ -480,6 +480,7 @@ principalClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             table$addColumn("qlt", title = .("Extraction"), type = "number", format = "zto")
         },
         .fillObservationTable = function(table, res, nDim) {
+            labelNA <- vijLabelNA(self)
             nrows <- nrow(res$scores)
             if (nrows > 100) {
                 table$setNote("100", .("Limited to the first 100 observations"))
@@ -491,7 +492,7 @@ principalClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 if (!is.null(self$options$labelVar))
                     values["label"] <- as.character(res$rowlabels[i])
                 if (!is.null(self$options$groupVar))
-                    values["group"] <- as.character(res$group[i])
+                    values["group"] <- labelNA(res$group[i])
                 values["qlt"] <- res$qlt[i]
                 for(j in 1:nDim) {
                     if (self$options$stdScores)
