@@ -71,11 +71,12 @@ principalClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 vijErrorMessage(self, .("The number of dimensions cannot be greater than the number of observations."))
             }
 
-            # Check for constant variables
-            varValues <- vapply(data[, self$options$vars, drop = FALSE], stats::var, FUN.VALUE = numeric(1))
-
-            if (any(varValues < .Machine$double.eps)) {
-                constantVars <- self$options$vars[varValues < .Machine$double.eps]
+            # Check for constant variables. Exact comparison: a threshold on the variance would depend
+            # on the variable's unit (1e-9 * (1:5) is not constant)
+            isConstant <- vapply(data[, self$options$vars, drop = FALSE], function(x) min(x) == max(x),
+                                 FUN.VALUE = logical(1))
+            if (any(isConstant)) {
+                constantVars <- self$options$vars[isConstant]
                 vijErrorMessage(
                     self,
                     jmvcore::format(

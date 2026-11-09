@@ -229,3 +229,19 @@ test_that("principal: a missing group is shown as (Missing)", {
     # The plot state keeps the real NA (labelled at plot time, in the current language)
     expect_true(is.na(r$obsPlot$state$obsData$group[2]))
 })
+
+test_that("principal: constant variables are detected whatever their unit", {
+    run <- function(data) vijMulti::principal(data = data, vars = c("Sepal_Length", "Sepal_Width", "Petal_Length", "Petal_Width"),
+                                              labelVar = NULL, groupVar = NULL)
+    ref <- run(testData)
+    # A variable in small units (variance 6e-19 < eps) is not constant: same results
+    smallData <- testData
+    smallData$Petal_Width <- smallData$Petal_Width * 1e-9
+    expect_equal(unname(run(smallData)$summaryTable$asDF$eigenvalue), unname(ref$summaryTable$asDF$eigenvalue))
+    # A constant variable is rejected
+    constData <- testData
+    constData$Petal_Width <- 7
+    expect_error(run(constData),
+                 "The following variable(s) are constant and cannot be used in a principal component analysis: Petal_Width.",
+                 fixed = TRUE)
+})
