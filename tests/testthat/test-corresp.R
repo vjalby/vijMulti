@@ -457,3 +457,43 @@ test_that("corresp: titles, axis and legend text options", {
     )$biplot
     expect_plot_snapshot("corresp-titles-axis-legend", testPlot)
 })
+
+test_that("corresp: null-inertia axes are shown but not usable (proportional rows)", {
+    # R3 and R4 are proportional to R1 and R2: only 2 non-null axes out of 3
+    propData <- data.frame(
+        Label = factor(c("R1", "R2", "R3", "R4", "R5"), levels = c("R1", "R2", "R3", "R4", "R5")),
+        C1 = c(10L, 4L, 20L, 8L, 6L),
+        C2 = c(20L, 2L, 40L, 4L, 3L),
+        C3 = c(5L, 12L, 10L, 24L, 5L),
+        C4 = c(8L, 9L, 16L, 18L, 9L)
+    )
+    args <- list(mode = "contTable", rows = NULL, cols = NULL, columns = c("C1", "C2", "C3", "C4"),
+                 rowLabels = "Label", counts = NULL)
+    r <- do.call(vijMulti::corresp, c(list(data = propData), args))
+    # All 3 dimensions are shown, the null one as exactly 0
+    eig <- r$eigenvalues$asDF
+    expect_equal(unname(eig$dim), c("1", "2", "3", "Total"))
+    expect_identical(unname(eig$singular[3]), 0)
+    expect_identical(unname(eig$inertia[3]), 0)
+    # ... but only the 2 non-null ones are usable, the Summary table being filled anyway
+    a <- correspClass$new(options = do.call(correspOptions$new, c(args, list(dimNum = 3))), data = propData)
+    a$init()
+    expect_error(a$run(), "less than or equal to 2")
+    expect_equal(unname(a$results$eigenvalues$asDF$dim), c("1", "2", "3", "Total"))
+    # Only one non-null axis (R5 left out): a 2-dimension CA is rejected
+    expect_error(do.call(vijMulti::corresp, c(list(data = propData[1:4, ]), args)),
+                 "at least two dimensions")
+    # No non-null axis at all (quasi-independent table with a tiny but non-zero χ², passing the
+    # χ² check): rejected before the inertia table is filled
+    indepData <- data.frame(
+        Label = factor(c("R1", "R2", "R3")),
+        C1 = c(20000.001, 40000, 60000),
+        C2 = c(50000, 100000, 150000),
+        C3 = c(30000, 60000, 90000),
+        C4 = c(40000, 80000, 120000)
+    )
+    a <- correspClass$new(options = do.call(correspOptions$new, args), data = indepData)
+    a$init()
+    expect_error(a$run(), "at least two dimensions")
+    expect_equal(nrow(a$results$eigenvalues$asDF), 0)
+})

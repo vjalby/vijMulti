@@ -456,6 +456,10 @@ msgstr "Tableau de Burt"
 msgid "Burt matrix method"
 msgstr "Méthode du tableau de Burt"
 
+#: R/corresp.b.R
+msgid "CA requires at least two dimensions with non-zero inertia."
+msgstr "L'analyse des correspondances nécessite au moins deux dimensions d'inertie non nulle."
+
 #: corresp/ui[7][2][1][0].label
 #: multcorresp/ui[8][2][1][0].label
 #: principal/ui[6][2][1][0].label
@@ -1812,14 +1816,6 @@ msgstr "Le nombre de dimensions ne peut pas être supérieur au nombre d'observa
 #: R/principal.b.R
 msgid "The number of dimensions cannot be greater than the number of variables."
 msgstr "Le nombre de dimensions ne peut pas être supérieur au nombre de variables."
-
-#: R/corresp.b.R
-msgid ""
-"The singular value for dimension {n} is close to zero. The plots may not be "
-"accurate."
-msgstr ""
-"La valeur singulière pour la dimension {n} est proche de zéro. Les "
-"graphiques peuvent être approximatifs."
 
 #: R/corresp.b.R
 msgid "The χ² statistic is equal to zero."

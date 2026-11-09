@@ -31,8 +31,10 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 return(NULL)
 
             reservedVar <- intersect(c(rowVarName, colVarName), ".COUNTS")
-            if (length(reservedVar) > 0)
-                vijErrorMessage(self, jmvcore::format(.("\"{var}\" is a reserved name. Please rename this variable."), var = reservedVar[1]))
+            if (length(reservedVar) > 0) {
+                errorMessage <- jmvcore::format(.("\"{var}\" is a reserved name. Please rename this variable."), var = reservedVar[1])
+                vijErrorMessage(self, errorMessage)
+            }
 
             data <- jmvcore::select(self$data, c(rowVarName, colVarName))
 
@@ -439,14 +441,8 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             if (self$options$showChisq)
                 private$.fillChisqTable(self$results$chisq, chisqres)
 
-            # Check solution dimension
-            nDim <- self$options$dimNum
-            if (nDim > maxDim) {
-                errorMessage <- jmvcore::format(.("Number of dimensions must be less than or equal to {maxDim}."), maxDim = maxDim)
-                vijErrorMessage(self,errorMessage)
-            }
-
             #### Compute CA ####
+            nDim <- self$options$dimNum
             res <- tryCatch(
                     private$.ca(contingencyTable, row.sup = supplementaryRows, col.sup = supplementaryCols, ncp = nDim, norm = self$options$normalization),
                     error = function (e) NULL
@@ -456,9 +452,25 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 vijErrorMessage(self, .("Unable to compute correspondence analysis for the selected data."))
             }
 
+            # No axis with a non-null inertia (e.g. a quasi-independent table with non-integer counts,
+            # whose tiny χ² passed the check above): nothing to show, not even the inertia table
+            if (res$nd.max == 0) {
+                vijErrorMessage(self, .("CA requires at least two dimensions with non-zero inertia."))
+            }
+
             #### Inertia Table ####
 
             private$.fillInertiaTable(self$results$eigenvalues, res)
+
+            # Check solution dimension (after filling the inertia table, which shows why)
+            if (nDim > res$nd.max) {
+                if (res$nd.max < 2) {
+                    vijErrorMessage(self, .("CA requires at least two dimensions with non-zero inertia."))
+                } else {
+                    errorMessage <- jmvcore::format(.("Number of dimensions must be less than or equal to {maxDim}."), maxDim = res$nd.max)
+                    vijErrorMessage(self, errorMessage)
+                }
+            }
 
             #### Summary Tables ####
 
@@ -478,11 +490,6 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             }
             if (xaxis == yaxis) {
                 vijErrorMessage(self, .("Axis numbers cannot be equal."))
-            }
-            if (res$sv[max(xaxis, yaxis)] < .Machine$double.eps) {
-                message <- jmvcore::format(.("The singular value for dimension {n} is close to zero. The plots may not be accurate."), n = max(xaxis, yaxis))
-                pos <- private$.warningPos()
-                vijWarningMessage(self, message, pos = pos)
             }
 
             #### Plots ####
@@ -522,25 +529,36 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                          suprow = if (is.null(row.sup)) NA else row.sup,
                          supcol = if (is.null(col.sup)) NA else col.sup)
             sv <- ca$sv                                    # singular values
+            # Only the axes with a non-null inertia are usable: ca also returns numerically zero
+            # singular values (e.g. proportional rows).
+            # All eigenvalues are kept for the Summary table (the null ones set to exactly 0),
+            # but coordinates are only computed on the first K axes.
+            K <- sum(sv > sqrt(.Machine$double.eps))
+            if (K == 0)
+                return(list(nd.max = 0L))                  # No usable axis: rejected in .run()
+            svAll <- c(sv[seq_len(K)], rep(0, length(sv) - K))
+            eigAll <- svAll^2
+            sv <- sv[seq_len(K)]
             eig <- sv^2                                    # eigenvalues (principal inertias)
-            K <- length(sv)
-            dims <- seq_len(ncp)
+            # Error message will be displayed in run() if ncp > K
+            dims <- seq_len(min(ncp, K))
             actCol <- setdiff(seq_along(ca$colnames), col.sup)
 
             #### Axis orientation ####
             # Arbitrary in the computation: on each axis, the active column farthest from the origin is positive
-            flip <- apply(ca$colcoord[actCol, , drop = FALSE], 2, function(x) sign(x[which.max(abs(x))]))
-            rowStd <- sweep(ca$rowcoord, 2, flip, FUN = "*")
-            colStd <- sweep(ca$colcoord, 2, flip, FUN = "*")
+            flip <- apply(ca$colcoord[actCol, seq_len(K), drop = FALSE], 2, function(x) sign(x[which.max(abs(x))]))
+            rowStd <- sweep(ca$rowcoord[, seq_len(K), drop = FALSE], 2, flip, FUN = "*")
+            colStd <- sweep(ca$colcoord[, seq_len(K), drop = FALSE], 2, flip, FUN = "*")
             dimnames(rowStd) <- list(ca$rownames, paste("Dim", seq_len(K)))   # "Dim k": used by the plots
             dimnames(colStd) <- list(ca$colnames, paste("Dim", seq_len(K)))
 
             #### Eigenvalues ####
             res <- list()
-            res$sv <- sv
-            res$eig <- cbind("eigenvalue" = eig,
-                             "percentage of variance" = eig / sum(eig),
-                             "cumulative percentage of variance" = cumsum(eig) / sum(eig))
+            res$sv <- svAll
+            res$eig <- cbind("eigenvalue" = eigAll,
+                             "percentage of variance" = eigAll / sum(eigAll),
+                             "cumulative percentage of variance" = cumsum(eigAll) / sum(eigAll))
+            res$nd.max <- K                                # Nb of usable (non-null) axes
 
             #### Rows and columns ####
             # Coordinates scaled according to the normalization; cos2 and contributions use principal coordinates

@@ -139,6 +139,9 @@
             "Burt matrix method": [
                 "Méthode du tableau de Burt"
             ],
+            "CA requires at least two dimensions with non-zero inertia.": [
+                "L'analyse des correspondances nécessite au moins deux dimensions d'inertie non nulle."
+            ],
             "Caption Style": [
                 "Style des légendes"
             ],
@@ -909,9 +912,6 @@
             ],
             "The number of dimensions cannot be greater than the number of variables.": [
                 "Le nombre de dimensions ne peut pas être supérieur au nombre de variables."
-            ],
-            "The singular value for dimension {n} is close to zero. The plots may not be accurate.": [
-                "La valeur singulière pour la dimension {n} est proche de zéro. Les graphiques peuvent être approximatifs."
             ],
             "The χ² statistic is equal to zero.": [
                 "La statistique du χ² est égale à zéro."
