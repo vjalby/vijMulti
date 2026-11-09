@@ -3,6 +3,7 @@
 * PCA: a missing group is shown as "(Missing)" instead of "NA" (legend) or an empty cell (Observations table)
 * CA/MCA: dimensions with null inertia (e.g. proportional rows, redundant variables) are still listed in the Summary table but can no longer be used as dimensions
 * MCA: fixed an error with variable names containing spaces or special characters
+* CA: fixed a column missing from the tables when a supplementary column, once marked with "*", had the same name as an active one
 
 
 # vijMulti 1.1.1 (2026-10-16)

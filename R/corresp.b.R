@@ -135,24 +135,32 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             contingencyTable[nrow(contingencyTable), supplementaryCols] <- NA
             return(contingencyTable)
         },
-        .displayName = function(key) {
-            # Table column keys and row labels: the margins use reserved keys (".margin", ".mass")
-            # rather than their translated names, so a category can't collide with them
-            switch(key, ".margin" = .("Active Margin"), ".mass" = .("Mass"), key)
+        .displayName = function(keys, idx, sup) {
+            # Displayed names of the rows/columns whose keys are at positions idx:
+            # - the margins use reserved keys (".margin", ".mass") rather than their translated names,
+            #   so a category can't collide with them;
+            # - the supplementary ones (idx in sup) are marked with " *". Display only: the tables, ca
+            #   and the plots keep the plain category names, which are unique.
+            labels <- ifelse(idx %in% sup, paste(keys, "*"), keys)
+            labels[keys == ".margin"] <- .("Active Margin")
+            labels[keys == ".mass"] <- .("Mass")
+            labels
         },
-        .fillProfileTable = function(profileTable, profiles, supplementary, suppText, rowName, colName) {
+        .fillProfileTable = function(profileTable, profiles, supplementaryRows, supplementaryCols, suppText, rowName, colName) {
             # Built in .run(), not .init(), like the contingency table (see .fillContingencyTable):
             # rows/columns and "*" marks depend on the data and the validated supplementary options.
+            # Only one of supplementaryRows/supplementaryCols is given: the dimension that holds
+            # every category, in table order (the other one only holds active categories)
             profileTable$addColumn(".row", type = "text", title = rowName)
-            for (col in colnames(profiles)) {
-                profileTable$addColumn(col, title = private$.displayName(col), type = "number", format = "zto", superTitle = colName)
+            for (j in seq_len(ncol(profiles))) {
+                profileTable$addColumn(colnames(profiles)[j], title = private$.displayName(colnames(profiles)[j], j, supplementaryCols), type = "number", format = "zto", superTitle = colName)
             }
             for (i in seq(nrow(profiles))) {
                 profileTable$addRow(i, values = profiles[i,])
-                profileTable$setCell(rowNo = i, ".row", private$.displayName(rownames(profiles)[i]))
+                profileTable$setCell(rowNo = i, ".row", private$.displayName(rownames(profiles)[i], i, supplementaryRows))
             }
             profileTable$addFormat(rowNo = nrow(profiles), 1, jmvcore::Cell.BEGIN_END_GROUP)
-            if (!is.null(supplementary))
+            if (length(supplementaryRows) + length(supplementaryCols) > 0)
                 profileTable$setNote("supp", paste("*", suppText))
         },
         .fillContingencyTable = function(table, contingencyTable, supplementaryRows, supplementaryCols,
@@ -167,15 +175,14 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             rownames(fullTable)[nrow(fullTable)] <- ".margin"
             colnames(fullTable)[ncol(fullTable)] <- ".margin"
             table$addColumn(".row", type="text", title = rowVarNameString)
-            for (col in colnames(fullTable)) {
-                if (col != ".margin")
-                    table$addColumn(col, type = ifelse(isDecimal,"number","integer"), superTitle = colVarNameString)
-                else
-                    table$addColumn(col, title = private$.displayName(col), type = ifelse(isDecimal,"number","integer"))
+            for (j in seq_len(ncol(fullTable))) {
+                col <- colnames(fullTable)[j]
+                table$addColumn(col, title = private$.displayName(col, j, supplementaryCols), type = ifelse(isDecimal,"number","integer"),
+                                superTitle = if (col != ".margin") colVarNameString)
             }
             for (i in seq(nrow(fullTable))) {
                 table$addRow(i, values = fullTable[i,])
-                table$setCell(rowNo = i, ".row", private$.displayName(rownames(fullTable)[i]))
+                table$setCell(rowNo = i, ".row", private$.displayName(rownames(fullTable)[i], i, supplementaryRows))
             }
             table$addFormat(rowNo = nrow(fullTable), 1, jmvcore::Cell.BEGIN_END_GROUP)
             # Change NaN/NA to NULL. Is there another way to have empty cells ?
@@ -235,7 +242,7 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             for (i in seq_len(nrow(points$coord))) {
                 theValues <- list(id = i, margin = nullOrValue(points$mass[i]), inertia = nullOrValue(points$inertia[i]),
                                   qlt = sum(points$cos2[i, 1:nDim], na.rm = TRUE))
-                theValues[[labelCol]] <- rownames(points$coord)[i]
+                theValues[[labelCol]] <- private$.displayName(rownames(points$coord)[i], i, supplementary)
                 for (j in seq(nDim)) {
                     theValues[[paste0("score",j)]] <- points$coord[i,j]
                     theValues[[paste0("contrib",j)]] <- nullOrValue(points$contrib[i,j])
@@ -260,8 +267,8 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             }
             supp
         },
-        # Category names: reject the reserved keys, warn about a trailing "*" (the supplementary mark),
-        # then mark the supplementary rows and columns with " *"
+        # Category names: reject the reserved keys, warn about a trailing "*" (the supplementary mark,
+        # added on display only by .displayName())
         .checkCategoryNames = function(contingencyTable, supplementaryRows, supplementaryCols) {
             catNames <- c(rownames(contingencyTable), colnames(contingencyTable))
             # ".row", ".margin" and ".mass" are used as row/column keys
@@ -274,11 +281,6 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 vijWarningMessage(self, .('Some row or column names end with "*", which is also used to mark supplementary rows and columns. Consider renaming them to avoid confusion.'),
                                   pos = private$.warningPos())
             }
-            for (i in supplementaryRows)
-                rownames(contingencyTable)[i] <- paste(rownames(contingencyTable)[i], "*")
-            for (j in supplementaryCols)
-                colnames(contingencyTable)[j] <- paste(colnames(contingencyTable)[j], "*")
-            return(contingencyTable)
         },
         .computeChiSquared = function(contingencyTable, supplementaryRows, supplementaryCols) {
             activeContingencyTable <- contingencyTable
@@ -395,7 +397,7 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 .("Supplementary column numbers must be between 1 and {nmax}.")
             )
 
-            contingencyTable <- private$.checkCategoryNames(contingencyTable, supplementaryRows, supplementaryCols)
+            private$.checkCategoryNames(contingencyTable, supplementaryRows, supplementaryCols)
 
             #### Normalisation ####
 
@@ -426,11 +428,11 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             if(self$options$showProfiles) {
                 # Row Profiles (supplementary columns left out)
                 rowProfiles <- private$.getProfile(contingencyTable, supplementaryRows, supplementaryCols)
-                private$.fillProfileTable(self$results$rowProfiles, rowProfiles, supplementaryRows,
+                private$.fillProfileTable(self$results$rowProfiles, rowProfiles, supplementaryRows, NULL,
                                           .("Supplementary rows"), rowVarNameString, colVarNameString)
                 # Column Profiles (supplementary rows left out)
                 colProfiles <- t(private$.getProfile(t(contingencyTable),supplementaryCols, supplementaryRows))
-                private$.fillProfileTable(self$results$colProfiles, colProfiles, supplementaryCols,
+                private$.fillProfileTable(self$results$colProfiles, colProfiles, NULL, supplementaryCols,
                                           .("Supplementary columns"), rowVarNameString, colVarNameString)
             }
 
@@ -586,7 +588,7 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             res <- image$state
             # sup: 1 = row, 2 = rowsup, 3 = column, 4 = colsup
             toDF <- function(points, type) {
-                df <- data.frame(points$coord, sup = type + points$sup, label = rownames(points$coord), check.names = FALSE)
+                df <- data.frame(points$coord, sup = type + points$sup, label = private$.displayName(rownames(points$coord), seq_len(nrow(points$coord)), which(points$sup)), check.names = FALSE)
                 df[order(points$sup), ]   # active points first, then supplementary ones
             }
             ptcoord <- rbind(

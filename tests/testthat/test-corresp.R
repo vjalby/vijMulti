@@ -231,10 +231,10 @@ test_that("corresp: profiles with a supplementary row and column", {
     expect_equal(r$rowProfiles$notes$supp$note, "* Supplementary rows")
 
     cp <- r$colProfiles$asDF
-    expect_equal(names(cp), c(".row", "None", "Light", "Medium", "Heavy *", ".mass"))
+    expect_equal(names(cp), c(".row", "None", "Light", "Medium", "Heavy", ".mass"))
     expect_equal(unname(cp$.row), c("Senior Managers", "Junior Managers", "Senior Employees", "Junior Employees", "Active Margin"))
     expect_equal(unname(cp$None), c(4, 4, 25, 18, 51) / 51)
-    expect_equal(unname(cp[["Heavy *"]]), c(2, 4, 4, 13, 23) / 23)
+    expect_equal(unname(cp$Heavy), c(2, 4, 4, 13, 23) / 23)
     expect_equal(unname(cp$.mass), c(9, 14, 47, 75, 145) / 145)
     expect_equal(r$colProfiles$notes$supp$note, "* Supplementary columns")
 })
@@ -301,6 +301,29 @@ test_that("corresp: categories named like the reserved table keys are rejected",
         "The category names .margin, .mass are reserved.",
         fixed = TRUE
     )
+})
+
+test_that("corresp: a supplementary column marked like an active one keeps its own column", {
+    # Supplementary "a" is shown as "a *", like the active column already named so
+    starData <- data.frame(lab = c("R1", "R2", "R3", "R4", "R5"),
+                           `a *` = c(10, 5, 8, 3, 7), b = c(3, 9, 4, 6, 2), c = c(6, 2, 11, 5, 8),
+                           d = c(4, 8, 3, 9, 5), a = c(5, 1, 2, 7, 4), check.names = FALSE)
+    r <- vijMulti::corresp(data = starData, mode = "contTable", rows = NULL, cols = NULL, counts = NULL,
+                           columns = c("a *", "b", "c", "d", "a"), rowLabels = "lab", supplementaryCols = "5",
+                           showContingency = TRUE, showProfiles = TRUE, showSummaries = TRUE)
+    titles <- function(table) vapply(table$columns, function(col) col$title, character(1), USE.NAMES = FALSE)
+
+    ct <- r$contingency$asDF
+    expect_equal(titles(r$contingency), c("lab", "a *", "b", "c", "d", "a *", "Active Margin"))
+    expect_equal(unname(ct[["a *"]]), c(10, 5, 8, 3, 7, 33))
+    expect_equal(unname(ct$a[1:5]), c(5, 1, 2, 7, 4))
+
+    cp <- r$colProfiles$asDF
+    expect_equal(titles(r$colProfiles), c("lab", "a *", "b", "c", "d", "a *", "Mass"))
+    expect_equal(unname(cp[["a *"]]), c(c(10, 5, 8, 3, 7) / 33, 1))
+    expect_equal(unname(cp$a), c(c(5, 1, 2, 7, 4) / 19, 1))
+
+    expect_equal(unname(r$colSummary$asDF$col), c("a *", "b", "c", "d", "a *"))
 })
 
 test_that("corresp: row and column summary tables (first row)", {
