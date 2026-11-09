@@ -195,6 +195,9 @@ multcorrespClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             n <- nrow(data)                    # Nb of observations
 
             #### MCA ####
+            # mjca() rewrites variable names through data.frame() (make.names: "Taille du foyer" ->
+            # "Taille.du.foyer"): it gets base64-encoded names, already syntactic, decoded below.
+            names(data) <- jmvcore::toB64(names(data))
             mca <- ca::mjca(data, nd = NA,
                             lambda = if (method == "Burt") "Burt" else "indicator",
                             supcol = if (is.null(supcol)) NA else supcol)
@@ -249,7 +252,7 @@ multcorrespClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             supCat <- mca$colsup[!is.na(mca$colsup)]       # mjca returns NA when there is no supplementary category
             count <- unlist(lapply(data, function(x) as.vector(table(x))), use.names = FALSE)   # n_c
             categ <- list()
-            categ$factors <- mca$factors[, "factor"]
+            categ$factors <- jmvcore::fromB64(mca$factors[, "factor"])   # real variable names
             categ$level <- mca$factors[, "level"]           # displayed label
             # Not mca$colpcoord: for supplementary categories in indicator mode, mjca computes it from Burt profiles
             categ$stdcoord <- mca$colcoord[, seq_len(K), drop = FALSE]

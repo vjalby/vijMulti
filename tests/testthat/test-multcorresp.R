@@ -257,3 +257,24 @@ test_that("multcorresp: null-inertia axes are shown but not usable (variables wi
     expect_error(a$run(), "at least two dimensions")
     expect_equal(unname(a$results$eigenvalues$asDF$dim), c("1", "2", "Total"))
 })
+
+test_that("multcorresp: variable names that are not syntactic R names (spaces, accents, symbols)", {
+    plainData <- testData[, c("Origin", "Size", "Type", "Home")]
+    oddData <- stats::setNames(plainData, c("Pays d'origine", "Taille du véhicule", "Type (usage)", "Logement"))
+    run <- function(data) vijMulti::multcorresp(data = data, vars = names(data)[1:3],
+                                                supplVars = names(data)[4], labelVar = NULL,
+                                                showDiscriminations = TRUE, showCategories = TRUE)
+    ref <- run(plainData)
+    r <- run(oddData)
+    # Real names in the tables
+    expect_equal(unname(r$discrim$asDF$var), c("Pays d'origine", "Taille du véhicule", "Type (usage)", "Logement *"))
+    expect_equal(unique(unname(r$categories$asDF$factor)), c("Pays d'origine", "Taille du véhicule", "Type (usage)", "Logement *"))
+    # ... and the same results as with plain names
+    expect_equal(unname(r$discrim$asDF$dim1), unname(ref$discrim$asDF$dim1))
+    expect_equal(unname(r$categories$asDF$coord1), unname(ref$categories$asDF$coord1))
+    expect_equal(unname(r$categories$asDF$coord2), unname(ref$categories$asDF$coord2))
+    # The category plot still finds the ordered variable (connecting path)
+    state <- r$categoryplot$state
+    expect_equal(unique(state$cat$factors), c("Pays d'origine", "Taille du véhicule", "Type (usage)", "Logement"))
+    expect_equal(state$ordVars, "Taille du véhicule")
+})

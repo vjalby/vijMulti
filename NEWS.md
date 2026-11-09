@@ -1,6 +1,8 @@
 # vijMulti 1.1.2 (2026-11-08)
 * CA: missing, negative or infinite counts are now always rejected; zero counts are treated as no observation
 * PCA: a missing group is shown as "(Missing)" instead of "NA" (legend) or an empty cell (Observations table)
+* CA/MCA: dimensions with null inertia (e.g. proportional rows, redundant variables) are still listed in the Summary table but can no longer be used as dimensions
+* MCA: fixed an error with variable names containing spaces or special characters
 
 
 # vijMulti 1.1.1 (2026-10-16)
