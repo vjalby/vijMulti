@@ -1086,6 +1086,10 @@ msgid "MCA Principal Coordinates ({method})"
 msgstr "Coordonnées principales ACM ({method})"
 
 #: R/multcorresp.b.R
+msgid "MCA requires at least two dimensions with non-zero inertia."
+msgstr "L'ACM nécessite au moins deux dimensions d'inertie non nulle."
+
+#: R/multcorresp.b.R
 msgid "MCA Standard Coordinates ({method})"
 msgstr "Coordonnées standardisées ACM ({method})"
 

@@ -973,6 +973,10 @@ msgid "MCA Principal Coordinates ({method})"
 msgstr ""
 
 #: R/multcorresp.b.R
+msgid "MCA requires at least two dimensions with non-zero inertia."
+msgstr ""
+
+#: R/multcorresp.b.R
 msgid "MCA Standard Coordinates ({method})"
 msgstr ""
 

@@ -90,16 +90,20 @@ multcorrespClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 vijErrorMessage(self, .("Unable to compute MCA for the selected variables."))
             }
 
-            if (nDim > res$nd.max) {
-                errorMessage <- jmvcore::format(.("The number of dimensions cannot be greater than {max}."), max = res$nd.max)
-                vijErrorMessage(self, errorMessage)
-            }
-
-            res$varDisplayName <- varDisplayName
-
             #### Inertia Table ####
 
             private$.fillInertiaTable(self$results$eigenvalues, res, method)
+
+            if (nDim > res$nd.max) {
+                if (res$nd.max < 2) {
+                    vijErrorMessage(self, .("MCA requires at least two dimensions with non-zero inertia."))
+                } else {
+                    errorMessage <- jmvcore::format(.("The number of dimensions cannot be greater than {max}."), max = res$nd.max)
+                    vijErrorMessage(self, errorMessage)
+                }
+            }
+
+            res$varDisplayName <- varDisplayName
 
             #### Discrimination Table ####
 
@@ -120,11 +124,9 @@ multcorrespClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
 
             # Check axis values
             if (self$options$xaxis > nDim || self$options$yaxis > nDim) {
-                errorMessage <- .("X-Axis and Y-Axis cannot be greater than the number of dimensions.")
-                vijErrorMessage(self, errorMessage)
+                vijErrorMessage(self, .("X-Axis and Y-Axis cannot be greater than the number of dimensions."))
             } else if (self$options$xaxis == self$options$yaxis) {
-                errorMessage <- .("X-Axis and Y-Axis cannot be equal.")
-                vijErrorMessage(self, errorMessage)
+                vijErrorMessage(self, .("X-Axis and Y-Axis cannot be equal."))
             }
 
             res$ordVars <- ordVars # List of ordered factors
@@ -199,7 +201,14 @@ multcorrespClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             sv <- mca$sv                                   # Indicator: sqrt(lambda) ; Burt: lambda
             eig <- sv^2                                    # Eigenvalues of the analysed matrix
             lambdaI <- if (method == "Burt") sv else eig   # Eigenvalues of the indicator matrix
-            K <- length(eig)
+            # Only the axes with a non-null inertia are usable: mjca also returns numerically zero eigenvalues
+            # All eigenvalues are kept for the Summary table (the null ones set to exactly 0),
+            # but coordinates are only computed on the first K axes.
+            K <- sum(lambdaI > sqrt(.Machine$double.eps) * lambdaI[1])
+            eigAll <- c(eig[seq_len(K)], rep(0, length(eig) - K))
+            sv <- sv[seq_len(K)]
+            eig <- eig[seq_len(K)]
+            lambdaI <- lambdaI[seq_len(K)]
 
             #### Axis orientation ####
             # Arbitrary in the computation: on each axis, the active category farthest from the origin is positive
@@ -210,12 +219,12 @@ multcorrespClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
 
             #### Eigenvalues ####
             res <- list()
-            res$eig <- cbind("eigenvalue" = eig,
-                             "percentage of variance" = eig / sum(eig),
-                             "cumulative percentage of variance" = cumsum(eig) / sum(eig))
-            res$nd.max <- K
-            if (nd > res$nd.max)
-                return(res)
+            res$eig <- cbind("eigenvalue" = eigAll,
+                             "percentage of variance" = eigAll / sum(eigAll),
+                             "cumulative percentage of variance" = cumsum(eigAll) / sum(eigAll))
+            res$nd.max <- K                                # Nb of usable (non-null) axes
+            # Error message will be displayed in run() if nd > res$nd.max
+            nd <- min(nd, res$nd.max)
 
             #### Labels ####
             res$rowlabels <- if (!is.null(rowlabels)) rowlabels else as.character(rownames)
@@ -266,17 +275,17 @@ multcorrespClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             if (method == "Burt") {
                 p <- Q                     # Nb of variables
                 m <- length(categ$factors) - length(supCat)   # Nb of active categories
-                res$totalInertia <- sum(eig)
-                res$adjEig <- matrix(nrow = K, ncol = 5)
-                res$adjEig[,1] <- (p/(p-1))**2 * (sqrt(eig) - 1/p)**2
-                res$adjEig[sqrt(eig) <= 1/p,1] <- 0
+                res$totalInertia <- sum(eigAll)
+                res$adjEig <- matrix(nrow = length(eigAll), ncol = 5)
+                res$adjEig[,1] <- (p/(p-1))**2 * (sqrt(eigAll) - 1/p)**2
+                res$adjEig[sqrt(eigAll) <= 1/p,1] <- 0
                 res$totalInrB <- sum(res$adjEig[,1])
                 res$totalInrG <- (p/(p-1)) * (res$totalInertia - (m-p)/p**2)
                 res$adjEig[,2] <- res$adjEig[,1] / res$totalInrB
                 res$adjEig[,3] <- cumsum(res$adjEig[,2])
                 res$adjEig[,4] <- res$adjEig[,1] / res$totalInrG
                 res$adjEig[,5] <- cumsum(res$adjEig[,4])
-                res$adjEig[sqrt(eig) <= 1/p,] <- rep(NA,5)
+                res$adjEig[sqrt(eigAll) <= 1/p,] <- rep(NA,5)
             }
             return(res)
         },
@@ -300,7 +309,7 @@ multcorrespClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         },
         .fillInertiaTable = function(table, res, method) {
             if (self$options$showSummary) {
-                for (i in seq_len(res$nd.max)) {
+                for (i in seq_len(nrow(res$eig))) {
                     values <- list(
                         dim = i,
                         inertia = res$eig[i,1],

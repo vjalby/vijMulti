@@ -490,6 +490,9 @@
             "MCA Principal Coordinates ({method})": [
                 "Coordonnées principales ACM ({method})"
             ],
+            "MCA requires at least two dimensions with non-zero inertia.": [
+                "L'ACM nécessite au moins deux dimensions d'inertie non nulle."
+            ],
             "MCA Standard Coordinates ({method})": [
                 "Coordonnées standardisées ACM ({method})"
             ],

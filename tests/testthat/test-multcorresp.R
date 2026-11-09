@@ -226,3 +226,34 @@ test_that("multcorresp: titles, axis and legend text options", {
     )$categoryplot
     expect_plot_snapshot("multcorresp-titles-axis-legend", testPlot)
 })
+
+test_that("multcorresp: null-inertia axes are shown but not usable (variables with the same partition)", {
+    a <- rep(c("A", "B", "C"), c(10, 12, 8))
+    dupData <- data.frame(
+        a = factor(a),
+        b = factor(c(A = "x", B = "y", C = "z")[a]),   # same partition as a
+        c = factor(rep(c("u", "v"), 15)),
+        d = factor(rep(c("s", "t"), 15))               # same partition as c
+    )
+    for (method in c("Indicator", "Burt")) {
+        r <- vijMulti::multcorresp(data = dupData, vars = c("a", "b", "c"), supplVars = NULL,
+                                   labelVar = NULL, method = method)
+        # All J - Q = 5 eigenvalues are shown, the 2 null ones as exactly 0
+        eig <- r$eigenvalues$asDF
+        expect_equal(unname(eig$dim), c("1", "2", "3", "4", "5", "Total"))
+        expect_identical(unname(eig$inertia[4:5]), c(0, 0))
+        # ... but only the 3 non-null ones are usable
+        expect_error(vijMulti::multcorresp(data = dupData, vars = c("a", "b", "c"), supplVars = NULL,
+                                           labelVar = NULL, method = method, dimNum = 4),
+                     "cannot be greater than 3")
+        # Only one non-null axis: a 2-dimension MCA is rejected
+        expect_error(vijMulti::multcorresp(data = dupData, vars = c("c", "d"), supplVars = NULL,
+                                           labelVar = NULL, method = method),
+                     "at least two dimensions")
+    }
+    # The Summary table is filled even when the analysis is then rejected
+    a <- multcorrespClass$new(options = multcorrespOptions$new(vars = c("c", "d")), data = dupData)
+    a$init()
+    expect_error(a$run(), "at least two dimensions")
+    expect_equal(unname(a$results$eigenvalues$asDF$dim), c("1", "2", "Total"))
+})
