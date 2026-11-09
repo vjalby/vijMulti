@@ -317,6 +317,18 @@ test_that("corresp: categories named like the reserved table keys are rejected",
     )
 })
 
+test_that("corresp: decimal supplementary row/column numbers are rejected, not truncated", {
+    run <- function(rows = "", cols = "") vijMulti::corresp(data = wideData, mode = "contTable", rows = NULL, cols = NULL,
+                                                          columns = c("None", "Light", "Medium", "Heavy"), rowLabels = "STAFF",
+                                                          counts = NULL, supplementaryRows = rows, supplementaryCols = cols,
+                                                          showContingency = TRUE)
+    expect_error(run(rows = "2.9"), "Supplementary row numbers must be a list of numbers, e.g. 1,2,9", fixed = TRUE)
+    expect_error(run(cols = "1,3.5"), "Supplementary column numbers must be a list of numbers, e.g. 1,2,9", fixed = TRUE)
+    # A whole number written as a decimal is accepted
+    r <- run(rows = "2.0")
+    expect_equal(unname(r$contingency$asDF$.row[2]), "Junior Managers *")
+})
+
 test_that("corresp: a supplementary column marked like an active one keeps its own column", {
     # Supplementary "a" is shown as "a *", like the active column already named so
     starData <- data.frame(lab = c("R1", "R2", "R3", "R4", "R5"),

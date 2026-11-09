@@ -5,6 +5,7 @@
 * MCA: fixed an error with variable names containing spaces or special characters
 * CA: fixed a column missing from the tables when a supplementary column, once marked with "*", had the same name as an active one
 * CA: the χ² Test table now shows a note when some expected counts are below 5
+* CA: decimal supplementary row/column numbers (e.g. 2.9) are now rejected instead of being truncated
 
 
 # vijMulti 1.1.1 (2026-10-16)

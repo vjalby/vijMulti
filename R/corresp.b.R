@@ -257,15 +257,17 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         .parseSupplementary = function(optionValue, nmax, parseErrorMsg, rangeErrorMsg) {
             if (is.null(optionValue) || optionValue == "0" || optionValue == "")
                 return(NULL)
-            supp <- suppressWarnings(as.integer(unlist(strsplit(optionValue, ","))))   # non-numbers become NA, rejected below
-            if (any(is.na(supp))) {
+            # as.numeric(), not as.integer(), which would silently truncate a decimal (2.9 -> 2):
+            # non-numbers become NA and decimals are rejected below
+            supp <- suppressWarnings(as.numeric(unlist(strsplit(optionValue, ","))))
+            if (any(is.na(supp) | supp != round(supp))) {
                 vijErrorMessage(self, parseErrorMsg)
             } else {
                 supp <- sort(unique(supp))
                 if (!all(supp %in% 1:nmax))
                     vijErrorMessage(self, jmvcore::format(rangeErrorMsg, nmax = nmax))
             }
-            supp
+            as.integer(supp)
         },
         # Category names: reject the reserved keys, warn about a trailing "*" (the supplementary mark,
         # added on display only by .displayName())
