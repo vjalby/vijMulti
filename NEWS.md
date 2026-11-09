@@ -7,6 +7,7 @@
 * CA: the χ² Test table now shows a note when some expected counts are below 5
 * CA: decimal supplementary row/column numbers (e.g. 2.9) are now rejected instead of being truncated
 * PCA: a variable measured in very small units is no longer wrongly rejected as constant
+* PCA: dimensions with null variance (rank-deficient data) are still listed in the Summary table but can no longer be used as dimensions
 
 
 # vijMulti 1.1.1 (2026-10-16)

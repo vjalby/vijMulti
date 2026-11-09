@@ -601,6 +601,9 @@
             "PCA Principal Coordinates ({rot})": [
                 "Coordonnées principales ACP ({rot})"
             ],
+            "PCA requires at least two dimensions with non-zero variance.": [
+                "L'ACP nécessite au moins deux dimensions de variance non nulle."
+            ],
             "PCA Standard Coordinates": [
                 "Coordonnées standardisées ACP"
             ],

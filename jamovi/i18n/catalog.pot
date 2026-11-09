@@ -1170,6 +1170,10 @@ msgid "PCA Principal Coordinates ({rot})"
 msgstr ""
 
 #: R/principal.b.R
+msgid "PCA requires at least two dimensions with non-zero variance."
+msgstr ""
+
+#: R/principal.b.R
 msgid "PCA Standard Coordinates"
 msgstr ""
 
@@ -1682,6 +1686,7 @@ msgid ""
 msgstr ""
 
 #: R/multcorresp.b.R
+#: R/principal.b.R
 msgid "The number of dimensions cannot be greater than {max}."
 msgstr ""
 

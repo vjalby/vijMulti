@@ -1285,6 +1285,10 @@ msgid "PCA Principal Coordinates ({rot})"
 msgstr "Coordonnées principales ACP ({rot})"
 
 #: R/principal.b.R
+msgid "PCA requires at least two dimensions with non-zero variance."
+msgstr "L'ACP nécessite au moins deux dimensions de variance non nulle."
+
+#: R/principal.b.R
 msgid "PCA Standard Coordinates"
 msgstr "Coordonnées standardisées ACP"
 
@@ -1638,7 +1642,9 @@ msgstr "Certaines catégories ont des effectifs nuls et doivent être supprimée
 
 #: R/corresp.b.R
 msgid "Some expected counts are less than 5. The χ² test may not be valid."
-msgstr "Certains effectifs théoriques sont inférieurs à 5. Le test du χ² peut ne pas être valide."
+msgstr ""
+"Certains effectifs théoriques sont inférieurs à 5. Le test du χ² peut ne pas "
+"être valide."
 
 #: R/corresp.b.R
 msgid ""
@@ -1812,6 +1818,7 @@ msgstr ""
 "dans une analyse en composantes principales : {vars}."
 
 #: R/multcorresp.b.R
+#: R/principal.b.R
 msgid "The number of dimensions cannot be greater than {max}."
 msgstr "Le nombre de dimensions ne peut pas être supérieur à {max}."
 

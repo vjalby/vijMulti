@@ -113,7 +113,17 @@ principalClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             #### Summary Table ####
 
             if (self$options$showSummary)
-                private$.fillSummaryTable(self$results$summaryTable, res, nDim)
+                private$.fillSummaryTable(self$results$summaryTable, res)
+
+            # Dimensions with null variance (rank-deficient data) are listed in the Summary table but
+            # can't be used: their standard scores and eigenvectors are arbitrary (checked after the
+            # Summary table, so it stays visible)
+            if (nDim > res$nd.max) {
+                if (res$nd.max < 2)
+                    vijErrorMessage(self, .("PCA requires at least two dimensions with non-zero variance."))
+                else
+                    vijErrorMessage(self, jmvcore::format(.("The number of dimensions cannot be greater than {max}."), max = res$nd.max))
+            }
 
             # Check that axes < nDim here to allow summary table to display
             if (self$options$xaxis > nDim || self$options$yaxis > nDim)
@@ -411,13 +421,14 @@ principalClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                                         statistic = kmo$MSA,
                                         df = NULL, p = NULL))
         },
-        .fillSummaryTable = function(table, res, nDim) {
+        .fillSummaryTable = function(table, res) {
             eigen <- res$eigenvalues
             eigenSum <- sum(eigen)
             eigenCum <- cumsum(eigen)
             ssl <- res$SSL
             sslCum <- cumsum(ssl)
-            for (i in 1:nDim) { # first dimensions
+            nExtracted <- length(ssl)   # nDim, or 0 when more dimensions than non-null axes were asked
+            for (i in seq_len(nExtracted)) { # first dimensions
                 table$setRow(rowNo = i,
                              values = list(comp = i,
                                   eigenvalue = eigen[i],
@@ -428,8 +439,8 @@ principalClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                                   varCum = sslCum[i]/eigenSum
                              ))
             }
-            if (length(eigen) > nDim) { # is there more dimensions ?
-                for (i in (nDim+1):length(eigen)) {
+            if (length(eigen) > nExtracted) { # is there more dimensions ?
+                for (i in (nExtracted+1):length(eigen)) {
                     table$setRow(rowNo = i,
                                  values = list(comp = i,
                                       eigenvalue = eigen[i],
@@ -517,6 +528,8 @@ principalClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             if (is.null(res)) {
                 vijErrorMessage(self, .("Unable to compute principal components for the selected variables."))
             }
+            if (nfact > res$nd.max)     # rejected in .run(), after the Summary table
+                return(res)
 
             rownames(res$scores) <- rownames(data)
             rownames(res$stdScores) <- rownames(data)
@@ -562,6 +575,14 @@ principalClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             res <- stats::prcomp(data, scale. = scaleData)
             # Full solution
             eigenvalues <- res$sdev**2
+            # Non-null axes (rank of the data), tested on the singular values (sdev), whose rounding noise
+            # is ~eps x sdev[1] (~eps² once squared); null eigenvalues are shown as 0
+            K <- sum(res$sdev > sqrt(.Machine$double.eps) * res$sdev[1])
+            eigenvalues[-seq_len(K)] <- 0
+            # More dimensions than non-null axes: rejected in .run(), after the Summary table (initial
+            # eigenvalues only). The null axes' eigenvectors are arbitrary: no loadings, scores or rotation
+            if (nfact > K)
+                return(list(eigenvalues = eigenvalues, nd.max = K))
             # Loadings (principal)
             stdLoadings <- res$rotation[,1:nfact, drop = FALSE]
             loadings <- stdLoadings %*% diag(res$sdev[1:nfact], ncol = nfact)
@@ -645,6 +666,7 @@ principalClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             #
             return(list(
                 eigenvalues = eigenvalues,
+                nd.max = K,                                    # Nb of usable (non-null) axes, checked in .run()
                 SSL = rotatedSSL,
                 loadings = rotatedLoadings,
                 scores = rotatedScores,

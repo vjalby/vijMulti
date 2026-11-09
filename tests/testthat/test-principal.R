@@ -245,3 +245,39 @@ test_that("principal: constant variables are detected whatever their unit", {
                  "The following variable(s) are constant and cannot be used in a principal component analysis: Petal_Width.",
                  fixed = TRUE)
 })
+
+test_that("principal: dimensions with null variance (rank-deficient data) can't be used", {
+    x <- c(1, 3, 2, 5, 4, 6)
+    y <- c(2, 1, 4, 3, 6, 5)
+    rank2Data <- data.frame(a = x, b = y, c = x + y, d = x - 2 * y)
+    run <- function(data, dimNum = 2) vijMulti::principal(data = data, vars = c("a", "b", "c", "d"), labelVar = NULL,
+                                                          groupVar = NULL, dimNum = dimNum, stdScores = TRUE)
+    # Null eigenvalues are shown as 0, the non-null dimensions can be used
+    r <- run(rank2Data)
+    expect_identical(unname(r$summaryTable$asDF$eigenvalue[3:4]), c(0, 0))
+    expect_true(all(is.finite(r$obsPlot$state$obsData$y)))
+    # but not the null ones: their standard scores were arbitrary (rounding noise / null variance)
+    expect_error(run(rank2Data, dimNum = 3), "The number of dimensions cannot be greater than 2.", fixed = TRUE)
+    rank1Data <- data.frame(a = x, b = 2 * x + 1, c = 10 - x, d = x / 3)
+    expect_error(run(rank1Data), "PCA requires at least two dimensions with non-zero variance.", fixed = TRUE)
+    # On rejection, the Summary table only shows the initial eigenvalues: no rotation of the null axes'
+    # arbitrary eigenvectors (Varimax on them gave variance to the null 3rd component)
+    a <- vijMulti::principalClass$new(options = vijMulti::principalOptions$new(vars = c("a", "b", "c", "d"), dimNum = 3,
+                                      rotation = "Varimax", stataRotation = TRUE), data = rank2Data)
+    a$init()
+    expect_error(a$run(), "The number of dimensions cannot be greater than 2.", fixed = TRUE)
+    summary <- a$results$summaryTable$asDF
+    expect_identical(unname(summary$eigenvalue[3:4]), c(0, 0))
+    expect_true(all(is.na(summary$loadings)) && all(is.na(summary$varProp)))
+})
+
+test_that("principal: a weak but real dimension is not taken for a null one", {
+    x <- c(1, 3, 2, 5, 4, 6)
+    y <- c(2, 1, 4, 3, 6, 5)
+    weakData <- data.frame(a = x, b = x + 3.4e-6 * y, c = 2 * x + 1)   # 2nd eigenvalue 3e-12, 3rd null
+    r <- vijMulti::principal(data = weakData, vars = c("a", "b", "c"), labelVar = NULL, groupVar = NULL, stdScores = TRUE)
+    eigen <- unname(r$summaryTable$asDF$eigenvalue)
+    expect_gt(eigen[2], 1e-12)
+    expect_identical(eigen[3], 0)
+    expect_true(all(is.finite(r$obsPlot$state$obsData$y)))
+})
