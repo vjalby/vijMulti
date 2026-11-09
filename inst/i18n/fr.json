@@ -802,6 +802,9 @@
             "Some categories have zero counts and must be removed.": [
                 "Certaines catégories ont des effectifs nuls et doivent être supprimées."
             ],
+            "Some expected counts are less than 5. The χ² test may not be valid.": [
+                "Certains effectifs théoriques sont inférieurs à 5. Le test du χ² peut ne pas être valide."
+            ],
             "Some row or column names end with \"*\", which is also used to mark supplementary rows and columns. Consider renaming them to avoid confusion.": [
                 "Certains noms de lignes ou de colonnes se terminent par « * », qui sert aussi à marquer les lignes et colonnes supplémentaires. Pensez à les renommer pour éviter toute confusion."
             ],

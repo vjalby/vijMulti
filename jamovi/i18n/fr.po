@@ -458,7 +458,9 @@ msgstr "Méthode du tableau de Burt"
 
 #: R/corresp.b.R
 msgid "CA requires at least two dimensions with non-zero inertia."
-msgstr "L'analyse des correspondances nécessite au moins deux dimensions d'inertie non nulle."
+msgstr ""
+"L'analyse des correspondances nécessite au moins deux dimensions d'inertie "
+"non nulle."
 
 #: corresp/ui[7][2][1][0].label
 #: multcorresp/ui[8][2][1][0].label
@@ -1633,6 +1635,10 @@ msgstr "Solution"
 #: R/corresp.b.R
 msgid "Some categories have zero counts and must be removed."
 msgstr "Certaines catégories ont des effectifs nuls et doivent être supprimées."
+
+#: R/corresp.b.R
+msgid "Some expected counts are less than 5. The χ² test may not be valid."
+msgstr "Certains effectifs théoriques sont inférieurs à 5. Le test du χ² peut ne pas être valide."
 
 #: R/corresp.b.R
 msgid ""

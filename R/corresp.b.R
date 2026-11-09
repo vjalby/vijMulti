@@ -289,6 +289,8 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             if (!is.null(supplementaryCols))
                 activeContingencyTable <- activeContingencyTable[,-supplementaryCols, drop = FALSE]
 
+            # chisq.test()'s warning (expected counts below 5) is shown as a table note instead,
+            # see .fillChisqTable()
             chisqres <- tryCatch(
                             suppressWarnings(stats::chisq.test(activeContingencyTable)),
                             error = function (e) NULL
@@ -314,6 +316,11 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 table$setNote("nonint", .("Counts are not integers. The χ² test may not be valid."))
             else
                 table$setNote("nonint", NULL)
+            # Same rule as chisq.test()'s "Chi-squared approximation may be incorrect" warning
+            if (any(chisqres$expected < 5))
+                table$setNote("expected", .("Some expected counts are less than 5. The χ² test may not be valid."))
+            else
+                table$setNote("expected", NULL)
         },
         .fillInertiaTable = function(table, res) {
             # Populate the inertia table

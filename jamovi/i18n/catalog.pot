@@ -1520,6 +1520,10 @@ msgid "Some categories have zero counts and must be removed."
 msgstr ""
 
 #: R/corresp.b.R
+msgid "Some expected counts are less than 5. The χ² test may not be valid."
+msgstr ""
+
+#: R/corresp.b.R
 msgid ""
 "Some row or column names end with \"*\", which is also used to mark "
 "supplementary rows and columns. Consider renaming them to avoid confusion."

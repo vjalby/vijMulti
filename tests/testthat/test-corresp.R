@@ -44,6 +44,20 @@ test_that("corresp: contingency table mode (mode = contTable)", {
     expect_equal(unname(eig$inertia[nrow(eig)]), chisq$statistic / sum(wideData[, -1]), tolerance = 1e-6)
 })
 
+test_that("corresp: χ² test note when some expected counts are below 5", {
+    run <- function(data) vijMulti::corresp(data = data, mode = "contTable", rows = NULL, cols = NULL,
+                                            columns = c("None", "Light", "Medium", "Heavy"), rowLabels = "STAFF",
+                                            counts = NULL, showChisq = TRUE)
+    # Senior Managers x Heavy: expected count 11 x 25 / 193 = 1.4
+    r <- run(wideData)
+    expect_equal(r$chisq$notes$expected$note, "Some expected counts are less than 5. The χ² test may not be valid.")
+    # Same table x 10: smallest expected count 14.2
+    bigData <- wideData
+    bigData[, -1] <- bigData[, -1] * 10
+    r <- run(bigData)
+    expect_null(r$chisq$notes$expected)
+})
+
 test_that("corresp: jamovi weights are ignored with a notice (mode = contTable)", {
     weightedData <- wideData
     attr(weightedData, "jmv-weights") <- c(1, 2, 1, 1, 1)
