@@ -394,6 +394,20 @@ test_that("corresp: a point at the centroid (supplementary Total row) has no cos
     # The other rows are unchanged
     expect_equal(unname(rowSum$qlt[1]), 0.8925683839, tolerance = 1e-6)
     expect_true(all(is.finite(as.matrix(rowSum[1:5, c("qlt", "cos1", "cos2")]))))
+
+    # A point close to the centroid, but not at it, keeps its cos²: Total + 1e-8 x Senior Employees
+    # is at a distance of ~1e-9, in the direction of Senior Employees (hence the same cos²)
+    nearData <- rbind(totalData, data.frame(STAFF = "Near", None = 61 + 25e-8, Light = 45 + 10e-8,
+                                            Medium = 62 + 12e-8, Heavy = 25 + 4e-8))
+    r <- vijMulti::corresp(data = nearData, mode = "contTable", rows = NULL, cols = NULL,
+                           columns = c("None", "Light", "Medium", "Heavy"), rowLabels = "STAFF", counts = NULL,
+                           supplementaryRows = "6,7", dimNum = 3, showSummaries = TRUE)
+    rowSum <- r$rowSummary$asDF
+    expect_true(all(is.na(rowSum[6, c("qlt", "cos1", "cos2", "cos3")])))
+    expect_lt(abs(rowSum$score1[7]), 1e-8)
+    expect_equal(unname(rowSum$qlt[7]), 1, tolerance = 1e-6)
+    expect_equal(unname(unlist(rowSum[7, c("cos1", "cos2", "cos3")])), unname(unlist(rowSum[3, c("cos1", "cos2", "cos3")])),
+                 tolerance = 1e-6)
 })
 
 test_that("corresp: row plot", {

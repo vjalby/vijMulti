@@ -439,6 +439,10 @@ principalClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             antiImage <- stats::cov2cor(corrInv)    # anti-image correlations = minus the partial correlations
             diag(antiImage) <- 0
             diag(corrMat) <- 0
+            # Uncorrelated variables (identity matrix, e.g. an orthogonal design): the measure is
+            # 0 / 0, or noise / noise when the correlations are only rounding noise (~eps)
+            if (max(abs(corrMat)) < 100 * .Machine$double.eps)
+                return(NULL)
             sum(corrMat^2) / (sum(corrMat^2) + sum(antiImage^2))
         },
         # corrInv: inverse of corrMat, NULL when it is singular

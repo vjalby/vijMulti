@@ -578,8 +578,10 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             # All rows (columns) in table order; mass, contributions and inertia are NA for supplementary points
             points <- function(std, mass, dist, inertia, sup, scale) {
                 mass[sup] <- NA
-                # A point at the centroid (e.g. a "Total" row): its cos2 would be noise / noise
-                dist[dist < sqrt(.Machine$double.eps)] <- NA
+                # A point at the centroid (e.g. a "Total" row): its cos2 would be noise / noise.
+                # The distance's own rounding noise is ~eps: cos2 is accurate to 3 decimals down
+                # to ~1e-14, and meaningless below 1e-15
+                dist[dist < 100 * .Machine$double.eps] <- NA
                 list(coord = sweep(std, 2, scale, FUN = "*")[, dims, drop = FALSE],
                      contrib = (mass * std^2)[, dims, drop = FALSE],
                      cos2 = (sweep(std, 2, sv, FUN = "*")^2 / dist^2)[, dims, drop = FALSE],

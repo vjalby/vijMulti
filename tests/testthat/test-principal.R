@@ -61,6 +61,21 @@ test_that("principal: Bartlett's test with many variables (determinant underflow
     expect_true(is.finite(kmo$statistic[2]))
 })
 
+test_that("principal: KMO is left empty for uncorrelated variables (identity correlation matrix)", {
+    run <- function(data) do.call(vijMulti::principal, list(data = data, vars = names(data), labelVar = NULL,
+                                                            groupVar = NULL, showKMO = TRUE))$kmoTable$asDF
+    # 2^3 factorial design: correlations exactly 0, the KMO was 0 / 0 = NaN
+    kmo <- run(expand.grid(a = c(-1, 1), b = c(-1, 1), c = c(-1, 1)))
+    expect_true(is.na(kmo$statistic[2]))
+    # Bartlett's test is defined: no departure from sphericity at all
+    expect_equal(unname(kmo$statistic[1]), 0)
+    expect_equal(unname(kmo$p[1]), 1)
+    # Orthogonal polynomials: correlations ~1e-17, the KMO was noise / noise = 0.5
+    polyData <- as.data.frame(poly(1:12, 3))
+    names(polyData) <- c("a", "b", "c")
+    expect_true(is.na(run(polyData)$statistic[2]))
+})
+
 test_that("principal: KMO and Bartlett's test are left empty on a singular correlation matrix", {
     x <- c(1, 3, 2, 5, 4, 6)
     y <- c(2, 1, 4, 3, 6, 5)
