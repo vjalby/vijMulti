@@ -93,8 +93,13 @@ principalClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 vijErrorMessage(self, .("Unable to compute the correlation matrix."))
             }
 
+            # Singular = not invertible at machine precision (the test psych::KMO() itself relies on).
+            # A single diagnosis, shared with the KMO table
+            singular <- is.null(tryCatch(solve(corrMat), error = function(e) NULL))
             rc <- rcond(corrMat)
-            if (!is.na(rc) && rc < sqrt(.Machine$double.eps)) {
+            if (singular) {
+                vijWarningMessage(self, .("The correlation matrix is singular."))
+            } else if (!is.na(rc) && rc < sqrt(.Machine$double.eps)) {
                 vijWarningMessage(
                     self,
                     .("The correlation matrix is nearly singular. Computations may not be accurate.")
@@ -104,7 +109,7 @@ principalClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             #### KMO & Bartlett's test ####
 
             if (self$options$showKMO)
-                private$.fillKmoTable(self$results$kmoTable, corrMat, data)
+                private$.fillKmoTable(self$results$kmoTable, corrMat, data, singular)
 
             #### PCA computation ####
 
@@ -314,11 +319,14 @@ principalClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
 
                 if (self$options$biplotLines && plotType == "biplot")
                     plot <- plot + ggplot2::geom_abline(data = varData, ggplot2::aes(intercept = 0, slope = y/x), linetype = 3, color="gray")
+
+                nudgeScale <- if (self$options$stdVariables) 1 else max(abs(c(varData$x, varData$y)))
+
                 plot <- plot + ggplot2::geom_segment(data = varData, ggplot2::aes(x = 0, y = 0, xend = x, yend = y),
                                             arrow = grid::arrow(length = grid::unit(0.05, "inches"), type = "closed"),
                                             color = self$options$varColor, linewidth = 0.8)
                 plot <- plot + ggrepel::geom_text_repel(data = varData, ggplot2::aes(x = x, y = y, label = Label), min.segment.length = 2,
-                                                        position = ggpp::position_nudge_center(x = 0.2, y = 0.01, center_x = 0, center_y = 0),
+                                                        position = ggpp::position_nudge_center(x = 0.2 * nudgeScale, y = 0.01 * nudgeScale, center_x = 0, center_y = 0),
                                                         size = self$options$varLabelSize/ggplot2::.pt, color = labelColor, fontface="bold", seed = 123)
              }
 
@@ -326,32 +334,41 @@ principalClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             plot <- plot + ggtheme + vijColorScale(self$options$colorPalette, "color", theme, labels = vijLabelNA(self))
 
             # Axe limits
-            if (plotType == "var") {
-                xmin <- 1.02*min(varData$x, -1)
-                xmax <- 1.02*max(varData$x, 1)
-                ymin <- 1.02*min(varData$y, -1)
-                ymax <- 1.02*max(varData$y, 1)
-            } else if (plotType == "obs") { # floor/ceiling *2 /2 => extend the plot to next 0.5 point
-                xmin <- 1.01*floor(min(obsData$x)*2)/2
-                xmax <- 1.01*ceiling(max(obsData$x)*2)/2
-                ymin <- 1.01*floor(min(obsData$y)*2)/2
-                ymax <- 1.01*ceiling(max(obsData$y)*2)/2
-            } else { # biplot
-                xmin <- 1.01*floor(min(obsData$x, varData$x)*2)/2
-                xmax <- 1.01*ceiling(max(obsData$x, varData$x)*2)/2
-                ymin <- 1.01*floor(min(obsData$y, varData$y)*2)/2
-                ymax <- 1.01*ceiling(max(obsData$y, varData$y)*2)/2
+            if (self$options$stdVariables) {
+                if (plotType == "var") {
+                    xmin <- 1.02*min(varData$x, -1)
+                    xmax <- 1.02*max(varData$x, 1)
+                    ymin <- 1.02*min(varData$y, -1)
+                    ymax <- 1.02*max(varData$y, 1)
+                } else if (plotType == "obs") { # floor/ceiling *2 /2 => extend the plot to next 0.5 point
+                    xmin <- 1.01*floor(min(obsData$x)*2)/2
+                    xmax <- 1.01*ceiling(max(obsData$x)*2)/2
+                    ymin <- 1.01*floor(min(obsData$y)*2)/2
+                    ymax <- 1.01*ceiling(max(obsData$y)*2)/2
+                } else { # biplot
+                    xmin <- 1.01*floor(min(obsData$x, varData$x)*2)/2
+                    xmax <- 1.01*ceiling(max(obsData$x, varData$x)*2)/2
+                    ymin <- 1.01*floor(min(obsData$y, varData$y)*2)/2
+                    ymax <- 1.01*ceiling(max(obsData$y, varData$y)*2)/2
+                }
+                # Security for singular data
+                if (xmin==xmax) {
+                    xmin <- xmin - 0.5
+                    xmax <- xmax + 0.5
+                }
+                if (ymin==ymax) {
+                    ymin <- ymin - 0.5
+                    ymax <- ymax + 0.5
+                }
+                plot <- plot + ggplot2::coord_fixed(xlim = c(xmin,xmax), ylim = c(ymin,ymax))
+            } else {
+                if (plotType == "var") {
+                    lim <- 1.2 * max(abs(c(varData$x, varData$y)))
+                    plot <- plot + ggplot2::coord_fixed(xlim = c(-lim, lim), ylim = c(-lim, lim))
+                } else {
+                    plot <- plot + ggplot2::coord_fixed()
+                }
             }
-            # Security for singular data
-            if (xmin==xmax) {
-                xmin <- xmin - 0.5
-                xmax <- xmax + 0.5
-            }
-            if (ymin==ymax) {
-                ymin <- ymin - 0.5
-                ymax <- ymax + 0.5
-            }
-            plot <- plot + ggplot2::coord_fixed(xlim = c(xmin,xmax), ylim = c(ymin,ymax))
 
             # Axis ticks (be sure there's a tick at each integer, unless there would be
             # too many of them: back to pretty() breaks, integers at that scale anyway)
@@ -402,15 +419,27 @@ principalClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
 
             return(plot)
         },
-        .fillKmoTable = function(table, corrMat, data) {
-            kmo <- tryCatch(
-                        psych::KMO(corrMat),
-                        error = function (e) list(MSA = NA)
-                    )
-            bartlett <- tryCatch(
-                            psych::cortest.bartlett(corrMat, n = nrow(data)),
-                            error = function (e) list(chisq = NA, df = NA, p.value = NA)
+        .fillKmoTable = function(table, corrMat, data, singular) {
+            # On a singular correlation matrix, psych::KMO() doesn't fail: it falls back to a
+            # meaningless MSA = 0.5, and Bartlett's statistic is NaN or huge. Both are left empty
+            if (singular) {
+                kmo <- list(MSA = NULL)
+                bartlett <- list(chisq = NULL, df = NULL, p.value = NULL)
+                table$setNote("singular", .("The correlation matrix is singular: these statistics cannot be computed."))
+            } else {
+                kmo <- tryCatch(
+                            psych::KMO(corrMat),
+                            error = function (e) list(MSA = NA)
                         )
+                bartlett <- tryCatch(
+                                psych::cortest.bartlett(corrMat, n = nrow(data)),
+                                error = function (e) list(chisq = NA, df = NA, p.value = NA)
+                            )
+                # Nearly singular matrix that solve() just managed to invert: its determinant may
+                # still come out <= 0, hence a NaN statistic
+                if (!is.finite(bartlett$chisq))
+                    bartlett <- list(chisq = NULL, df = NULL, p.value = NULL)
+            }
 
             table$setRow(rowNo = 1,
                          values = list(test = .("Bartlett's Test of Sphericity"),
@@ -547,7 +576,7 @@ principalClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                                    quartimax = "Quartimax",
                                    equamax = "Equamax",
                                    parsimax = "Parsimax",
-                                   entropy = "Minimum entropy",
+                                   entropy = .("Minimum entropy"),
                                    bentlerT = "Bentler T",
                                    rotation
                             )

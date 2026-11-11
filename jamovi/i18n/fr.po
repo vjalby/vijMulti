@@ -55,7 +55,7 @@ msgstr ""
 "correspondances</li> <li>Analyse des correspondances multiples</li> </ul> "
 "<p>Le module est disponible dans l'onglet "
 "<strong>Analyses</strong>.</p><p>Le code source du projet (et le changelog) "
-"est disponible sur <a href=\"https://github.com/vjalby/vijMulti "
+"est disponible sur <a href=\"https://github.com/vjalby/vijMulti\" "
 "target=\"_blank\">Github</a>.</p>"
 
 #: R/corresp.b.R
@@ -1104,6 +1104,7 @@ msgstr "Coordonnées standardisées ACM ({method})"
 msgid "Method"
 msgstr "Méthode"
 
+#: R/principal.b.R
 #: principal/options/rotation/entropy.title
 msgid "Minimum entropy"
 msgstr "Entropie minimale"
@@ -1810,12 +1811,30 @@ msgstr ""
 "approximatifs."
 
 #: R/principal.b.R
+msgid "The correlation matrix is singular: these statistics cannot be computed."
+msgstr ""
+"La matrice des corrélations est singulière : ces statistiques ne peuvent pas "
+"être calculées."
+
+#: R/principal.b.R
+msgid "The correlation matrix is singular."
+msgstr "La matrice des corrélations est singulière."
+
+#: R/principal.b.R
 msgid ""
 "The following variable(s) are constant and cannot be used in a principal "
 "component analysis: {vars}."
 msgstr ""
 "Les variables suivantes sont constantes et ne peuvent pas être utilisées "
 "dans une analyse en composantes principales : {vars}."
+
+#: R/multcorresp.b.R
+msgid ""
+"The following variable(s) have a single category and cannot be used in a "
+"multiple correspondence analysis: {vars}."
+msgstr ""
+"Les variables suivantes n'ont qu'une seule catégorie et ne peuvent pas être "
+"utilisées dans une analyse des correspondances multiples : {vars}."
 
 #: R/multcorresp.b.R
 #: R/principal.b.R

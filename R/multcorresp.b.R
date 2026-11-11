@@ -60,6 +60,19 @@ multcorrespClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 vijErrorMessage(self, .("Unable to compute MCA because of too many missing values."))
             }
 
+            # Check for constant variables (a single category left once the incomplete cases are removed)
+            isConstant <- vapply(data[, allVars, drop = FALSE], function(x) length(unique(x)) < 2,
+                                 FUN.VALUE = logical(1))
+            if (any(isConstant)) {
+                vijErrorMessage(
+                    self,
+                    jmvcore::format(
+                        .("The following variable(s) have a single category and cannot be used in a multiple correspondence analysis: {vars}."),
+                        vars = paste(allVars[isConstant], collapse = ", ")
+                    )
+                )
+            }
+
             # list of ordered factors (used to draw path) - real variable names, not
             # positions, so this stays correct even if two variables' display names
             # later collide and merge in the category plot (see .mainplot)

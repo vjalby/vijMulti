@@ -44,6 +44,35 @@ test_that("principal: KMO and Bartlett's test", {
     expect_equal(unname(kmo$df), c(6, NA))
 })
 
+test_that("principal: KMO and Bartlett's test are left empty on a singular correlation matrix", {
+    x <- c(1, 3, 2, 5, 4, 6)
+    y <- c(2, 1, 4, 3, 6, 5)
+    run <- function(data) vijMulti::principal(data = data, vars = c("a", "b", "c"), labelVar = NULL, groupVar = NULL,
+                                              showKMO = TRUE)
+    notices <- function(r) unlist(lapply(names(r), function(n) if (inherits(r[[n]], "Notice")) r[[n]]$content))
+    singularNote <- "The correlation matrix is singular: these statistics cannot be computed."
+    # c = a + b: psych::KMO() would return a meaningless MSA = 0.5, and Bartlett's statistic NaN
+    r <- run(data.frame(a = x, b = y, c = x + y))
+    expect_true(all(is.na(r$kmoTable$asDF$statistic)) && all(is.na(r$kmoTable$asDF$df)) && all(is.na(r$kmoTable$asDF$p)))
+    expect_equal(r$kmoTable$notes$singular$note, singularNote)
+    # A single diagnosis: the warning says singular too, not "nearly singular"
+    expect_equal(notices(r), "The correlation matrix is singular.")
+    # Singular at machine precision only (b = a but for the 8th digit of one value): same diagnosis
+    r <- run(data.frame(a = c(x[-6], 5.9999999), b = x, c = y))
+    expect_equal(r$kmoTable$notes$singular$note, singularNote)
+    expect_equal(notices(r), "The correlation matrix is singular.")
+    # Nearly singular but invertible: statistics computed, "nearly singular" warning
+    r <- run(data.frame(a = x, b = y, c = x + y + 1e-4 * c(1, -1, 2, 0, -2, 1)))
+    expect_true(all(is.finite(r$kmoTable$asDF$statistic)))
+    expect_null(r$kmoTable$notes$singular)
+    expect_equal(notices(r), "The correlation matrix is nearly singular. Computations may not be accurate.")
+    # Regular matrix: statistics computed, no note, no warning
+    r <- run(data.frame(a = x, b = y, c = c(3, 1, 4, 1, 5, 9)))
+    expect_true(all(is.finite(r$kmoTable$asDF$statistic)))
+    expect_null(r$kmoTable$notes$singular)
+    expect_null(notices(r))
+})
+
 test_that("principal: observation table (first 5 observations)", {
     r <- vijMulti::principal(
         data = testData,

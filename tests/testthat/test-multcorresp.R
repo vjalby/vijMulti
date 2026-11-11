@@ -258,6 +258,31 @@ test_that("multcorresp: null-inertia axes are shown but not usable (variables wi
     expect_equal(unname(a$results$eigenvalues$asDF$dim), c("1", "2", "Total"))
 })
 
+test_that("multcorresp: variables with a single category are rejected", {
+    a <- rep(c("A", "B", "C"), c(10, 12, 8))
+    constData <- data.frame(
+        a = factor(a),
+        b = factor(rep(c("u", "v"), 15)),
+        c = factor(rep(c("s", "t", "t"), 10)),
+        k = factor(rep("k", 30)),                             # constant
+        m = factor(c(rep("m1", 25), rep("m2", 5))),           # constant once n's incomplete cases are removed
+        n = factor(c(rep(c("n1", "n2"), c(13, 12)), rep(NA, 5)))
+    )
+    # do.call(): the wrapper's vars/supplVars arguments are quoted, they can't be passed through variables
+    run <- function(vars, supplVars = NULL) do.call(vijMulti::multcorresp, list(data = constData, vars = vars,
+                                                                                supplVars = supplVars, labelVar = NULL))
+    msg <- "The following variable(s) have a single category and cannot be used in a multiple correspondence analysis: "
+    expect_no_error(run(c("a", "b", "c")))
+    # Active or supplementary
+    expect_error(run(c("a", "b", "k")), paste0(msg, "k."), fixed = TRUE)
+    expect_error(run(c("a", "b", "c"), supplVars = "k"), paste0(msg, "k."), fixed = TRUE)
+    # Constant only among the complete cases
+    expect_no_error(run(c("a", "b", "m")))
+    expect_error(run(c("a", "m", "n")), paste0(msg, "m."), fixed = TRUE)
+    # Every constant variable is named
+    expect_error(run(c("a", "k", "m"), supplVars = "n"), paste0(msg, "k, m."), fixed = TRUE)
+})
+
 test_that("multcorresp: variable names that are not syntactic R names (spaces, accents, symbols)", {
     plainData <- testData[, c("Origin", "Size", "Type", "Home")]
     oddData <- stats::setNames(plainData, c("Pays d'origine", "Taille du véhicule", "Type (usage)", "Logement"))

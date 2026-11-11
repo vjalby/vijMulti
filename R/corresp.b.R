@@ -241,12 +241,12 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             nullOrValue <- function(x) if (is.na(x)) NULL else x
             for (i in seq_len(nrow(points$coord))) {
                 theValues <- list(id = i, margin = nullOrValue(points$mass[i]), inertia = nullOrValue(points$inertia[i]),
-                                  qlt = sum(points$cos2[i, 1:nDim], na.rm = TRUE))
+                                  qlt = nullOrValue(sum(points$cos2[i, 1:nDim])))
                 theValues[[labelCol]] <- private$.displayName(rownames(points$coord)[i], i, supplementary)
                 for (j in seq(nDim)) {
                     theValues[[paste0("score",j)]] <- points$coord[i,j]
                     theValues[[paste0("contrib",j)]] <- nullOrValue(points$contrib[i,j])
-                    theValues[[paste0("cos",j)]] <- points$cos2[i,j]
+                    theValues[[paste0("cos",j)]] <- nullOrValue(points$cos2[i,j])
                 }
                 table$addRow(i, values = theValues)
             }
@@ -578,6 +578,8 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             # All rows (columns) in table order; mass, contributions and inertia are NA for supplementary points
             points <- function(std, mass, dist, inertia, sup, scale) {
                 mass[sup] <- NA
+                # A point at the centroid (e.g. a "Total" row): its cos2 would be noise / noise
+                dist[dist < sqrt(.Machine$double.eps)] <- NA
                 list(coord = sweep(std, 2, scale, FUN = "*")[, dims, drop = FALSE],
                      contrib = (mass * std^2)[, dims, drop = FALSE],
                      cos2 = (sweep(std, 2, sv, FUN = "*")^2 / dist^2)[, dims, drop = FALSE],

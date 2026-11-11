@@ -21,9 +21,17 @@ The module is available in the **Analyses** tab.
 
 ![](img/mca.jpg)
 
-## Last changes: vijMulti 1.1.1 (2026-10-16)
+## Last changes: vijMulti 1.1.2 (2026-11-11)
 
-* MCA: Fixed total inertia for Greenacre correction
+* More robust handling of degenerate data: dimensions with null inertia are listed but can no longer be used; constant/single-category variables are rejected
+* CA: stricter validation of counts and supplementary row/column numbers; the χ² Test table shows a note when some expected counts are below 5
+* PCA: plots of unstandardized variables are now scaled to the data
+* PCA: KMO and Bartlett's test are left empty when the correlation matrix is singular
+* PCA: a missing group is shown as "(Missing)"
+* MCA: fixed an error with variable names containing spaces or special characters
+* Other fixes in CA tables (supplementary columns, points at the centroid) and in French translations
+
+See [NEWS.md](NEWS.md) for the full changelog.
 
 ## References
 

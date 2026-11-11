@@ -378,6 +378,24 @@ test_that("corresp: row and column summary tables (first row)", {
     expect_equal(unname(colSum$qlt), 0.9984944007, tolerance = 1e-6)
 })
 
+test_that("corresp: a point at the centroid (supplementary Total row) has no cos² nor QLT", {
+    # The Total row has the average profile: its distance to the centroid is rounding noise,
+    # so cos² = noise / noise gave a meaningless QLT (0.48)
+    totalData <- rbind(wideData, data.frame(STAFF = "Total", None = 61L, Light = 45L, Medium = 62L, Heavy = 25L))
+    r <- vijMulti::corresp(data = totalData, mode = "contTable", rows = NULL, cols = NULL,
+                           columns = c("None", "Light", "Medium", "Heavy"), rowLabels = "STAFF", counts = NULL,
+                           supplementaryRows = "6", showSummaries = TRUE, showRowPlot = TRUE)
+    rowSum <- r$rowSummary$asDF
+    expect_equal(unname(rowSum$row[6]), "Total *")
+    expect_true(all(is.na(rowSum[6, c("qlt", "cos1", "cos2")])))
+    # at the origin of the map, still plotted
+    expect_equal(unname(unlist(rowSum[6, c("score1", "score2")])), c(0, 0), tolerance = 1e-12)
+    expect_true(all(is.finite(r$rowplot$state$row$coord)))
+    # The other rows are unchanged
+    expect_equal(unname(rowSum$qlt[1]), 0.8925683839, tolerance = 1e-6)
+    expect_true(all(is.finite(as.matrix(rowSum[1:5, c("qlt", "cos1", "cos2")]))))
+})
+
 test_that("corresp: row plot", {
     testPlot <- vijMulti::corresp(
         data = testData,
