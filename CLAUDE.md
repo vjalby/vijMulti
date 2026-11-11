@@ -66,7 +66,7 @@ Each analysis `<name>` (`principal`, `corresp`, `multcorresp`) is defined by:
 - `jamovi/<name>.a.yaml` / `.u.yaml` / `.r.yaml` — option definitions, UI layout, result items.
 
 All three are registered in `jamovi/0000.yaml` (`ns: vijMulti`, `menuGroup: vijMulti`,
-`menuSubgroup: Multivariate`) and in `jamovi/00refs.yaml` (citations: `capackage`, `psych`,
+`menuSubgroup: Multivariate`) and in `jamovi/00refs.yaml` (citations: `capackage`,
 `greenacre`, `gpa` — only the subset actually referenced by these three analyses' `.r.yaml` files,
 trimmed down from vijPlots' full reference list).
 

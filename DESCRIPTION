@@ -10,7 +10,7 @@ Description: Main classic multivariate data analyses (Principal Component
 License: GPL (>=3)
 Encoding: UTF-8
 LazyData: true
-Imports: jmvcore (>= 0.8.5), R6, utils, stats, grDevices, psych, rlang,
+Imports: jmvcore (>= 0.8.5), R6, utils, stats, grDevices, rlang,
          ggplot2, scales, ggpp, ggrepel, ggforce, GPArotation, ca, grid
 Suggests:
     testthat (>= 3.0.0),

@@ -93,9 +93,10 @@ principalClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 vijErrorMessage(self, .("Unable to compute the correlation matrix."))
             }
 
-            # Singular = not invertible at machine precision (the test psych::KMO() itself relies on).
-            # A single diagnosis, shared with the KMO table
-            singular <- is.null(tryCatch(solve(corrMat), error = function(e) NULL))
+            # Singular = not invertible at machine precision. A single diagnosis, shared with the
+            # KMO table, which also needs the inverse
+            corrInv <- tryCatch(solve(corrMat), error = function(e) NULL)
+            singular <- is.null(corrInv)
             rc <- rcond(corrMat)
             if (singular) {
                 vijWarningMessage(self, .("The correlation matrix is singular."))
@@ -109,7 +110,7 @@ principalClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             #### KMO & Bartlett's test ####
 
             if (self$options$showKMO)
-                private$.fillKmoTable(self$results$kmoTable, corrMat, data, singular)
+                private$.fillKmoTable(self$results$kmoTable, corrMat, corrInv, n = nrow(data))
 
             #### PCA computation ####
 
@@ -419,26 +420,37 @@ principalClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
 
             return(plot)
         },
-        .fillKmoTable = function(table, corrMat, data, singular) {
-            # On a singular correlation matrix, psych::KMO() doesn't fail: it falls back to a
-            # meaningless MSA = 0.5, and Bartlett's statistic is NaN or huge. Both are left empty
-            if (singular) {
+        # Bartlett's test of sphericity, from the log-determinant of the correlation matrix: det() itself
+        # underflows to 0 with many variables (200 variables: log det = -921), which would make
+        # -log(det()) infinite.
+        # Empty values when the determinant comes out <= 0 (nearly singular matrix)
+        .bartlett = function(corrMat, n) {
+            p <- ncol(corrMat)
+            logDet <- determinant(corrMat, logarithm = TRUE)
+            if (logDet$sign <= 0)
+                return(list(chisq = NULL, df = NULL, p.value = NULL))
+            chisq <- -as.numeric(logDet$modulus) * (n - 1 - (2 * p + 5) / 6)
+            df <- p * (p - 1) / 2
+            list(chisq = chisq, df = df, p.value = stats::pchisq(chisq, df, lower.tail = FALSE))
+        },
+        # Kaiser-Meyer-Olkin measure of sampling adequacy (overall MSA), from the inverse of the
+        # correlation matrix
+        .kmo = function(corrMat, corrInv) {
+            antiImage <- stats::cov2cor(corrInv)    # anti-image correlations = minus the partial correlations
+            diag(antiImage) <- 0
+            diag(corrMat) <- 0
+            sum(corrMat^2) / (sum(corrMat^2) + sum(antiImage^2))
+        },
+        # corrInv: inverse of corrMat, NULL when it is singular
+        .fillKmoTable = function(table, corrMat, corrInv, n) {
+            # Singular correlation matrix: no inverse, hence no KMO, and a null determinant. Both left empty
+            if (is.null(corrInv)) {
                 kmo <- list(MSA = NULL)
                 bartlett <- list(chisq = NULL, df = NULL, p.value = NULL)
                 table$setNote("singular", .("The correlation matrix is singular: these statistics cannot be computed."))
             } else {
-                kmo <- tryCatch(
-                            psych::KMO(corrMat),
-                            error = function (e) list(MSA = NA)
-                        )
-                bartlett <- tryCatch(
-                                psych::cortest.bartlett(corrMat, n = nrow(data)),
-                                error = function (e) list(chisq = NA, df = NA, p.value = NA)
-                            )
-                # Nearly singular matrix that solve() just managed to invert: its determinant may
-                # still come out <= 0, hence a NaN statistic
-                if (!is.finite(bartlett$chisq))
-                    bartlett <- list(chisq = NULL, df = NULL, p.value = NULL)
+                kmo <- list(MSA = private$.kmo(corrMat, corrInv))
+                bartlett <- private$.bartlett(corrMat, n)
             }
 
             table$setRow(rowNo = 1,

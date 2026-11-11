@@ -1,12 +1,5 @@
 ---
 refs:
-    psych:
-        type: 'software'
-        author: Revelle, W.
-        year: 2025
-        title: "psych: Procedures for Psychological, Psychometric, and Personality Research"
-        publisher: '[R package]. Retrieved from https://cran.r-project.org/package=psych'
-        url: https://cran.r-project.org/package=psych
     capackage:
         type: 'software'
         author: Greenacre, M., Nenadic, O., Friendly, M.

@@ -44,6 +44,23 @@ test_that("principal: KMO and Bartlett's test", {
     expect_equal(unname(kmo$df), c(6, NA))
 })
 
+test_that("principal: Bartlett's test with many variables (determinant underflowing to 0)", {
+    # 200 correlated variables: det(R) = 0 in double precision although R is invertible, so
+    # -log(det(R)) was infinite. The statistic is computed from the log-determinant
+    set.seed(1)
+    n <- 500; p <- 200
+    manyData <- as.data.frame(matrix(rnorm(n * 5), n) %*% matrix(rnorm(5 * p), 5) + matrix(rnorm(n * p, sd = 0.35), n))
+    corrMat <- cor(manyData)
+    expect_identical(det(corrMat), 0)
+    r <- do.call(vijMulti::principal, list(data = manyData, vars = names(manyData), labelVar = NULL, groupVar = NULL,
+                                           showKMO = TRUE))
+    kmo <- r$kmoTable$asDF
+    logDet <- as.numeric(determinant(corrMat, logarithm = TRUE)$modulus)
+    expect_equal(unname(kmo$statistic[1]), -logDet * (n - 1 - (2 * p + 5) / 6))
+    expect_equal(unname(kmo$df[1]), p * (p - 1) / 2)
+    expect_true(is.finite(kmo$statistic[2]))
+})
+
 test_that("principal: KMO and Bartlett's test are left empty on a singular correlation matrix", {
     x <- c(1, 3, 2, 5, 4, 6)
     y <- c(2, 1, 4, 3, 6, 5)
@@ -51,7 +68,7 @@ test_that("principal: KMO and Bartlett's test are left empty on a singular corre
                                               showKMO = TRUE)
     notices <- function(r) unlist(lapply(names(r), function(n) if (inherits(r[[n]], "Notice")) r[[n]]$content))
     singularNote <- "The correlation matrix is singular: these statistics cannot be computed."
-    # c = a + b: psych::KMO() would return a meaningless MSA = 0.5, and Bartlett's statistic NaN
+    # c = a + b: no inverse, hence no KMO, and a null determinant (Bartlett)
     r <- run(data.frame(a = x, b = y, c = x + y))
     expect_true(all(is.na(r$kmoTable$asDF$statistic)) && all(is.na(r$kmoTable$asDF$df)) && all(is.na(r$kmoTable$asDF$p)))
     expect_equal(r$kmoTable$notes$singular$note, singularNote)

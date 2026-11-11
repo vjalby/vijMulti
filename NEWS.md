@@ -11,6 +11,7 @@
 * PCA: with unstandardized variables, the plots are now scaled to the data (observations were collapsed at the origin with variables in small units)
 * PCA: KMO and Bartlett's test are left empty, with a note, when the correlation matrix is singular (instead of a meaningless KMO of 0.5)
 * PCA: a singular correlation matrix is now reported as singular rather than nearly singular
+* PCA: Bartlett's test is now computed with many variables (the statistic was infinite when the determinant underflowed to 0)
 * MCA: variables with a single category are now rejected with a message naming them
 * CA: a point at the centroid (e.g. a supplementary Total row) no longer shows a meaningless cos² and QLT
 * Fixed French translations (broken link in the module description, rotation name in notes)
