@@ -222,6 +222,11 @@ pixel diff — but still smoke-testing the render — when `CI` is truthy). Requ
 `Sys.setenv(NOT_CRAN = "true")` locally or snapshot checks silently skip. Review new/changed
 snapshots with `testthat::snapshot_review("<name>")`.
 
+`vdiffr` is used by the tests but deliberately left out of `DESCRIPTION`'s `Suggests` (2026-11-21):
+the jamovi compiler installs Suggests as well as Imports into `build/R*` and the .jmo, and vdiffr
+(not shipped with jamovi) made the .jmo 0.24 MiB heavier (1.91 vs 1.67 MiB). It must be installed by hand in
+the dev library; `expect_plot_snapshot()` skips when it is missing. Don't add it back.
+
 ## Icon
 
 `icon/vijMulti.svg` (viewBox `0 0 74 44`, matching vijPlots' icon dimensions): a factorial-map/

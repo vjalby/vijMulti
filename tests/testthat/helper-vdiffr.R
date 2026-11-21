@@ -18,6 +18,9 @@ expect_plot_snapshot <- function(title, fig, ...) {
         print(fig)
         testthat::succeed()
     } else {
+        # vdiffr is deliberately not in DESCRIPTION's Suggests: the jamovi compiler bundles
+        # Suggests into the .jmo (~0.7 MiB for vdiffr alone)
+        testthat::skip_if_not_installed("vdiffr")
         vdiffr::expect_doppelganger(title, fig, ...)
     }
 }
