@@ -154,6 +154,54 @@ don't exist in this module):
   `'method'` note, `discrim`'s `'sup'` note, `categories`'s `'normalization'`/`'sup'`
   notes, and `observations`'s `"100"`/`'normalization'` notes — left unfixed on the same basis as
   vijPlots (narrow repro surface, and the real fix belongs upstream in jmvcore/jamovi).
+- No ggpp nor ggforce (dropped 2026-11-21, as in vijPlots: ggpp alone pulled lubridate,
+  timechange, xts and polynom into the .jmo, ~2.2 MiB of 5.3 MiB). PCA's variable labels are
+  nudged away from the origin with per-label `nudge_x`/`nudge_y` in `geom_text_repel()` (identical
+  to `ggpp::position_nudge_center()`, except a variable exactly at the origin is no longer nudged);
+  the unit circle is a `geom_polygon()` on 721 points with `lineend = "round"`, giving the same SVG
+  as `ggforce::geom_circle(n = 720)`. Rebuild the .jmo from an emptied `build/R*` directory,
+  or the old packages stay in it.
+
+### Numerical thresholds (settled 2026-11-16 — read before reporting a "noise vs tiny real value" finding)
+
+Several checks separate rounding noise (~`eps` = 2.2e-16, relative) from a tiny but real value.
+Whatever the threshold, a dataset can always be built that falls on the wrong side of it, so an
+audit hunting for such cases finds new ones indefinitely: each fix only moves the boundary. The
+rule: **a finding of this kind is only worth fixing if it is reached with realistic data** (a Total
+row, 200 variables, a factorial design — not scales nine orders of magnitude apart, nor counts
+multiplied by 1e-18). Otherwise leave the code alone.
+
+Current thresholds, all deliberate:
+
+- Null axes: PCA `sdev > sqrt(eps) * sdev[1]`, CA `sv > sqrt(eps)`, MCA
+  `lambdaI > sqrt(eps) * lambdaI[1]`. Conservative on purpose — refusing a real but negligible
+  axis only costs a message, whereas accepting a noise axis gives arbitrary standard scores (the
+  bug fixed in `fa5f4e5`). Don't lower them to `100 * eps`.
+- PCA correlation matrix: *singular* = `solve()` fails (one diagnosis in `.run()`, shared by the
+  warning and the KMO table, whose two rows are then left empty); *nearly singular* =
+  `rcond < sqrt(eps)`, warning only.
+- Points/values at an exact degeneracy, where the statistic would be noise / noise, are left
+  empty below `100 * eps`: CA cos²/QLT of a point at the centroid (distance to the centroid), PCA
+  KMO of uncorrelated variables (largest off-diagonal correlation). Measured for CA: cos² is
+  accurate to 3 decimals down to a distance of ~1e-14, meaningless below 1e-15 — `sqrt(eps)` was
+  tried first and wrongly emptied valid cos² at 8e-10.
+- PCA KMO and Bartlett's test are computed in `principal.b.R` (`.kmo()`, `.bartlett()`), not by
+  psych: Bartlett from the log-determinant (`det()` underflows to 0 with ~200 variables), KMO from
+  the inverse already computed for the singularity diagnosis.
+
+Reported and deliberately left as is (unrealistic data):
+
+- PCA, unstandardized: two variables whose standard deviations differ by 1e9 — the second axis
+  (1e-18 of the variance) is declared null and the analysis rejected.
+- CA: all counts multiplied by 1e-18 — rejected by the absolute test `chisq <= eps`.
+- MCA, Burt method: supplementary categories exactly at the centroid (a supplementary variable
+  exactly independent of every active one) show a cos²/QLT made of rounding noise.
+- MCA, Benzécri/Greenacre corrections with exactly independent active variables: the test
+  `sqrt(eig) <= 1/p` has no tolerance, hence a 100 % axis (Benzécri) or an infinite percentage
+  (Greenacre).
+
+The last two only arise with a balanced design built on purpose; reopen them if such data become
+a real use case (the fix would be two more `100 * eps` guards).
 
 ### Translations (`jamovi/i18n/*.po`)
 

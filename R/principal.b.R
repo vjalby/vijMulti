@@ -277,9 +277,12 @@ principalClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
 
             # Reference lines
             plot <- plot + ggplot2::geom_hline(yintercept = 0, linetype = 2) + ggplot2::geom_vline(xintercept = 0, linetype = 2)
-            # Unit circle
-            if (self$options$stdVariables && plotType == "var" && !self$options$stdLoadings)
-                plot <- plot + ggforce::geom_circle(ggplot2::aes(x0 = 0, y0 = 0, r = 1), linewidth = 0.2, n = 720)
+            # Unit circle, drawn as ggforce::geom_circle(n = 720) did (same SVG output)
+            if (self$options$stdVariables && plotType == "var" && !self$options$stdLoadings) {
+                angle <- seq(0, 2 * pi, length.out = 721)
+                plot <- plot + ggplot2::geom_polygon(data = data.frame(x = sin(angle), y = cos(angle)), ggplot2::aes(x = x, y = y),
+                                                     fill = NA, colour = "black", linewidth = 0.2, lineend = "round")
+            }
 
             #### Obs Plot ####
 
@@ -326,8 +329,11 @@ principalClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 plot <- plot + ggplot2::geom_segment(data = varData, ggplot2::aes(x = 0, y = 0, xend = x, yend = y),
                                             arrow = grid::arrow(length = grid::unit(0.05, "inches"), type = "closed"),
                                             color = self$options$varColor, linewidth = 0.8)
+                # Labels nudged away from the origin, as ggpp::position_nudge_center() did
+                dist <- pmax(sqrt(varData$x^2 + varData$y^2), 1e-5)
                 plot <- plot + ggrepel::geom_text_repel(data = varData, ggplot2::aes(x = x, y = y, label = Label), min.segment.length = 2,
-                                                        position = ggpp::position_nudge_center(x = 0.2 * nudgeScale, y = 0.01 * nudgeScale, center_x = 0, center_y = 0),
+                                                        nudge_x = 0.2 * nudgeScale * varData$x / dist,
+                                                        nudge_y = 0.01 * nudgeScale * varData$y / dist,
                                                         size = self$options$varLabelSize/ggplot2::.pt, color = labelColor, fontface="bold", seed = 123)
              }
 
