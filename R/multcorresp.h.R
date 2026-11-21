@@ -61,7 +61,9 @@ multcorrespOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
             xAxisPosition = "0.5",
             yAxisText = "",
             yAxisFontSize = "16",
-            yAxisPosition = "0.5", ...) {
+            yAxisPosition = "0.5",
+            plotTheme = "default",
+            fontFamily = "default", ...) {
 
             super$initialize(
                 package="vijMulti",
@@ -459,6 +461,29 @@ multcorrespOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                     "0.5",
                     "0"),
                 default="0.5")
+            private$..plotTheme <- jmvcore::OptionList$new(
+                "plotTheme",
+                plotTheme,
+                options=list(
+                    "default",
+                    "jmvDefault",
+                    "jmvMinimal",
+                    "jmvHadley",
+                    "jmvSpss",
+                    "ggBw",
+                    "ggLight",
+                    "ggLinedraw",
+                    "ggDark"),
+                default="default")
+            private$..fontFamily <- jmvcore::OptionList$new(
+                "fontFamily",
+                fontFamily,
+                options=list(
+                    "default",
+                    "sans",
+                    "serif",
+                    "mono"),
+                default="default")
 
             self$.addOption(private$..vars)
             self$.addOption(private$..supplVars)
@@ -517,6 +542,8 @@ multcorrespOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
             self$.addOption(private$..yAxisText)
             self$.addOption(private$..yAxisFontSize)
             self$.addOption(private$..yAxisPosition)
+            self$.addOption(private$..plotTheme)
+            self$.addOption(private$..fontFamily)
         }),
     active = list(
         vars = function() private$..vars$value,
@@ -575,7 +602,9 @@ multcorrespOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
         xAxisPosition = function() private$..xAxisPosition$value,
         yAxisText = function() private$..yAxisText$value,
         yAxisFontSize = function() private$..yAxisFontSize$value,
-        yAxisPosition = function() private$..yAxisPosition$value),
+        yAxisPosition = function() private$..yAxisPosition$value,
+        plotTheme = function() private$..plotTheme$value,
+        fontFamily = function() private$..fontFamily$value),
     private = list(
         ..vars = NA,
         ..supplVars = NA,
@@ -633,7 +662,9 @@ multcorrespOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
         ..xAxisPosition = NA,
         ..yAxisText = NA,
         ..yAxisFontSize = NA,
-        ..yAxisPosition = NA)
+        ..yAxisPosition = NA,
+        ..plotTheme = NA,
+        ..fontFamily = NA)
 )
 
 multcorrespResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
@@ -816,7 +847,9 @@ multcorrespResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                     "yAxisFontSize",
                     "yAxisPosition",
                     "labelSize",
-                    "descAsVarName")))
+                    "descAsVarName",
+                    "plotTheme",
+                    "fontFamily")))
             self$add(jmvcore::Image$new(
                 options=options,
                 name="categoryplot",
@@ -858,7 +891,9 @@ multcorrespResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                     "labelSize",
                     "connectOrdinalCat",
                     "descAsVarName",
-                    "boldCat")))
+                    "boldCat",
+                    "plotTheme",
+                    "fontFamily")))
             self$add(jmvcore::Image$new(
                 options=options,
                 name="obsplot",
@@ -897,7 +932,9 @@ multcorrespResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                     "obsColor",
                     "labelSize",
                     "propPoint",
-                    "ggrepel")))
+                    "ggrepel",
+                    "plotTheme",
+                    "fontFamily")))
             self$add(jmvcore::Image$new(
                 options=options,
                 name="biplot",
@@ -943,7 +980,9 @@ multcorrespResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                     "propPoint",
                     "descAsVarName",
                     "ggrepel",
-                    "boldCat")))
+                    "boldCat",
+                    "plotTheme",
+                    "fontFamily")))
             self$add(jmvcore::Output$new(
                 options=options,
                 name="obsCoordOV",
@@ -1037,6 +1076,8 @@ multcorrespBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @param yAxisText .
 #' @param yAxisFontSize .
 #' @param yAxisPosition .
+#' @param plotTheme .
+#' @param fontFamily .
 #' @return A results object containing:
 #' \tabular{llllll}{
 #'   \code{results$eigenvalues} \tab \tab \tab \tab \tab a table \cr
@@ -1114,7 +1155,9 @@ multcorresp <- function(
     xAxisPosition = "0.5",
     yAxisText = "",
     yAxisFontSize = "16",
-    yAxisPosition = "0.5") {
+    yAxisPosition = "0.5",
+    plotTheme = "default",
+    fontFamily = "default") {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
         stop("multcorresp requires jmvcore to be installed (restart may be required)")
@@ -1188,7 +1231,9 @@ multcorresp <- function(
         xAxisPosition = xAxisPosition,
         yAxisText = yAxisText,
         yAxisFontSize = yAxisFontSize,
-        yAxisPosition = yAxisPosition)
+        yAxisPosition = yAxisPosition,
+        plotTheme = plotTheme,
+        fontFamily = fontFamily)
 
     analysis <- multcorrespClass$new(
         options = options,

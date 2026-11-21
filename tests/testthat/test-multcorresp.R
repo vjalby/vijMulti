@@ -303,3 +303,18 @@ test_that("multcorresp: variable names that are not syntactic R names (spaces, a
     expect_equal(unique(state$cat$factors), c("Pays d'origine", "Taille du véhicule", "Type (usage)", "Logement"))
     expect_equal(state$ordVars, "Taille du véhicule")
 })
+
+test_that("multcorresp: theme and font family, observation and category labels included", {
+    args <- list(data = testData, vars = c("Origin", "Size", "Type"), supplVars = NULL, labelVar = "Sex",
+                 showBiPlot = TRUE, showDiscriminationPlot = TRUE)
+    r <- do.call(vijMulti::multcorresp, c(args, plotTheme = "ggBw", fontFamily = "serif"))
+    expectBwSerif(renderedPlot(r$biplot), nText = 2)
+    expectBwSerif(renderedPlot(r$discrimplot), nText = 1)
+    # observation labels without ggrepel (geom_text)
+    r <- do.call(vijMulti::multcorresp, c(args, plotTheme = "ggBw", fontFamily = "serif", ggrepel = FALSE))
+    p <- renderedPlot(r$biplot)
+    expect_true(any(vapply(textLayers(p), function(l) inherits(l$geom, "GeomText") && !inherits(l$geom, "GeomTextRepel"), logical(1))))
+    expectBwSerif(p, nText = 2)
+    r <- do.call(vijMulti::multcorresp, c(args, plotTheme = "jmvHadley"))
+    expectBlackFrame(renderedPlot(r$biplot))
+})

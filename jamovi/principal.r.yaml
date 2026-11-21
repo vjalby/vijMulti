@@ -146,6 +146,8 @@ items:
         - xAxisPosition
         - yAxisFontSize
         - yAxisPosition
+        - plotTheme
+        - fontFamily
 
     - name: varPlot
       title: "Variable Plot"
@@ -186,6 +188,8 @@ items:
         - yAxisText
         - yAxisFontSize
         - yAxisPosition
+        - plotTheme
+        - fontFamily
 
     - name: obsPlot
       title: "Observation Plot"
@@ -233,6 +237,8 @@ items:
         - legendText
         - legendFontSize
         - legendPosition
+        - plotTheme
+        - fontFamily
 
     - name: biPlot
       title: "Biplot"
@@ -285,6 +291,8 @@ items:
         - legendText
         - legendFontSize
         - legendPosition
+        - plotTheme
+        - fontFamily
 
     - name: obsCoordOV
       title: Observation Coordinates

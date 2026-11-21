@@ -103,6 +103,9 @@
             "Black": [
                 "Noir"
             ],
+            "Black and white (ggplot2)": [
+                "Noir et blanc (ggplot2)"
+            ],
             "Blue": [
                 "Bleu"
             ],
@@ -271,6 +274,9 @@
             "Cumulative %": [
                 "% cumulés"
             ],
+            "Dark (ggplot2)": [
+                "Sombre (ggplot2)"
+            ],
             "Dark 2": [
                 "Sombre 2"
             ],
@@ -279,6 +285,9 @@
             ],
             "default": [
                 "par défaut"
+            ],
+            "Default": [
+                "Par défaut"
             ],
             "df": [
                 "ddl"
@@ -330,6 +339,9 @@
             ],
             "Font face": [
                 "Style de police"
+            ],
+            "Font family": [
+                "Police"
             ],
             "Font size": [
                 "Taille de police"
@@ -385,6 +397,9 @@
             "Group": [
                 "Groupe"
             ],
+            "Hadley (jamovi)": [
+                "Hadley (jamovi)"
+            ],
             "Indicator matrix": [
                 "Tableau disjonctif"
             ],
@@ -405,6 +420,9 @@
             ],
             "Italic": [
                 "Italique"
+            ],
+            "jamovi": [
+                "jamovi"
             ],
             "jmv Blue": [
                 "Bleu jmv"
@@ -457,6 +475,9 @@
             "Level": [
                 "Niveau"
             ],
+            "Light (ggplot2)": [
+                "Clair (ggplot2)"
+            ],
             "Light Blue": [
                 "Bleu clair"
             ],
@@ -487,6 +508,9 @@
             "Limited to the first 100 observations": [
                 "Limité aux 100 premières observations"
             ],
+            "Line draw (ggplot2)": [
+                "Traits (ggplot2)"
+            ],
             "Mass": [
                 "Masse"
             ],
@@ -502,8 +526,14 @@
             "Method": [
                 "Méthode"
             ],
+            "Minimal (jamovi)": [
+                "Minimal (jamovi)"
+            ],
             "Minimum entropy": [
                 "Entropie minimale"
+            ],
+            "Monospace": [
+                "Chasse fixe"
             ],
             "Multiple Correspondence Analysis": [
                 "Analyse des correspondances multiples"
@@ -763,6 +793,9 @@
             "Same as point/arrow": [
                 "Comme les vecteurs/points"
             ],
+            "Sans serif": [
+                "Sans empattement"
+            ],
             "Save": [
                 "Enregistrer"
             ],
@@ -774,6 +807,9 @@
             ],
             "Scree plot": [
                 "Valeurs propres"
+            ],
+            "Serif": [
+                "Avec empattement"
             ],
             "Set 1": [
                 "Ensemble 1"
@@ -816,6 +852,9 @@
             ],
             "Spectral": [
                 "Spectral"
+            ],
+            "SPSS (jamovi)": [
+                "SPSS (jamovi)"
             ],
             "SS Loadings": [
                 "Total"
@@ -930,6 +969,9 @@
             ],
             "The χ² statistic is equal to zero.": [
                 "La statistique du χ² est égale à zéro."
+            ],
+            "Theme": [
+                "Thème"
             ],
             "Tidy:Alger": [
                 "Tidy:Alger"

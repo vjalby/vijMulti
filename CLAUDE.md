@@ -94,7 +94,26 @@ ggplot2's "Removed 1 row containing missing values" warning (surfaced by `vijDeb
 versions) — the same mechanism as vijPlots' `piechart`/`barplot` hidden labels.
 Compared with vijPlots' `utils.R` on 2026-11-08: vijMulti's is a strict subset; the only functions
 left out (`vijFormatCount()`, `vijGridLines()`, `vijHideAxis()`) are unused here — don't copy the
-file wholesale.
+file wholesale. `vijPlotTheme()`/`vijFontFamily()` were copied verbatim on 2026-11-21 (see below).
+
+### Theme and font options (ported from vijPlots, 2026-11-21)
+
+Same `plotTheme`/`fontFamily` options, values and "Theme" UI section as vijPlots (see its
+`CLAUDE.md`, "Appearance options", for the reasoning: theme list, `base_size = 16`, margins, SPSS
+`suppressWarnings()`, why every text layer needs `family =`). The section comes right after "Plot
+Titles & Subtitles" (before PCA's "Advanced Options" and MCA's "Save"). Every plot adds
+`ggtheme + vijPlotTheme(self$options)`, scree and discrimination plots included, and every text
+layer gets `family = fontFamily` (`vijFontFamily(self$options)`): 3 in PCA, 1 in CA, 4 in MCA
+(its `geom_text` fallback when `ggrepel` is off included). A new text layer must get it too: each
+analysis' "theme and font family" test checks every text layer (`helper-theme.R`). Both options are
+in every Image's `clearWith:` (jamovi only re-renders an image whose `clearWith` changed).
+
+vijMulti-specific: the factorial maps' forced black frame (`panel.border` black, linewidth 1, no
+`axis.line`) is kept with "Default" and the four jamovi themes (so the default look, snapshots
+included, is unchanged), but skipped with the four ggplot2 themes (`startsWith(plotTheme, "gg")`),
+which keep their own frame (Light's gray one, Bw/Linedraw's dark one) or, for Dark, no frame on a
+filled panel. No grid options here, so `vijGridLines()` is still not needed: ggplot2's themes and
+jamovi's Hadley/Minimal bring their grid, the others have none.
 
 ### CA/MCA backends (`ca` package)
 

@@ -67,7 +67,9 @@ principalOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             xAxisPosition = "0.5",
             yAxisText = "",
             yAxisFontSize = "16",
-            yAxisPosition = "0.5", ...) {
+            yAxisPosition = "0.5",
+            plotTheme = "default",
+            fontFamily = "default", ...) {
 
             super$initialize(
                 package="vijMulti",
@@ -544,6 +546,29 @@ principalOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                     "0.5",
                     "0"),
                 default="0.5")
+            private$..plotTheme <- jmvcore::OptionList$new(
+                "plotTheme",
+                plotTheme,
+                options=list(
+                    "default",
+                    "jmvDefault",
+                    "jmvMinimal",
+                    "jmvHadley",
+                    "jmvSpss",
+                    "ggBw",
+                    "ggLight",
+                    "ggLinedraw",
+                    "ggDark"),
+                default="default")
+            private$..fontFamily <- jmvcore::OptionList$new(
+                "fontFamily",
+                fontFamily,
+                options=list(
+                    "default",
+                    "sans",
+                    "serif",
+                    "mono"),
+                default="default")
 
             self$.addOption(private$..vars)
             self$.addOption(private$..labelVar)
@@ -608,6 +633,8 @@ principalOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             self$.addOption(private$..yAxisText)
             self$.addOption(private$..yAxisFontSize)
             self$.addOption(private$..yAxisPosition)
+            self$.addOption(private$..plotTheme)
+            self$.addOption(private$..fontFamily)
         }),
     active = list(
         vars = function() private$..vars$value,
@@ -672,7 +699,9 @@ principalOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         xAxisPosition = function() private$..xAxisPosition$value,
         yAxisText = function() private$..yAxisText$value,
         yAxisFontSize = function() private$..yAxisFontSize$value,
-        yAxisPosition = function() private$..yAxisPosition$value),
+        yAxisPosition = function() private$..yAxisPosition$value,
+        plotTheme = function() private$..plotTheme$value,
+        fontFamily = function() private$..fontFamily$value),
     private = list(
         ..vars = NA,
         ..labelVar = NA,
@@ -736,7 +765,9 @@ principalOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         ..xAxisPosition = NA,
         ..yAxisText = NA,
         ..yAxisFontSize = NA,
-        ..yAxisPosition = NA)
+        ..yAxisPosition = NA,
+        ..plotTheme = NA,
+        ..fontFamily = NA)
 )
 
 principalResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
@@ -914,7 +945,9 @@ principalResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                     "xAxisFontSize",
                     "xAxisPosition",
                     "yAxisFontSize",
-                    "yAxisPosition")))
+                    "yAxisPosition",
+                    "plotTheme",
+                    "fontFamily")))
             self$add(jmvcore::Image$new(
                 options=options,
                 name="varPlot",
@@ -954,7 +987,9 @@ principalResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                     "xAxisPosition",
                     "yAxisText",
                     "yAxisFontSize",
-                    "yAxisPosition")))
+                    "yAxisPosition",
+                    "plotTheme",
+                    "fontFamily")))
             self$add(jmvcore::Image$new(
                 options=options,
                 name="obsPlot",
@@ -1001,7 +1036,9 @@ principalResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                     "yAxisPosition",
                     "legendText",
                     "legendFontSize",
-                    "legendPosition")))
+                    "legendPosition",
+                    "plotTheme",
+                    "fontFamily")))
             self$add(jmvcore::Image$new(
                 options=options,
                 name="biPlot",
@@ -1053,7 +1090,9 @@ principalResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                     "yAxisPosition",
                     "legendText",
                     "legendFontSize",
-                    "legendPosition")))
+                    "legendPosition",
+                    "plotTheme",
+                    "fontFamily")))
             self$add(jmvcore::Output$new(
                 options=options,
                 name="obsCoordOV",
@@ -1155,6 +1194,8 @@ principalBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @param yAxisText .
 #' @param yAxisFontSize .
 #' @param yAxisPosition .
+#' @param plotTheme .
+#' @param fontFamily .
 #' @return A results object containing:
 #' \tabular{llllll}{
 #'   \code{results$summaryTable} \tab \tab \tab \tab \tab a table \cr
@@ -1238,7 +1279,9 @@ principal <- function(
     xAxisPosition = "0.5",
     yAxisText = "",
     yAxisFontSize = "16",
-    yAxisPosition = "0.5") {
+    yAxisPosition = "0.5",
+    plotTheme = "default",
+    fontFamily = "default") {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
         stop("principal requires jmvcore to be installed (restart may be required)")
@@ -1317,7 +1360,9 @@ principal <- function(
         xAxisPosition = xAxisPosition,
         yAxisText = yAxisText,
         yAxisFontSize = yAxisFontSize,
-        yAxisPosition = yAxisPosition)
+        yAxisPosition = yAxisPosition,
+        plotTheme = plotTheme,
+        fontFamily = fontFamily)
 
     analysis <- principalClass$new(
         options = options,

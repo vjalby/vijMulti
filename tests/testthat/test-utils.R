@@ -12,3 +12,12 @@ test_that("fixed-length palettes are interpolated beyond their number of colors"
         expect_equal(anyDuplicated(colors), 0)
     }
 })
+
+test_that("vijPlotTheme(): every theme builds, jamovi's SPSS without deprecation warning", {
+    withr::local_options(lifecycle_verbosity = "warning")
+    for (th in c("default", "jmvDefault", "jmvMinimal", "jmvHadley", "jmvSpss", "ggBw", "ggLight", "ggLinedraw", "ggDark"))
+        expect_no_warning(expect_s3_class(vijPlotTheme(list(plotTheme = th, fontFamily = "mono")), "theme"))
+    expect_equal(vijFontFamily(list()), "")
+    expect_equal(vijFontFamily(list(fontFamily = "default")), "")
+    expect_equal(vijFontFamily(list(fontFamily = "serif")), "serif")
+})

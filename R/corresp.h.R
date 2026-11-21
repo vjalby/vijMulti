@@ -55,7 +55,9 @@ correspOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             yAxisText = "",
             yAxisFontSize = "16",
             yAxisPosition = "0.5",
-            descAsVarName = FALSE, ...) {
+            descAsVarName = FALSE,
+            plotTheme = "default",
+            fontFamily = "default", ...) {
 
             super$initialize(
                 package="vijMulti",
@@ -372,6 +374,29 @@ correspOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 "descAsVarName",
                 descAsVarName,
                 default=FALSE)
+            private$..plotTheme <- jmvcore::OptionList$new(
+                "plotTheme",
+                plotTheme,
+                options=list(
+                    "default",
+                    "jmvDefault",
+                    "jmvMinimal",
+                    "jmvHadley",
+                    "jmvSpss",
+                    "ggBw",
+                    "ggLight",
+                    "ggLinedraw",
+                    "ggDark"),
+                default="default")
+            private$..fontFamily <- jmvcore::OptionList$new(
+                "fontFamily",
+                fontFamily,
+                options=list(
+                    "default",
+                    "sans",
+                    "serif",
+                    "mono"),
+                default="default")
 
             self$.addOption(private$..mode)
             self$.addOption(private$..rows)
@@ -423,6 +448,8 @@ correspOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             self$.addOption(private$..yAxisFontSize)
             self$.addOption(private$..yAxisPosition)
             self$.addOption(private$..descAsVarName)
+            self$.addOption(private$..plotTheme)
+            self$.addOption(private$..fontFamily)
         }),
     active = list(
         mode = function() private$..mode$value,
@@ -474,7 +501,9 @@ correspOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         yAxisText = function() private$..yAxisText$value,
         yAxisFontSize = function() private$..yAxisFontSize$value,
         yAxisPosition = function() private$..yAxisPosition$value,
-        descAsVarName = function() private$..descAsVarName$value),
+        descAsVarName = function() private$..descAsVarName$value,
+        plotTheme = function() private$..plotTheme$value,
+        fontFamily = function() private$..fontFamily$value),
     private = list(
         ..mode = NA,
         ..rows = NA,
@@ -525,7 +554,9 @@ correspOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         ..yAxisText = NA,
         ..yAxisFontSize = NA,
         ..yAxisPosition = NA,
-        ..descAsVarName = NA)
+        ..descAsVarName = NA,
+        ..plotTheme = NA,
+        ..fontFamily = NA)
 )
 
 correspResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
@@ -783,7 +814,9 @@ correspResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                     "yAxisText",
                     "yAxisFontSize",
                     "yAxisPosition",
-                    "labelSize")))
+                    "labelSize",
+                    "plotTheme",
+                    "fontFamily")))
             self$add(jmvcore::Image$new(
                 options=options,
                 name="colplot",
@@ -827,7 +860,9 @@ correspResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                     "yAxisText",
                     "yAxisFontSize",
                     "yAxisPosition",
-                    "labelSize")))
+                    "labelSize",
+                    "plotTheme",
+                    "fontFamily")))
             self$add(jmvcore::Image$new(
                 options=options,
                 name="biplot",
@@ -872,7 +907,9 @@ correspResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                     "yAxisText",
                     "yAxisFontSize",
                     "yAxisPosition",
-                    "labelSize")))}))
+                    "labelSize",
+                    "plotTheme",
+                    "fontFamily")))}))
 
 correspBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     "correspBase",
@@ -949,6 +986,8 @@ correspBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @param yAxisFontSize .
 #' @param yAxisPosition .
 #' @param descAsVarName .
+#' @param plotTheme .
+#' @param fontFamily .
 #' @return A results object containing:
 #' \tabular{llllll}{
 #'   \code{results$contingency} \tab \tab \tab \tab \tab a table \cr
@@ -1021,7 +1060,9 @@ corresp <- function(
     yAxisText = "",
     yAxisFontSize = "16",
     yAxisPosition = "0.5",
-    descAsVarName = FALSE) {
+    descAsVarName = FALSE,
+    plotTheme = "default",
+    fontFamily = "default") {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
         stop("corresp requires jmvcore to be installed (restart may be required)")
@@ -1094,7 +1135,9 @@ corresp <- function(
         yAxisText = yAxisText,
         yAxisFontSize = yAxisFontSize,
         yAxisPosition = yAxisPosition,
-        descAsVarName = descAsVarName)
+        descAsVarName = descAsVarName,
+        plotTheme = plotTheme,
+        fontFamily = fontFamily)
 
     analysis <- correspClass$new(
         options = options,

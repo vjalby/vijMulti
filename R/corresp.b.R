@@ -625,11 +625,12 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             # Building the plot
             plot <-  ggplot2::ggplot(ptcoord, ggplot2::aes(x = .data[[xaxisdim]], y = .data[[yaxisdim]], color = .data[["sup"]], shape = .data[["sup"]]))
             plot <- plot + ggplot2::geom_point()
-            plot <- plot + ggrepel::geom_text_repel(ggplot2::aes(label = .data[["label"]]), show.legend = FALSE, size = self$options$labelSize/ggplot2::.pt, seed = 123)
+            plot <- plot + ggrepel::geom_text_repel(ggplot2::aes(label = .data[["label"]]), show.legend = FALSE, size = self$options$labelSize/ggplot2::.pt,
+                                                    family = vijFontFamily(self$options), seed = 123)
             plot <- plot + ggplot2::geom_hline(yintercept = 0, linetype = 2) + ggplot2::geom_vline(xintercept = 0, linetype = 2)
 
-            # Apply jmv theme
-            plot <- plot + ggtheme
+            # Apply jmv theme, then the module's theme and font
+            plot <- plot + ggtheme + vijPlotTheme(self$options)
 
             # Set point colors
             plot <- plot +
@@ -638,8 +639,9 @@ correspClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 ggplot2::scale_shape_manual(values = c("1" = 19, "2" = 19, "3" = 17, "4" = 17)) +
                 ggplot2::guides(color = "none", shape = "none")
 
-            # Plot frame
-            plot <- plot + ggplot2::theme(axis.line = ggplot2::element_line(linewidth = 0), panel.border = ggplot2::element_rect(color = "black", fill = NA, linewidth = 1))
+            # Plot frame (the ggplot2 themes keep their own: frame, or Dark's filled panel)
+            if (!startsWith(self$options$plotTheme, "gg"))
+                plot <- plot + ggplot2::theme(axis.line = ggplot2::element_line(linewidth = 0), panel.border = ggplot2::element_rect(color = "black", fill = NA, linewidth = 1))
 
             # Plot title
             title <- switch(plotType,
