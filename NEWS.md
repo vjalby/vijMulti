@@ -1,4 +1,5 @@
-# vijMulti 1.1.2 (2026-11-11)
+# vijMulti 1.2.0 (2026-11-22)
+* New "Theme" section to choose the plot theme (jamovi's Default, Minimal, Hadley or SPSS, or ggplot2's Black and white, Light, Line draw or Dark) and the font family (sans serif, serif or monospace)
 * CA: missing, negative or infinite counts are now always rejected; zero counts are treated as no observation
 * PCA: a missing group is shown as "(Missing)" instead of "NA" (legend) or an empty cell (Observations table)
 * CA/MCA: dimensions with null inertia (e.g. proportional rows, redundant variables) are still listed in the Summary table but can no longer be used as dimensions

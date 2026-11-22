@@ -359,5 +359,5 @@ test_that("principal: theme and font family, point and variable labels included"
     r <- do.call(vijMulti::principal, c(args, plotTheme = "jmvSpss"))
     expectBlackFrame(renderedPlot(r$biPlot))
     r <- do.call(vijMulti::principal, c(args, plotTheme = "ggLight"))
-    expect_equal(ggplot2::calc_element("panel.border", renderedPlot(r$biPlot)$theme)$colour, "#B3B3B3FF")
+    expect_equal(grDevices::col2rgb(ggplot2::calc_element("panel.border", renderedPlot(r$biPlot)$theme)$colour), grDevices::col2rgb("grey70"))
 })

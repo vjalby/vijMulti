@@ -5,7 +5,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Overview
 
 **vijMulti** is an R package / jamovi module dedicated to classic multivariate data analyses,
-available in jamovi's **Multivariate** ribbon tab: `principal` (Principal Component Analysis),
+available in jamovi's **Analyses** ribbon tab, under its own `vijMulti` menu (subgroup
+"Multivariate"): `principal` (Principal Component Analysis),
 `corresp` (Correspondence Analysis), `multcorresp` (Multiple Correspondence Analysis). It was
 split out of [vijPlots](https://github.com/vjalby/vijPlots) (2026-09), which keeps the plotting
 analyses and originally shipped these three as well — the code was duplicated, not moved, so
@@ -37,11 +38,12 @@ either — `prepare()` can delete files there outright as part of its regenerati
 from that analysis's own `jamovi/<name>.a.yaml` header — hand edits to those fields in `0000.yaml`
 get silently overwritten on the next `prepare()`. Edit the `.a.yaml` header instead. Note that the
 per-analysis `category:` field in `.a.yaml` is a fixed jamovi-internal enum (`analyses` or `plots`
-only — nothing else validates), unrelated to which ribbon tab the module appears under; the ribbon
-tab is controlled by `jamovi/0000.yaml`'s top-level `category:` (currently `multivariate`) plus
-each analysis's `menuGroup: vijMulti`. Leaving the per-analysis `.a.yaml` `category:` unset
-defaults to `analyses`, which is what puts these three under jamovi's **Analyses** grouping rather
-than looking like plots.
+only — nothing else validates). It does pick the ribbon tab: unset, it defaults to `analyses`,
+which puts these three in jamovi's **Analyses** tab (checked in jamovi 28.17, 2026-11-21), as a
+`vijMulti` menu button (`menuGroup`) whose entries are listed under "Multivariate"
+(`menuSubgroup`). `jamovi/0000.yaml`'s top-level `category: multivariate` does *not* choose the
+tab (the module shows under Analyses with it); its effect, probably the module's category in the
+jamovi library, was not checked.
 
 Testing (testthat edition 3, run from the package root after `devtools::load_all(".")`):
 
@@ -72,8 +74,7 @@ trimmed down from vijPlots' full reference list).
 
 ### Shared utilities (`R/utils.R`)
 
-Copied in full from vijPlots (all functions are used by at least one of the three analyses), all
-prefixed `vij*`: `vijColorScale()`/`vijColorPalette()`/`vijColorPaletteNlevels()`/
+Copied from vijPlots (see the end of this section), all prefixed `vij*`: `vijColorScale()`/`vijColorPalette()`/`vijColorPaletteNlevels()`/
 `vijOneColorOfPalette()` build palette scales from the `colorPalette` option; `vijVar()` wraps an
 optional `rlang::sym`-or-`NULL`; `vijTitlesAndLabels()`/`vijTitleAndLabelFormat()` build `labs()`
 and axis/legend theme; `vijHelpMessage()`/`vijWarningMessage()`/`vijDebugMessage()` insert a
@@ -92,9 +93,11 @@ label, rather than showing several identical "(Missing)" labels (user's choice, 
 The observation text layers have `na.rm = TRUE`, so a missing label just drops that text, without
 ggplot2's "Removed 1 row containing missing values" warning (surfaced by `vijDebugPlot()` in dev
 versions) — the same mechanism as vijPlots' `piechart`/`barplot` hidden labels.
-Compared with vijPlots' `utils.R` on 2026-11-08: vijMulti's is a strict subset; the only functions
-left out (`vijFormatCount()`, `vijGridLines()`, `vijHideAxis()`) are unused here — don't copy the
-file wholesale. `vijPlotTheme()`/`vijFontFamily()` were copied verbatim on 2026-11-21 (see below).
+Since 2026-11-22, `R/utils.R` and `tests/testthat/test-utils.R` are **exact copies** of vijPlots'
+(edited there, copied here; vijPlots' `build.R` checks they are identical): don't edit them here
+alone. Some of their helpers are unused here (`vijVar()`, `vijOneColorOfPalette()`,
+`vijFormatCount()`, `lastColor` of `vijColorScale()`): keep them. The vijPlots-only helpers
+(`vijGridLines()`, `vijHideAxis()`, `vijNudgePosition()`) are in vijPlots' `R/utilsPlots.R`, not copied.
 
 ### Theme and font options (ported from vijPlots, 2026-11-21)
 
