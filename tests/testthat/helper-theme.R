@@ -16,7 +16,7 @@ textLayers <- function(p) {
 expectBwSerif <- function(p, nText = 0) {
     border <- ggplot2::calc_element("panel.border", p$theme)
     expect_true(inherits(border, "element_rect"))
-    expect_equal(border$colour, "#333333FF")
+    expect_equal(grDevices::col2rgb(border$colour), grDevices::col2rgb("grey20"))
     expect_equal(ggplot2::calc_element("plot.title", p$theme)$family, "serif")
     expect_equal(ggplot2::calc_element("axis.text.x", p$theme)$family, "serif")
     layers <- textLayers(p)

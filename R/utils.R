@@ -1,8 +1,22 @@
-vijColorScale = function(pal, type = "fill", theme, drop = TRUE, labels = ggplot2::waiver()) {
+vijColorScale = function(pal, type = "fill", theme, drop = TRUE, labels = ggplot2::waiver(),
+                         lastColor = NULL) {
     palette <- vijColorPalette(pal, type, theme)
+    # lastColor: color of the last level (e.g. lumped "Other"), the others keep the palette colors.
+    # An explicit NA level is not counted in n (drawn with na.value)
+    if (!is.null(lastColor)) {
+        basePalette <- palette
+        palette <- function(n) if (n > 1) c(basePalette(n - 1), lastColor) else lastColor
+    }
     # drop = FALSE to include unused levels in color scales
     return(ggplot2::discrete_scale(aesthetics = type, palette = palette, na.value = "gray", drop = drop,
                                    labels = labels))
+}
+
+# Labelling function for (possibly weighted) counts: integers as they are, decimal counts (decimal
+# weights) rounded to 2 decimals without trailing zeros, with jamovi's decimal symbol, after prefix
+vijFormatCount = function(decimal.mark = ".", prefix = "") {
+    function(x) paste0(prefix, formatC(round(x, 2), format = "f", digits = 2, drop0trailing = TRUE,
+                                        decimal.mark = decimal.mark))
 }
 
 # Labelling function for discrete scales, facets, text labels and tables: NA shown as "(Missing)".
