@@ -251,7 +251,11 @@ the dev library; `expect_plot_snapshot()` skips when it is missing. Don't add it
 
 ## Icon
 
-`icon/vijMulti.svg` (viewBox `0 0 74 44`, matching vijPlots' icon dimensions): a factorial-map/
-biplot motif — two grey axes crossing at the origin, two `#e6ac40` (jamovi's own icon yellow, seen
-across its built-in analysis icons) variable vectors, and a scatter of blue observation points —
-evoking the 2D map that all three analyses produce, rather than a generic pictogram.
+`jamovi/icons/vijMulti.svg`, declared in `jamovi/0000.yaml` as `menuIcons: {vijMulti: icons/vijMulti.svg}`
+(jamovi's module menu-icon procedure, 2026-11; the key must match the analyses' `menuGroup`
+exactly). Ignored by current jamovi/compiler until support ships; `jmvtools::prepare()` keeps the
+key (compiler 0.3.5 round-trips unknown top-level keys of `0000.yaml`). Follows jamovi's
+guidelines: viewBox `0 0 74 44`, palette grey `#9F9F9F` / blue `#6B9DE8` / orange `#E6AC40` /
+white fill, strokes 2–3, plain SVG with no editor metadata. Motif: a factorial map/biplot (two
+axes, two orange variable vectors, five white-filled blue observation points), the 2D map all
+three analyses produce.

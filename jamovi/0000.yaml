@@ -16,6 +16,8 @@ description: >-
   is available in the <strong>Analyses</strong> tab.</p> <p>Project source (and
   changelog) is available at <a href="https://github.com/vjalby/vijMulti"
   target="_blank">Github</a>.</p>
+menuIcons:
+  vijMulti: icons/vijMulti.svg
 analyses:
   - title: Principal Component Analysis
     name: principal
