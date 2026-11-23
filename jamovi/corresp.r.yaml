@@ -223,8 +223,6 @@ items:
         - yAxisFontSize
         - yAxisPosition
         - labelSize
-        - plotTheme
-        - fontFamily
 
     - name: colplot
       title: "Column Plot"
@@ -269,8 +267,6 @@ items:
         - yAxisFontSize
         - yAxisPosition
         - labelSize
-        - plotTheme
-        - fontFamily
 
     - name: biplot
       title: "Biplot"
@@ -316,7 +312,5 @@ items:
         - yAxisFontSize
         - yAxisPosition
         - labelSize
-        - plotTheme
-        - fontFamily
 
 ...

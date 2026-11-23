@@ -237,7 +237,7 @@ principalClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             plot <- plot + ggplot2::geom_line(linewidth = 0.8) + ggplot2::geom_point(size = 3, color = "darkgrey")
 
             plot <- plot + ggplot2::scale_x_continuous(breaks = 1:nd)
-            plot <- plot + ggtheme + vijPlotTheme(self$options)
+            plot <- plot + ggtheme
 
             # Titles & Labels
             defaults <- list(title = .("Scree Plot"), y = .("Eigenvalues"), x = .("Component"))
@@ -272,8 +272,6 @@ principalClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             dim1name <- res$dim1name
             dim2name <- res$dim2name
             type <- self$options$biplotType
-            # Font family of the text layers
-            fontFamily <- vijFontFamily(self$options)
 
             plot <- ggplot2::ggplot()
 
@@ -305,11 +303,11 @@ principalClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                     if (!is.null(self$options$groupVar) && self$options$labelColor == "none") {
                         plot <- plot + ggrepel::geom_text_repel(data = obsData, ggplot2::aes(x = x, y = y, label = Label, color = group),
                                                                 box.padding = 0.4, min.segment.length = 0.6,
-                                                                size = self$options$obsLabelSize/ggplot2::.pt, family = fontFamily, seed = 123, na.rm = TRUE)
+                                                                size = self$options$obsLabelSize/ggplot2::.pt, seed = 123, na.rm = TRUE)
                     } else {
                         plot <- plot + ggrepel::geom_text_repel(data = obsData, ggplot2::aes(x = x, y = y, label = Label),
                                                                 color = labelColor, box.padding = 0.4, min.segment.length = 0.6,
-                                                                size = self$options$obsLabelSize/ggplot2::.pt, family = fontFamily, seed = 123, na.rm = TRUE)
+                                                                size = self$options$obsLabelSize/ggplot2::.pt, seed = 123, na.rm = TRUE)
                     }
                 }
             }
@@ -336,11 +334,11 @@ principalClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 plot <- plot + ggrepel::geom_text_repel(data = varData, ggplot2::aes(x = x, y = y, label = Label), min.segment.length = 2,
                                                         nudge_x = 0.2 * nudgeScale * varData$x / dist,
                                                         nudge_y = 0.01 * nudgeScale * varData$y / dist,
-                                                        size = self$options$varLabelSize/ggplot2::.pt, color = labelColor, fontface="bold", family = fontFamily, seed = 123)
+                                                        size = self$options$varLabelSize/ggplot2::.pt, color = labelColor, fontface="bold", seed = 123)
              }
 
             # Theme and colors
-            plot <- plot + ggtheme + vijPlotTheme(self$options) + vijColorScale(self$options$colorPalette, "color", theme, labels = vijLabelNA(self))
+            plot <- plot + ggtheme + vijColorScale(self$options$colorPalette, "color", theme, labels = vijLabelNA(self))
 
             # Axe limits
             if (self$options$stdVariables) {
@@ -394,10 +392,9 @@ principalClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                     plot <- plot + ggplot2::scale_y_continuous(breaks = integerBreaks(ymin, ymax))
             }
 
-            # Plot frame (the ggplot2 themes keep their own: frame, or Dark's filled panel)
-            if (!startsWith(self$options$plotTheme, "gg"))
-                plot <- plot + ggplot2::theme(axis.line = ggplot2::element_line(linewidth = 0),
-                                              panel.border = ggplot2::element_rect(color = "black", fill = NA, linewidth = 1))
+            # Plot frame
+            plot <- plot + ggplot2::theme(axis.line = ggplot2::element_line(linewidth = 0),
+                                          panel.border = ggplot2::element_rect(color = "black", fill = NA, linewidth = 1))
 
             # Plot title
             title <- switch(plotType,

@@ -479,8 +479,8 @@ multcorrespClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             plot <- plot + ggplot2::geom_point()
             plot <- plot + ggplot2::geom_segment(ggplot2::aes(xend = 0, yend = 0))
             plot <- plot + ggrepel::geom_text_repel(show.legend = FALSE, nudge_y = 0.03/ggplot2::.pt, min.segment.length = 2,
-                                                    size = self$options$labelSize/ggplot2::.pt, family = vijFontFamily(self$options), seed = 123)
-            plot <- plot + ggtheme + vijPlotTheme(self$options)
+                                                    size = self$options$labelSize/ggplot2::.pt, seed = 123)
+            plot <- plot + ggtheme
 
             # Axes
             plot <- plot + ggplot2::coord_fixed(clip = "off")
@@ -505,9 +505,6 @@ multcorrespClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             dim2 <- self$options$yaxis
             dim1name <- jmvcore::format(.("Dimension {n} ({perc} %)"), n = dim1, perc = round(res$eig[dim1,2]*100,1))
             dim2name <- jmvcore::format(.("Dimension {n} ({perc} %)"), n = dim2, perc = round(res$eig[dim2,2]*100,1))
-
-            # Font family of the text layers
-            fontFamily <- vijFontFamily(self$options)
 
             #### Prepare data ####
             # catdata/obsdata are only built (hence only need res$cat/res$ind) for
@@ -547,12 +544,12 @@ multcorrespClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                     if (self$options$ggrepel) {
                         plot <- plot + ggrepel::geom_text_repel(data = unique(obsdata),
                                                                 ggplot2::aes(x = x, y = y, label = label),
-                                                                size = self$options$labelSize/ggplot2::.pt, family = fontFamily,
+                                                                size = self$options$labelSize/ggplot2::.pt,
                                                                 color = self$options$obsColor, seed = 123, na.rm = TRUE)
                     } else {
                         plot <- plot + ggplot2::geom_text(data = unique(obsdata),
                                                           ggplot2::aes(x = x, y = y, label = label),
-                                                    size = self$options$labelSize/ggplot2::.pt, family = fontFamily,
+                                                    size = self$options$labelSize/ggplot2::.pt,
                                                     color = self$options$obsColor,
                                                     nudge_y = ggheight*0.03, hjust = 0.5, check_overlap = TRUE, na.rm = TRUE)
                     }
@@ -578,7 +575,7 @@ multcorrespClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 plot <- plot + ggplot2::geom_point(data = catdata, ggplot2::aes(x = x, y = y, color = factors, shape = factors), size = catPtSize)
                 plot <- plot + ggrepel::geom_text_repel(data = catdata,
                                                         ggplot2::aes(x = x, y = y, label = level, color = factors, fontface = factors),
-                                                        size = self$options$labelSize/ggplot2::.pt, family = fontFamily, show.legend = FALSE, seed = 123)
+                                                        size = self$options$labelSize/ggplot2::.pt, show.legend = FALSE, seed = 123)
                 if (self$options$connectOrdinalCat) {
                     ordDisplayFactors <- unique(catDisplayFactors[res$cat$factors %in% res$ordVars])
                     plot <- plot + ggplot2::geom_path(data = catdata[catdata$factors %in% ordDisplayFactors,],
@@ -589,7 +586,7 @@ multcorrespClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             plot <- plot + ggplot2::geom_hline(yintercept = 0, linetype = 2) + ggplot2::geom_vline(xintercept = 0, linetype = 2)
 
             #### Theme and colors ####
-            plot <- plot + ggtheme + vijPlotTheme(self$options) + vijColorScale(self$options$colorPalette, "color", theme)
+            plot <- plot + ggtheme + vijColorScale(self$options$colorPalette, "color", theme)
 
             # Shape
             varShapes <- c(rep(16, res$varActive[1]), rep(17, res$varActive[2]))
@@ -601,10 +598,9 @@ multcorrespClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 plot <- plot + ggplot2::scale_discrete_manual("fontface", values = varFontface )
             }
 
-            # Plot frame (the ggplot2 themes keep their own: frame, or Dark's filled panel) & coord
-            if (!startsWith(self$options$plotTheme, "gg"))
-                plot <- plot + ggplot2::theme(axis.line = ggplot2::element_line(linewidth = 0),
-                                              panel.border = ggplot2::element_rect(color = "black", fill = NA, linewidth = 1))
+            # Plot frame & coord
+            plot <- plot + ggplot2::theme(axis.line = ggplot2::element_line(linewidth = 0),
+                                          panel.border = ggplot2::element_rect(color = "black", fill = NA, linewidth = 1))
             plot <- plot + ggplot2::coord_fixed()
 
             #### Plot title ####

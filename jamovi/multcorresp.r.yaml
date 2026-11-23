@@ -149,8 +149,6 @@ items:
         - yAxisPosition
         - labelSize
         - descAsVarName
-        - plotTheme
-        - fontFamily
 
     - name: categoryplot
       title: "Category Plot"
@@ -193,8 +191,6 @@ items:
         - connectOrdinalCat
         - descAsVarName
         - boldCat
-        - plotTheme
-        - fontFamily
 
     - name: obsplot
       title: "Observation Plot"
@@ -234,8 +230,6 @@ items:
         - labelSize
         - propPoint
         - ggrepel
-        - plotTheme
-        - fontFamily
 
     - name: biplot
       title: "Biplot"
@@ -282,8 +276,6 @@ items:
         - descAsVarName
         - ggrepel
         - boldCat
-        - plotTheme
-        - fontFamily
 
     - name: obsCoordOV
       title: Observation Coordinates

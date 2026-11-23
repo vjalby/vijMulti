@@ -293,7 +293,7 @@ msgstr "Accentué"
 msgid "Active Margin"
 msgstr "Marge active"
 
-#: principal/ui[8].label
+#: principal/ui[7].label
 msgid "Advanced Options"
 msgstr "Options avancées"
 
@@ -376,12 +376,6 @@ msgstr "Type de graphique double"
 #: principal/options/obsColor/black.title
 msgid "Black"
 msgstr "Noir"
-
-#: corresp/options/plotTheme/ggBw.title
-#: multcorresp/options/plotTheme/ggBw.title
-#: principal/options/plotTheme/ggBw.title
-msgid "Black and white (ggplot2)"
-msgstr "Noir et blanc (ggplot2)"
 
 #: corresp/options/rowColor/blue.title
 #: corresp/options/colColor/blue.title
@@ -684,12 +678,6 @@ msgstr "Graphique double (Covariance)"
 msgid "Cumulative %"
 msgstr "% cumulés"
 
-#: corresp/options/plotTheme/ggDark.title
-#: multcorresp/options/plotTheme/ggDark.title
-#: principal/options/plotTheme/ggDark.title
-msgid "Dark (ggplot2)"
-msgstr "Sombre (ggplot2)"
-
 #: multcorresp/options/colorPalette/Dark2.title
 #: principal/options/colorPalette/Dark2.title
 msgid "Dark 2"
@@ -724,15 +712,6 @@ msgstr "Gris foncé"
 #: principal/options/obsCaptionText.default
 msgid "default"
 msgstr "par défaut"
-
-#: corresp/options/plotTheme/default.title
-#: corresp/options/fontFamily/default.title
-#: multcorresp/options/plotTheme/default.title
-#: multcorresp/options/fontFamily/default.title
-#: principal/options/plotTheme/default.title
-#: principal/options/fontFamily/default.title
-msgid "Default"
-msgstr "Par défaut"
 
 #: corresp/results/chisq.columns.title
 #: principal/results/kmoTable.columns.title
@@ -818,12 +797,6 @@ msgstr "Facteur"
 #: principal/options/captionFontFace.title
 msgid "Font face"
 msgstr "Style de police"
-
-#: corresp/options/fontFamily.title
-#: multcorresp/options/fontFamily.title
-#: principal/options/fontFamily.title
-msgid "Font family"
-msgstr "Police"
 
 #: corresp/options/titleFontSize.title
 #: corresp/options/subtitleFontSize.title
@@ -922,12 +895,6 @@ msgstr "Gris"
 msgid "Group"
 msgstr "Groupe"
 
-#: corresp/options/plotTheme/jmvHadley.title
-#: multcorresp/options/plotTheme/jmvHadley.title
-#: principal/options/plotTheme/jmvHadley.title
-msgid "Hadley (jamovi)"
-msgstr "Hadley (jamovi)"
-
 #: R/multcorresp.b.R
 #: multcorresp/options/method/Indicator.title
 #: multcorresp/ui[3][0][0]/method_indicator.label
@@ -967,12 +934,6 @@ msgstr "Iris"
 #: principal/options/captionFontFace/italic.title
 msgid "Italic"
 msgstr "Italique"
-
-#: corresp/options/plotTheme/jmvDefault.title
-#: multcorresp/options/plotTheme/jmvDefault.title
-#: principal/options/plotTheme/jmvDefault.title
-msgid "jamovi"
-msgstr "jamovi"
 
 #: principal/options/varColor/#A6C4F1.title
 #: principal/options/obsColor/#A6C4F1.title
@@ -1069,12 +1030,6 @@ msgstr "Lémovice"
 msgid "Level"
 msgstr "Niveau"
 
-#: corresp/options/plotTheme/ggLight.title
-#: multcorresp/options/plotTheme/ggLight.title
-#: principal/options/plotTheme/ggLight.title
-msgid "Light (ggplot2)"
-msgstr "Clair (ggplot2)"
-
 #: principal/options/varColor/#B3CDE3.title
 #: principal/options/obsColor/#B3CDE3.title
 msgid "Light Blue"
@@ -1126,12 +1081,6 @@ msgstr "Jaune clair"
 msgid "Limited to the first 100 observations"
 msgstr "Limité aux 100 premières observations"
 
-#: corresp/options/plotTheme/ggLinedraw.title
-#: multcorresp/options/plotTheme/ggLinedraw.title
-#: principal/options/plotTheme/ggLinedraw.title
-msgid "Line draw (ggplot2)"
-msgstr "Traits (ggplot2)"
-
 #: R/corresp.b.R
 #: multcorresp/results/categories.columns.title
 #: multcorresp/results/observations.columns.title
@@ -1155,22 +1104,10 @@ msgstr "Coordonnées standardisées ACM ({method})"
 msgid "Method"
 msgstr "Méthode"
 
-#: corresp/options/plotTheme/jmvMinimal.title
-#: multcorresp/options/plotTheme/jmvMinimal.title
-#: principal/options/plotTheme/jmvMinimal.title
-msgid "Minimal (jamovi)"
-msgstr "Minimal (jamovi)"
-
 #: R/principal.b.R
 #: principal/options/rotation/entropy.title
 msgid "Minimum entropy"
 msgstr "Entropie minimale"
-
-#: corresp/options/fontFamily/mono.title
-#: multcorresp/options/fontFamily/mono.title
-#: principal/options/fontFamily/mono.title
-msgid "Monospace"
-msgstr "Chasse fixe"
 
 #: package/analyses/multcorresp.title
 #: package/analyses/multcorresp.menuTitle
@@ -1217,7 +1154,7 @@ msgstr "Normal"
 #: corresp/ui[3][0].label
 #: multcorresp/options/normalization.title
 #: multcorresp/ui[4][0].label
-#: principal/ui[8][0][0][0].label
+#: principal/ui[7][0][0][0].label
 msgid "Normalization"
 msgstr "Normalisation"
 
@@ -1551,7 +1488,7 @@ msgstr "Rotation des vecteurs propres"
 
 #: principal/options/rotation.title
 #: principal/ui[2][1][0].label
-#: principal/ui[8][0][1][0].label
+#: principal/ui[7][0][1][0].label
 msgid "Rotation"
 msgstr "Rotation"
 
@@ -1630,14 +1567,8 @@ msgstr "Lignes"
 msgid "Same as point/arrow"
 msgstr "Comme les vecteurs/points"
 
-#: corresp/options/fontFamily/sans.title
-#: multcorresp/options/fontFamily/sans.title
-#: principal/options/fontFamily/sans.title
-msgid "Sans serif"
-msgstr "Sans empattement"
-
-#: multcorresp/ui[10].label
-#: principal/ui[9].label
+#: multcorresp/ui[9].label
+#: principal/ui[8].label
 msgid "Save"
 msgstr "Enregistrer"
 
@@ -1657,12 +1588,6 @@ msgstr "Valeurs propres"
 #: principal/options/screeCaptionText.title
 msgid "Scree plot"
 msgstr "Valeurs propres"
-
-#: corresp/options/fontFamily/serif.title
-#: multcorresp/options/fontFamily/serif.title
-#: principal/options/fontFamily/serif.title
-msgid "Serif"
-msgstr "Avec empattement"
 
 #: multcorresp/options/colorPalette/Set1.title
 #: principal/options/colorPalette/Set1.title
@@ -1739,12 +1664,6 @@ msgstr "Le tableau de contingence contient des données manquantes."
 #: principal/options/colorPalette/Spectral.title
 msgid "Spectral"
 msgstr "Spectral"
-
-#: corresp/options/plotTheme/jmvSpss.title
-#: multcorresp/options/plotTheme/jmvSpss.title
-#: principal/options/plotTheme/jmvSpss.title
-msgid "SPSS (jamovi)"
-msgstr "SPSS (jamovi)"
 
 #: principal/results/summaryTable.columns.title
 msgid "SS Loadings"
@@ -1933,15 +1852,6 @@ msgstr "Le nombre de dimensions ne peut pas être supérieur au nombre de variab
 #: R/corresp.b.R
 msgid "The χ² statistic is equal to zero."
 msgstr "La statistique du χ² est égale à zéro."
-
-#: corresp/options/plotTheme.title
-#: corresp/ui[8].label
-#: multcorresp/options/plotTheme.title
-#: multcorresp/ui[9].label
-#: principal/options/plotTheme.title
-#: principal/ui[7].label
-msgid "Theme"
-msgstr "Thème"
 
 #: multcorresp/options/colorPalette/tidy::alger.title
 #: principal/options/colorPalette/tidy::alger.title
