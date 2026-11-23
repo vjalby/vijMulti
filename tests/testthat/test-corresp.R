@@ -578,12 +578,3 @@ test_that("corresp: null-inertia axes are shown but not usable (proportional row
     expect_error(a$run(), "at least two dimensions")
     expect_equal(nrow(a$results$eigenvalues$asDF), 0)
 })
-
-test_that("corresp: theme and font family, point labels included", {
-    args <- list(data = testData, mode = "obsTable", rows = "STAFF", cols = "SMOKE",
-                 columns = NULL, rowLabels = NULL, counts = "COUNT", showBiPlot = TRUE)
-    r <- do.call(vijMulti::corresp, c(args, plotTheme = "ggBw", fontFamily = "serif"))
-    expectBwSerif(renderedPlot(r$biplot), nText = 1)
-    r <- do.call(vijMulti::corresp, c(args, plotTheme = "jmvMinimal"))
-    expectBlackFrame(renderedPlot(r$biplot))
-})

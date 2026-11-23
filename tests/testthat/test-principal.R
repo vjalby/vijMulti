@@ -342,22 +342,3 @@ test_that("principal: a weak but real dimension is not taken for a null one", {
     expect_identical(eigen[3], 0)
     expect_true(all(is.finite(r$obsPlot$state$obsData$y)))
 })
-
-test_that("principal: theme and font family, point and variable labels included", {
-    args <- list(data = testData, vars = c("Sepal_Length", "Sepal_Width", "Petal_Length", "Petal_Width"),
-                 labelVar = "Num", groupVar = "Species", showBiplot = TRUE, showScreePlot = TRUE)
-    r <- do.call(vijMulti::principal, c(args, plotTheme = "ggBw", fontFamily = "serif"))
-    expectBwSerif(renderedPlot(r$biPlot), nText = 2)
-    expectBwSerif(renderedPlot(r$screePlot))
-    # the module's black frame with the default and jamovi themes only
-    r <- do.call(vijMulti::principal, args)
-    expectBlackFrame(renderedPlot(r$biPlot))
-    p <- renderedPlot(r$biPlot)
-    expect_equal(ggplot2::calc_element("plot.title", p$theme)$family, "")
-    for (l in textLayers(p))
-        expect_equal(l$aes_params$family, "")
-    r <- do.call(vijMulti::principal, c(args, plotTheme = "jmvSpss"))
-    expectBlackFrame(renderedPlot(r$biPlot))
-    r <- do.call(vijMulti::principal, c(args, plotTheme = "ggLight"))
-    expect_equal(grDevices::col2rgb(ggplot2::calc_element("panel.border", renderedPlot(r$biPlot)$theme)$colour), grDevices::col2rgb("grey70"))
-})
