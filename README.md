@@ -21,9 +21,8 @@ The module is available in the **Analyses** tab.
 
 ![](img/mca.jpg)
 
-## Last changes: vijMulti 1.2.0 (2026-11-22)
+## Last changes: vijMulti 1.2.1 (2026-11-24)
 
-* New "Theme" section to choose the plot theme and the font family (sans serif, serif or monospace)
 * More robust handling of degenerate data: dimensions with null inertia are listed but can no longer be used; constant/single-category variables are rejected
 * CA: stricter validation of counts and supplementary row/column numbers; the χ² Test table shows a note when some expected counts are below 5
 * PCA: plots of unstandardized variables are now scaled to the data

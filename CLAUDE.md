@@ -96,27 +96,16 @@ versions) — the same mechanism as vijPlots' `piechart`/`barplot` hidden labels
 Since 2026-11-22, `R/utils.R` and `tests/testthat/test-utils.R` are **exact copies** of vijPlots'
 (edited there, copied here; vijPlots' `build.R` checks they are identical): don't edit them here
 alone. Some of their helpers are unused here (`vijVar()`, `vijOneColorOfPalette()`,
-`vijFormatCount()`, `lastColor` of `vijColorScale()`): keep them. The vijPlots-only helpers
+`vijFormatCount()`, `vijPlotTheme()`, `vijFontFamily()`, `lastColor` of `vijColorScale()`): keep them. The vijPlots-only helpers
 (`vijGridLines()`, `vijHideAxis()`, `vijNudgePosition()`) are in vijPlots' `R/utilsPlots.R`, not copied.
 
-### Theme and font options (ported from vijPlots, 2026-11-21)
+### No theme or font options (removed in 1.2.1)
 
-Same `plotTheme`/`fontFamily` options, values and "Theme" UI section as vijPlots (see its
-`CLAUDE.md`, "Appearance options", for the reasoning: theme list, `base_size = 16`, margins, SPSS
-`suppressWarnings()`, why every text layer needs `family =`). The section comes right after "Plot
-Titles & Subtitles" (before PCA's "Advanced Options" and MCA's "Save"). Every plot adds
-`ggtheme + vijPlotTheme(self$options)`, scree and discrimination plots included, and every text
-layer gets `family = fontFamily` (`vijFontFamily(self$options)`): 3 in PCA, 1 in CA, 4 in MCA
-(its `geom_text` fallback when `ggrepel` is off included). A new text layer must get it too: each
-analysis' "theme and font family" test checks every text layer (`helper-theme.R`). Both options are
-in every Image's `clearWith:` (jamovi only re-renders an image whose `clearWith` changed).
-
-vijMulti-specific: the factorial maps' forced black frame (`panel.border` black, linewidth 1, no
-`axis.line`) is kept with "Default" and the four jamovi themes (so the default look, snapshots
-included, is unchanged), but skipped with the four ggplot2 themes (`startsWith(plotTheme, "gg")`),
-which keep their own frame (Light's gray one, Bw/Linedraw's dark one) or, for Dark, no frame on a
-filled panel. No grid options here, so `vijGridLines()` is still not needed: ggplot2's themes and
-jamovi's Hadley/Minimal bring their grid, the others have none.
+`plotTheme`/`fontFamily` options and a "Theme" UI section, ported from vijPlots, shipped in 1.2.0
+and were removed in 1.2.1 (2026-11-23) because the jamovi team did not want them: plots follow
+jamovi's own theme (`ggtheme`) again, and text layers have no `family =`. Don't re-add them. The
+removal restored the analyses' files as they were before the port (`6ae7ded`); `vijPlotTheme()`/
+`vijFontFamily()` stay in the shared `R/utils.R` (and its tests), unused here.
 
 ### CA/MCA backends (`ca` package)
 

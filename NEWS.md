@@ -1,3 +1,7 @@
+# vijMulti 1.2.1 (2026-11-24)
+* Add jamovi menu icon (menuIcons) following jamovi's new module icon procedure
+* Removed the "Theme" section (plot theme and font family) added in 1.2.0: plots follow jamovi's theme again
+
 # vijMulti 1.2.0 (2026-11-22)
 * New "Theme" section to choose the plot theme (jamovi's Default, Minimal, Hadley or SPSS, or ggplot2's Black and white, Light, Line draw or Dark) and the font family (sans serif, serif or monospace)
 * CA: missing, negative or infinite counts are now always rejected; zero counts are treated as no observation
