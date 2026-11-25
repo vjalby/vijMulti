@@ -21,7 +21,7 @@ The module is available in the **Analyses** tab.
 
 ![](img/mca.jpg)
 
-## Last changes: vijMulti 1.2.1 (2026-11-24)
+## Last changes: vijMulti 1.2.1 (2026-11-25)
 
 * More robust handling of degenerate data: dimensions with null inertia are listed but can no longer be used; constant/single-category variables are rejected
 * CA: stricter validation of counts and supplementary row/column numbers; the χ² Test table shows a note when some expected counts are below 5

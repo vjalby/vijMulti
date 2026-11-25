@@ -1,4 +1,4 @@
-# vijMulti 1.2.1 (2026-11-24)
+# vijMulti 1.2.1 (2026-11-25)
 * Add jamovi menu icon (menuIcons) following jamovi's new module icon procedure
 * Removed the "Theme" section (plot theme and font family) added in 1.2.0: plots follow jamovi's theme again
 
